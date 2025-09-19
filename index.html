@@ -178,20 +178,21 @@
 
         /* Enhanced Daena Exploration Button - MASSIVE & EYE-CATCHING */
         .btn-primary {
-            background: linear-gradient(45deg, #FFD700, #00bcd4, #4caf50, #FFD700);
-            background-size: 300% 300%;
+            background: linear-gradient(45deg, #FFD700, #00bcd4, #4caf50, #FFD700, #ff6b6b, #96ceb4);
+            background-size: 400% 400%;
             color: white;
             padding: 25px 50px;
             border-radius: 60px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 1.4rem;
+            font-size: 1.8rem;
             transition: all 0.4s ease;
             box-shadow: 
-                0 15px 40px rgba(255, 215, 0, 0.4),
-                0 0 0 4px rgba(255, 215, 0, 0.3),
-                inset 0 2px 0 rgba(255, 255, 255, 0.4);
-            animation: gradientShift 3s ease-in-out infinite, float 3s ease-in-out infinite, pulse 2s ease-in-out infinite;
+                0 20px 50px rgba(255, 215, 0, 0.5),
+                0 0 0 5px rgba(255, 215, 0, 0.4),
+                0 0 0 10px rgba(0, 188, 212, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.5);
+            animation: gradientShift 2s ease-in-out infinite, float 3s ease-in-out infinite, pulse 1.5s ease-in-out infinite, glow 2s ease-in-out infinite;
             position: relative;
             overflow: hidden;
             display: inline-block;
@@ -306,6 +307,107 @@
             transform: translateY(-5px) scale(1.05);
             box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
             border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Daena Demo Key - Ultra Fancy & Eye-catching */
+        .daena-demo-key {
+            display: inline-block;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b, #96ceb4, #feca57);
+            background-size: 400% 400%;
+            color: white;
+            padding: 25px 50px;
+            border-radius: 60px;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin: 0 20px 30px 20px;
+            transition: all 0.4s ease;
+            box-shadow: 
+                0 20px 50px rgba(255, 107, 107, 0.5),
+                0 0 0 5px rgba(255, 107, 107, 0.4),
+                0 0 0 10px rgba(78, 205, 196, 0.2),
+                inset 0 2px 0 rgba(255, 255, 255, 0.5);
+            animation: gradientShift 2s ease-in-out infinite, float 3s ease-in-out infinite, pulse 1.5s ease-in-out infinite, glow 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+            min-width: 350px;
+            text-align: center;
+        }
+
+        .daena-demo-key::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .daena-demo-key:hover::before {
+            left: 100%;
+        }
+
+        .daena-demo-key::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #ff6b6b, #96ceb4, #feca57);
+            background-size: 400% 400%;
+            border-radius: 62px;
+            z-index: -1;
+            animation: gradientShift 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { 
+                box-shadow: 
+                    0 20px 50px rgba(255, 107, 107, 0.5),
+                    0 0 0 5px rgba(255, 107, 107, 0.4),
+                    0 0 0 10px rgba(78, 205, 196, 0.2),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.5);
+            }
+            50% { 
+                box-shadow: 
+                    0 25px 60px rgba(255, 107, 107, 0.7),
+                    0 0 0 8px rgba(255, 107, 107, 0.6),
+                    0 0 0 15px rgba(78, 205, 196, 0.3),
+                    inset 0 2px 0 rgba(255, 255, 255, 0.7);
+            }
+        }
+
+        .daena-demo-key:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 
+                0 30px 70px rgba(255, 107, 107, 0.6),
+                0 0 0 8px rgba(255, 107, 107, 0.5),
+                0 0 0 15px rgba(78, 205, 196, 0.3),
+                inset 0 2px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .daena-demo-key .icon {
+            margin-right: 15px;
+            font-size: 2.2rem;
+            display: inline-block;
+            animation: bounce 1.5s infinite, rotate 3s linear infinite, pulse 1s ease-in-out infinite;
+        }
+
+        .daena-demo-key .text {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .daena-demo-key .subtitle {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: normal;
+            margin-top: 5px;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
         }
 
         /* Container */
@@ -742,6 +844,23 @@
                 height: 160px;
             }
 
+            .daena-demo-key {
+                font-size: 1.4rem;
+                padding: 20px 40px;
+                min-width: 300px;
+            }
+
+            .daena-demo-key .icon {
+                font-size: 1.6rem;
+                margin-right: 10px;
+            }
+
+            .btn-primary {
+                font-size: 1.4rem;
+                padding: 20px 40px;
+                min-width: 300px;
+            }
+
             .cta-button {
                 font-size: 1rem;
                 padding: 10px 20px;
@@ -794,6 +913,13 @@
                     <span class="text">
                         Explore Daena AI
                         <span class="subtitle">The Revolutionary AI VP System</span>
+                    </span>
+                </a>
+                <a href="https://daena.mas-ai.co#demos" class="daena-demo-key">
+                    <span class="icon">🎬</span>
+                    <span class="text">
+                        Daena in Action
+                        <span class="subtitle">Watch Live Demos</span>
                     </span>
                 </a>
                 <a href="#contact" class="btn-secondary">Get Started Today</a>
