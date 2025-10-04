@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mas-AI - The World's First AI-Native Autonomous Company</title>
+    <meta name="description" content="Mas-AI is pioneering the future of AI with Daena, the world's first AI-native autonomous company. Experience revolutionary multi-agent orchestration with 48 specialized agents across 8 departments.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a1a3a 50%, #2a1a4a 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+            border-bottom: 2px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #FFD700;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 80px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 20%, rgba(255, 193, 7, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 193, 7, 0.06) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #00bcd4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #e0e0e0;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero .description {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            line-height: 1.8;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00bcd4;
+            border: 2px solid #00bcd4;
+        }
+
+        .btn-secondary:hover {
+            background: #00bcd4;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Daena Showcase */
+        .daena-showcase {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .showcase-content h2 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 1.5rem;
+        }
+
+        .showcase-content p {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .features-list li {
+            color: #e0e0e0;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            color: #4caf50;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .daena-visual {
+            text-align: center;
+            position: relative;
+        }
+
+        .honeycomb-diagram {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300"><defs><pattern id="hex" patternUnits="userSpaceOnUse" width="60" height="52"><polygon points="30,5 50,20 50,35 30,50 10,35 10,20" fill="%23FFD700" stroke="%23FFA500" stroke-width="1" opacity="0.3"/></pattern></defs><rect width="300" height="300" fill="url(%23hex)"/><circle cx="150" cy="150" r="40" fill="%2300bcd4" stroke="%23FFD700" stroke-width="3"/><text x="150" y="155" text-anchor="middle" fill="white" font-size="12" font-weight="bold">Daena Core</text></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        .agent-count {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1rem;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+        }
+
+        .agent-count .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+
+        .agent-count .label {
+            font-size: 0.9rem;
+            color: #e0e0e0;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 80px 0;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 193, 7, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #e0e0e0;
+            font-size: 1.1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 2rem;
+        }
+
+        .contact p {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            text-align: center;
+        }
+
+        .contact-item h4 {
+            color: #00bcd4;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #FFD700;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 2rem 0;
+            text-align: center;
+            color: #e0e0e0;
+            border-top: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .showcase-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Mas-AI</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="https://daena.mas-ai.co">Daena AI</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="https://github.com/Masoud-Masoori" target="_blank">GitHub</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Mas-AI</h1>
+            <p class="subtitle">The World's First AI-Native Autonomous Company</p>
+            <p class="description">
+                We're pioneering the future of artificial intelligence with Daena, our revolutionary AI VP system. 
+                Experience the power of 48 specialized agents working across 8 departments in perfect harmony, 
+                powered by our proprietary Sunflower-Honeycomb architecture.
+            </p>
+            <div class="cta-buttons">
+                <a href="https://daena.mas-ai.co" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-robot"></i> Try Daena AI
+                </a>
+                <a href="https://github.com/Masoud-Masoori" class="btn btn-secondary" target="_blank">
+                    <i class="fab fa-github"></i> View on GitHub
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daena Showcase -->
+    <section id="daena" class="daena-showcase">
+        <div class="container">
+            <div class="showcase-grid">
+                <div class="showcase-content">
+                    <h2>Meet Daena</h2>
+                    <p>
+                        Daena is not just another AI assistant. She's the world's first AI-native Vice President, 
+                        orchestrating 48 specialized agents across 8 departments to run your business autonomously. 
+                        Built with our revolutionary Sunflower-Honeycomb architecture, Daena represents the future 
+                        of organizational intelligence.
+                    </p>
+                    <ul class="features-list">
+                        <li>48 Specialized AI Agents across 8 departments</li>
+                        <li>Revolutionary Sunflower-Honeycomb Architecture</li>
+                        <li>Reflexive Memory System for continuous learning</li>
+                        <li>Real-time Governance and Compliance</li>
+                        <li>Multi-LLM Brain with smart routing</li>
+                        <li>Enterprise-ready security and scalability</li>
+                    </ul>
+                    <a href="https://daena.mas-ai.co" class="btn btn-primary" target="_blank">
+                        Experience Daena Live Demo
+                    </a>
+                </div>
+                <div class="daena-visual">
+                    <div class="honeycomb-diagram">
+                        <div class="agent-count">
+                            <div class="number">48</div>
+                            <div class="label">AI Agents</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="features" class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Specialized Agents</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Department Cells</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">$155B</div>
+                    <div class="stat-label">Market Opportunity</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Patent Protected</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Ready to Transform Your Business?</h2>
+            <p>
+                Join the AI revolution with Daena. Experience the future of autonomous business operations 
+                and discover how our AI-native approach can transform your organization.
+            </p>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h4>📧 Email</h4>
+                    <a href="mailto:masoud.masoori@gmail.com">masoud.masoori@gmail.com</a>
+                    <br>
+                    <a href="mailto:masoud.masoori@mas-ai.co">masoud.masoori@mas-ai.co</a>
+                </div>
+                <div class="contact-item">
+                    <h4>🌐 Daena Platform</h4>
+                    <a href="https://daena.mas-ai.co" target="_blank">daena.mas-ai.co</a>
+                </div>
+                <div class="contact-item">
+                    <h4>💻 GitHub</h4>
+                    <a href="https://github.com/Masoud-Masoori" target="_blank">View Projects</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Mas-AI. All rights reserved. | Leading the world's first AI-native, multi-agent autonomous company</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.95)';
+            } else {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            }
+        });
+    </script>
+</body>
+</html>
