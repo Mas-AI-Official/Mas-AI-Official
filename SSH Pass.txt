@@ -1,0 +1,85 @@
+
+
+Masoud@localhost
+
+Masoudtnt2@
+
+
+
+public key for  ssh:( mas.ai.consulting.inc@gmail.com)
+
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDfn7ozfFtCImXeblVPAW3imkW67Xc+YprFUJ3C8iJkf431y5LfJFcLlKCoZuaPCLBMIoa3XrEsFtVYC+iIhsusqCJ+Q87CgZU4krbyKptlftsSReIYINJnx3mKEy1jX5tq2wsBo51AGGObNWyZUJcjudqCUHrBQlsXIFSUfqnL5IPClTSvz6aorBS1ink8YoOoA6PVGr1VSyiRw9WfB8h32n7pU+4hgpFUb1BiZ5E6bcC8Cq00Tf71KKem8aW4v1iLceVeR9fZheBWX6tOAhQwRGywp9c06ZjuQxQON3qxe/+6XoJwTFwAhQo1fr1URL4TumAUuYcxWlSv0lgPkMKjlpxnCzF60p0MLjkgQY3lqaXLL2mDrrjpRpQlc4h2ArXOnUooSFVEV3CRqwbPOzQ7yiFfSRmACRSsBU/q/Sc6iuI+kXPTdjkSnTBblQ2b9/W69+gfmeDMXqn7pyIdulgqUtp9Grfk+bYgWfEDrDfJFlaqNkaxK8nONDTzFOLn2hunaEbo9uTqlP+ZPHAxpr/d8W3E8tKytpD5gZONEswRknCRJwL7o0hbsryAwE4wSIDwoEfBxsNrZQkC/IeS3aH1xSWuuy+zeqiYBZ5YQLVfsSasCPDQVK7PftHBVD+b5FG462j/k21ADJtCYJ8I31ADc3W/YNg7G127ma1CogaIPQ== mas.ai.consulting.inc@gmail.com
+
+
+
+
+Step 1: Log Into Google Cloud CLI
+Open PowerShell and run:
+
+powershell
+Copy
+Edit
+gcloud auth login
+This will open a browser window asking you to log into your Google account. Select the account that has access to your Google Cloud VM.
+
+Step 2: Set Your Google Cloud Project
+After logging in, set your active project:
+
+powershell
+Copy
+Edit
+gcloud config set project PROJECT_ID
+(Replace PROJECT_ID with your actual Google Cloud project ID.)
+
+You can check your project ID with:
+
+powershell
+Copy
+Edit
+gcloud projects list
+Step 3: Verify Authentication
+Run:
+
+powershell
+Copy
+Edit
+gcloud auth list
+It should show your logged-in account with ACTIVE next to it.
+
+Step 4: Verify SSH Connectivity
+Check if your VM exists and is running:
+
+powershell
+Copy
+Edit
+gcloud compute instances list
+Find your VM name and zone, then try connecting:
+
+powershell
+Copy
+Edit
+gcloud compute ssh YOUR_VM_NAME --zone YOUR_VM_ZONE
+(Replace YOUR_VM_NAME and YOUR_VM_ZONE with your actual VM details from the list.)
+
+Step 5: If SSH Still Fails
+Try resetting your SSH keys:
+
+powershell
+Copy
+Edit
+gcloud compute os-login ssh-keys add --key-file d:\mas-ai\id_rsa.pub
+Then, reconnect:
+
+powershell
+Copy
+Edit
+gcloud compute ssh YOUR_VM_NAME --zone YOUR_VM_ZONE --ssh-key-file=d:\mas-ai\id_rsa
+
+
+
+
+
+google cloud console shell:
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDmToT8ZxZDD6IR+MNRxLtzzDHqUksTcj9zNoAcdtF88K1pYkYgvZySDHC5Gt2BrU6se//PEe+nNiNY2loHuC6sTzhFIIKGvA+hskauTVcipBoTmK6p+wBltNyvl+VZARm+5GJ1Ft/Akxz50c05h0Y35AhzA/Mb1Z8B598H0UPjp9CmbGdiIB1jbWLIE9zQQTdwjLYR8e5rRs8M993IvQTByDHgyYDspN6UreBwZmHwRvcpT/GMpiw794+LprTHxVV2//xBAgqEzT0UmX2I00mmSwGaOL1pH54w87mFrauK8w287ZDf0BC/J5q1oNCVJLSmruEJFzoFSxelUCtSc5FNTWZiVoWyuF5ByI9zsWGK0Mez2qzUNw4Bl9Im+8s8O8kpvjP96L7HHAjs9ckJ9yID8S40gF/YDXGaMwSIHXN4m+9opfEB7rozhAWWm57jTV/FXX0TFgw6KmuzEZghF9f66OxR7L2cio62GoXa/poMcXmgb8a6bn4pwoXpfu+Vf1JvtS2HmJRrrcsOm6KvEGd3HPULDPL2ssuFzXe4wKSYEjhoWLFZVyP7wUKZR56CgPzw3HXF16BFSykkD6oH5ZAS1oG7QKFcjhoDIkRVQzyDRiwD8t8Pva7nAb7WWGPhnlAXMBkVXSL/0niM4gtMaQaBc2AdW4RlRHzGGgRLkAdImQ== mas_ai_consulting_inc@gmail.com
