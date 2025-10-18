@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://mas-ai.co/sitemap.xml
+
+

@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAS-AI — The World's First AI‑Native Autonomous Company with Daena VP</title>
+    <meta name="description" content="MAS-AI builds Daena, an AI VP system orchestrating 48+ specialized agents with Consulate experts across 8 departments. Explore live demos, pitch deck and portfolio of the world's first AI-native autonomous company.">
+    <meta name="keywords" content="MAS-AI, Daena AI, AI VP, autonomous company, AI-native, 48 agents, Consulate experts, multi-agent systems, SFHC, business intelligence, AI portfolio">
+    <link rel="icon" href="mas-ai-logo.jpg">
+    <meta property="og:title" content="MAS-AI — The World's First AI‑Native Autonomous Company with Daena VP">
+    <meta property="og:description" content="Meet Daena: an AI VP orchestrating 48+ agents with Consulate experts across 8 departments. Explore live demos and portfolio of the world's first AI-native autonomous company.">
+    <meta property="og:image" content="mas-ai-logo.jpg">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="MAS-AI — The World's First AI‑Native Autonomous Company with Daena VP">
+    <meta name="twitter:description" content="Meet Daena: an AI VP orchestrating 48+ agents with Consulate experts across 8 departments. Explore live demos and portfolio.">
+    <meta name="twitter:image" content="mas-ai-logo.jpg">
+    <meta name="theme-color" content="#0b0b14">
+    <link rel="canonical" href="https://mas-ai.co/">
+    <link rel="preconnect" href="https://daena.mas-ai.co" crossorigin>
+    <link rel="dns-prefetch" href="https://daena.mas-ai.co">
+    <script defer data-domain="mas-ai.co" src="https://plausible.io/js/script.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://mas-ai.co/",
+      "name": "MAS-AI",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://mas-ai.co/?s={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #0b0b14;
+            --panel: rgba(255,255,255,0.08);
+            --text: #e9eef6;
+            --muted: #a6b0c3;
+            --gold: #ffd700;
+            --cyan: #00bcd4;
+            --accent: linear-gradient(135deg, var(--gold), var(--cyan));
+            --glass-bg: rgba(255,255,255,0.05);
+            --glass-border: rgba(255,215,0,0.2);
+            --shadow-glow: 0 0 30px rgba(255, 215, 0, 0.3);
+            --shadow-strong: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            background: radial-gradient(1200px 600px at 10% -10%, rgba(255,215,0,0.08), transparent),
+                        radial-gradient(1200px 600px at 110% 110%, rgba(0,188,212,0.08), transparent),
+                        var(--bg);
+            color: var(--text);
+            /* Reserve space so floating CTA doesn't cover content */
+            padding-bottom: 160px;
+        }
+        a { color: inherit; text-decoration: none; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .nav {
+            position: sticky; top: 0; z-index: 10;
+            backdrop-filter: blur(12px);
+            background: rgba(11,11,20,0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+        .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .5px; font-size: 18px; }
+        .brand img { height: 36px; width: auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3); }
+        .nav-links { display: flex; gap: 18px; align-items: center; }
+        .mobile-menu-toggle { display: none; background: none; border: none; color: var(--text); font-size: 24px; cursor: pointer; }
+        .mobile-menu { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(11,11,20,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 20px; }
+        .mobile-menu.active { display: block; }
+        .mobile-menu .btn { display: block; width: 100%; margin: 8px 0; text-align: center; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.12); color: var(--text); background: transparent; cursor: pointer; font-weight: 600; transition: all 0.3s ease; }
+        .btn-primary { border: none; background: var(--accent); color: #0b0b14; box-shadow: 0 8px 30px rgba(255,215,0,.25); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255,215,0,.4); }
+        .btn-ghost { background: transparent; }
+        .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+        /* Hero */
+        .hero { padding: 80px 0 40px; }
+        .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 36px; align-items: center; }
+        .eyebrow { color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+        .title { font-size: clamp(32px, 5vw, 56px); line-height: 1.08; margin: 10px 0 16px; font-weight: 900; background: var(--accent); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: var(--muted); font-size: 18px; max-width: 720px; }
+        .cta-row { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+        .hero-card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 18px; transition: all 0.3s ease; }
+        .hero-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-strong); }
+        .metric { font-size: 28px; font-weight: 800; color: var(--gold); }
+        .metric-label { color: var(--muted); font-size: 12px; }
+
+        /* Portfolio */
+        .section { padding: 60px 0; }
+        .section h2 { font-size: 28px; margin: 0 0 12px; }
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+        .card { background: var(--glass-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 20px; padding: 18px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent); transition: left 0.5s ease; }
+        .card:hover::before { left: 100%; }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-strong); }
+        .card h3 { margin: 6px 0 6px; font-size: 18px; line-height: 1.4; }
+        .card p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+        .card ul { margin: 0; padding-left: 18px; }
+        .card li { margin-bottom: 8px; line-height: 1.5; }
+
+        /* Daena spotlight */
+        .spotlight { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: center; }
+        .badge { display: inline-block; padding: 6px 10px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); color: var(--muted); font-size: 12px; }
+        .pill { background: var(--glass-bg); backdrop-filter: blur(20px); padding: 8px 12px; border-radius: 999px; border: 1px solid var(--glass-border); transition: all 0.3s ease; cursor: pointer; }
+        .pill:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); background: var(--accent); color: #0b0b14; }
+        .list { display: grid; gap: 10px; margin-top: 10px; }
+        
+        /* Enhanced Daena section */
+        .daena-highlight { 
+            background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(0,188,212,0.1));
+            border: 2px solid rgba(255,215,0,0.3);
+            border-radius: 20px;
+            padding: 24px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .daena-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent);
+        }
+        .daena-cta {
+            background: var(--accent);
+            color: #0b0b14;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255,215,0,.4);
+        }
+        .daena-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(255,215,0,.5);
+        }
+
+        /* Founder */
+        .founder { display: grid; grid-template-columns: .9fr 1.1fr; gap: 22px; align-items: start; }
+        .avatar { width: 96px; height: 96px; border-radius: 16px; background: var(--panel); display:flex; align-items:center; justify-content:center; font-weight:800; border:1px solid rgba(255,255,255,.1); }
+        .tags { display:flex; gap:8px; flex-wrap:wrap; margin-top:10px; }
+        .tag { padding:6px 10px; border-radius:999px; background: var(--panel); border:1px solid rgba(255,255,255,.1); color: var(--muted); font-size:12px; }
+
+        /* Footer */
+        .footer { padding: 32px 0 46px; color: var(--muted); border-top: 1px solid rgba(255,255,255,0.08); margin-top: 40px; }
+        .footer a { color: var(--text); }
+        /* Accessibility helper */
+        .visually-hidden { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .nav-inner { height: 60px; }
+            .brand { gap: 8px; font-size: 16px; }
+            .brand img { height: 32px; }
+            .nav-links { gap: 12px; }
+            .nav-links .btn { padding: 8px 12px; font-size: 14px; }
+            .hero { padding: 60px 0 30px; }
+            .hero-grid, .spotlight, .grid, .founder { grid-template-columns: 1fr; gap: 24px; }
+            .title { font-size: clamp(24px, 8vw, 40px); margin: 8px 0 12px; line-height: 1.2; }
+            .subtitle { font-size: 16px; line-height: 1.5; }
+            .cta-row { gap: 8px; margin-top: 16px; flex-direction: column; }
+            .cta-row .btn { padding: 14px 20px; font-size: 16px; width: 100%; text-align: center; }
+            .section { padding: 40px 0; }
+            .section h2 { font-size: 24px; line-height: 1.3; margin-bottom: 20px; }
+            .grid { grid-template-columns: 1fr; gap: 16px; }
+            .compare { grid-template-columns: 1fr; gap: 16px; }
+            .band .container { flex-direction: column; text-align: center; gap: 16px; }
+            .sticky { left: 12px; right: 12px; bottom: 12px; padding: 12px; }
+            .sticky .container { flex-direction: column; text-align: center; gap: 12px; }
+            .fab { right: 12px; bottom: 140px; gap: 6px; }
+            .fab .btn { padding: 10px 14px; font-size: 13px; }
+            .form { grid-template-columns: 1fr !important; }
+            .form input[style*="grid-column: span 2"], 
+            .form textarea[style*="grid-column: span 2"],
+            .form div[style*="grid-column: span 2"] { grid-column: span 1 !important; }
+            .footer .container { flex-direction: column; text-align: center; gap: 16px; }
+            .footer div:last-child { flex-direction: column; gap: 8px; }
+            
+            /* Mobile-specific improvements */
+            .card { padding: 20px; margin-bottom: 16px; }
+            .card h3 { font-size: 18px; line-height: 1.4; margin-bottom: 12px; }
+            .card p { font-size: 15px; line-height: 1.5; }
+            .list { gap: 12px; }
+            .pill { padding: 10px 16px; font-size: 14px; margin: 4px 0; }
+            .daena-highlight { padding: 20px; margin: 20px 0; }
+            .daena-cta { padding: 16px 24px; font-size: 16px; width: 100%; }
+        }
+        
+        @media (max-width: 480px) {
+            .container { padding: 0 12px; }
+            .nav-links { display: none; }
+            .mobile-menu-toggle { display: block; }
+            .hero { padding: 40px 0 20px; }
+            .title { font-size: clamp(20px, 10vw, 32px); line-height: 1.3; }
+            .subtitle { font-size: 15px; line-height: 1.6; }
+            .section { padding: 30px 0; }
+            .section h2 { font-size: 22px; line-height: 1.4; }
+            .card { padding: 18px; margin-bottom: 12px; }
+            .card h3 { font-size: 17px; line-height: 1.4; margin-bottom: 10px; }
+            .card p { font-size: 14px; line-height: 1.6; }
+            .cta-row .btn { padding: 12px 18px; font-size: 15px; width: 100%; }
+            .sticky { display: none; }
+            .fab { display: none; }
+            .daena-highlight { padding: 18px; margin: 16px 0; }
+            .daena-cta { padding: 14px 20px; font-size: 15px; }
+            .pill { padding: 8px 14px; font-size: 13px; margin: 3px 0; }
+            .list { gap: 10px; }
+            .compare .card { padding: 16px; }
+            .compare .card ul { padding-left: 16px; }
+            .compare .card li { font-size: 13px; line-height: 1.5; margin-bottom: 6px; }
+            .grid[style*="grid-template-columns: repeat(4, 1fr)"] { 
+                grid-template-columns: 1fr; 
+                gap: 12px; 
+            }
+            .grid[style*="grid-template-columns: repeat(4, 1fr)"] .card { 
+                padding: 16px; 
+                margin-bottom: 12px; 
+            }
+            .grid[style*="grid-template-columns: repeat(4, 1fr)"] .card h3 { 
+                font-size: 15px; 
+                margin-bottom: 10px; 
+            }
+            .grid[style*="grid-template-columns: repeat(4, 1fr)"] .card li { 
+                font-size: 12px; 
+                line-height: 1.4; 
+                margin-bottom: 5px; 
+            }
+        }
+        
+        /* Tablet responsiveness */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .grid[style*="grid-template-columns: repeat(4, 1fr)"] { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 16px; 
+            }
+            .container { padding: 0 20px; }
+            .title { font-size: clamp(28px, 6vw, 48px); }
+            .section h2 { font-size: 26px; }
+        }
+        /* Problem/Solution funnel */
+        .compare { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+        .neg { background: rgba(255,0,0,0.06); border:1px solid rgba(255,0,0,0.25); }
+        .pos { background: rgba(0,255,170,0.06); border:1px solid rgba(0,255,170,0.25); }
+        
+        /* Comparison grid improvements */
+        .grid[style*="grid-template-columns: repeat(4, 1fr)"] { 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 16px; 
+        }
+        .grid[style*="grid-template-columns: repeat(4, 1fr)"] .card { 
+            min-height: auto; 
+            padding: 18px; 
+        }
+        .grid[style*="grid-template-columns: repeat(4, 1fr)"] .card h3 { 
+            font-size: 16px; 
+            margin-bottom: 12px; 
+        }
+        .grid[style*="grid-template-columns: repeat(4, 1fr)"] .card ul { 
+            padding-left: 16px; 
+            margin: 0; 
+        }
+        .grid[style*="grid-template-columns: repeat(4, 1fr)"] .card li { 
+            font-size: 14px; 
+            line-height: 1.5; 
+            margin-bottom: 8px; 
+        }
+        .band { background: var(--panel); border-top:1px solid rgba(255,255,255,0.08); border-bottom:1px solid rgba(255,255,255,0.08); padding: 18px 0; backdrop-filter: blur(8px); }
+        /* Sticky CTA */
+        .sticky { position: fixed; left: 16px; right: 16px; bottom: 16px; background: rgba(11,11,20,0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; padding: 10px 12px; z-index: 25; }
+        /* Floating quick explore */
+        .fab { position: fixed; right: 18px; bottom: 180px; display: grid; gap: 8px; z-index: 20; }
+
+        /* Glass form styling */
+        .glass { background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); backdrop-filter: blur(14px); border-radius: 16px; }
+        .fab .btn { box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    </style>
+    <script>
+        function goDaena(src='masai_home') { window.location.href = 'https://daena.mas-ai.co?utm_source='+encodeURIComponent(src)+'&utm_medium=site&utm_campaign=masai_home'; }
+        function openDemo() { window.open('https://daena.mas-ai.co#demos', '_blank'); }
+        function email(to) { window.location.href = 'mailto:' + to; }
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('active');
+        }
+        // Close mobile menu when clicking on a link
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileLinks = document.querySelectorAll('.mobile-menu a, .mobile-menu button');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('mobileMenu').classList.remove('active');
+                });
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('demoForm');
+            if (!form) return;
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const data = Object.fromEntries(new FormData(form));
+                const body = `Demo Request (MAS-AI)\n\nName: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\nCompany: ${data.company||''}\nRole: ${data.role||''}\nMessage: ${data.message||''}\n\nSource: mas-ai.co`; 
+                const mailto = `mailto:masoud.masoori@mas-ai.co,masoud.masoori@gmail.com?subject=Demo Request - ${encodeURIComponent(data.company||'')}&body=${encodeURIComponent(body)}`;
+                window.location.href = mailto;
+            });
+        });
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "MAS-AI",
+      "url": "https://mas-ai.co/",
+      "logo": "https://mas-ai.co/mas-ai-logo.jpg",
+      "sameAs": [
+        "https://daena.mas-ai.co/",
+        "https://www.linkedin.com/in/masoud-masoori/",
+        "https://github.com/Masoud-Masoori"
+      ],
+      "contactPoint": [{
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "masoud.masoori@mas-ai.co",
+        "areaServed": "US",
+        "availableLanguage": ["en"]
+      }]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is Daena different from typical GPT agents?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Daena is an AI VP orchestrating 48 agents across 8 departments with Border-first handshakes, cross-department governance, and voice-synchronized demos for verifiable completion."}
+        },
+        {
+          "@type": "Question",
+          "name": "Can I see Daena working before talking to sales?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Yes—our live, voice-synchronized demos show timing, state, and completion across phases."}
+        },
+        {
+          "@type": "Question",
+          "name": "What functions can Daena run?",
+          "acceptedAnswer": {"@type": "Answer", "text": "Go-to-market, finance, operations, legal/compliance, and more via CMP orchestration and patent-tech analysis."}
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="nav">
+        <div class="container nav-inner">
+            <a class="brand" href="/" aria-label="MAS-AI Home"><img src="mas-ai-logo.jpg" alt="MAS-AI">MAS-AI</a>
+            <nav class="nav-links">
+                <a class="btn btn-ghost" href="#portfolio">Portfolio</a>
+                <a class="btn btn-ghost" href="#founder">Founder</a>
+                <a class="btn btn-ghost" href="https://daena.mas-ai.co">Daena</a>
+                <a class="btn btn-ghost" href="#contact">Contact</a>
+                <button class="btn btn-primary" onclick="goDaena('nav_explore')">Explore Daena →</button>
+            </nav>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a class="btn btn-ghost" href="#portfolio">Portfolio</a>
+            <a class="btn btn-ghost" href="#founder">Founder</a>
+            <a class="btn btn-ghost" href="https://daena.mas-ai.co">Daena</a>
+            <a class="btn btn-ghost" href="#contact">Contact</a>
+            <button class="btn btn-primary" onclick="goDaena('mobile_nav_explore')">Explore Daena →</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container hero-grid">
+                <div>
+                    <div class="eyebrow">MAS-AI</div>
+                    <h1 class="title">Meet <span style="color:var(--gold)">Daena</span> — The World's First AI VP</h1>
+                    <p class="subtitle">Daena orchestrates <strong style="color:var(--gold)">48+ specialized agents</strong> with <strong style="color:var(--cyan)">Consulate experts</strong> across 8 departments. Experience the future of autonomous business management with the world's most advanced AI Vice President.</p>
+                    <div class="cta-row">
+                        <a href="https://daena.mas-ai.co" class="btn btn-primary daena-cta" onclick="trackClick('daena_explore')">
+                            <span>🧠</span> Meet Daena AI VP
+                        </a>
+                        <a href="https://daena.mas-ai.co/daena Pitch Deck .pptx" class="btn btn-ghost" onclick="trackClick('pitch_deck')">
+                            <span>📊</span> View Pitch Deck
+                        </a>
+                    </div>
+                    <div class="cta-row" style="margin-top:12px">
+                        <span class="pill">🧠 48+ AI Agents</span>
+                        <span class="pill">👑 Consulate Experts</span>
+                        <span class="pill">🌻 Sunflower Pattern</span>
+                        <span class="pill">🔬 Patent Protected</span>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <div style="display:grid; grid-template-columns: repeat(2,1fr); gap: 12px;">
+                        <div class="hero-card"><div class="metric">48+</div><div class="metric-label">AI Agents (scales infinitely)</div></div>
+                        <div class="hero-card"><div class="metric">8</div><div class="metric-label">Departments</div></div>
+                        <div class="hero-card"><div class="metric">96%</div><div class="metric-label">Patent Tech Accuracy</div></div>
+                        <div class="hero-card"><div class="metric">300%</div><div class="metric-label">Projected ROI</div></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="section" id="faq">
+            <div class="container">
+                <h2>FAQ</h2>
+                <div class="grid" style="grid-template-columns: 1fr 1fr;">
+                    <div class="card">
+                        <h3>How is Daena different from typical GPT agents?</h3>
+                        <p>Daena is an AI VP with 48 agents across 8 departments. Every initiative begins with Border‑first handshakes, ensuring cross‑department coordination and verifiable completion.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Can I see it working before talking to sales?</h3>
+                        <p>Yes. We provide voice‑synchronized live demos so you can observe state, timing, and completion. </p>
+                    </div>
+                    <div class="card">
+                        <h3>What business functions can Daena run?</h3>
+                        <p>From go‑to‑market to finance and legal/compliance. The CMP pipeline orchestrates content processes end‑to‑end; patent analysis delivers 96% accuracy.</p>
+                    </div>
+                    <div class="card">
+                        <h3>How do I evaluate Daena quickly?</h3>
+                        <p>Start with the Agent Communication demo, then run Budget Calculation and CMP Pipeline. Each demo shows clear progress and end state.</p>
+                    </div>
+                </div>
+                <div class="cta-row" style="margin-top:14px;">
+                    <button class="btn btn-primary" onclick="goDaena('faq_explore')">Explore Daena</button>
+                    <button class="btn" onclick="openDemo()">Jump to Demos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA band -->
+        <div class="band">
+            <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+                <div style="color:var(--muted);">See Daena solve multi‑agent coordination with live, voice‑synced demos.</div>
+                <button class="btn btn-primary" onclick="goDaena('band_top')">Explore Daena →</button>
+            </div>
+        </div>
+
+        <!-- Problem / Solution Funnel -->
+        <section class="section" id="why">
+            <div class="container">
+                <h2>Why most GPT tools stall — and how Daena fixes it</h2>
+                <div class="compare" style="margin-top:14px;">
+                    <div class="card neg">
+                        <h3 style="margin:4px 0 8px;">Generic GPT / AutoGPT</h3>
+                        <ul class="list" style="margin:0; padding-left:18px; color:var(--muted);">
+                            <li>Lacks cross‑department structure → agents talk past each other</li>
+                            <li>No shared handshakes → brittle coordination and deadlocks</li>
+                            <li>No timing/progress → auditors can’t verify completion</li>
+                            <li>Single‑agent mindset → tasks don’t scale organization‑wide</li>
+                        </ul>
+                    </div>
+                    <div class="card pos">
+                        <h3 style="margin:4px 0 8px;">Daena (Sunflower‑Honeycomb)</h3>
+                        <ul class="list" style="margin:0; padding-left:18px; color:var(--muted);">
+                            <li><strong>Border‑first handshakes</strong> open channels before work starts</li>
+                            <li><strong>48 agents / 8 departments</strong> with Strategic→Growth→Research→Data→Border→Exec</li>
+                            <li><strong>Voice‑synced demos</strong> show state, timing, and completion</li>
+                            <li><strong>CMP orchestration + patent tech</strong> for real workflows and analysis</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cta-row" style="margin-top:16px;">
+                    <button class="btn btn-primary" onclick="goDaena('funnel_try_live')">Try Daena Live</button>
+                    <button class="btn" onclick="openDemo()">See Interactive Demos</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Grid (inspired by Daena site) -->
+        <section class="section" id="compare">
+            <div class="container">
+                <h2>Compare: AutoGPT / LangChain / Enterprise AI vs Daena</h2>
+                <div class="grid" style="grid-template-columns: repeat(4, 1fr); margin-top:14px;">
+                    <div class="card neg">
+                        <h3>AutoGPT</h3>
+                        <ul class="list" style="margin:0; padding-left:18px; color:var(--muted);">
+                            <li>Lack of memory</li>
+                            <li>No org or governance</li>
+                            <li>Prompt‑loop failures</li>
+                            <li>High resource cost</li>
+                        </ul>
+                        <div class="pill" style="margin-top:10px;">Daena solves: Reflexive memory, Sunflower governance</div>
+                    </div>
+                    <div class="card neg">
+                        <h3>LangChain</h3>
+                        <ul class="list" style="margin:0; padding-left:18px; color:var(--muted);">
+                            <li>Tool routing errors</li>
+                            <li>No real‑time governance</li>
+                            <li>No cross‑agent memory</li>
+                            <li>Bloated graphs & cost</li>
+                        </ul>
+                        <div class="pill" style="margin-top:10px;">Daena solves: Real‑time orchestration, CMP + ABAC, Honeycomb memory</div>
+                    </div>
+                    <div class="card neg">
+                        <h3>Enterprise AI Models</h3>
+                        <ul class="list" style="margin:0; padding-left:18px; color:var(--muted);">
+                            <li>Black‑box behavior</li>
+                            <li>Lack of agent reasoning</li>
+                            <li>No system‑level learning</li>
+                            <li>Drift & hallucination</li>
+                        </ul>
+                        <div class="pill" style="margin-top:10px;">Daena solves: Governance overlay, CMP filtering, drift correction</div>
+                    </div>
+                    <div class="card pos">
+                        <h3>Daena AI</h3>
+                        <ul class="list" style="margin:0; padding-left:18px; color:var(--muted);">
+                            <li>Real‑time governance</li>
+                            <li>Agent‑to‑agent memory</li>
+                            <li>Multi‑model routing</li>
+                            <li>Reflexive learning & override</li>
+                            <li>Founder control (King‑Override)</li>
+                        </ul>
+                        <div class="cta-row" style="margin-top:12px;">
+                            <button class="btn btn-primary" onclick="goDaena('compare_grid')">Explore Daena</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA band 2 -->
+        <div class="band">
+            <div class="container" style="display:flex; justify-content:center;">
+                <button class="btn btn-primary" onclick="goDaena('band_mid')">Explore Daena — Start Here</button>
+            </div>
+        </div>
+
+        <!-- Quick Demos strip -->
+        <section class="section" style="padding:30px 0;">
+            <div class="container" style="display:flex; gap:12px; flex-wrap:wrap; align-items:center;">
+                <span class="badge">Quick Demos</span>
+                <a class="pill" href="https://daena.mas-ai.co" target="_blank">Agent Communication</a>
+                <a class="pill" href="https://daena.mas-ai.co" target="_blank">Budget Calculation</a>
+                <a class="pill" href="https://daena.mas-ai.co" target="_blank">CMP Pipeline</a>
+            </div>
+        </section>
+
+        <!-- Portfolio -->
+        <section id="portfolio" class="section">
+            <div class="container">
+                <h2>Founder Portfolio — Masoud Masoori</h2>
+                <p class="subtitle">Selected work in AI systems, multi‑agent orchestration, and enterprise automation.</p>
+                <div class="grid" style="margin-top:14px;">
+                    <a class="card" href="https://daena.mas-ai.co" target="_blank">
+                        <h3>Daena AI — VP System</h3>
+                        <p>48 agents across 8 departments. Sunflower‑Honeycomb architecture, Border‑first comms, CMP pipeline.</p>
+                    </a>
+                    <a class="card" href="https://daena.mas-ai.co" target="_blank">
+                        <h3>Interactive Demos</h3>
+                        <p>Agent Communication, Budget Calculation, CMP Pipeline, Patent Technology, Real Scenario, Voice Interaction.</p>
+                    </a>
+                    <a class="card" href="Masoud_Masoori AI-ML_Resume.docx" target="_blank">
+                        <h3>Resume</h3>
+                        <p>AI/ML engineering, multi‑agent systems, product leadership, and enterprise delivery.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Founder section -->
+        <section id="founder" class="section">
+            <div class="container founder">
+                <div class="card">
+                    <div style="display:flex; gap:14px; align-items:center;">
+                        <div class="avatar">MM</div>
+                        <div>
+                            <h2 style="margin:0 0 6px;">Masoud Masoori — Founder & Chief Architect</h2>
+                            <div class="tags">
+                                <span class="tag">Multi‑Agent Systems</span>
+                                <span class="tag">AI/ML Engineering</span>
+                                <span class="tag">Product Strategy</span>
+                                <span class="tag">Enterprise Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="margin:14px 0 0; color:var(--muted);">I design and ship AI systems that run like organizations. My focus: agent communication patterns, orchestration at scale, and measurable business outcomes.</p>
+                    <div class="cta-row" style="margin-top:14px;">
+                        <a class="btn" href="Masoud_Masoori AI-ML_Resume.docx" target="_blank">Download Resume</a>
+                        <button class="btn btn-primary" onclick="goDaena('founder_explore')">Explore Daena</button>
+                    </div>
+                </div>
+                <div class="list">
+                    <div class="card"><strong>Signature:</strong> Sunflower‑Honeycomb architecture enabling Border‑first handshakes, cross‑department truth, and Exec‑level synthesis.</div>
+                    <div class="card"><strong>Result:</strong> Voice‑synchronized demos that show timing, progress, and completion for audit‑ready clarity.</div>
+                    <div class="card"><strong>Systems:</strong> CMP content pipeline orchestration; patent‑tech analysis with 96% accuracy; reflexive memory for continuous learning.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Daena Spotlight -->
+        <section id="daena" class="section" style="padding-top:0;">
+            <div class="container">
+                <div class="daena-highlight">
+                    <div class="spotlight">
+                        <div>
+                            <span class="badge">🚀 Meet Daena AI VP</span>
+                            <h2 style="margin:8px 0 10px; color: var(--gold);">The World's First AI Vice President</h2>
+                            <p style="color: var(--muted); margin-bottom: 20px; font-size: 18px;">Daena orchestrates <strong style="color: var(--gold);">48+ specialized agents</strong> with <strong style="color: var(--cyan);">Consulate experts</strong> across 8 departments using patented Sunflower-Honeycomb architecture.</p>
+                            <div class="list">
+                                <div class="card"><strong style="color: var(--cyan);">🧠 48+ AI Agents.</strong> Each department has 6 specialized agents positioned using Fibonacci golden angle for optimal communication.</div>
+                                <div class="card"><strong style="color: var(--cyan);">👑 Consulate Experts.</strong> Top 5 domain experts per discipline co-govern with Daena for superior decision quality.</div>
+                                <div class="card"><strong style="color: var(--cyan);">🌻 Sunflower Pattern.</strong> Mathematical positioning using golden angle (137.507°) for infinite scalability without overlap.</div>
+                                <div class="card"><strong style="color: var(--cyan);">🔬 Patent Protected.</strong> Core AI VP technology with 96% accuracy and immutable blockchain audit trails.</div>
+                                <div class="card"><strong style="color: var(--cyan);">⚡ Real-time Intelligence.</strong> Multi-LLM consensus with 5 AI providers for superior decision making.</div>
+                                <div class="card"><strong style="color: var(--cyan);">🎯 Production Ready.</strong> Live system with FastAPI backend, 500+ endpoints, and comprehensive database.</div>
+                            </div>
+                            <div class="cta-row" style="margin-top:20px;">
+                                <div class="daena-cta" onclick="goDaena('spotlight_experience')">
+                                    🧠 Experience Daena AI VP — Try Live Demo
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3 style="margin:0 0 8px; color: var(--gold);">Quick Access</h3>
+                            <div class="list">
+                                <a class="pill" href="https://daena.mas-ai.co" target="_blank" onclick="goDaena('quick_pitch')">📊 Interactive Pitch Deck</a>
+                                <a class="pill" href="https://daena.mas-ai.co" target="_blank" onclick="goDaena('quick_demos')">🎬 All Live Demos</a>
+                                <a class="pill" href="https://daena.mas-ai.co" target="_blank" onclick="goDaena('quick_agent')">🤖 Agent Communication</a>
+                                <a class="pill" href="https://daena.mas-ai.co" target="_blank" onclick="goDaena('quick_budget')">💰 Budget Calculation</a>
+                                <a class="pill" href="https://daena.mas-ai.co" target="_blank" onclick="goDaena('quick_cmp')">⚡ CMP Pipeline</a>
+                                <a class="pill" href="https://daena.mas-ai.co" target="_blank" onclick="goDaena('quick_patent')">🔬 Patent Technology</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact / Request Demo -->
+        <section id="contact" class="section">
+            <div class="container">
+                <h2>Request a Demo</h2>
+                <p class="subtitle">Tell us a bit about your use case. We’ll reply with the best demo path.</p>
+                <form id="demoForm" class="card glass form" style="display:grid; grid-template-columns: 1fr 1fr; gap:12px;">
+                    <input required name="firstName" placeholder="First name" style="padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:var(--text);">
+                    <input required name="lastName" placeholder="Last name" style="padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:var(--text);">
+                    <input required type="email" name="email" placeholder="Work email" style="padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:var(--text); grid-column: span 2;">
+                    <input name="company" placeholder="Company" style="padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:var(--text);">
+                    <input name="role" placeholder="Role" style="padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:var(--text);">
+                    <textarea name="message" placeholder="What do you want to automate with Daena?" rows="4" style="padding:12px; border-radius:10px; border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.06); color:var(--text); grid-column: span 2;"></textarea>
+                    <div style="grid-column: span 2; display:flex; gap:8px;">
+                        <button type="submit" class="btn btn-primary">Send Request</button>
+                        <button type="button" class="btn" onclick="goDaena('contact_section')">Explore Daena</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Articles -->
+        <section id="articles" class="section">
+            <div class="container">
+                <h2>Articles</h2>
+                <div class="grid" style="margin-top:14px;">
+                    <a class="card" href="https://daena.mas-ai.co">
+                        <h3>Why GPT tools stall — and how Daena fixes it</h3>
+                        <p>Border‑first handshakes, department orchestration, voice‑synced demos, and CMP pipeline.</p>
+                    </a>
+                    <a class="card" href="articles/border-first-handshakes.html">
+                        <h3>Border‑first handshakes</h3>
+                        <p>Open channels first to prevent deadlocks and enable verifiable execution.</p>
+                    </a>
+                    <a class="card" href="articles/voice-synced-demos.html">
+                        <h3>Voice‑synchronized demos</h3>
+                        <p>Audit‑ready timing, progress and completion across phases.</p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container" style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+            <div>© 2025 MAS-AI. All rights reserved.</div>
+            <div style="display:flex; gap:14px; align-items:center;">
+                <a href="https://daena.mas-ai.co" target="_blank">daena.mas-ai.co</a>
+                <span>|</span>
+                <a href="mailto:masoud.masoori@mas-ai.co">masoud.masoori@mas-ai.co</a>
+                <a href="mailto:masoud.masoori@gmail.com">masoud.masoori@gmail.com</a>
+                <a href="https://www.linkedin.com/in/masoud-masoori/" target="_blank">LinkedIn</a>
+                <a href="https://github.com/Masoud-Masoori" target="_blank">GitHub</a>
+            </div>
+    </div>
+    </footer>
+
+    <!-- Sticky Explore CTA -->
+    <div class="sticky">
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+            <div style="color:var(--muted);">🧠 Ready to meet <strong style="color:var(--gold);">Daena AI VP</strong> with 48+ agents?</div>
+            <button class="btn btn-primary daena-cta" onclick="goDaena('sticky_cta')">Meet Daena Now</button>
+        </div>
+    </div>
+
+    <!-- Floating Quick Explore -->
+    <div class="fab">
+        <button class="btn btn-primary daena-cta" onclick="goDaena('fab_explore')">🧠 Meet Daena</button>
+        <button class="btn" onclick="openDemo()">📊 View Pitch Deck</button>
+    </div>
+</body>
+</html>
