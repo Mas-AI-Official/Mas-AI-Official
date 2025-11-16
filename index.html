@@ -607,6 +607,15 @@
         
         /* Responsive */
         @media (max-width: 768px) {
+            .nav {
+                padding: 0 16px;
+            }
+            
+            .nav-inner {
+                height: 60px;
+                padding: 0;
+            }
+            
             .nav-links {
                 display: none;
             }
@@ -616,59 +625,123 @@
             }
             
             .hero {
-                padding: 100px 20px 60px;
+                padding: 120px 20px 60px !important;
+                min-height: auto;
             }
             
             .hero-title {
                 font-size: 42px;
+                margin-bottom: 20px;
             }
             
             .hero-subtitle {
                 font-size: 18px;
+                margin-bottom: 24px;
             }
             
             .hero-stats {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 16px;
+                margin-top: 48px;
             }
             
             .section {
-                padding: 60px 20px;
+                padding: 60px 20px !important;
+                padding-top: 100px !important;
             }
             
             .daena-spotlight {
-                padding: 32px 24px;
+                padding: 32px 20px !important;
+                margin: 32px 0;
+            }
+            
+            .daena-title {
+                font-size: 32px;
+            }
+            
+            .daena-description {
+                font-size: 16px;
             }
             
             .daena-features {
                 grid-template-columns: 1fr;
+                gap: 16px;
             }
             
             .portfolio-grid {
                 grid-template-columns: 1fr;
+                gap: 24px;
             }
             
             .founder-content {
                 grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            
+            .founder-section {
+                padding: 32px 20px !important;
             }
             
             .hero-cta {
                 flex-direction: column;
+                gap: 12px;
             }
             
             .hero-cta .btn {
                 width: 100%;
                 justify-content: center;
             }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .section-subtitle {
+                font-size: 16px;
+            }
         }
         
         @media (max-width: 480px) {
+            .hero {
+                padding: 110px 16px 40px !important;
+            }
+            
+            .hero-title {
+                font-size: 36px;
+            }
+            
+            .hero-subtitle {
+                font-size: 16px;
+            }
+            
             .hero-stats {
                 grid-template-columns: 1fr;
+                gap: 12px;
             }
             
             .stat-value {
                 font-size: 28px;
+            }
+            
+            .section {
+                padding: 50px 16px !important;
+                padding-top: 90px !important;
+            }
+            
+            .daena-spotlight {
+                padding: 24px 16px !important;
+            }
+            
+            .daena-title {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .project-card {
+                padding: 24px;
             }
         }
         
