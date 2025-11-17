@@ -53,63 +53,14 @@
             line-height: 1.6;
         }
         
-        /* Metatron's Cube Background */
-        .metatron-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -3;
-            background: 
-                radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 70%),
-                var(--bg);
-            pointer-events: none;
-        }
-
-        /* Metatron's Cube Pattern Background Image */
-        .metatron-pattern-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            opacity: 0.2;
-            background-image: 
-                radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><circle cx="200" cy="200" r="40" fill="none" stroke="%23FFD700" stroke-width="2" opacity="0.6"/><circle cx="200" cy="120" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="280" cy="160" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="280" cy="240" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="200" cy="280" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="120" cy="240" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="120" cy="160" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><line x1="200" y1="200" x2="200" y2="120" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="280" y2="160" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="280" y2="240" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="200" y2="280" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="120" y2="240" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="120" y2="160" stroke="%23FFD700" stroke-width="1" opacity="0.4"/></svg>');
-            background-size: 600px 600px;
-            background-position: center;
-            background-repeat: repeat;
-            pointer-events: none;
-            animation: metatronRotate 60s linear infinite;
-        }
-
-        @keyframes metatronRotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        /* Hexagonal Node Network Canvas */
-        #metatron-hex-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        
-        /* Scroll-based Background Animation (kept for scroll effects) */
+        /* Scroll-based Background Animation */
         .scroll-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -4;
+            z-index: -1;
             background: var(--bg);
             transition: background 0.3s ease;
         }
@@ -547,7 +498,7 @@
         .project-title {
             font-size: 24px;
             font-weight: 700;
-                margin-bottom: 12px; 
+            margin-bottom: 12px;
             color: var(--text);
         }
         
@@ -569,7 +520,7 @@
             color: var(--gold);
             padding: 4px 12px;
             border-radius: 12px;
-                font-size: 12px; 
+            font-size: 12px;
             font-weight: 600;
         }
         
@@ -656,15 +607,6 @@
         
         /* Responsive */
         @media (max-width: 768px) {
-            .nav {
-                padding: 0 16px;
-            }
-            
-            .nav-inner {
-                height: 60px;
-                padding: 0;
-            }
-            
             .nav-links {
                 display: none;
             }
@@ -674,123 +616,59 @@
             }
             
             .hero {
-                padding: 120px 20px 60px !important;
-                min-height: auto;
+                padding: 100px 20px 60px;
             }
             
             .hero-title {
                 font-size: 42px;
-                margin-bottom: 20px;
             }
             
             .hero-subtitle {
                 font-size: 18px;
-                margin-bottom: 24px;
             }
             
             .hero-stats {
-                grid-template-columns: repeat(2, 1fr); 
-                gap: 16px; 
-                margin-top: 48px;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
             }
             
             .section {
-                padding: 60px 20px !important;
-                padding-top: 100px !important;
+                padding: 60px 20px;
             }
             
             .daena-spotlight {
-                padding: 32px 20px !important;
-                margin: 32px 0;
-            }
-            
-            .daena-title {
-                font-size: 32px;
-            }
-            
-            .daena-description {
-                font-size: 16px;
+                padding: 32px 24px;
             }
             
             .daena-features {
                 grid-template-columns: 1fr;
-            gap: 16px; 
-        }
+            }
             
             .portfolio-grid {
                 grid-template-columns: 1fr;
-                gap: 24px;
             }
             
             .founder-content {
                 grid-template-columns: 1fr;
-                gap: 32px;
-            }
-            
-            .founder-section {
-                padding: 32px 20px !important;
             }
             
             .hero-cta {
                 flex-direction: column;
-                gap: 12px;
             }
             
             .hero-cta .btn {
                 width: 100%;
                 justify-content: center;
             }
-            
-            .section-title {
-                font-size: 32px;
-            }
-            
-            .section-subtitle {
-            font-size: 16px; 
-            }
         }
         
         @media (max-width: 480px) {
-            .hero {
-                padding: 110px 16px 40px !important;
-            }
-            
-            .hero-title {
-                font-size: 36px;
-            }
-            
-            .hero-subtitle {
-                font-size: 16px;
-            }
-            
             .hero-stats {
                 grid-template-columns: 1fr;
-                gap: 12px;
             }
             
             .stat-value {
                 font-size: 28px;
-            }
-            
-            .section {
-                padding: 50px 16px !important;
-                padding-top: 90px !important;
-            }
-            
-            .daena-spotlight {
-                padding: 24px 16px !important;
-            }
-            
-            .daena-title {
-                font-size: 28px;
-            }
-            
-            .section-title {
-                font-size: 28px;
-            }
-            
-            .project-card {
-                padding: 24px;
             }
         }
         
@@ -812,10 +690,6 @@
 <body>
     <!-- Scroll Background -->
     <div class="scroll-bg scene-1" id="scrollBg"></div>
-    <!-- Metatron's Cube Background Layers -->
-    <div class="metatron-bg"></div>
-    <div class="metatron-pattern-bg"></div>
-    <canvas id="metatron-hex-canvas"></canvas>
     
     <!-- Navigation -->
     <nav class="nav" id="navbar">
@@ -862,13 +736,13 @@
                 </a>
                 <a href="#daena" class="btn btn-ghost" style="font-size: 18px; padding: 16px 32px;">
                     Learn More
-                        </a>
-                    </div>
+                </a>
+            </div>
             <div class="hero-stats">
                 <div class="stat-card">
                     <div class="stat-value">48</div>
                     <div class="stat-label">AI Agents</div>
-                    </div>
+                </div>
                 <div class="stat-card">
                     <div class="stat-value">60%+</div>
                     <div class="stat-label">Cost Savings</div>
@@ -880,11 +754,11 @@
                 <div class="stat-card">
                     <div class="stat-value">300%</div>
                     <div class="stat-label">ROI</div>
-                    </div>
                 </div>
             </div>
-        </section>
-
+        </div>
+    </section>
+    
     <!-- Daena Spotlight -->
     <section class="section" id="daena">
         <div class="daena-spotlight">
@@ -893,14 +767,9 @@
                 <h2 class="daena-title">Daena AI VP</h2>
                 <p class="daena-description">
                     Daena orchestrates <strong style="color: var(--gold);">48 specialized agents</strong> across 8 departments using revolutionary 
-                    <strong style="color: var(--cyan);">NBMF Memory</strong> (Patent Pending), <strong style="color: var(--gold);">Hex-Mesh Communication</strong> (Patent Pending), 
+                    <strong style="color: var(--cyan);">NBMF Memory</strong>, <strong style="color: var(--gold);">Hex-Mesh Communication</strong>, 
                     and <strong style="color: var(--cyan);">Trust & Governance Pipeline</strong>. Enhanced by Consulate experts for superior decision-making.
                 </p>
-                <div style="margin: 24px 0; padding: 16px; background: rgba(255,215,0,0.1); border-left: 4px solid var(--gold); border-radius: 8px;">
-                    <p style="margin: 0; color: var(--gold); font-weight: 600; font-size: 14px;">
-                        🔬 <strong>Patent Pending:</strong> Our revolutionary NBMF Memory System and Sunflower-Honeycomb Communication Architecture are patent-pending technologies, representing breakthrough innovations in AI memory management and multi-agent coordination.
-                    </p>
-                    </div>
                 <div class="daena-features">
                     <div class="daena-feature">
                         <strong>🧠 48 AI Agents</strong>
@@ -917,88 +786,25 @@
                     <div class="daena-feature">
                         <strong>🛡️ Trust & Governance</strong>
                         <p>Quarantine store, trust scoring, ledger with Merkle roots, compliance automation</p>
-                </div>
+                    </div>
                     <div class="daena-feature">
                         <strong>📡 Presence Beacons</strong>
                         <p>Real-time agent state tracking (ONLINE/BUSY/OVERLOADED/OFFLINE)</p>
-                </div>
+                    </div>
                     <div class="daena-feature">
                         <strong>🎯 Production Ready</strong>
                         <p>50+ API endpoints, 15+ CLI tools, 40+ test suites, complete CI/CD integration</p>
-            </div>
-            </div>
+                    </div>
+                </div>
                 <div class="hero-cta" style="margin-top: 32px;">
                     <a href="https://daena.mas-ai.co" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
                         Experience Daena AI VP →
                     </a>
-        </div>
                 </div>
-            </div>
-        </section>
-
-    <!-- Testimonials & Recognition Section -->
-    <section class="section" id="testimonials" style="background: rgba(255,255,255,0.02);">
-        <h2 class="section-title">Recognition & Testimonials</h2>
-        <div style="text-align: center; margin-bottom: 48px;">
-            <div style="display: inline-block; background: var(--accent); color: #0b0b14; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 18px; margin-bottom: 32px;">
-                🚀 Accepted by Google Startup Program
-                    </div>
-            <p class="section-subtitle" style="max-width: 800px; margin: 0 auto;">
-                Daena has been recognized by industry leaders and academic experts for its revolutionary approach to AI systems
-            </p>
-                    </div>
-        
-        <div class="portfolio-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
-            <div class="project-card">
-                <div class="project-icon">👨‍🏫</div>
-                <h3 class="project-title">Dr. Mohammad Mostafanejad</h3>
-                <p class="project-description">
-                    "Daena represents a paradigm shift in AI architecture. The Sunflower-Honeycomb structure and NBMF Memory System demonstrate exceptional innovation. This is exactly the kind of breakthrough technology that will define the next generation of AI systems."
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Academic Expert</span>
-                    <span class="project-tag">AI Research</span>
-                    </div>
-                        </div>
-            
-            <div class="project-card">
-                <div class="project-icon">🎓</div>
-                <h3 class="project-title">Dr. Amit Miraj</h3>
-                <p class="project-description">
-                    "The patent-pending technologies in Daena - particularly the NBMF Memory and Hex-Mesh Communication - solve critical problems that have plagued multi-agent systems. The results speak for themselves: 60%+ cost savings and 99.4% accuracy."
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Research Expert</span>
-                    <span class="project-tag">Enterprise AI</span>
-                    </div>
-                </div>
-            
-            <div class="project-card">
-                <div class="project-icon">👨‍🏫</div>
-                <h3 class="project-title">Prof. Asad Norouzi</h3>
-                <p class="project-description">
-                    "I'm genuinely excited about Daena's potential. The Self-Fulfilling Hierarchical Communication system and the way agents coordinate through the Sunflower-Honeycomb architecture is groundbreaking. This project shows exceptional promise."
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Research</span>
-                    <span class="project-tag">Innovation</span>
             </div>
         </div>
-
-            <div class="project-card">
-                <div class="project-icon">🌟</div>
-                <h3 class="project-title">Google Startup Program</h3>
-                <p class="project-description">
-                    "Daena has been accepted into the Google Startup Program, recognizing its innovative approach to AI-native business operations. We're growing rapidly and building the future of autonomous AI systems."
-                </p>
-                <div class="project-tags">
-                    <span class="project-tag">Google Startup</span>
-                    <span class="project-tag">Growing</span>
-            </div>
-                </div>
-            </div>
-        </section>
-
+    </section>
+    
     <!-- Portfolio Section -->
     <section class="section" id="portfolio">
         <h2 class="section-title">Our Portfolio</h2>
@@ -1015,8 +821,8 @@
                 <div class="project-tags">
                     <span class="project-tag">Healthcare AI</span>
                     <span class="project-tag">Medical Diagnosis</span>
-                            </div>
-                        </div>
+                </div>
+            </div>
             <div class="project-card">
                 <div class="project-icon">🌿</div>
                 <h3 class="project-title">Nature NLP</h3>
@@ -1026,8 +832,8 @@
                 <div class="project-tags">
                     <span class="project-tag">NLP</span>
                     <span class="project-tag">Environmental AI</span>
-                    </div>
-                    </div>
+                </div>
+            </div>
             <div class="project-card">
                 <div class="project-icon">🏗️</div>
                 <h3 class="project-title">Construction AI</h3>
@@ -1038,16 +844,16 @@
                     <span class="project-tag">Construction</span>
                     <span class="project-tag">Permit Analysis</span>
                 </div>
-                </div>
             </div>
-        </section>
-
+        </div>
+    </section>
+    
     <!-- Founder Section -->
     <section class="section" id="founder">
         <h2 class="section-title">Founder</h2>
         <div class="founder-section">
             <div class="founder-content">
-                        <div>
+                <div>
                     <h3>Masoud Masoori</h3>
                     <p>
                         Founder and CEO of MAS-AI, Masoud is a visionary AI/ML engineer specializing in multi-agent systems, 
@@ -1062,18 +868,18 @@
                     <a href="Masoud_Masoori AI-ML_Resume.docx" class="resume-link" download>
                         Download Resume →
                     </a>
-                            </div>
+                </div>
                 <div>
                     <h3 style="font-size: 24px; margin-bottom: 16px;">Signature Achievements</h3>
                     <div class="daena-features">
                         <div class="daena-feature">
                             <strong>🌻 Sunflower-Honeycomb Architecture</strong>
                             <p>Border-first handshakes, cross-department truth, and Exec-level synthesis</p>
-                                </div>
+                        </div>
                         <div class="daena-feature">
                             <strong>⚡ Voice-Synchronized Demos</strong>
                             <p>Audit-ready timing, progress and completion across phases</p>
-                            </div>
+                        </div>
                         <div class="daena-feature">
                             <strong>🔬 Patent Technology</strong>
                             <p>CMP content pipeline orchestration with 96% accuracy</p>
@@ -1081,13 +887,13 @@
                         <div class="daena-feature">
                             <strong>🧠 Reflexive Memory</strong>
                             <p>Continuous learning system for autonomous business intelligence</p>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-
+        </div>
+    </section>
+    
     <!-- Contact Section -->
     <section class="section" id="contact">
         <h2 class="section-title">Get In Touch</h2>
@@ -1098,7 +904,7 @@
             <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
                 Contact Us
             </a>
-            </div>
+        </div>
     </section>
     
     <!-- Footer -->
@@ -1113,7 +919,7 @@
             <div class="footer-copyright">
                 © 2025 MAS-AI. All rights reserved.
             </div>
-            </div>
+        </div>
     </footer>
     
     <script>
@@ -1191,8 +997,6 @@
             });
         });
     </script>
-    <!-- Metatron Hexagonal Node Network -->
-    <script src="metatron-hex-network.js"></script>
 </body>
 </html>
 
