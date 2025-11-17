@@ -51,6 +51,20 @@
             color: var(--text);
             overflow-x: hidden;
             line-height: 1.6;
+            position: relative;
+        }
+        
+        /* Cover whole site with consistent background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -5;
+            pointer-events: none;
         }
         
         /* Metatron's Cube Background */
@@ -62,7 +76,7 @@
             height: 100%;
             z-index: -3;
             background: 
-                radial-gradient(ellipse at center, rgba(255, 215, 0, 0.2) 0%, transparent 70%),
+                radial-gradient(ellipse at center, rgba(255, 215, 0, 0.05) 0%, transparent 70%),
                 var(--bg);
             pointer-events: none;
         }
@@ -75,9 +89,9 @@
             width: 100%;
             height: 100%;
             z-index: -2;
-            opacity: 0.5;
+            opacity: 0.3;
             background-image: 
-                radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(255, 215, 0, 0.15) 0%, transparent 50%),
                 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><circle cx="200" cy="200" r="40" fill="none" stroke="%23FFD700" stroke-width="2" opacity="0.6"/><circle cx="200" cy="120" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="280" cy="160" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="280" cy="240" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="200" cy="280" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="120" cy="240" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><circle cx="120" cy="160" r="30" fill="none" stroke="%23FFD700" stroke-width="1.5" opacity="0.5"/><line x1="200" y1="200" x2="200" y2="120" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="280" y2="160" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="280" y2="240" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="200" y2="280" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="120" y2="240" stroke="%23FFD700" stroke-width="1" opacity="0.4"/><line x1="200" y1="200" x2="120" y2="160" stroke="%23FFD700" stroke-width="1" opacity="0.4"/></svg>');
             background-size: 600px 600px;
             background-position: center;

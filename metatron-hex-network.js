@@ -156,7 +156,7 @@ class MetatronHexNetwork {
         // Draw Metatron's Cube pattern in background
         const ctx = this.ctx;
         ctx.save();
-        ctx.globalAlpha = 0.5;
+        ctx.globalAlpha = 0.3;
         
         // Draw circles (13 circles pattern)
         const circles = [
