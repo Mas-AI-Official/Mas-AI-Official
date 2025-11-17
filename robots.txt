@@ -1,7 +1,15 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*?*utm_*
+
+# Crawl-delay
+Crawl-delay: 1
 
 # Sitemaps
 Sitemap: https://mas-ai.co/sitemap.xml
+Sitemap: https://daena.mas-ai.co/sitemap.xml
 
 
