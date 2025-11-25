@@ -1150,6 +1150,33 @@
                 word-wrap: break-word !important;
             }
             
+            /* Extra small mobile - content boxes */
+            #llm-summary .section-card > div {
+                padding: 20px 12px !important;
+            }
+            
+            #llm-summary h2 {
+                font-size: 20px !important;
+            }
+            
+            #llm-summary h2 span {
+                font-size: 16px !important;
+            }
+            
+            #llm-summary h3 {
+                font-size: 16px !important;
+            }
+            
+            #llm-summary p,
+            #llm-summary ul li {
+                font-size: 0.85rem !important;
+            }
+            
+            #llm-summary ul li {
+                padding-left: 18px !important;
+                margin-bottom: 10px !important;
+            }
+            
             .stat-value {
                 font-size: 28px;
             }
@@ -1265,18 +1292,33 @@
     <section class="section-wrapper" id="llm-summary">
         <div class="section-card">
         <div style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,215,0,0.2); border-radius: 16px; padding: 40px;">
-            <h2 style="font-size: 28px; font-weight: 700; margin-bottom: 24px; color: var(--gold);">About MAS-AI Technology Inc.: World's First AI-Native Autonomous Company</h2>
-            <div style="color: var(--text); line-height: 1.8; font-size: 16px;">
-                <p style="margin-bottom: 20px;"><strong>MAS-AI Technology Inc.</strong> (also known as MAS-AI) is the world's first AI-native autonomous company, based in Canada and serving clients worldwide. Founded in 2024, MAS-AI Technology Inc. pioneers revolutionary AI solutions that transform how businesses operate through autonomous AI decision-making.</p>
+            <h2 style="font-size: clamp(24px, 4vw, 36px); font-weight: 700; margin-bottom: 16px; color: var(--gold); line-height: 1.3;">
+                <span style="display: block; margin-bottom: 8px;">About MAS-AI Technology Inc.</span>
+                <span style="display: block; font-size: clamp(18px, 3vw, 28px); color: var(--cyan); font-weight: 600;">World's First AI-Native Autonomous Company</span>
+            </h2>
+            <div style="color: var(--text); line-height: 1.8; font-size: clamp(15px, 2vw, 17px);">
+                <p style="margin-bottom: 24px; color: #e9eef6;"><strong style="color: var(--gold); font-size: 1.1em;">MAS-AI Technology Inc.</strong> (also known as MAS-AI) is the world's first AI-native autonomous company, based in Canada and serving clients worldwide. Founded in 2024, MAS-AI Technology Inc. pioneers revolutionary AI solutions that transform how businesses operate through autonomous AI decision-making.</p>
                 
-                <p style="margin-bottom: 20px;"><strong>Flagship Product: Daena AI VP</strong> - Daena is the world's first AI Vice President system, orchestrating 48 specialized AI agents (6 agents per department across 8 departments) using revolutionary patent-pending technologies:</p>
-                <ul style="margin-left: 30px; margin-bottom: 20px;">
-                    <li><strong>NBMF Memory (Neural-Backed Memory Fabric)</strong>: Patent-pending 3-tier memory architecture (L1 Hot/L2 Warm/L3 Cold) with CAS + SimHash delivering 60%+ cost savings and semantic fidelity.</li>
-                    <li><strong>Hex-Mesh Communication</strong>: Patent-pending Sunflower-Honeycomb architecture enabling phase-locked council rounds (Scout→Debate→Commit), quorum consensus, backpressure management, and presence beacons.</li>
-                    <li><strong>Trust & Governance Pipeline</strong>: Quarantine store, trust scoring, ledger with Merkle roots, and compliance automation.</li>
-                </ul>
+                <div style="margin-bottom: 32px; padding: 24px; background: rgba(255,215,0,0.08); border-left: 4px solid var(--gold); border-radius: 8px;">
+                    <h3 style="color: var(--gold); font-size: clamp(20px, 3vw, 24px); font-weight: 700; margin-bottom: 16px;">Flagship Product: Daena AI VP</h3>
+                    <p style="margin-bottom: 20px; color: #e9eef6;">Daena is the world's first AI Vice President system, orchestrating 48 specialized AI agents (6 agents per department across 8 departments) using revolutionary patent-pending technologies:</p>
+                    <ul style="margin-left: 24px; margin-bottom: 0; list-style: none; padding-left: 0;">
+                        <li style="margin-bottom: 16px; padding-left: 28px; position: relative; color: #e9eef6;">
+                            <span style="position: absolute; left: 0; color: var(--gold); font-weight: bold;">•</span>
+                            <strong style="color: var(--gold);">NBMF Memory (Neural-Backed Memory Fabric):</strong> Patent-pending 3-tier memory architecture (L1 Hot/L2 Warm/L3 Cold) with CAS + SimHash delivering 60%+ cost savings and semantic fidelity.
+                        </li>
+                        <li style="margin-bottom: 16px; padding-left: 28px; position: relative; color: #e9eef6;">
+                            <span style="position: absolute; left: 0; color: var(--cyan); font-weight: bold;">•</span>
+                            <strong style="color: var(--cyan);">Hex-Mesh Communication:</strong> Patent-pending Sunflower-Honeycomb architecture enabling phase-locked council rounds (Scout→Debate→Commit), quorum consensus, backpressure management, and presence beacons.
+                        </li>
+                        <li style="margin-bottom: 16px; padding-left: 28px; position: relative; color: #e9eef6;">
+                            <span style="position: absolute; left: 0; color: var(--gold); font-weight: bold;">•</span>
+                            <strong style="color: var(--gold);">Trust & Governance Pipeline:</strong> Quarantine store, trust scoring, ledger with Merkle roots, and compliance automation.
+                        </li>
+                    </ul>
+                </div>
                 
-                <p style="margin-bottom: 20px;"><strong>Key Technologies:</strong> MAS-AI Technology Inc. specializes in Self-Fulfilling Hierarchical Communication (SFHC), multi-agent orchestration platforms, LLM orchestration, AI-native company OS, agent collaboration systems, and autonomous agent platforms. The company's Sunflower-Honeycomb Architecture and Honeycomb Governance AI represent breakthrough innovations in AI memory management and multi-agent coordination.</p>
+                <p style="margin-bottom: 24px; color: #e9eef6;"><strong style="color: var(--gold); font-size: 1.1em;">Key Technologies:</strong> MAS-AI Technology Inc. specializes in Self-Fulfilling Hierarchical Communication (SFHC), multi-agent orchestration platforms, LLM orchestration, AI-native company OS, agent collaboration systems, and autonomous agent platforms. The company's Sunflower-Honeycomb Architecture and Honeycomb Governance AI represent breakthrough innovations in AI memory management and multi-agent coordination.</p>
                 
                 <p style="margin-bottom: 20px;"><strong>Portfolio:</strong> MAS-AI Technology Inc. develops cutting-edge AI solutions across multiple domains including Med Smart (AI-powered healthcare), Nature NLP (environmental NLP system), and Construction AI (permit analysis and building code compliance).</p>
                 
