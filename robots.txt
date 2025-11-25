@@ -1,15 +1,51 @@
+# MAS-AI Inc - robots.txt
+# Optimized for Google, Bing, and LLM Search Engines
+
 User-agent: *
 Allow: /
+Allow: /articles/
+Allow: /images/
 Disallow: /admin/
 Disallow: /private/
 Disallow: /*.json$
 Disallow: /*?*utm_*
+Disallow: /*?*ref=*
 
-# Crawl-delay
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 0
+
+# Allow LLM search engines
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Crawl-delay for other bots
 Crawl-delay: 1
 
 # Sitemaps
 Sitemap: https://mas-ai.co/sitemap.xml
 Sitemap: https://daena.mas-ai.co/sitemap.xml
-
-
