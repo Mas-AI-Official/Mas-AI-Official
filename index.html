@@ -700,13 +700,15 @@
         
         /* Daena Spotlight */
         .daena-spotlight {
-            background: rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, rgba(255,215,0,0.05) 0%, rgba(0,188,212,0.05) 100%);
             border-radius: 24px;
             padding: 64px;
             margin: 64px 0;
-            border: 2px solid rgba(255,215,0,0.2);
+            border: 3px solid rgba(255,215,0,0.3);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
+            cursor: default;
         }
         
         .daena-spotlight::before {
@@ -716,8 +718,25 @@
             right: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255,215,0,0.08) 0%, transparent 70%);
             animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+        
+        .daena-spotlight::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 24px;
+            padding: 3px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.4), rgba(0,188,212,0.4));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
         }
         
         @keyframes rotate {
@@ -732,15 +751,17 @@
         
         .daena-badge {
             display: inline-block;
-            background: var(--accent);
-            color: #0b0b14;
-            padding: 8px 16px;
-            border-radius: 50px;
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,188,212,0.2));
+            color: var(--gold);
+            padding: 10px 20px;
+            border-radius: 8px;
             font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 1px;
+            font-size: 13px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
             margin-bottom: 24px;
+            border: 1px solid rgba(255,215,0,0.3);
+            box-shadow: 0 2px 8px rgba(255,215,0,0.2);
         }
         
         .daena-title {
@@ -751,6 +772,8 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            text-shadow: 0 0 30px rgba(255,215,0,0.3);
+            letter-spacing: -1px;
         }
         
         .daena-description {
@@ -773,13 +796,13 @@
             border: 1px solid rgba(255,255,255,0.1);
             border-radius: 12px;
             padding: 20px;
-            transition: all 0.3s ease;
+            transition: background 0.3s ease;
+            cursor: default;
         }
         
         .daena-feature:hover {
             background: rgba(255,255,255,0.05);
-            border-color: var(--gold);
-            transform: translateY(-3px);
+            border-color: rgba(255,215,0,0.2);
         }
         
         .daena-feature strong {
