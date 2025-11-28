@@ -1138,6 +1138,12 @@
                 padding: 2rem 0.25rem !important;
             }
             
+            /* Patent Section - Mobile Layout */
+            [style*="grid-template-columns: repeat(auto-fit, minmax(400px"] {
+                grid-template-columns: 1fr !important;
+                gap: 1.5rem !important;
+            }
+            
             /* Google Startup Program card mobile */
             #testimonials > div > div:last-child {
                 max-width: 100% !important;
@@ -1352,11 +1358,68 @@
                     <strong style="color: var(--cyan);">NBMF Memory</strong> (Patent Pending), <strong style="color: var(--gold);">Hex-Mesh Communication</strong> (Patent Pending), 
                     and <strong style="color: var(--cyan);">Trust & Governance Pipeline</strong>. Enhanced by Consulate experts for superior decision-making.
                 </p>
-                <div style="margin: 24px 0; padding: 16px; background: rgba(255,215,0,0.1); border-left: 4px solid var(--gold); border-radius: 8px;">
-                    <p style="margin: 0; color: var(--gold); font-weight: 600; font-size: 14px;">
-                        🔬 <strong>Patent Pending:</strong> Our revolutionary NBMF Memory System and Sunflower-Honeycomb Communication Architecture are patent-pending technologies, representing breakthrough innovations in AI memory management and multi-agent coordination.
-                    </p>
+                <!-- Patent-Pending Technologies Section - Matching Daena Style -->
+                <div style="margin: 32px 0;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <span style="display: inline-block; background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,188,212,0.2)); color: var(--gold); padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid rgba(255,215,0,0.3); margin-bottom: 24px;">
+                            🔬 PATENT-PENDING TECHNOLOGIES
+                        </span>
                     </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                        <!-- Patent 1: NBMF Memory System -->
+                        <div style="padding: 2rem; background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(255,215,0,0.05)); border-radius: 20px; border: 2px solid rgba(255,215,0,0.4); box-shadow: 0 10px 30px rgba(255,215,0,0.2);">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="font-size: 2.5rem;">🧠</div>
+                                <div>
+                                    <div style="background: rgba(255,215,0,0.2); color: var(--gold); padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.5rem;">
+                                        PATENT-PENDING
+                                    </div>
+                                    <h4 style="color: var(--gold); font-size: 1.5rem; margin: 0;">NBMF Memory System</h4>
+                                    <p style="color: #B8BCC8; font-size: 0.9rem; margin: 0.25rem 0 0 0;">Neural-Backed Memory Fabric</p>
+                                </div>
+                            </div>
+                            <p style="color: #E6E8EA; line-height: 1.7; margin-bottom: 1rem;">
+                                Revolutionary 3-tier memory architecture (L1 Hot / L2 Warm / L3 Cold) with CAS + SimHash technology delivering <strong style="color: var(--cyan);">60%+ cost savings</strong> while maintaining <strong style="color: var(--gold);">99.4% accuracy</strong>.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: #E6E8EA;">
+                                <li style="margin-bottom: 0.5rem;">✅ Intelligent memory compression</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Semantic fidelity preservation</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Scalable cost optimization</li>
+                                <li>✅ Enterprise-grade reliability</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Patent 2: Sunflower-Honeycomb Architecture -->
+                        <div style="padding: 2rem; background: linear-gradient(135deg, rgba(0,188,212,0.15), rgba(0,188,212,0.05)); border-radius: 20px; border: 2px solid rgba(0,188,212,0.4); box-shadow: 0 10px 30px rgba(0,188,212,0.2);">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                                <div style="font-size: 2.5rem;">🏗️</div>
+                                <div>
+                                    <div style="background: rgba(0,188,212,0.2); color: var(--cyan); padding: 4px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.5rem;">
+                                        PATENT-PENDING
+                                    </div>
+                                    <h4 style="color: var(--cyan); font-size: 1.5rem; margin: 0;">Sunflower-Honeycomb Architecture</h4>
+                                    <p style="color: #B8BCC8; font-size: 0.9rem; margin: 0.25rem 0 0 0;">Hex-Mesh Communication System</p>
+                                </div>
+                            </div>
+                            <p style="color: #E6E8EA; line-height: 1.7; margin-bottom: 1rem;">
+                                Biomimetic organizational architecture using Fibonacci golden angle (137.507°) for optimal agent positioning and <strong style="color: var(--cyan);">O(log n) communication efficiency</strong> with infinite scalability.
+                            </p>
+                            <ul style="list-style: none; padding: 0; margin: 0; color: #E6E8EA;">
+                                <li style="margin-bottom: 0.5rem;">✅ Self-organizing agent network</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Phase-locked council rounds</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Quorum consensus mechanism</li>
+                                <li>✅ Backpressure management</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255,215,0,0.1); border-left: 4px solid var(--gold); border-radius: 12px; padding: 1.5rem; text-align: center;">
+                        <p style="color: #E6E8EA; font-size: 1.1rem; margin: 0; line-height: 1.7;">
+                            Both technologies represent breakthrough innovations in AI memory management and multi-agent coordination, providing Daena with a <strong style="color: var(--gold);">significant competitive moat</strong> and <strong style="color: var(--cyan);">patent protection</strong> as we scale.
+                        </p>
+                    </div>
+                </div>
                 <div class="daena-features">
                     <div class="daena-feature">
                         <strong>🧠 48 AI Agents</strong>
