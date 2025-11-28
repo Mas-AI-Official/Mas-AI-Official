@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
     <title>MAS-AI Technology Inc. | World's First AI-Native Autonomous Company | Daena AI VP</title>
     <meta name="description" content="MAS-AI Inc is the world's first AI-native autonomous company, pioneering revolutionary AI solutions including Daena AI VP - the world's first AI Vice President system with 48 specialized agents (6×8), patent-pending NBMF Memory, and Hex-Mesh Communication. Transform your business with autonomous AI decision-making. Explore our portfolio: Med Smart, Nature NLP, Construction AI. Accepted by Google Startup Program. Based in Canada.">
     <meta name="keywords" content="MAS-AI, MAS AI, MAS-AI Inc, MAS AI company, MAS-AI Canada, Daena AI, Daena multi-agent system, AI VP system, Sunflower Architecture AI, Honeycomb Governance AI, Multi-agent orchestration platform, LLM orchestration, AI-native company OS, Agent collaboration system, AI CEO, AI VP systems, Autonomous agent platforms, artificial intelligence VP, autonomous company, AI-native company, 48 AI agents, NBMF Memory, Hex-Mesh Communication, patent pending AI, Med Smart, Nature NLP, Construction AI, AI portfolio, multi-agent systems, SFHC, Self-Fulfilling Hierarchical Communication, business intelligence AI, enterprise AI, autonomous decision making, AI governance, trust pipeline, Consulate agents, Google Startup Program, AI innovation, neural memory fabric, sunflower honeycomb architecture">
@@ -1231,15 +1231,86 @@
         
         /* Cross-browser compatibility */
         @supports not (backdrop-filter: blur(20px)) {
-            .nav, .stat-card, .project-card {
-                background: rgba(11,11,20,0.95);
+            .nav, .stat-card, .project-card, .section-card, .daena-spotlight {
+                background: rgba(11,11,20,0.95) !important;
             }
         }
         
-        /* Smooth scroll for Safari */
+        /* Smooth scroll for all browsers */
         @media (prefers-reduced-motion: no-preference) {
             html {
                 scroll-behavior: smooth;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+        
+        /* iOS Safari specific fixes */
+        @supports (-webkit-touch-callout: none) {
+            .section-card, .daena-spotlight {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            
+            input, textarea, select, button {
+                font-size: 16px !important; /* Prevents zoom on iOS */
+            }
+        }
+        
+        /* Touch-friendly elements */
+        @media (hover: none) and (pointer: coarse) {
+            .btn, a, button, .mobile-menu-toggle {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 24px;
+            }
+            
+            .daena-feature, .project-card {
+                cursor: pointer;
+            }
+        }
+        
+        /* Firefox specific fixes */
+        @-moz-document url-prefix() {
+            .section-card, .daena-spotlight {
+                background: rgba(11,11,20,0.9);
+            }
+        }
+        
+        /* Edge/IE fallbacks */
+        @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+            .section-card, .daena-spotlight {
+                background: rgba(11,11,20,0.95);
+            }
+            
+            .daena-features {
+                display: -ms-grid;
+                -ms-grid-columns: 1fr 1fr 1fr;
+            }
+        }
+        
+        /* Additional mobile breakpoints */
+        @media (max-width: 360px) {
+            .hero-title {
+                font-size: 28px !important;
+            }
+            
+            .section-card {
+                padding: 1rem 0.5rem !important;
+            }
+            
+            .btn {
+                font-size: 0.9rem !important;
+                padding: 10px 16px !important;
+            }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .section-card {
+                padding: 2.5rem 1.5rem;
+            }
+            
+            .daena-features {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
