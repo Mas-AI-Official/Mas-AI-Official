@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>MAS-AI Technology Inc. | AI-Native Autonomous Company | Daena AI VP</title>
     <meta name="description" content="MAS-AI Inc is an AI-native autonomous company, pioneering revolutionary AI solutions including Daena AI VP - a unique AI Vice President system with 48+ specialized agents (6×8), patent-pending Memory & Governance Engine (NBMF + Enterprise-DNA), and Hex-Mesh Communication. Transform your business with autonomous AI decision-making. Explore our portfolio: Med Smart, Nature NLP, Construction AI. Accepted by Google Startup Program. Based in Canada.">
     <meta name="keywords" content="MAS-AI, MAS AI, MAS-AI Inc, MAS AI company, MAS-AI Canada, Daena AI, Daena multi-agent system, AI VP system, Sunflower Architecture AI, Honeycomb Governance AI, Multi-agent orchestration platform, LLM orchestration, AI-native company OS, Agent collaboration system, AI CEO, AI VP systems, Autonomous agent platforms, artificial intelligence VP, autonomous company, AI-native company, 48+ AI agents, NBMF Memory, Enterprise-DNA, Genome, Epigenome, Lineage, Immune system, Hex-Mesh Communication, patent pending AI, Med Smart, Nature NLP, Construction AI, AI portfolio, multi-agent systems, SFHC, Self-Fulfilling Hierarchical Communication, business intelligence AI, enterprise AI, autonomous decision making, AI governance, trust pipeline, Consulate agents, Google Startup Program, AI innovation, neural memory fabric, sunflower honeycomb architecture, Merkle-notarized lineage, prompt injection detection">
@@ -1287,6 +1287,81 @@
             .daena-features {
                 display: -ms-grid;
                 -ms-grid-columns: 1fr 1fr 1fr;
+            }
+        }
+        
+        /* Global mobile text wrapping fixes - prevent cross icon issue */
+        * {
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+        }
+        
+        body {
+            overflow-x: hidden;
+            word-wrap: break-word;
+            word-break: normal;
+            overflow-wrap: anywhere;
+        }
+        
+        /* Prevent writing-mode for body copy */
+        body, p, span, div, li, td, th, h1, h2, h3, h4, h5, h6 {
+            writing-mode: horizontal-tb !important;
+        }
+        
+        /* Ensure all text containers wrap properly */
+        p, span, div, li, td, th {
+            word-wrap: break-word;
+            overflow-wrap: anywhere;
+            word-break: normal;
+            hyphens: none !important;
+            max-width: 100%;
+            white-space: normal !important;
+        }
+        
+        /* Fix line break rendering on mobile - prevent cross icon */
+        @media (max-width: 768px) {
+            br {
+                display: block;
+                margin: 0;
+                padding: 0;
+                line-height: 0.5em;
+                height: 0.5em;
+            }
+            
+            /* Ensure text flows naturally without visible break characters */
+            p, span, div, li, td, th {
+                white-space: normal !important;
+                word-wrap: break-word !important;
+                overflow-wrap: anywhere !important;
+            }
+            
+            /* Remove any pseudo-elements that might show line break indicators */
+            *::before,
+            *::after {
+                content: none !important;
+            }
+            
+            /* Hide any special characters that might show as cross icons */
+            * {
+                font-variant-ligatures: none !important;
+                text-rendering: optimizeLegibility !important;
+            }
+            
+            /* Ensure no invisible characters show */
+            p::before, p::after,
+            span::before, span::after,
+            div::before, div::after,
+            li::before, li::after {
+                content: none !important;
+                display: none !important;
+            }
+            
+            /* Fix any zero-width characters or special Unicode */
+            * {
+                unicode-bidi: normal !important;
+                direction: ltr !important;
             }
         }
         
