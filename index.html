@@ -718,6 +718,22 @@
             box-sizing: border-box;
         }
         
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 8, 15, 0.85);
+            z-index: 0;
+        }
+        
+        .section > * {
+            position: relative;
+            z-index: 1;
+        }
+        
         /* Glassmorphism Section Card - unified styling for all content containers */
         .section-card {
             background: var(--glass-card-bg);
@@ -1351,6 +1367,22 @@
                 background: rgba(5, 8, 15, 0.9);
             }
             
+            .section::before {
+                background: rgba(5, 8, 15, 0.9);
+            }
+            
+            /* Daena metrics grid mobile */
+            [style*="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))"] {
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 0.75rem !important;
+            }
+            
+            /* Patent cards mobile */
+            [style*="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"] {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
             /* Patent Section - Mobile Layout */
             [style*="grid-template-columns: repeat(auto-fit, minmax(400px"] {
                 grid-template-columns: 1fr !important;
@@ -1750,141 +1782,124 @@
     </section>
 
     <!-- Daena Spotlight -->
-    <section class="section" id="daena">
+    <section class="section-wrapper" id="daena">
         <div class="daena-spotlight">
             <div class="daena-content">
                 <span class="daena-badge">🚀 Flagship Product</span>
                 <h2 class="daena-title">Daena – your AI-native VP</h2>
-                <p class="daena-description" style="margin-bottom: 2rem;">
-                    Daena acts like a virtual VP that never sleeps. It coordinates multiple AI agents across finance, operations, growth, product, and more. Each agent specializes in one role; Daena orchestrates them to plan, execute, and learn from every interaction.
-                    <br><br>
-                    Powered by <strong style="color: var(--gold);">48+ specialized agents</strong> across 8 departments using revolutionary 
-                    <strong style="color: var(--cyan);">Memory & Governance Engine</strong> (NBMF + Enterprise-DNA), <strong style="color: var(--gold);">Hex-Mesh Communication</strong> (Patent Pending),
-                    <strong style="color: var(--cyan);">Multi-Device Support</strong> (CPU/GPU/TPU), 
-                    and <strong style="color: var(--gold);">Trust & Governance Pipeline</strong>.
-                    <br><br>
-                    <a href="https://daena.mas-ai.co/#memory-governance" style="color: var(--cyan); text-decoration: underline; font-weight: 600;">Learn more about Memory & Governance Engine →</a>
+                <p class="daena-description" style="margin-bottom: 2.5rem; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;">
+                    Your virtual VP that coordinates AI agents across departments. Plans, executes, and learns continuously.
                 </p>
+                
+                <!-- Key Metrics with Visual Bars -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+                    <div style="text-align: center; padding: 1.5rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3);">
+                        <div style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--gold); margin-bottom: 0.5rem;">48</div>
+                        <div style="color: #e9eef6; font-size: 14px; font-weight: 600;">AI Agents</div>
+                        <div style="margin-top: 0.75rem; height: 6px; background: rgba(255,215,0,0.2); border-radius: 3px; overflow: hidden;">
+                            <div style="height: 100%; width: 100%; background: linear-gradient(90deg, var(--gold), #ffed4e);"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3);">
+                        <div style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--cyan); margin-bottom: 0.5rem;">94.3%</div>
+                        <div style="color: #e9eef6; font-size: 14px; font-weight: 600;">Storage Savings</div>
+                        <div style="margin-top: 0.75rem; height: 6px; background: rgba(0,188,212,0.2); border-radius: 3px; overflow: hidden;">
+                            <div style="height: 100%; width: 94.3%; background: linear-gradient(90deg, var(--cyan), #4dd0e1);"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3);">
+                        <div style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--gold); margin-bottom: 0.5rem;">128×</div>
+                        <div style="color: #e9eef6; font-size: 14px; font-weight: 600;">TPU Speed</div>
+                        <div style="margin-top: 0.75rem; height: 6px; background: rgba(255,215,0,0.2); border-radius: 3px; overflow: hidden;">
+                            <div style="height: 100%; width: 100%; background: linear-gradient(90deg, var(--gold), #ffed4e);"></div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; padding: 1.5rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3);">
+                        <div style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--cyan); margin-bottom: 0.5rem;">60%+</div>
+                        <div style="color: #e9eef6; font-size: 14px; font-weight: 600;">Cost Savings</div>
+                        <div style="margin-top: 0.75rem; height: 6px; background: rgba(0,188,212,0.2); border-radius: 3px; overflow: hidden;">
+                            <div style="height: 100%; width: 60%; background: linear-gradient(90deg, var(--cyan), #4dd0e1);"></div>
+                        </div>
+                    </div>
+                </div>
                 
                 <!-- Patent-Pending Technologies Section -->
                 <div style="margin: 0 0 2rem 0;">
-                    <div style="text-align: center; margin-bottom: 1.5rem;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
                         <span style="display: inline-block; background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(0,188,212,0.2)); color: var(--gold); padding: 10px 20px; border-radius: 8px; font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; border: 1px solid rgba(255,215,0,0.3);">
                             🔬 PATENT-PENDING TECHNOLOGIES
                         </span>
                     </div>
                     
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
                         <!-- Patent 1: Memory & Governance Engine -->
-                        <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(139,92,246,0.1), rgba(0,188,212,0.05)); border-radius: 16px; border: 2px solid rgba(255,215,0,0.4); box-shadow: 0 8px 25px rgba(255,215,0,0.2);">
-                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                <div style="font-size: 2rem;">🧠🧬</div>
-                                <div>
-                                    <div style="background: rgba(255,215,0,0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.4rem;">
-                                        PATENT-PENDING
-                                    </div>
-                                    <h4 style="color: var(--gold); font-size: 1.3rem; margin: 0;">Memory & Governance Engine</h4>
-                                    <p style="color: #B8BCC8; font-size: 0.85rem; margin: 0.2rem 0 0 0;">NBMF + Enterprise-DNA Unified</p>
-                                </div>
+                        <div style="padding: 1.5rem; background: rgba(255,215,0,0.1); border-radius: 16px; border: 1px solid rgba(255,215,0,0.3);">
+                            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🧠🧬</div>
+                            <div style="background: rgba(255,215,0,0.2); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.75rem;">
+                                PATENT-PENDING
                             </div>
-                            <p style="color: #E6E8EA; line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem;">
-                                Revolutionary <strong style="color: var(--gold);">3-tier memory architecture</strong> (L1 Hot / L2 Warm / L3 Cold) with <strong style="color: var(--cyan);">CAS + SimHash technology</strong> delivering <strong style="color: var(--gold);">94.3% storage savings<sup style="color: #B8BCC8; font-size: 0.7em;">†</sup></strong> (lossless) while maintaining <strong style="color: var(--cyan);">100% exact match<sup style="color: #B8BCC8; font-size: 0.7em;">†</sup></strong> (lossless) or <strong style="color: var(--cyan);">95.28% similarity<sup style="color: #B8BCC8; font-size: 0.7em;">†</sup></strong> (semantic). Enhanced with <strong style="color: #8b5cf6;">Enterprise-DNA governance</strong> (Genome, Epigenome, Lineage, Immune) for <strong style="color: #9333ea;">complete auditability</strong> and <strong style="color: #8b5cf6;">automatic threat detection</strong>. Optimized for <strong style="color: var(--gold);">CPU, GPU, and TPU/Google TPUs</strong> acceleration.
-                            </p>
-                            <ul style="list-style: none; padding: 0; margin: 0; color: #E6E8EA; font-size: 0.9rem;">
-                                <li style="margin-bottom: 0.4rem;">✅ <strong style="color: var(--gold);">94.3% storage savings<sup style="color: #B8BCC8; font-size: 0.7em;">†</sup></strong> (lossless mode)</li>
-                                <li style="margin-bottom: 0.4rem;">✅ <strong style="color: var(--cyan);">Merkle-notarized lineage</strong> for audit trails</li>
-                                <li style="margin-bottom: 0.4rem;">✅ <strong style="color: #8b5cf6;">Automatic threat detection</strong> & response</li>
-                                <li style="margin-bottom: 0.4rem;">✅ <strong style="color: var(--gold);">Multi-device hardware acceleration</strong> (CPU/GPU/TPU/Google TPUs)</li>
-                                <li style="font-size: 0.85em; color: #B8BCC8; margin-top: 8px;"><sup>†</sup> Internal benchmarks. See <a href="https://daena.mas-ai.co/nbmf#benchmarks" style="color: var(--cyan); text-decoration: underline;">benchmarks</a> for details.</li>
+                            <h4 style="color: var(--gold); font-size: 1.2rem; margin: 0 0 0.5rem 0; font-weight: 700;">Memory & Governance</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0.75rem 0 0 0; color: #e9eef6; font-size: 0.9rem;">
+                                <li style="margin-bottom: 0.5rem;">✅ 94.3% storage savings</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Merkle-notarized lineage</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Auto threat detection</li>
+                                <li>✅ CPU/GPU/TPU support</li>
                             </ul>
-                            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid rgba(255,215,0,0.3);">
-                                <a href="https://daena.mas-ai.co/#memory-governance" style="color: var(--gold); text-decoration: underline; font-size: 0.9rem; font-weight: 600;">Learn more →</a>
-                            </div>
                         </div>
                         
                         <!-- Patent 2: Sunflower-Honeycomb Architecture -->
-                        <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(0,188,212,0.15), rgba(0,188,212,0.05)); border-radius: 16px; border: 2px solid rgba(0,188,212,0.4); box-shadow: 0 8px 25px rgba(0,188,212,0.2);">
-                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                <div style="font-size: 2rem;">🏗️</div>
-                                <div>
-                                    <div style="background: rgba(0,188,212,0.2); color: var(--cyan); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.4rem;">
-                                        PATENT-PENDING
-                                    </div>
-                                    <h4 style="color: var(--cyan); font-size: 1.3rem; margin: 0;">Sunflower-Honeycomb Architecture</h4>
-                                    <p style="color: #B8BCC8; font-size: 0.85rem; margin: 0.2rem 0 0 0;">Hex-Mesh Communication System</p>
-                                </div>
+                        <div style="padding: 1.5rem; background: rgba(0,188,212,0.1); border-radius: 16px; border: 1px solid rgba(0,188,212,0.3);">
+                            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🏗️</div>
+                            <div style="background: rgba(0,188,212,0.2); color: var(--cyan); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.75rem;">
+                                PATENT-PENDING
                             </div>
-                            <p style="color: #E6E8EA; line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem;">
-                                Biomimetic organizational architecture using <strong style="color: var(--cyan);">Fibonacci golden angle</strong> (137.507°) for <strong style="color: var(--gold);">optimal agent positioning</strong> and <strong style="color: var(--cyan);">O(log n) communication efficiency</strong> with <strong style="color: var(--gold);">infinite scalability</strong>. Enhanced with <strong style="color: var(--cyan);">hardware-optimized routing</strong>.
-                            </p>
-                            <ul style="list-style: none; padding: 0; margin: 0; color: #E6E8EA; font-size: 0.9rem;">
-                                <li style="margin-bottom: 0.4rem;">✅ <strong style="color: var(--cyan);">Self-organizing agent network</strong></li>
-                                <li style="margin-bottom: 0.4rem;">✅ <strong style="color: var(--gold);">Phase-locked council rounds</strong></li>
-                                <li style="margin-bottom: 0.4rem;">✅ <strong style="color: var(--cyan);">Quorum consensus mechanism</strong></li>
-                                <li>✅ <strong style="color: var(--gold);">Backpressure management</strong> with device-aware batching</li>
+                            <h4 style="color: var(--cyan); font-size: 1.2rem; margin: 0 0 0.5rem 0; font-weight: 700;">Hex-Mesh Communication</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0.75rem 0 0 0; color: #e9eef6; font-size: 0.9rem;">
+                                <li style="margin-bottom: 0.5rem;">✅ Self-organizing network</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Phase-locked rounds</li>
+                                <li style="margin-bottom: 0.5rem;">✅ Quorum consensus</li>
+                                <li>✅ Infinite scalability</li>
                             </ul>
                         </div>
                         
                         <!-- Multi-Device Hardware Support Card -->
-                        <div style="padding: 1.5rem; background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(0,188,212,0.15)); border-radius: 16px; border: 2px solid rgba(255,215,0,0.5); box-shadow: 0 8px 25px rgba(255,215,0,0.3);">
-                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                                <div style="font-size: 2rem;">🚀</div>
-                                <div>
-                                    <div style="background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(0,188,212,0.3)); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.4rem;">
-                                        REVOLUTIONARY
-                                    </div>
-                                    <h4 style="color: var(--gold); font-size: 1.3rem; margin: 0;">Multi-Device Hardware Support</h4>
-                                    <p style="color: #B8BCC8; font-size: 0.85rem; margin: 0.2rem 0 0 0;">CPU / GPU / TPU Architecture</p>
-                                </div>
+                        <div style="padding: 1.5rem; background: rgba(255,215,0,0.1); border-radius: 16px; border: 1px solid rgba(255,215,0,0.3);">
+                            <div style="font-size: 2rem; margin-bottom: 0.75rem;">🚀</div>
+                            <div style="background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(0,188,212,0.3)); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.75rem;">
+                                REVOLUTIONARY
                             </div>
-                            <p style="color: #E6E8EA; line-height: 1.6; margin-bottom: 0.8rem; font-size: 0.95rem;">
-                                Hardware-agnostic architecture with <strong style="color: var(--gold);">automatic device detection</strong> and <strong style="color: var(--cyan);">intelligent routing</strong>. <strong style="color: var(--gold);">TPU delivers 128× batch multiplier</strong> for massive throughput, <strong style="color: var(--cyan);">GPU acceleration</strong> for real-time processing, and <strong style="color: var(--gold);">CPU fallback</strong> for universal compatibility. <strong style="color: var(--cyan);">Zero configuration required</strong>.
-                            </p>
-                            <ul style="list-style: none; padding: 0; margin: 0; color: #E6E8EA; font-size: 0.9rem;">
-                                <li style="margin-bottom: 0.4rem;">⚡ <strong style="color: var(--gold);">TPU: 128× batch processing</strong> for massive parallel operations</li>
-                                <li style="margin-bottom: 0.4rem;">🎮 <strong style="color: var(--cyan);">GPU: Real-time acceleration</strong> for low-latency decisions</li>
-                                <li style="margin-bottom: 0.4rem;">💻 <strong style="color: var(--gold);">CPU: Universal fallback</strong> for any infrastructure</li>
-                                <li>🔧 <strong style="color: var(--cyan);">Automatic routing</strong> with zero code changes</li>
+                            <h4 style="color: var(--gold); font-size: 1.2rem; margin: 0 0 0.5rem 0; font-weight: 700;">Multi-Device Support</h4>
+                            <ul style="list-style: none; padding: 0; margin: 0.75rem 0 0 0; color: #e9eef6; font-size: 0.9rem;">
+                                <li style="margin-bottom: 0.5rem;">⚡ TPU: 128× speed</li>
+                                <li style="margin-bottom: 0.5rem;">🎮 GPU: Real-time</li>
+                                <li style="margin-bottom: 0.5rem;">💻 CPU: Universal</li>
+                                <li>🔧 Zero config</li>
                             </ul>
                         </div>
-                    </div>
-                    
-                    <div style="background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(0,188,212,0.1)); border-left: 4px solid var(--gold); border-radius: 12px; padding: 1.5rem; text-align: center; box-shadow: 0 8px 25px rgba(255,215,0,0.15); margin-bottom: 2rem;">
-                        <p style="color: #E6E8EA; font-size: 1.1rem; margin: 0; line-height: 1.7;">
-                            These <strong style="color: var(--gold);">breakthrough innovations</strong> in AI memory management, multi-agent coordination, and <strong style="color: var(--cyan);">hardware-agnostic architecture</strong> provide Daena with a <strong style="color: var(--gold);">significant competitive moat</strong> and <strong style="color: var(--cyan);">patent protection</strong> as we scale. The <strong style="color: var(--gold);">revolutionary Multi-Device Support</strong> (CPU/GPU/TPU) ensures <strong style="color: var(--cyan);">maximum performance</strong> on any infrastructure, from cloud TPUs to edge CPUs, with <strong style="color: var(--gold);">zero configuration required</strong>.
-                        </p>
                     </div>
                 </div>
                 
                 <!-- Key Features Grid -->
-                <div class="daena-features" style="margin-top: 0;">
-                    <div class="daena-feature">
-                        <strong>🧠 48 AI Agents</strong>
-                        <p>6 agents per department × 8 departments with Metatron's Cube communication pattern</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem;">
+                    <div style="text-align: center; padding: 1.25rem; background: rgba(255,215,0,0.08); border-radius: 12px; border: 1px solid rgba(255,215,0,0.2);">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🧠</div>
+                        <div style="font-size: 1.5rem; font-weight: 900; color: var(--gold); margin-bottom: 0.25rem;">48</div>
+                        <div style="color: #e9eef6; font-size: 0.85rem;">AI Agents</div>
                     </div>
-                    <div class="daena-feature">
-                        <strong>💾 NBMF Memory</strong>
-                        <p>3-tier architecture (L1/L2/L3) with CAS + SimHash delivering 60%+ cost savings</p>
+                    <div style="text-align: center; padding: 1.25rem; background: rgba(0,188,212,0.08); border-radius: 12px; border: 1px solid rgba(0,188,212,0.2);">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">💾</div>
+                        <div style="font-size: 1.5rem; font-weight: 900; color: var(--cyan); margin-bottom: 0.25rem;">3-Tier</div>
+                        <div style="color: #e9eef6; font-size: 0.85rem;">Memory</div>
                     </div>
-                    <div class="daena-feature">
-                        <strong>🌐 Hex-Mesh Communication</strong>
-                        <p>Phase-locked council rounds (Scout→Debate→Commit), quorum consensus, backpressure</p>
+                    <div style="text-align: center; padding: 1.25rem; background: rgba(255,215,0,0.08); border-radius: 12px; border: 1px solid rgba(255,215,0,0.2);">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🌐</div>
+                        <div style="font-size: 1.5rem; font-weight: 900; color: var(--gold); margin-bottom: 0.25rem;">O(log n)</div>
+                        <div style="color: #e9eef6; font-size: 0.85rem;">Efficiency</div>
                     </div>
-                    <div class="daena-feature">
-                        <strong>🚀 Multi-Device Support</strong>
-                        <p>CPU, GPU, and TPU with automatic routing and optimized batch processing (128× for TPU)</p>
-                    </div>
-                    <div class="daena-feature">
-                        <strong>🛡️ Trust & Governance</strong>
-                        <p>Quarantine store, trust scoring, ledger with Merkle roots, compliance automation</p>
-                    </div>
-                    <div class="daena-feature">
-                        <strong>📡 Presence Beacons</strong>
-                        <p>Real-time agent state tracking (ONLINE/BUSY/OVERLOADED/OFFLINE)</p>
-                    </div>
-                    <div class="daena-feature">
-                        <strong>🎯 Production Ready</strong>
-                        <p>50+ API endpoints, 15+ CLI tools, 40+ test suites, complete CI/CD integration</p>
+                    <div style="text-align: center; padding: 1.25rem; background: rgba(0,188,212,0.08); border-radius: 12px; border: 1px solid rgba(0,188,212,0.2);">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🛡️</div>
+                        <div style="font-size: 1.5rem; font-weight: 900; color: var(--cyan); margin-bottom: 0.25rem;">100%</div>
+                        <div style="color: #e9eef6; font-size: 0.85rem;">Governance</div>
                     </div>
                 </div>
                 <div class="hero-cta" style="margin-top: 32px;">
