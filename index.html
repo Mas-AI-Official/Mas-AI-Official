@@ -605,22 +605,22 @@
         }
         
         .hero-subtitle {
-            font-size: clamp(24px, 3.5vw, 36px);
+            font-size: clamp(20px, 3vw, 28px);
             color: var(--muted);
-            margin: 0 0 24px;
-            font-weight: 600;
-            max-width: 800px;
+            margin: 0 0 28px;
+            font-weight: 500;
+            max-width: 750px;
             margin-left: auto;
             margin-right: auto;
-            line-height: 1.3;
+            line-height: 1.5;
         }
         
         .hero-description {
-            font-size: clamp(18px, 2vw, 22px);
+            font-size: clamp(16px, 1.8vw, 18px);
             color: var(--muted);
-            margin: 0 0 40px;
+            margin: 0 0 48px;
             font-weight: 400;
-            max-width: 700px;
+            max-width: 650px;
             margin-left: auto;
             margin-right: auto;
             line-height: 1.6;
@@ -636,14 +636,15 @@
             gap: 16px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-top: 48px;
+            margin-top: 40px;
+            margin-bottom: 0;
         }
         
         .hero-stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 24px;
-            margin-top: 64px;
+            margin-top: 56px;
             max-width: 1000px;
             margin-left: auto;
             margin-right: auto;
@@ -713,7 +714,7 @@
         
         /* Section wrapper - transparent, content in glass cards */
         .section-wrapper {
-            padding: clamp(3rem, 6vw, 6rem) clamp(1rem, 4vw, 2rem);
+            padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 2rem);
             background: transparent;
             position: relative;
             overflow-x: hidden;
@@ -734,9 +735,9 @@
         .section-subtitle {
             text-align: center;
             color: var(--muted);
-            font-size: 20px;
+            font-size: clamp(16px, 2vw, 20px);
             max-width: 700px;
-            margin: 0 auto 64px;
+            margin: 0 auto clamp(2rem, 4vw, 3rem);
             line-height: 1.6;
         }
         
@@ -1562,7 +1563,6 @@
             </a>
             <div class="nav-links">
                 <a href="#daena">Daena</a>
-                <a href="#vibeagent">VibeAgent</a>
                 <a href="#portfolio">Portfolio</a>
                 <a href="#founder">Founder</a>
                 <a href="/investors.html">For Investors</a>
@@ -1573,7 +1573,6 @@
         </div>
         <div class="mobile-menu" id="mobileMenu">
             <a href="#daena" class="btn btn-ghost">Daena</a>
-            <a href="#vibeagent" class="btn btn-ghost">VibeAgent</a>
             <a href="#portfolio" class="btn btn-ghost">Portfolio</a>
             <a href="#founder" class="btn btn-ghost">Founder</a>
             <a href="/investors.html" class="btn btn-ghost">For Investors</a>
@@ -1585,8 +1584,8 @@
     <!-- Hero Section - Daena Focus -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Meet Daena — your AI-native VP</h1>
-            <h2 class="hero-subtitle">Daena is an AI-native executive that runs your company with a network of coordinated agents. It plans, executes, and learns across your departments so you can move faster with fewer gaps.</h2>
+            <h1 class="hero-title">Meet Daena — your AI VP</h1>
+            <h2 class="hero-subtitle">Daena is an AI VP that runs your company with a network of coordinated agents.<br>It plans, executes, and learns across departments so you move faster with fewer gaps.</h2>
             <p class="hero-description">
                 Built by Mas-AI in Canada, Daena acts as a central brain that turns tools, data, and workflows into one coordinated operating system.
             </p>
@@ -1619,6 +1618,15 @@
             </div>
         </section>
 
+    <!-- Mas-AI Company Intro -->
+    <section class="section-wrapper" id="company-intro" style="padding-top: 3rem;">
+        <div class="section-card" style="padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 2rem);">
+            <p style="text-align: center; font-size: clamp(18px, 2.5vw, 22px); color: var(--text); line-height: 1.6; max-width: 900px; margin: 0 auto;">
+                <strong style="color: var(--gold);">Mas-AI Technologies Inc.</strong> is the company behind <strong style="color: var(--gold);">Daena</strong>, our flagship AI VP, and <strong style="color: var(--cyan);">VibeAgent</strong>, the interface that connects people to Daena's architecture.
+            </p>
+        </div>
+    </section>
+
     <!-- LLM-Readable Summary Section for AI Search Engines -->
     <section class="section-wrapper" id="llm-summary">
         <div class="section-card">
@@ -1627,7 +1635,7 @@
                 <span style="display: block; margin-bottom: 8px;">About MAS-AI Technology Inc.</span>
             </h2>
             <div style="color: var(--text); line-height: 1.8; font-size: clamp(15px, 2vw, 17px);">
-                <p style="margin-bottom: 24px; color: #e9eef6;"><strong style="color: var(--gold); font-size: 1.1em;">Mas-AI Technologies Inc.</strong> is a Canadian deep-tech company building Daena, an AI-native VP, and VibeAgent, the interface that connects people to Daena's architecture.</p>
+                <p style="margin-bottom: 24px; color: #e9eef6;">Mas-AI Technologies Inc. is a Canadian deep-tech company building Daena, an AI-native VP, and VibeAgent, the interface that connects people to Daena's architecture.</p>
                 
                 <div style="margin-bottom: 32px; padding: clamp(1.25rem, 3vw, 1.5rem); background: rgba(255,215,0,0.12); border-left: 4px solid var(--gold); border-radius: 12px;">
                     <h3 style="color: var(--gold); font-size: clamp(20px, 3vw, 24px); font-weight: 700; margin-bottom: 16px;">Flagship Product: Daena AI VP</h3>
@@ -1833,40 +1841,6 @@
         </div>
     </section>
 
-    <!-- VibeAgent Section -->
-    <section class="section-wrapper" id="vibeagent">
-        <div class="section-card">
-            <h2 class="section-title">VibeAgent — your interface to Daena</h2>
-            <p class="section-subtitle" style="max-width: 800px; margin: 0 auto 2rem;">
-                VibeAgent is the user-facing canvas on top of Daena's brain. It's how founders and teams connect to Daena, design agent workflows, and see what's happening under the hood.
-            </p>
-            <div style="max-width: 700px; margin: 0 auto 2rem;">
-                <p style="color: var(--text); line-height: 1.8; margin-bottom: 20px;">
-                    Instead of writing code, you use VibeAgent to:
-                </p>
-                <ul style="list-style: none; padding: 0; margin: 0;">
-                    <li style="margin-bottom: 16px; padding-left: 28px; position: relative; color: #e9eef6;">
-                        <span style="position: absolute; left: 0; color: var(--gold); font-weight: bold;">•</span>
-                        Create and configure agents.
-                    </li>
-                    <li style="margin-bottom: 16px; padding-left: 28px; position: relative; color: #e9eef6;">
-                        <span style="position: absolute; left: 0; color: var(--gold); font-weight: bold;">•</span>
-                        Design workflows and handoffs between agents.
-                    </li>
-                    <li style="margin-bottom: 16px; padding-left: 28px; position: relative; color: #e9eef6;">
-                        <span style="position: absolute; left: 0; color: var(--gold); font-weight: bold;">•</span>
-                        Monitor what Daena and its agents are doing for your company.
-                    </li>
-                </ul>
-            </div>
-            <div style="text-align: center; margin-top: 2rem;">
-                <a href="https://daena.mas-ai.co" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
-                    Explore VibeAgent →
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Testimonials & Recognition Section -->
     <section class="section-wrapper" id="testimonials">
         <div class="section-card">
@@ -1944,6 +1918,38 @@
         </p>
         <div class="portfolio-grid">
             <div class="project-card">
+                <div class="project-icon">🧠</div>
+                <h3 class="project-title">Daena</h3>
+                <p class="project-description">
+                    Our flagship AI VP that runs your company with a network of coordinated agents. It plans, executes, and learns across departments.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">AI VP</span>
+                    <span class="project-tag">Multi-Agent System</span>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <a href="https://daena.mas-ai.co" class="btn btn-primary" style="font-size: 14px; padding: 10px 20px; display: inline-block;">
+                        Explore Daena →
+                    </a>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-icon">🎨</div>
+                <h3 class="project-title">VibeAgent</h3>
+                <p class="project-description">
+                    The user-facing interface to Daena. It gives teams a clear way to interact with Daena's architecture, configure agents, and monitor what the AI VP is doing for the company.
+                </p>
+                <div class="project-tags">
+                    <span class="project-tag">Interface</span>
+                    <span class="project-tag">Visual Builder</span>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <a href="https://daena.mas-ai.co/#demos" class="btn btn-primary" style="font-size: 14px; padding: 10px 20px; display: inline-block;">
+                        See Daena in action →
+                    </a>
+                </div>
+            </div>
+            <div class="project-card">
                 <div class="project-icon">🏥</div>
                 <h3 class="project-title">Med Smart</h3>
                 <p class="project-description">
@@ -1952,8 +1958,8 @@
                 <div class="project-tags">
                     <span class="project-tag">Healthcare AI</span>
                     <span class="project-tag">Medical Diagnosis</span>
-                            </div>
-                        </div>
+                </div>
+            </div>
             <div class="project-card">
                 <div class="project-icon">🌿</div>
                 <h3 class="project-title">Nature NLP</h3>
@@ -1963,8 +1969,8 @@
                 <div class="project-tags">
                     <span class="project-tag">NLP</span>
                     <span class="project-tag">Environmental AI</span>
-                    </div>
-                    </div>
+                </div>
+            </div>
             <div class="project-card">
                 <div class="project-icon">🏗️</div>
                 <h3 class="project-title">Construction AI</h3>
@@ -1975,8 +1981,8 @@
                     <span class="project-tag">Construction</span>
                     <span class="project-tag">Permit Analysis</span>
                 </div>
-                </div>
             </div>
+        </div>
         </div>
         </div>
     </section>
