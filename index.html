@@ -609,11 +609,23 @@
             line-height: 1.1;
             margin: 0 0 20px;
             font-weight: 800;
-            background: var(--accent);
+            background: linear-gradient(90deg, #ffd700 0%, #ffed4e 25%, #ffd700 50%, #ffed4e 75%, #ffd700 100%);
+            background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             letter-spacing: -0.5px;
+            animation: shimmer 3s linear infinite;
+            position: relative;
+        }
+        
+        @keyframes shimmer {
+            0% {
+                background-position: 0% center;
+            }
+            100% {
+                background-position: 200% center;
+            }
         }
         
         .hero-text-content {
@@ -730,6 +742,22 @@
             position: relative;
             overflow-x: hidden;
             box-sizing: border-box;
+        }
+        
+        .section-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 8, 15, 0.85);
+            z-index: 0;
+        }
+        
+        .section-wrapper > * {
+            position: relative;
+            z-index: 1;
         }
         
         .section-title {
@@ -1211,8 +1239,17 @@
             }
             
             .hero-subtitle {
-                font-size: 18px;
-                margin-bottom: 24px;
+                font-size: clamp(16px, 4vw, 20px);
+                margin-bottom: 12px;
+                line-height: 1.5;
+            }
+            
+            .hero-text-content {
+                margin-bottom: 32px;
+            }
+            
+            .hero-title {
+                font-size: clamp(36px, 8vw, 48px) !important;
             }
             
             .hero-stats {
@@ -1283,11 +1320,15 @@
             }
             
             .hero-title {
-                font-size: 36px;
+                font-size: clamp(32px, 8vw, 42px) !important;
             }
             
             .hero-subtitle {
-                font-size: 16px;
+                font-size: clamp(15px, 4vw, 18px) !important;
+            }
+            
+            .hero-text-content {
+                margin-bottom: 28px;
             }
             
             .hero-stats {
@@ -1303,7 +1344,11 @@
             }
             
             .section-wrapper {
-                padding: 2rem 0.25rem !important;
+                padding: 2rem 0.75rem !important;
+            }
+            
+            .section-wrapper::before {
+                background: rgba(5, 8, 15, 0.9);
             }
             
             /* Patent Section - Mobile Layout */
@@ -1599,9 +1644,6 @@
             <div class="hero-text-content">
                 <p class="hero-subtitle">Daena is an AI VP that runs your company with a network of coordinated agents.</p>
                 <p class="hero-subtitle">It plans, executes, and learns across departments so you move faster with fewer gaps.</p>
-                <p class="hero-description">
-                    Built by Mas-AI in Canada, Daena acts as a central brain that turns tools, data, and workflows into one coordinated operating system.
-                </p>
             </div>
             <div class="hero-cta">
                 <a href="https://daena.mas-ai.co" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
