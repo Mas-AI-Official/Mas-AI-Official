@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover, user-scalable=yes">
     <title>MAS-AI Technology Inc. | AI-Native Autonomous Company | Daena AI VP</title>
     <meta name="description" content="MAS-AI Inc is an AI-native autonomous company, pioneering revolutionary AI solutions including Daena AI VP - a unique AI Vice President system with 48+ specialized agents (6×8), patent-pending Memory & Governance Engine (NBMF + Enterprise-DNA), and Hex-Mesh Communication. Transform your business with autonomous AI decision-making. Explore our portfolio: Med Smart, Nature NLP, Construction AI. Accepted by Google Startup Program. Based in Canada.">
     <meta name="keywords" content="MAS-AI, MAS AI, MAS-AI Inc, MAS AI company, MAS-AI Canada, Daena AI, Daena multi-agent system, AI VP system, Sunflower Architecture AI, Honeycomb Governance AI, Multi-agent orchestration platform, LLM orchestration, AI-native company OS, Agent collaboration system, AI CEO, AI VP systems, Autonomous agent platforms, artificial intelligence VP, autonomous company, AI-native company, 48+ AI agents, NBMF Memory, Enterprise-DNA, Genome, Epigenome, Lineage, Immune system, Hex-Mesh Communication, patent pending AI, Med Smart, Nature NLP, Construction AI, AI portfolio, multi-agent systems, SFHC, Self-Fulfilling Hierarchical Communication, business intelligence AI, enterprise AI, autonomous decision making, AI governance, trust pipeline, Consulate agents, Google Startup Program, AI innovation, neural memory fabric, sunflower honeycomb architecture, Merkle-notarized lineage, prompt injection detection">
@@ -324,6 +324,10 @@
             scroll-behavior: smooth;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
         }
         body {
             margin: 0;
@@ -333,6 +337,17 @@
             overflow-x: hidden;
             line-height: 1.6;
             position: relative;
+            -webkit-overflow-scrolling: touch;
+            overflow-scrolling: touch;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
+        }
+        
+        /* Fix for iOS Safari viewport height */
+        @supports (-webkit-touch-callout: none) {
+            body {
+                min-height: -webkit-fill-available;
+            }
         }
         
         /* Cover whole site with consistent background - lighter, more modern */
@@ -1500,22 +1515,26 @@
         }
         
         /* Touch-friendly elements */
-        @media (hover: none) and (pointer: coarse) {
-            .btn, a, button, .mobile-menu-toggle {
-                min-height: 44px;
-                min-width: 44px;
-                padding: 12px 24px;
-            }
-            
-            .daena-feature, .project-card {
-                cursor: pointer;
-            }
-        }
-        
         /* Firefox specific fixes */
         @-moz-document url-prefix() {
             .section-card, .daena-spotlight {
                 background: rgba(11,11,20,0.9);
+            }
+            
+            .hero-title {
+                -moz-background-clip: text;
+            }
+        }
+        
+        /* Safari specific fixes */
+        @supports (-webkit-appearance: none) {
+            .hero-title {
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            
+            .section-card, .daena-spotlight {
+                -webkit-backdrop-filter: blur(20px);
             }
         }
         
@@ -1528,6 +1547,48 @@
             .daena-features {
                 display: -ms-grid;
                 -ms-grid-columns: 1fr 1fr 1fr;
+            }
+            
+            .hero-title {
+                background: var(--gold);
+                -webkit-text-fill-color: var(--gold);
+                color: var(--gold);
+            }
+        }
+        
+        /* Chrome/Edge specific fixes */
+        @supports (backdrop-filter: blur(20px)) {
+            .section-card, .daena-spotlight {
+                backdrop-filter: blur(20px);
+            }
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            /* Larger touch targets */
+            .btn, a, button, .mobile-menu-toggle {
+                min-height: 44px;
+                min-width: 44px;
+                padding: 12px 24px;
+                -webkit-tap-highlight-color: rgba(255, 215, 0, 0.3);
+                tap-highlight-color: rgba(255, 215, 0, 0.3);
+            }
+            
+            .daena-feature, .project-card, .stat-card {
+                cursor: pointer;
+                -webkit-tap-highlight-color: rgba(255, 215, 0, 0.2);
+                tap-highlight-color: rgba(255, 215, 0, 0.2);
+            }
+            
+            /* Remove hover effects on touch devices */
+            .btn:hover, a:hover {
+                transform: none;
+            }
+            
+            /* Better scrolling on touch */
+            body {
+                -webkit-overflow-scrolling: touch;
+                overflow-scrolling: touch;
             }
         }
         
@@ -1606,6 +1667,35 @@
             }
         }
         
+        /* Image optimizations for all browsers */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+        
+        .brand img {
+            max-width: 120px;
+            height: auto;
+        }
+        
+        /* Grid fallbacks for older browsers */
+        .portfolio-grid, .daena-features, .hero-stats {
+            display: grid;
+            display: -ms-grid;
+        }
+        
+        @supports not (display: grid) {
+            .portfolio-grid, .daena-features, .hero-stats {
+                display: flex;
+                flex-wrap: wrap;
+            }
+        }
+        
         /* Additional mobile breakpoints */
         @media (max-width: 360px) {
             .hero-title {
@@ -1620,15 +1710,154 @@
                 font-size: 0.9rem !important;
                 padding: 10px 16px !important;
             }
+            
+            .hero-stats {
+                grid-template-columns: 1fr !important;
+            }
+            
+            .nav-inner {
+                padding: 0 12px;
+            }
+            
+            .brand img {
+                max-width: 100px;
+            }
+            
+            .section-wrapper {
+                padding: 1.5rem 0.5rem !important;
+            }
         }
         
+        /* Animation fallbacks for reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .hero-title {
+                animation: none !important;
+            }
+        }
+        
+        /* High DPI / Retina display optimizations */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .brand img {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .nav, .mobile-menu, .hero-cta, .btn {
+                display: none !important;
+            }
+            
+            body {
+                background: white;
+                color: black;
+            }
+            
+            .section-card, .daena-spotlight {
+                background: white;
+                border: 1px solid #ccc;
+            }
+        }
+        
+        /* Tablet Styles (768px - 1024px) */
         @media (min-width: 769px) and (max-width: 1024px) {
+            .hero {
+                padding: clamp(80px, 10vw, 100px) clamp(1.5rem, 4vw, 2rem) clamp(50px, 6vw, 60px);
+            }
+            
+            .hero-title {
+                font-size: clamp(42px, 5vw, 56px);
+            }
+            
+            .hero-subtitle {
+                font-size: clamp(18px, 2.5vw, 24px);
+            }
+            
             .section-card {
-                padding: 2.5rem 1.5rem;
+                padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2rem);
+            }
+            
+            .section-wrapper {
+                padding: clamp(2.5rem, 4vw, 4rem) clamp(1.5rem, 3vw, 2rem);
+            }
+            
+            .daena-spotlight {
+                padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2rem);
             }
             
             .daena-features {
                 grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .hero-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .nav-links a {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            
+            .section-title {
+                font-size: clamp(36px, 4vw, 48px);
+            }
+            
+            .daena-title {
+                font-size: clamp(32px, 4vw, 48px);
+            }
+        }
+        
+        /* Large Tablets and Small Desktops (1025px - 1280px) */
+        @media (min-width: 1025px) and (max-width: 1280px) {
+            .hero-title {
+                font-size: clamp(48px, 5vw, 64px);
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Landscape Mobile Orientation */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero {
+                padding: 80px 20px 40px !important;
+                min-height: auto;
+            }
+            
+            .hero-title {
+                font-size: clamp(32px, 6vw, 42px) !important;
+            }
+            
+            .nav-inner {
+                height: 56px;
+            }
+        }
+        
+        /* Portrait Mobile Orientation */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .hero {
+                min-height: 70vh;
             }
         }
     </style>
@@ -2298,4 +2527,5 @@
     <script src="metatron-hex-network.js"></script>
 </body>
 </html>
+
 
