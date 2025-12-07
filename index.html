@@ -609,7 +609,7 @@
             line-height: 1.1;
             margin: 0 0 20px;
             font-weight: 800;
-            background: linear-gradient(90deg, #ffd700 0%, #ffed4e 25%, #ffd700 50%, #ffed4e 75%, #ffd700 100%);
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #FFA500 75%, #FFD700 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -617,13 +617,12 @@
             letter-spacing: -0.5px;
             animation: shimmer 3s linear infinite;
             position: relative;
+            display: inline-block;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
         }
         
         @keyframes shimmer {
-            0% {
-                background-position: 0% center;
-            }
-            100% {
+            to {
                 background-position: 200% center;
             }
         }
