@@ -577,10 +577,22 @@
             background: transparent;
         }
         
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 8, 15, 0.85);
+            z-index: 0;
+        }
+        
         .hero-content {
             max-width: 1200px;
             margin: 0 auto;
             z-index: 1;
+            position: relative;
         }
         
         .hero-eyebrow {
@@ -604,26 +616,25 @@
             letter-spacing: -0.5px;
         }
         
+        .hero-text-content {
+            max-width: 800px;
+            margin: 0 auto 48px;
+        }
+        
         .hero-subtitle {
             font-size: clamp(20px, 3vw, 28px);
-            color: var(--muted);
-            margin: 0 0 28px;
+            color: #e9eef6;
+            margin: 0 0 16px;
             font-weight: 500;
-            max-width: 750px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         
         .hero-description {
             font-size: clamp(16px, 1.8vw, 18px);
-            color: var(--muted);
-            margin: 0 0 48px;
+            color: #d0d7e0;
+            margin: 24px 0 0;
             font-weight: 400;
-            max-width: 650px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.6;
+            line-height: 1.7;
         }
         
         .hero-highlight {
@@ -1584,11 +1595,14 @@
     <!-- Hero Section - Daena Focus -->
     <section class="hero" id="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Meet Daena — your AI VP</h1>
-            <h2 class="hero-subtitle">Daena is an AI VP that runs your company with a network of coordinated agents.<br>It plans, executes, and learns across departments so you move faster with fewer gaps.</h2>
-            <p class="hero-description">
-                Built by Mas-AI in Canada, Daena acts as a central brain that turns tools, data, and workflows into one coordinated operating system.
-            </p>
+            <h1 class="hero-title">Meet Daena : First AI VP</h1>
+            <div class="hero-text-content">
+                <p class="hero-subtitle">Daena is an AI VP that runs your company with a network of coordinated agents.</p>
+                <p class="hero-subtitle">It plans, executes, and learns across departments so you move faster with fewer gaps.</p>
+                <p class="hero-description">
+                    Built by Mas-AI in Canada, Daena acts as a central brain that turns tools, data, and workflows into one coordinated operating system.
+                </p>
+            </div>
             <div class="hero-cta">
                 <a href="https://daena.mas-ai.co" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
                     Explore Daena →
