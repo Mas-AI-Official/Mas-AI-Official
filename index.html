@@ -505,8 +505,10 @@
         }
 
         .brand img {
-            height: 30px;
+            height: 32px;
             width: auto;
+            max-width: 100px;
+            object-fit: contain;
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
         }
@@ -1268,7 +1270,12 @@
 
             .nav-inner {
                 height: 60px;
-                padding: 0;
+                padding: 0 16px;
+            }
+            
+            .brand img {
+                height: 32px;
+                max-width: 90px;
             }
 
             .nav-links {
@@ -1966,8 +1973,7 @@
     <nav class="nav" id="navbar">
         <div class="nav-inner">
             <a href="/" class="brand">
-                <img src="mas-ai-logo.jpg" alt="MAS-AI - The World's First AI-Native Autonomous Company Logo" width="90"
-                    height="30">
+                <img src="mas-ai-logo.jpg" alt="MAS-AI - The World's First AI-Native Autonomous Company Logo" style="height: 32px; width: auto; max-width: 100px;">
                 <span>MAS-AI</span>
             </a>
             <div class="nav-links">
@@ -2050,71 +2056,14 @@
         <div class="daena-spotlight">
             <div class="daena-content">
                 <span class="daena-badge">🚀 Flagship Product</span>
-                <h2 class="daena-title">Daena – your AI-native VP</h2>
+                <h2 class="daena-title">Daena AI-native VP</h2>
                 <p class="daena-description"
                     style="margin-bottom: 2.5rem; text-align: center; max-width: 700px; margin-left: auto; margin-right: auto;">
                     Your virtual VP that coordinates AI agents across departments. Plans, executes, and learns
                     continuously.
                 </p>
 
-                <!-- Key Metrics with Visual Bars -->
-                <div
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
-                    <div
-                        style="text-align: center; padding: 0.875rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3);">
-                        <div
-                            style="font-size: clamp(24px, 3vw, 32px); font-weight: 800; color: var(--gold); margin-bottom: 0.25rem;">
-                            48</div>
-                        <div style="color: #e9eef6; font-size: clamp(13px, 1.5vw, 14px); font-weight: 600;">AI Agents</div>
-                        <div
-                            style="margin-top: 0.5rem; height: 4px; background: rgba(255,215,0,0.2); border-radius: 2px; overflow: hidden;">
-                            <div
-                                style="height: 100%; width: 100%; background: linear-gradient(90deg, var(--gold), #ffed4e);">
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        style="text-align: center; padding: 0.875rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3);">
-                        <div
-                            style="font-size: clamp(24px, 3vw, 32px); font-weight: 800; color: var(--cyan); margin-bottom: 0.25rem;">
-                            94.3%</div>
-                        <div style="color: #e9eef6; font-size: clamp(13px, 1.5vw, 14px); font-weight: 600;">Storage Savings</div>
-                        <div
-                            style="margin-top: 0.5rem; height: 4px; background: rgba(0,188,212,0.2); border-radius: 2px; overflow: hidden;">
-                            <div
-                                style="height: 100%; width: 94.3%; background: linear-gradient(90deg, var(--cyan), #4dd0e1);">
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        style="text-align: center; padding: 0.875rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3);">
-                        <div
-                            style="font-size: clamp(24px, 3vw, 32px); font-weight: 800; color: var(--gold); margin-bottom: 0.25rem;">
-                            128×</div>
-                        <div style="color: #e9eef6; font-size: clamp(13px, 1.5vw, 14px); font-weight: 600;">TPU Speed</div>
-                        <div
-                            style="margin-top: 0.5rem; height: 4px; background: rgba(255,215,0,0.2); border-radius: 2px; overflow: hidden;">
-                            <div
-                                style="height: 100%; width: 100%; background: linear-gradient(90deg, var(--gold), #ffed4e);">
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        style="text-align: center; padding: 0.875rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3);">
-                        <div
-                            style="font-size: clamp(24px, 3vw, 32px); font-weight: 800; color: var(--cyan); margin-bottom: 0.25rem;">
-                            60%+</div>
-                        <div style="color: #e9eef6; font-size: clamp(13px, 1.5vw, 14px); font-weight: 600;">Cost Savings</div>
-                        <div
-                            style="margin-top: 0.5rem; height: 4px; background: rgba(0,188,212,0.2); border-radius: 2px; overflow: hidden;">
-                            <div
-                                style="height: 100%; width: 60%; background: linear-gradient(90deg, var(--cyan), #4dd0e1);">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Patent-Pending Technologies Section -->
+<!-- Patent-Pending Technologies Section -->
                 <div style="margin: 0 0 1.5rem 0;">
                     <div style="text-align: center; margin-bottom: 1.5rem;">
                         <span
