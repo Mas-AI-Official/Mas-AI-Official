@@ -886,21 +886,21 @@
             display: inline-block;
             background: rgba(255, 215, 0, 0.15);
             color: var(--gold);
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 8px;
             font-weight: 700;
-            font-size: 13px;
+            font-size: clamp(11px, 1.2vw, 13px);
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 24px;
+            margin-bottom: 16px;
             border: 1px solid rgba(255, 215, 0, 0.3);
             box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
         }
 
         .daena-title {
-            font-size: clamp(32px, 5vw, 48px);
+            font-size: clamp(28px, 4vw, 40px);
             font-weight: 800;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             background: var(--accent);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -910,11 +910,11 @@
         }
 
         .daena-description {
-            font-size: 20px;
+            font-size: clamp(16px, 1.8vw, 18px);
             color: var(--muted);
-            line-height: 1.7;
-            margin-bottom: 32px;
-            max-width: 900px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+            max-width: 700px;
         }
 
         .daena-features {
@@ -1320,11 +1320,17 @@
             }
 
             .daena-title {
-                font-size: 32px;
+                font-size: clamp(24px, 5vw, 32px);
             }
 
             .daena-description {
-                font-size: 16px;
+                font-size: clamp(15px, 2vw, 17px);
+            }
+            
+            .daena-badge {
+                font-size: 11px;
+                padding: 6px 12px;
+                margin-bottom: 12px;
             }
 
             .daena-features {
@@ -2057,9 +2063,9 @@
                     <div
                         style="text-align: center; padding: 1rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3);">
                         <div
-                            style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--gold); margin-bottom: 0.25rem;">
+                            style="font-size: clamp(28px, 4vw, 36px); font-weight: 900; color: var(--gold); margin-bottom: 0.25rem;">
                             48</div>
-                        <div style="color: #e9eef6; font-size: 13px; font-weight: 600;">AI Agents</div>
+                        <div style="color: #e9eef6; font-size: clamp(12px, 1.5vw, 14px); font-weight: 600;">AI Agents</div>
                         <div
                             style="margin-top: 0.5rem; height: 4px; background: rgba(255,215,0,0.2); border-radius: 2px; overflow: hidden;">
                             <div
@@ -2070,9 +2076,9 @@
                     <div
                         style="text-align: center; padding: 1rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3);">
                         <div
-                            style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--cyan); margin-bottom: 0.25rem;">
+                            style="font-size: clamp(28px, 4vw, 36px); font-weight: 900; color: var(--cyan); margin-bottom: 0.25rem;">
                             94.3%</div>
-                        <div style="color: #e9eef6; font-size: 13px; font-weight: 600;">Storage Savings</div>
+                        <div style="color: #e9eef6; font-size: clamp(12px, 1.5vw, 14px); font-weight: 600;">Storage Savings</div>
                         <div
                             style="margin-top: 0.5rem; height: 4px; background: rgba(0,188,212,0.2); border-radius: 2px; overflow: hidden;">
                             <div
@@ -2083,9 +2089,9 @@
                     <div
                         style="text-align: center; padding: 1rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3);">
                         <div
-                            style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--gold); margin-bottom: 0.25rem;">
+                            style="font-size: clamp(28px, 4vw, 36px); font-weight: 900; color: var(--gold); margin-bottom: 0.25rem;">
                             128×</div>
-                        <div style="color: #e9eef6; font-size: 13px; font-weight: 600;">TPU Speed</div>
+                        <div style="color: #e9eef6; font-size: clamp(12px, 1.5vw, 14px); font-weight: 600;">TPU Speed</div>
                         <div
                             style="margin-top: 0.5rem; height: 4px; background: rgba(255,215,0,0.2); border-radius: 2px; overflow: hidden;">
                             <div
@@ -2096,9 +2102,9 @@
                     <div
                         style="text-align: center; padding: 1rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3);">
                         <div
-                            style="font-size: clamp(36px, 5vw, 48px); font-weight: 900; color: var(--cyan); margin-bottom: 0.25rem;">
+                            style="font-size: clamp(28px, 4vw, 36px); font-weight: 900; color: var(--cyan); margin-bottom: 0.25rem;">
                             60%+</div>
-                        <div style="color: #e9eef6; font-size: 13px; font-weight: 600;">Cost Savings</div>
+                        <div style="color: #e9eef6; font-size: clamp(12px, 1.5vw, 14px); font-weight: 600;">Cost Savings</div>
                         <div
                             style="margin-top: 0.5rem; height: 4px; background: rgba(0,188,212,0.2); border-radius: 2px; overflow: hidden;">
                             <div
