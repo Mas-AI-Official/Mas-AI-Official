@@ -1426,6 +1426,11 @@
             }
 
             /* Patent cards mobile */
+            [style*="grid-template-columns: repeat(3, 1fr)"] {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
             [style*="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"] {
                 grid-template-columns: 1fr !important;
                 gap: 1rem !important;
@@ -1923,6 +1928,11 @@
             .daena-title {
                 font-size: clamp(32px, 4vw, 48px);
             }
+            
+            /* Patent cards tablet - 2 columns */
+            [style*="grid-template-columns: repeat(3, 1fr)"] {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
         }
 
         /* Large Tablets and Small Desktops (1025px - 1280px) */
@@ -2073,61 +2083,61 @@
                     </div>
 
                     <div
-                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem;">
+                        style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; align-items: stretch;">
                         <!-- Patent 1: Memory & Governance Engine -->
                         <div
-                            style="padding: 0.875rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3);">
+                            style="padding: 1rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3); display: flex; flex-direction: column; height: 100%;">
                             <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">🧠🧬</div>
                             <div
                                 style="background: rgba(255,215,0,0.2); color: var(--gold); padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.5rem;">
                                 PATENT-PENDING
                             </div>
-                            <h4 style="color: var(--gold); font-size: clamp(16px, 2vw, 18px); margin: 0 0 0.25rem 0; font-weight: 700;">
+                            <h4 style="color: var(--gold); font-size: clamp(16px, 2vw, 18px); margin: 0 0 0.5rem 0; font-weight: 700;">
                                 Memory & Governance</h4>
                             <ul
-                                style="list-style: none; padding: 0; margin: 0.5rem 0 0 0; color: #e9eef6; font-size: 0.85rem;">
-                                <li style="margin-bottom: 0.25rem;">✅ 94.3% storage savings</li>
-                                <li style="margin-bottom: 0.25rem;">✅ Merkle-notarized lineage</li>
-                                <li style="margin-bottom: 0.25rem;">✅ Auto threat detection</li>
-                                <li>✅ CPU/GPU/TPU support</li>
+                                style="list-style: none; padding: 0; margin: 0; color: #e9eef6; font-size: 0.85rem; flex-grow: 1;">
+                                <li style="margin-bottom: 0.4rem;">✅ 94.3% storage savings</li>
+                                <li style="margin-bottom: 0.4rem;">✅ Merkle-notarized lineage</li>
+                                <li style="margin-bottom: 0.4rem;">✅ Auto threat detection</li>
+                                <li style="margin-bottom: 0;">✅ CPU/GPU/TPU support</li>
                             </ul>
                         </div>
 
                         <!-- Patent 2: Sunflower-Honeycomb Architecture -->
                         <div
-                            style="padding: 0.875rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3);">
+                            style="padding: 1rem; background: rgba(0,188,212,0.1); border-radius: 12px; border: 1px solid rgba(0,188,212,0.3); display: flex; flex-direction: column; height: 100%;">
                             <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">🏗️</div>
                             <div
                                 style="background: rgba(0,188,212,0.2); color: var(--cyan); padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.5rem;">
                                 PATENT-PENDING
                             </div>
-                            <h4 style="color: var(--cyan); font-size: clamp(16px, 2vw, 18px); margin: 0 0 0.25rem 0; font-weight: 700;">
+                            <h4 style="color: var(--cyan); font-size: clamp(16px, 2vw, 18px); margin: 0 0 0.5rem 0; font-weight: 700;">
                                 Hex-Mesh Communication</h4>
                             <ul
-                                style="list-style: none; padding: 0; margin: 0.5rem 0 0 0; color: #e9eef6; font-size: 0.85rem;">
-                                <li style="margin-bottom: 0.25rem;">✅ Self-organizing network</li>
-                                <li style="margin-bottom: 0.25rem;">✅ Phase-locked rounds</li>
-                                <li style="margin-bottom: 0.25rem;">✅ Quorum consensus</li>
-                                <li>✅ Infinite scalability</li>
+                                style="list-style: none; padding: 0; margin: 0; color: #e9eef6; font-size: 0.85rem; flex-grow: 1;">
+                                <li style="margin-bottom: 0.4rem;">✅ Self-organizing network</li>
+                                <li style="margin-bottom: 0.4rem;">✅ Phase-locked rounds</li>
+                                <li style="margin-bottom: 0.4rem;">✅ Quorum consensus</li>
+                                <li style="margin-bottom: 0;">✅ Infinite scalability</li>
                             </ul>
                         </div>
 
                         <!-- Multi-Device Hardware Support Card -->
                         <div
-                            style="padding: 1rem; background: rgba(255,215,0,0.1); border-radius: 16px; border: 1px solid rgba(255,215,0,0.3);">
-                            <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🚀</div>
+                            style="padding: 1rem; background: rgba(255,215,0,0.1); border-radius: 12px; border: 1px solid rgba(255,215,0,0.3); display: flex; flex-direction: column; height: 100%;">
+                            <div style="font-size: 1.25rem; margin-bottom: 0.5rem;">🚀</div>
                             <div
                                 style="background: linear-gradient(135deg, rgba(255,215,0,0.3), rgba(0,188,212,0.3)); color: var(--gold); padding: 3px 8px; border-radius: 6px; font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: inline-block; margin-bottom: 0.5rem;">
                                 REVOLUTIONARY
                             </div>
-                            <h4 style="color: var(--gold); font-size: clamp(16px, 2vw, 18px); margin: 0 0 0.25rem 0; font-weight: 700;">
+                            <h4 style="color: var(--gold); font-size: clamp(16px, 2vw, 18px); margin: 0 0 0.5rem 0; font-weight: 700;">
                                 Multi-Device Support</h4>
                             <ul
-                                style="list-style: none; padding: 0; margin: 0.5rem 0 0 0; color: #e9eef6; font-size: 0.85rem;">
-                                <li style="margin-bottom: 0.25rem;">⚡ TPU: 128× speed</li>
-                                <li style="margin-bottom: 0.25rem;">🎮 GPU: Real-time</li>
-                                <li style="margin-bottom: 0.25rem;">💻 CPU: Universal</li>
-                                <li>🔧 Zero config</li>
+                                style="list-style: none; padding: 0; margin: 0; color: #e9eef6; font-size: 0.85rem; flex-grow: 1;">
+                                <li style="margin-bottom: 0.4rem;">⚡ TPU: 128× speed</li>
+                                <li style="margin-bottom: 0.4rem;">🎮 GPU: Real-time</li>
+                                <li style="margin-bottom: 0.4rem;">💻 CPU: Universal</li>
+                                <li style="margin-bottom: 0;">🔧 Zero config</li>
                             </ul>
                         </div>
                     </div>
