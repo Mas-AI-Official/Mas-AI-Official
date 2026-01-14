@@ -208,7 +208,7 @@
                 <a href="https://mas-ai.co#portfolio">Portfolio</a>
                 <a href="https://mas-ai.co#founder">About</a>
                 <a href="https://mas-ai.co#contact">Contact</a>
-                <a href="https://mas-ai.co" class="btn">Back to MAS-AI</a>
+                <a href="javascript:void(0)" onclick="goBack()" class="btn">Back to MAS-AI</a>
             </div>
         </div>
     </nav>
@@ -218,20 +218,31 @@
             <div class="icon-large">🌿</div>
             <h1>NatureNLP</h1>
             <p>
-                <strong>Efficiency-First NLP Research</strong> — Reducing compute and energy costs while maintaining language performance through nature-inspired computation principles.
+                <strong>Efficiency-First NLP Research</strong> — Reducing compute and energy costs while maintaining
+                language performance through nature-inspired computation principles.
             </p>
             <p>
-                An efficiency-first NLP research prototype focused on architectural innovations that can be adopted by larger models. 
+                An efficiency-first NLP research prototype focused on architectural innovations that can be adopted by
+                larger models.
                 Explore oscillatory mechanisms, sparsity patterns, and regenerative learning for sustainable AI.
             </p>
             <div class="cta-group">
-                <a href="https://naturenlp.mas-ai.co" class="btn" target="_blank" rel="noopener noreferrer">Visit NatureNLP Website →</a>
+                <a href="https://naturenlp.mas-ai.co" class="btn" target="_blank" rel="noopener noreferrer">Visit
+                    NatureNLP Website →</a>
                 <a href="https://mas-ai.co#portfolio" class="btn btn-secondary">View in Portfolio</a>
-                <a href="https://mas-ai.co" class="btn btn-secondary">Back to MAS-AI</a>
+                <a href="javascript:void(0)" onclick="goBack()" class="btn btn-secondary">Back to MAS-AI</a>
             </div>
         </div>
     </section>
+    <script>
+        function goBack() {
+            if (document.referrer.includes('mas-ai.co')) {
+                history.back();
+            } else {
+                window.location.href = 'https://mas-ai.co';
+            }
+        }
+    </script>
 </body>
 
 </html>
-
