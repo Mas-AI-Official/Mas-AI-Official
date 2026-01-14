@@ -197,6 +197,55 @@
             background: rgba(76, 175, 80, 0.1);
             border-color: rgba(76, 175, 80, 0.6);
         }
+
+        /* Neon Text Effect */
+        .btn-neon {
+            background: transparent;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00, #ffff00) 1;
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), inset 0 0 5px rgba(0, 255, 255, 0.2);
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #00ffff,
+                0 0 30px #00ffff,
+                0 0 40px #00ffff;
+            transition: all 0.3s ease;
+            animation: border-flow 5s linear infinite;
+            padding: 12px 24px;
+            border-radius: 0;
+            /* Border image requires rectangular borders usually, or specific handling */
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn-neon:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), inset 0 0 10px rgba(0, 255, 255, 0.4);
+            text-shadow:
+                0 0 10px #fff,
+                0 0 20px #fff,
+                0 0 30px #00ffff,
+                0 0 40px #00ffff,
+                0 0 50px #00ffff,
+                0 0 60px #00ffff;
+        }
+
+        @keyframes border-flow {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -227,7 +276,8 @@
                 Explore oscillatory mechanisms, sparsity patterns, and regenerative learning for sustainable AI.
             </p>
             <div class="cta-group">
-                <a href="https://naturenlp.mas-ai.co" class="btn" target="_blank" rel="noopener noreferrer">Visit
+                <a href="https://naturenlp.mas-ai.co" class="btn btn-neon" target="_blank"
+                    rel="noopener noreferrer">Visit
                     NatureNLP Website →</a>
                 <a href="https://mas-ai.co#portfolio" class="btn btn-secondary">View in Portfolio</a>
                 <a href="javascript:void(0)" onclick="goBack()" class="btn btn-secondary">Back to MAS-AI</a>

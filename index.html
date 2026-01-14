@@ -1963,6 +1963,77 @@
             }
         }
 
+        /* Shimmer Effect */
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+            background: var(--accent);
+            color: #0b0b14;
+            z-index: 1;
+        }
+
+        .btn-shimmer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.6),
+                    transparent);
+            transform: skewX(-25deg);
+            animation: shimmer-btn 3s infinite;
+            z-index: -1;
+        }
+
+        @keyframes shimmer-btn {
+            0% {
+                left: -100%;
+            }
+
+            20% {
+                left: 200%;
+            }
+
+            100% {
+                left: 200%;
+            }
+        }
+
+        /* Neon Text Effect */
+        .btn-neon {
+            background: transparent;
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00, #ffff00) 1;
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), inset 0 0 5px rgba(0, 255, 255, 0.2);
+            text-shadow:
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 20px #00ffff,
+                0 0 30px #00ffff,
+                0 0 40px #00ffff;
+            transition: all 0.3s ease;
+            animation: border-flow 5s linear infinite;
+        }
+
+        .btn-neon:hover {
+            background: rgba(0, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.8), inset 0 0 10px rgba(0, 255, 255, 0.4);
+            text-shadow:
+                0 0 10px #fff,
+                0 0 20px #fff,
+                0 0 30px #00ffff,
+                0 0 40px #00ffff,
+                0 0 50px #00ffff,
+                0 0 60px #00ffff;
+        }
+
         /* Portrait Mobile Orientation */
         @media (max-width: 768px) and (orientation: portrait) {
             .hero {
@@ -2017,7 +2088,8 @@
                     gaps.</p>
             </div>
             <div class="hero-cta">
-                <a href="https://daena.mas-ai.co" class="btn btn-primary" style="font-size: 18px; padding: 16px 32px;">
+                <a href="https://daena.mas-ai.co" class="btn btn-primary btn-shimmer"
+                    style="font-size: 18px; padding: 16px 32px;">
                     Explore Daena →
                 </a>
                 <a href="https://daena.mas-ai.co/#demos" class="btn btn-ghost"
@@ -2026,8 +2098,8 @@
                 </a>
             </div>
             <div class="hero-cta" style="margin-top: 20px;">
-                <a href="naturenlp.html" class="btn btn-ghost"
-                    style="font-size: 16px; padding: 12px 24px; border-color: rgba(76, 175, 80, 0.5); color: #81c784;">
+                <a href="https://naturenlp.mas-ai.co/" class="btn btn-neon"
+                    style="font-size: 16px; padding: 12px 24px;">
                     Try Explore NatureNLP →
                 </a>
             </div>
