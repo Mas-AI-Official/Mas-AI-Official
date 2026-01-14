@@ -2003,10 +2003,9 @@
         }
 
         /* Neon Text Effect */
+        /* Neon Text Effect */
         .btn-neon {
             background: transparent;
-            border: 2px solid transparent;
-            border-image: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00, #ffff00) 1;
             color: #fff;
             font-weight: 700;
             text-transform: uppercase;
@@ -2020,6 +2019,24 @@
                 0 0 40px #00ffff;
             transition: all 0.3s ease;
             animation: border-flow 5s linear infinite;
+            border: none;
+            border-radius: 50px;
+            z-index: 1;
+        }
+
+        .btn-neon::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            padding: 2px;
+            background: linear-gradient(45deg, #ff00ff, #00ffff, #00ff00, #ffff00);
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            z-index: -1;
         }
 
         .btn-neon:hover {
@@ -2100,7 +2117,7 @@
             <div class="hero-cta" style="margin-top: 20px;">
                 <a href="https://naturenlp.mas-ai.co/" class="btn btn-neon"
                     style="font-size: 16px; padding: 12px 24px;">
-                    Try Explore NatureNLP →
+                    Also Explore NatureNLP →
                 </a>
             </div>
             <div class="hero-stats">
