@@ -145,47 +145,6 @@
             padding: 1rem;
         }
 
-        /* Video Player Styles */
-        .video-container {
-            position: relative;
-            border-radius: 0.75rem;
-            overflow: hidden;
-            background: #000;
-            aspect-ratio: 16/9;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        .video-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(2px);
-            transition: opacity 0.3s;
-            cursor: pointer;
-        }
-
-        .play-button-wrapper {
-            width: 4rem;
-            height: 4rem;
-            border-radius: 9999px;
-            background: rgba(59, 130, 246, 0.2);
-            border: 1px solid rgba(59, 130, 246, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
-            transition: transform 0.3s;
-        }
-
-        .video-overlay:hover .play-button-wrapper {
-            transform: scale(1.1);
-        }
-
         /* OpsFlow Background Canvas */
         #opsflow-canvas {
             position: fixed;
@@ -197,6 +156,12 @@
             pointer-events: none;
         }
     </style>
+
+    <!-- Video Player CSS -->
+    <link rel="stylesheet" href="assets/css/video-player.css">
+
+    <!-- Video Player Script -->
+    <script src="assets/js/video-player.js" defer></script>
 </head>
 
 <body>
@@ -443,29 +408,60 @@
                 <p class="text-gray-400">Watch the end-to-end automation pipeline.</p>
             </div>
 
-            <div class="glass-card p-6 md:p-8 group">
+            <div class="glass-card p-6 md:p-8">
                 <h3 class="text-xl md:text-2xl font-bold mb-4 text-ops-primary">Pipeline Demo</h3>
-                <p class="text-gray-300 mb-6 text-sm">A walkthrough of the ContentOPS dashboard and automated workflow
-                    execution.</p>
-
-                <div class="video-container">
-                    <video id="demo-video" src="assets/videos/demo.mp4" poster="assets/images/demo-poster.jpg"
-                        class="w-full h-full object-cover" playsinline></video>
-
-                    <div id="video-overlay" class="video-overlay" onclick="toggleVideo()">
-                        <div class="flex flex-col items-center gap-4">
+                <p class="text-gray-300 mb-6 text-sm">
+                    A walkthrough of the ContentOPS dashboard and automated workflow execution.
+                </p>
+                <div class="naturenlp-video" data-video="assets/videos/demo.mp4" aria-label="ContentOPS Pipeline Demo">
+                    <div class="video-frame">
+                        <video preload="auto" playsinline poster="assets/images/demo-poster.jpg"></video>
+                        <button class="overlay-play" aria-label="Play video">
                             <div class="play-button-wrapper">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
-                                    fill="currentColor" class="text-ops-primary ml-1">
-                                    <polygon points="5 3 19 12 5 21 5 3" />
+                                <svg viewBox="0 0 24 24" width="64" height="64" aria-hidden="true">
+                                    <path d="M8 5v14l11-7z"></path>
                                 </svg>
                             </div>
-                            <div class="text-center">
-                                <div class="text-xs font-bold text-ops-primary uppercase tracking-wider mb-1">Watch Demo
-                                </div>
-                                <div class="text-white text-sm">Click to play</div>
+                            <div class="video-label">
+                                <div class="label-badge">Pipeline Demo</div>
+                                <div class="label-text">Click to watch workflow</div>
                             </div>
-                        </div>
+                        </button>
+                    </div>
+                    <div class="controls" data-controls>
+                        <button class="btn" data-action="play" aria-label="Play/Pause">
+                            <svg class="icon-play" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z"></path>
+                            </svg>
+                            <svg class="icon-pause" viewBox="0 0 24 24">
+                                <path d="M6 5h4v14H6zM14 5h4v14h-4z"></path>
+                            </svg>
+                        </button>
+                        <span class="time" data-time="current">0:00</span>
+                        <input class="seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek">
+                        <span class="time" data-time="duration">0:00</span>
+                        <div class="spacer"></div>
+                        <button class="btn" data-action="mute" aria-label="Mute/Unmute">
+                            <svg class="icon-vol" viewBox="0 0 24 24">
+                                <path d="M3 10v4h4l5 4V6L7 10H3z"></path>
+                            </svg>
+                            <svg class="icon-vol-mute" viewBox="0 0 24 24">
+                                <path
+                                    d="M16.5 12l4.5 4.5-1.5 1.5L15 13.5l-4.5 4.5-1.5-1.5L13.5 12 9 7.5l1.5-1.5L15 10.5l4.5-4.5 1.5 1.5L16.5 12z">
+                                </path>
+                            </svg>
+                        </button>
+                        <input class="volume" type="range" min="0" max="1" step="0.01" value="0.8" aria-label="Volume">
+                        <button class="btn" data-action="speed" aria-label="Playback Speed" title="Speed: 1x">
+                            <span class="speed-text">1x</span>
+                        </button>
+                        <button class="btn" data-action="fs" aria-label="Toggle Fullscreen">
+                            <svg class="icon-fs" viewBox="0 0 24 24">
+                                <path
+                                    d="M7 14H5v5h5v-2H7v-3zm0-4h3V7h2V2H7v3H5v5h2V6zM17 5h-3V3h5v5h-2V5zm-3 14h3v-3h2v5h-5v-2z">
+                                </path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -537,6 +533,54 @@
             ];
         }
 
+        function drawPanels(time) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+            ctx.lineWidth = 1;
+
+            panels.forEach(p => {
+                const floatY = Math.sin(time * 0.001 + p.offset) * 10;
+                const x = p.x;
+                const y = p.y + floatY;
+
+                // Draw Panel
+                ctx.beginPath();
+                ctx.roundRect(x, y, p.w, p.h, 12);
+                ctx.fill();
+                ctx.stroke();
+
+                // Draw Mock Content
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.fillRect(x + 16, y + 16, p.w * 0.3, 8);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+                ctx.fillRect(x + 16, y + 32, p.w * 0.6, 8);
+                ctx.fillRect(x + 16, y + 48, p.w * 0.5, 8);
+
+                // Reset fill style for next panel
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
+            });
+        }
+
+        function drawFlowLines() {
+            ctx.strokeStyle = 'rgba(59, 130, 246, 0.1)'; // ops-primary with low opacity
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i < 3; i++) {
+                const offsetY = (i - 1) * 30;
+                const startX = -100;
+                const startY = height * 0.4 + offsetY;
+                const endX = width + 100;
+                const endY = height * 0.4 + offsetY;
+                const controlX = width / 2;
+                const controlY = height * 0.4 + offsetY + (i % 2 === 0 ? 100 : -100);
+
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.quadraticCurveTo(controlX, controlY, endX, endY);
+                ctx.stroke();
+            }
+        }
+
         class Particle {
             constructor() {
                 this.reset();
@@ -587,54 +631,6 @@
             }
         }
 
-        function drawPanels(time) {
-            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
-            ctx.lineWidth = 1;
-
-            panels.forEach(p => {
-                const floatY = Math.sin(time * 0.001 + p.offset) * 10;
-                const x = p.x;
-                const y = p.y + floatY;
-
-                // Draw Panel
-                ctx.beginPath();
-                ctx.roundRect(x, y, p.w, p.h, 12);
-                ctx.fill();
-                ctx.stroke();
-
-                // Draw Mock Content
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-                ctx.fillRect(x + 16, y + 16, p.w * 0.3, 8);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-                ctx.fillRect(x + 16, y + 32, p.w * 0.6, 8);
-                ctx.fillRect(x + 16, y + 48, p.w * 0.5, 8);
-
-                // Reset fill style for next panel
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.02)';
-            });
-        }
-
-        function drawFlowLines() {
-            ctx.strokeStyle = 'rgba(59, 130, 246, 0.1)'; // ops-primary with low opacity
-            ctx.lineWidth = 1;
-
-            for (let i = 0; i < 3; i++) {
-                const offsetY = (i - 1) * 30;
-                const startX = -100;
-                const startY = height * 0.4 + offsetY;
-                const endX = width + 100;
-                const endY = height * 0.4 + offsetY;
-                const controlX = width / 2;
-                const controlY = height * 0.4 + offsetY + (i % 2 === 0 ? 100 : -100);
-
-                ctx.beginPath();
-                ctx.moveTo(startX, startY);
-                ctx.quadraticCurveTo(controlX, controlY, endX, endY);
-                ctx.stroke();
-            }
-        }
-
         function animate(time) {
             ctx.clearRect(0, 0, width, height);
 
@@ -653,28 +649,6 @@
         resize();
         initParticles();
         animate(0);
-
-        // Video Player Logic
-        function toggleVideo() {
-            const video = document.getElementById('demo-video');
-            const overlay = document.getElementById('video-overlay');
-
-            if (video.paused) {
-                video.play();
-                overlay.style.opacity = '0';
-                overlay.style.pointerEvents = 'none';
-            } else {
-                video.pause();
-                overlay.style.opacity = '1';
-                overlay.style.pointerEvents = 'auto';
-            }
-        }
-
-        document.getElementById('demo-video').addEventListener('ended', () => {
-            const overlay = document.getElementById('video-overlay');
-            overlay.style.opacity = '1';
-            overlay.style.pointerEvents = 'auto';
-        });
     </script>
 </body>
 
