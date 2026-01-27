@@ -1,11 +1,11 @@
 /* ===== Global layout system (fixes left/right gaps + sharp background) ===== */
 :root{
-  --container: 1200px;
-  --gutter: clamp(16px, 4vw, 44px);
-  --sectionY: clamp(56px, 8vw, 120px);
-  --radius: 22px;
-  --glass: rgba(10, 14, 18, 0.55);
-  --glassBorder: rgba(255,255,255,0.09);
+  --container: 1240px;
+  --gutter: 24px;
+  --sectionY: clamp(56px, 6vw, 96px);
+  --radius: 20px;
+  --glass: rgba(0,0,0,0.35);
+  --glassBorder: rgba(255,255,255,0.08);
   --headerH: 72px;
 
   /* Colors */
@@ -53,15 +53,15 @@ canvas#metatron-hex-canvas,
   pointer-events: none;
 }
 
-/* global black glass overlay that covers TOP to BOTTOM and left to right - FULL BLEED */
+/* global black glass overlay - full screen, less dark */
 body::before{
   content:"";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(16px) saturate(1.1);
-  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  background: rgba(0,0,0,0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 1;
   width: 100vw;
   height: 100vh;
@@ -75,7 +75,7 @@ body::after{
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(1400px 800px at 50% 20%, rgba(0,0,0,0.0), rgba(0,0,0,0.6));
+  background: radial-gradient(1400px 800px at 50% 20%, rgba(0,0,0,0.0), rgba(0,0,0,0.5));
   z-index: 1;
   width: 100vw;
   height: 100vh;
@@ -87,16 +87,19 @@ body::after{
   z-index: 1; 
 }
 
-/* one container rule for every section */
+/* one container rule for every section - consistent everywhere */
 .container{
-  width: min(var(--container), calc(100% - (2 * var(--gutter))));
-  margin-inline: auto;
+  max-width: var(--container);
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+  margin: 0 auto;
   box-sizing: border-box;
+  width: 100%;
 }
 
-/* Section Shell - full-bleed black glass for every section */
+/* Section Shell - consistent vertical padding and full-width */
 .section{
-  padding-block: var(--sectionY);
+  padding: var(--sectionY) 0;
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
@@ -104,33 +107,16 @@ body::after{
   position: relative;
 }
 
-/* Full-bleed black glass overlay for each section - ensures no gaps */
-.section::before{
-  content: "";
-  position: absolute;
-  inset: 0;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
-  background: rgba(0,0,0,0.3);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  z-index: -1;
-  pointer-events: none;
-}
-
 /* typography that never explodes (fixes step 3/4 going lost) */
 .h1, h1{ 
-  font-size: clamp(38px, 5vw, 70px); 
+  font-size: clamp(40px, 4.5vw, 72px); 
   line-height: 1.05; 
   font-weight: 800;
   margin: 0 0 12px;
 }
 
 .h2, h2, .section-title{ 
-  font-size: clamp(26px, 3.2vw, 44px); 
+  font-size: clamp(28px, 3vw, 48px); 
   line-height: 1.1; 
   font-weight: 800;
   margin: 0 0 10px;
@@ -138,7 +124,7 @@ body::after{
 }
 
 .p, p{ 
-  font-size: clamp(15px, 1.2vw, 18px); 
+  font-size: clamp(14px, 1.1vw, 18px); 
   line-height: 1.65; 
   opacity: 0.9; 
   margin: 0;
@@ -147,6 +133,13 @@ body::after{
 .section-head{
   text-align: center;
   margin-bottom: clamp(32px, 4vw, 48px);
+  width: 100%;
+}
+
+.section-head .section-sub{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .section-sub{
@@ -161,6 +154,23 @@ body::after{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+}
+
+.section-sub-shimmer{
+  position: relative;
+  display: inline-block;
+  background: linear-gradient(90deg, var(--text) 0%, var(--muted) 50%, var(--text) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-subtle 4s linear infinite;
+}
+
+@keyframes shimmer-subtle {
+  to {
+    background-position: 200% center;
+  }
 }
 
 .eyebrow{
@@ -222,8 +232,8 @@ a{color:inherit; text-decoration:none}
   background: var(--glass);
   border: 1px solid var(--glassBorder);
   border-radius: var(--radius);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   box-shadow: var(--shadow);
 }
 
@@ -322,21 +332,26 @@ header.site-header.is-scrolled{
   min-width: 190px;
 }
 
-/* logo size normalization */
+/* logo size normalization - constrained */
 .brand img, .brand-logo{
-  width: 44px; 
-  height: 44px;
+  width: 48px; 
+  height: 48px;
+  max-width: 48px;
+  max-height: 48px;
   border-radius: 14px;
   object-fit: cover;
   border: 1px solid rgba(255,255,255,.14);
   box-shadow: 0 10px 30px rgba(0,0,0,.35);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
 }
 
 header.site-header.is-scrolled .brand img,
 header.site-header.is-scrolled .brand-logo{
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
+  max-width: 40px;
+  max-height: 40px;
 }
 
 .brand .name,
@@ -664,8 +679,8 @@ header.site-header.is-scrolled .brand-logo{
 }
 
 .daena-orbit{
-  width: 320px;
-  height: 320px;
+  width: 360px;
+  height: 360px;
   margin: 0 auto;
   position: relative;
 }
@@ -675,8 +690,8 @@ header.site-header.is-scrolled .brand-logo{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 90px;
-  height: 90px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   background: var(--glass);
   border: 2px solid var(--glassBorder);
@@ -691,25 +706,25 @@ header.site-header.is-scrolled .brand-logo{
 
 .daena-orbit-node{
   position: absolute;
-  width: 75px;
-  height: 75px;
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   background: var(--glass);
   border: 2px solid var(--glassBorder);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(10px, 1vw, 11px);
+  font-size: clamp(11px, 1.2vw, 13px);
   font-weight: 600;
   text-align: center;
-  padding: 6px;
+  padding: 8px;
   transition: all 0.4s ease;
   cursor: pointer;
-  line-height: 1.15;
+  line-height: 1.2;
   word-break: break-word;
   color: var(--text);
   white-space: normal;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .daena-orbit-node.is-active{

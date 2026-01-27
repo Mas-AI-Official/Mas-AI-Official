@@ -281,6 +281,19 @@
     const nodes = qsa(".daena-orbit-node");
     if (!wrap || !steps.length) return;
 
+    // Step mapping: node index -> step index
+    // Node 0 (Sunflower) -> Step 1 (Sunflower)
+    // Node 1 (Honeycomb) -> Step 2 (Honeycomb)
+    // Node 2 (Agent Swarms) -> Step 3 (Agent Swarms)
+    // Node 3 (Audit Trail) -> Step 4 (Audit Trail)
+    // Step 0 is "Sunflower + Honeycomb" (default, no node)
+    const nodeToStepMap = {
+      0: 1, // Sunflower node -> Step 1
+      1: 2, // Honeycomb node -> Step 2
+      2: 3, // Agent Swarms node -> Step 3
+      3: 4  // Audit Trail node -> Step 4
+    };
+
     // Layout orbit nodes in circle - proper positioning
     function layoutOrbitNodes() {
       if (!nodes.length) return;
@@ -315,21 +328,26 @@
       steps.forEach((step, i) => {
         step.classList.toggle("is-active", i === stepIndex);
       });
-      nodes.forEach((node, i) => {
-        node.classList.toggle("is-active", i === stepIndex);
+      // Update nodes based on step
+      nodes.forEach((node, nodeIndex) => {
+        const mappedStep = nodeToStepMap[nodeIndex];
+        node.classList.toggle("is-active", mappedStep === stepIndex);
       });
     }
 
-    // Click handlers
-    nodes.forEach((node, i) => {
+    // Click handlers - fix mapping
+    nodes.forEach((node, nodeIndex) => {
       node.addEventListener("click", () => {
+        const stepIndex = nodeToStepMap[nodeIndex];
+        if (stepIndex === undefined) return;
+        
         if (prefersReduced) {
-          setStep(i);
+          setStep(stepIndex);
           return;
         }
-        setStep(i);
+        setStep(stepIndex);
         // Scroll to show the step
-        const step = steps[i];
+        const step = steps[stepIndex];
         if (step) {
           step.scrollIntoView({ behavior: "smooth", block: "center" });
         }
@@ -366,7 +384,7 @@
       }
     });
 
-    // Initial state
+    // Initial state - show Sunflower + Honeycomb
     setStep(0);
   }
 
