@@ -1567,22 +1567,12 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             z-index: 9999;
-            opacity: 0;
-            visibility: hidden;
-            max-height: 0;
-            overflow: hidden;
-            transform: translateY(-10px);
-            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, max-height 0.4s ease;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .mobile-nav.is-open {
             display: block;
-            opacity: 1;
-            visibility: visible;
-            max-height: 600px;
-            transform: translateY(0);
         }
 
         /* Ensure header adjusts when menu is open */
