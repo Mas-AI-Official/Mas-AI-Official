@@ -51,6 +51,16 @@
     btn.addEventListener("click", () => {
       const open = panel.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
+      
+      if (open) {
+        // Force reflow to ensure menu expands
+        panel.style.maxHeight = "none";
+        const height = panel.scrollHeight;
+        panel.style.maxHeight = `${height}px`;
+      } else {
+        panel.style.maxHeight = "0";
+      }
+      
       updateSpacing(open);
     });
 
