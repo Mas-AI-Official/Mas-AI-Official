@@ -779,7 +779,7 @@
             margin: 0 auto;
             position: relative;
             background: transparent;
-            overflow-x: hidden;
+            overflow-x: visible;
             box-sizing: border-box;
         }
 
@@ -787,8 +787,10 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
+            left: 50%;
+            margin-left: -50vw;
+            width: 100vw;
+            right: auto;
             bottom: 0;
             background: rgba(11, 11, 20, 0.6);
             backdrop-filter: blur(12px);
@@ -823,7 +825,7 @@
             padding: clamp(3rem, 5vw, 5rem) clamp(1rem, 4vw, 2rem);
             background: transparent;
             position: relative;
-            overflow-x: hidden;
+            overflow-x: visible;
             box-sizing: border-box;
         }
 
@@ -831,10 +833,14 @@
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            right: 0;
+            left: 50%;
+            margin-left: -50vw;
+            width: 100vw;
+            right: auto;
             bottom: 0;
-            background: rgba(5, 8, 15, 0.85);
+            background: rgba(11, 11, 20, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 0;
         }
 
