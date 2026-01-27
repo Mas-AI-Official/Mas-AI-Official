@@ -71,6 +71,7 @@
     initDaenaOSStory();
     initPortfolioAnimation();
     initNavbarScrollSpy();
+    initProblemSection();
   }
 
   function initNavbarScrollSpy() {
@@ -147,6 +148,38 @@
           once: false
         }
       });
+    });
+  }
+
+  function initProblemSection() {
+    const problemSection = qs("#problem");
+    if (!problemSection) return;
+
+    const title = problemSection.querySelector(".section-title");
+    if (!title) return;
+
+    if (prefersReduced) {
+      return;
+    }
+
+    // Animate title with word stagger
+    const words = title.textContent.split(" ");
+    title.innerHTML = words.map((word, i) => 
+      `<span style="display: inline-block; opacity: 0; transform: translateY(20px);">${word}</span>`
+    ).join(" ");
+
+    const wordSpans = title.querySelectorAll("span");
+    gsap.to(wordSpans, {
+      opacity: 1,
+      y: 0,
+      duration: 0.6,
+      ease: "power3.out",
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: title,
+        start: "top 85%",
+        once: true
+      }
     });
   }
 

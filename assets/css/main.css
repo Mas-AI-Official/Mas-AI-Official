@@ -492,6 +492,16 @@ header.site-header.is-scrolled .brand-logo{
   margin-left: auto;
   margin-right: auto;
   text-align: center;
+  max-width: 720px;
+}
+
+.hero-main-title{
+  text-align: center;
+}
+
+.hero-actions-centered{
+  justify-content: center;
+  width: 100%;
 }
 
 .hero-actions{
@@ -928,8 +938,9 @@ header.site-header.is-scrolled .brand-logo{
   .daena-os-left{position: relative; top: 0;}
   .daena-step{min-height: auto; padding: 24px;}
   .credibility-strip{grid-template-columns: 1fr; gap: 24px; padding: 32px 24px;}
-  .daena-orbit{width: 240px; height: 240px; margin: 0 auto 20px;}
-  .daena-orbit-node{width: 60px; height: 60px; font-size: 10px;}
+  .daena-orbit{width: 280px; height: 280px; margin: 0 auto 20px;}
+  .daena-orbit-node{width: 70px; height: 70px; font-size: clamp(10px, 1.1vw, 11px);}
+  .daena-orbit-center{width: 80px; height: 80px;}
 }
 
 @media (max-width: 560px){
