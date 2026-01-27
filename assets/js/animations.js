@@ -35,16 +35,20 @@
 
     const updateSpacing = (isOpen) => {
       if (hero) {
-        // Use setTimeout to ensure menu is rendered before calculating height
-        setTimeout(() => {
-          if (isOpen) {
-            const menuHeight = panel.scrollHeight || panel.offsetHeight;
-            hero.style.marginTop = `${60 + menuHeight}px`;
-            hero.style.transition = "margin-top 0.3s ease";
-          } else {
-            hero.style.marginTop = "60px";
-          }
-        }, 10);
+        // Use requestAnimationFrame to ensure menu is fully rendered
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (isOpen) {
+              // Force reflow to get accurate height
+              panel.style.display = 'block';
+              const menuHeight = panel.offsetHeight || panel.scrollHeight;
+              hero.style.marginTop = `${60 + menuHeight}px`;
+              hero.style.transition = "margin-top 0.3s ease";
+            } else {
+              hero.style.marginTop = "60px";
+            }
+          });
+        });
       }
     };
 
