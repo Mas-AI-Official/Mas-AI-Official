@@ -284,10 +284,11 @@
 
     els.forEach(el => {
       const target = parseFloat(el.getAttribute("data-count") || "0");
+      const suffix = el.getAttribute("data-suffix") || "";
       const isFloat = String(target).includes(".");
 
       if (prefersReduced) {
-        el.textContent = isFloat ? target.toFixed(1) : String(Math.round(target));
+        el.textContent = (isFloat ? target.toFixed(1) : String(Math.round(target))) + suffix;
         return;
       }
 
@@ -302,7 +303,7 @@
           once: true
         },
         onUpdate: () => {
-          el.textContent = isFloat ? obj.val.toFixed(1) : String(Math.round(obj.val));
+          el.textContent = (isFloat ? obj.val.toFixed(1) : String(Math.round(obj.val))) + suffix;
         }
       });
     });
