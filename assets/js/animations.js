@@ -35,32 +35,22 @@
 
     const updateSpacing = (isOpen) => {
       if (hero) {
-        if (isOpen) {
-          // Wait for menu to expand, then calculate height
-          setTimeout(() => {
+        // Use setTimeout to ensure menu is rendered before calculating height
+        setTimeout(() => {
+          if (isOpen) {
             const menuHeight = panel.scrollHeight || panel.offsetHeight;
             hero.style.marginTop = `${60 + menuHeight}px`;
             hero.style.transition = "margin-top 0.3s ease";
-          }, 50);
-        } else {
-          hero.style.marginTop = "60px";
-        }
+          } else {
+            hero.style.marginTop = "60px";
+          }
+        }, 10);
       }
     };
 
     btn.addEventListener("click", () => {
       const open = panel.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      
-      if (open) {
-        // Force reflow to ensure menu expands
-        panel.style.maxHeight = "none";
-        const height = panel.scrollHeight;
-        panel.style.maxHeight = `${height}px`;
-      } else {
-        panel.style.maxHeight = "0";
-      }
-      
       updateSpacing(open);
     });
 
