@@ -501,21 +501,13 @@ header.site-header.is-scrolled{
   gap: 20px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 40px;
-  perspective: 1200px;
   width: 100%;
   max-width: 100%;
 }
 
 .grid-portfolio .card{
   transform-style: preserve-3d;
-  opacity: 0;
-  transform: translateZ(-300px) scale(0.75);
   will-change: transform, opacity;
-}
-
-.grid-portfolio .card.is-visible{
-  opacity: 1;
-  transform: translateZ(0) scale(1);
 }
 
 /* Grid system */

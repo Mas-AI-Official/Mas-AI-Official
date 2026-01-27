@@ -158,6 +158,8 @@
     if (prefersReduced) {
       cards.forEach(card => {
         card.classList.add("is-visible");
+        card.style.opacity = "1";
+        card.style.transform = "scale(1)";
       });
       return;
     }
@@ -165,12 +167,12 @@
     // Set initial state - cards start from behind (small, far back)
     gsap.set(cards, {
       opacity: 0,
-      scale: 0.8,
-      z: -200,
-      transformPerspective: 1000
+      scale: 0.75,
+      z: -300,
+      transformPerspective: 1200
     });
 
-    // Animate cards coming from behind to front
+    // Animate cards coming from behind to front sequentially
     cards.forEach((card, index) => {
       gsap.to(card, {
         opacity: 1,
@@ -178,7 +180,6 @@
         z: 0,
         duration: 0.8,
         ease: "power3.out",
-        delay: index * 0.1,
         scrollTrigger: {
           trigger: card,
           start: "top 85%",
