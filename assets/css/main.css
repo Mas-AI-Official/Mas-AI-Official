@@ -946,6 +946,20 @@ header.site-header.is-scrolled .brand-logo{
   font-size: 14px;
 }
 
+.card-actions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  align-items: center;
+}
+
+.btn-link-sm{
+  font-size: 0.9em;
+  padding: 6px 12px;
+  opacity: 0.85;
+}
+
 /* Anchor scroll margin */
 [id]{
   scroll-margin-top: calc(var(--headerH) + 18px);
