@@ -1582,42 +1582,43 @@
         }
 
         .mobile-nav .container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            padding: 20px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            padding: 16px;
             max-width: 100%;
         }
 
         .mobile-nav a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 14px 12px;
+            display: block;
+            padding: 16px 20px;
             color: var(--text);
             text-decoration: none;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 600;
-            border-radius: 8px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.2s ease;
-            text-align: center;
+            transition: color 0.2s ease;
+            text-align: left;
             -webkit-tap-highlight-color: rgba(255, 215, 0, 0.2);
-            min-height: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            line-height: 1.5;
+        }
+
+        .mobile-nav a:first-child {
+            border-top: none;
+        }
+
+        .mobile-nav a:last-child {
+            border-bottom: none;
         }
 
         .mobile-nav a:hover,
         .mobile-nav a:active {
-            background: rgba(255, 215, 0, 0.15);
             color: var(--gold);
-            border-color: rgba(255, 215, 0, 0.3);
-            transform: translateY(-2px);
+            background: rgba(255, 215, 0, 0.05);
         }
 
         .mobile-nav a.btn-primary {
-            grid-column: 1 / -1;
-            margin-top: 8px;
+            margin-top: 12px;
             border-radius: 8px;
             text-align: center;
             background: var(--accent);
@@ -1629,13 +1630,6 @@
 
         .mobile-nav a.btn-primary:hover {
             background: var(--gold);
-            transform: translateY(-2px) scale(1.02);
-        }
-
-        @media (max-width: 480px) {
-            .mobile-nav .container {
-                grid-template-columns: repeat(2, 1fr);
-            }
         }
 
         /* Responsive */
