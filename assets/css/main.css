@@ -1,6 +1,6 @@
 :root{
-  --container: 1180px;
-  --px: clamp(16px, 3vw, 28px);
+  --container: 1280px;
+  --px: clamp(20px, 4vw, 24px);
   --headerH: 72px;
 
   /* Global glass + card glass */
@@ -72,7 +72,9 @@ body::before{
   min-height: 100vh;
   z-index: 1;
   pointer-events: none;
-  background: var(--pageTint);
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   /* Ensure it covers all scrollable content - stays fixed during scroll */
   transform: translateZ(0);
   will-change: transform;
@@ -87,22 +89,23 @@ body::before{
   z-index: 2;
 }
 
-/* Universal container that forces alignment - no gaps */
+/* Universal container - consistent layout system */
 .container{
   width: min(var(--container), 100%);
+  max-width: var(--container);
   margin: 0 auto;
-  padding-inline: clamp(20px, 4vw, 32px);
-  max-width: 100%;
+  padding-inline: var(--px);
   box-sizing: border-box;
 }
 
-/* Section spacing, consistent everywhere - no gaps */
+/* Section spacing - consistent everywhere */
 .section{
-  padding: clamp(56px, 7vw, 110px) 0;
+  padding-block: clamp(64px, 8vw, 120px);
   width: 100%;
   max-width: 100vw;
   overflow-x: hidden;
   box-sizing: border-box;
+  position: relative;
 }
 
 .section-title{
@@ -240,22 +243,34 @@ a{color:inherit; text-decoration:none}
   background: rgba(255,255,255,0.04);
 }
 
-/* Navbar - fixed height, proper sizing - no gaps */
+/* Navbar - premium sticky blur */
 header.site-header{
   position: sticky;
-  top: 0;
-  z-index: 10;
+  top: 12px;
+  z-index: 100;
   height: var(--headerH);
   display: flex;
   align-items: center;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   background: rgba(10,12,16,.55);
-  border-bottom: 1px solid rgba(255,255,255,.08);
-  transition: all 0.3s ease;
-  width: 100%;
-  max-width: 100vw;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  margin: 0 var(--px);
+  max-width: var(--container);
+  margin-left: auto;
+  margin-right: auto;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
+}
+
+header.site-header.is-scrolled{
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  background: rgba(10,12,16,.85);
+  border-color: rgba(255,255,255,.12);
+  box-shadow: 0 4px 24px rgba(0,0,0,.3);
+  height: 64px;
 }
 
 header.site-header.is-scrolled{
@@ -292,6 +307,13 @@ header.site-header.is-scrolled{
   object-fit: cover;
   border: 1px solid rgba(255,255,255,.14);
   box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+header.site-header.is-scrolled .brand img,
+header.site-header.is-scrolled .brand-logo{
+  width: 32px;
+  height: 32px;
 }
 
 .brand .name,
@@ -317,11 +339,30 @@ header.site-header.is-scrolled{
   font-size: 14px;
   color: var(--text);
   transition: opacity 0.2s ease;
+  position: relative;
 }
 
 .navlinks a:hover,
 .nav-links a:hover{
   opacity:1;
+}
+
+.navlinks a.is-active,
+.nav-links a.is-active{
+  opacity: 1;
+  color: var(--gold);
+}
+
+.navlinks a.is-active::after,
+.nav-links a.is-active::after{
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
 }
 
 /* CTA */
@@ -413,6 +454,10 @@ header.site-header.is-scrolled{
   gap:12px;
   flex-wrap:wrap;
   margin-top: 18px;
+}
+
+.hero-actions-centered{
+  justify-content: center;
 }
 
 .subhead{
@@ -551,6 +596,141 @@ header.site-header.is-scrolled{
   display: block;
 }
 
+/* Problem section */
+.section-problem{
+  padding-block: clamp(48px, 6vw, 80px);
+}
+
+/* Daena OS pinned section */
+.section-daena-os{
+  padding-block: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.daena-os-wrap{
+  display: grid;
+  grid-template-columns: 0.4fr 0.6fr;
+  gap: 48px;
+  align-items: center;
+  min-height: 80vh;
+  width: 100%;
+}
+
+.daena-os-left{
+  position: sticky;
+  top: calc(var(--headerH) + 24px);
+  align-self: start;
+}
+
+.daena-os-visual{
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.daena-os-visual h3{
+  font-size: clamp(36px, 4vw, 56px);
+  font-weight: 900;
+  margin: 0 0 12px;
+  background: linear-gradient(90deg, #FFD700, #00bcd4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.daena-tagline{
+  font-size: clamp(16px, 1.8vw, 20px);
+  color: var(--muted);
+  margin: 0;
+}
+
+.daena-os-right{
+  position: relative;
+}
+
+.daena-step{
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  padding: 32px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.daena-step.is-active{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.daena-step h2{
+  margin: 12px 0 16px;
+}
+
+.daena-step p{
+  font-size: clamp(16px, 1.8vw, 18px);
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+/* Credibility strip */
+.section-credibility{
+  padding-block: clamp(48px, 6vw, 80px);
+}
+
+.credibility-strip{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  padding: 40px 32px;
+  text-align: center;
+}
+
+.credibility-item{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.credibility-label{
+  font-size: 12px;
+  color: var(--muted2);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+.credibility-value{
+  font-size: clamp(18px, 2vw, 24px);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+/* Founder card */
+.founder-card{
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 32px;
+  text-align: center;
+}
+
+.founder-bio{
+  font-size: clamp(16px, 1.8vw, 18px);
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0 0 24px;
+}
+
+.founder-links{
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* Portfolio grid - 3x2 with scroll animation */
 .grid-portfolio{
   display: grid;
@@ -574,6 +754,10 @@ header.site-header.is-scrolled{
 
 .grid.cols4{
   grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid.cols3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .card{
@@ -611,20 +795,26 @@ header.site-header.is-scrolled{
   .nav-links{display:none;}
   .nav-burger{display:flex;}
   .stats{grid-template-columns: repeat(2, minmax(0, 1fr));}
-  .pin-wrap{grid-template-columns: 1fr; min-height: auto; gap: 24px; padding: 24px;}
   .grid.cols4{grid-template-columns: repeat(2, minmax(0, 1fr));}
+  .grid.cols3{grid-template-columns: repeat(2, minmax(0, 1fr));}
   .grid-portfolio{grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;}
-  .story-video{height: min(46vh, 400px);}
-  .blueprint-selector{flex-wrap: wrap;}
-  .blueprint-btn{font-size: 12px; padding: 6px 12px;}
+  .daena-os-wrap{grid-template-columns: 1fr; gap: 32px;}
+  .daena-os-left{position: relative; top: 0;}
+  .daena-step{min-height: auto; padding: 24px;}
+  .credibility-strip{grid-template-columns: 1fr; gap: 24px; padding: 32px 24px;}
+  header.site-header{margin: 0 16px; border-radius: 12px;}
 }
 
 @media (max-width: 560px){
   .hero-glass{padding: 26px 18px;}
   .grid.cols4{grid-template-columns: 1fr;}
+  .grid.cols3{grid-template-columns: 1fr;}
   .grid-portfolio{grid-template-columns: 1fr;}
-  .orbit{width: min(280px, 100%);}
-  .node{font-size: 12px; padding: 8px 12px;}
+  .daena-os-visual{padding: 32px 24px;}
+  .credibility-strip{padding: 24px 16px;}
+  .founder-card{padding: 24px 16px;}
+  header.site-header{margin: 0 12px; height: 60px;}
+  header.site-header.is-scrolled{height: 56px;}
 }
 
 /* Reduced motion */

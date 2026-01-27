@@ -2361,7 +2361,7 @@
             </nav>
 
             <div class="nav-cta">
-                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Launch Demo</a>
+                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore Daena</a>
                 <button class="nav-burger" aria-label="Open menu" aria-expanded="false" data-mobile-nav>
                     <span></span><span></span><span></span>
                 </button>
@@ -2376,7 +2376,7 @@
                 <a href="#usecases">Use Cases</a>
                 <a href="/investors.html">Investors</a>
                 <a href="#contact">Contact</a>
-                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Launch Demo</a>
+                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore Daena</a>
             </div>
         </div>
     </header>
@@ -2391,9 +2391,9 @@
                 </h1>
                 <p class="subhead" data-reveal>with governance, auditable memory, and growing agent swarms that evolve with your business.</p>
 
-                <div class="hero-actions" data-reveal>
-                    <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Launch Daena Demo</a>
-                    <a class="btn btn-ghost" href="#architecture">Explore Architecture</a>
+                <div class="hero-actions hero-actions-centered" data-reveal>
+                    <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore Daena</a>
+                    <a class="btn btn-ghost" href="#daena-os">Explore Architecture</a>
                 </div>
 
                 <div class="stats" data-stagger>
@@ -2418,60 +2418,60 @@
         </div>
     </section>
 
-    <!-- Chapter 1: What Daena does -->
-    <section class="section" id="platform">
+    <!-- Chapter 2: Problem (fast) -->
+    <section class="section section-problem" id="problem">
         <div class="container">
             <div class="section-head" data-reveal>
-                <p class="eyebrow">What Daena does</p>
-                <h2 class="section-title">Platform Pillars</h2>
+                <p class="eyebrow">The Challenge</p>
+                <h2 class="section-title">Why traditional AI fails</h2>
             </div>
-            <div class="grid cols4" data-stagger>
+            <div class="grid cols3" data-stagger>
                 <article class="glass card" data-reveal>
-                    <h3>🛡️ Governance</h3>
-                    <p>Policy-driven execution with auditable, traceable decision-making. ABAC tiers, Merkle-notarized lineage, and auto threat detection.</p>
+                    <h3>🔴 No Governance</h3>
+                    <p>AI decisions happen in black boxes with no accountability or policy enforcement. Drift happens, and you can't trace why.</p>
                 </article>
                 <article class="glass card" data-reveal>
-                    <h3>🎯 Orchestration</h3>
-                    <p>Self-organizing agent networks with phase-locked rounds, quorum consensus, and infinite scalability through Hex-Mesh Communication.</p>
+                    <h3>🔴 Fragmented Memory</h3>
+                    <p>Each agent operates in isolation. No shared context, no learning from past decisions, no evolving knowledge base.</p>
                 </article>
                 <article class="glass card" data-reveal>
-                    <h3>🔍 Security & Observability</h3>
-                    <p>Real-time monitoring, prompt injection detection, and comprehensive audit trails. Enterprise-grade security with immune system responses.</p>
+                    <h3>🔴 No Scalability</h3>
+                    <p>Adding agents means chaos. No coordination, no conflict resolution, no way to scale beyond a handful of agents.</p>
                 </article>
             </div>
         </div>
     </section>
 
-    <!-- Chapter 2: How it works (scroll-controlled video + orbit selector) -->
-    <section class="section pin-story" id="architecture">
+    <!-- Chapter 3: Daena OS (pinned scroll story) -->
+    <section class="section section-daena-os" id="daena-os">
         <div class="container">
-            <div class="pin-wrap glass" id="daenaStory">
-                <div class="pin-left">
-                    <p class="eyebrow" data-reveal>How it works</p>
-                    <h2 class="pin-title" id="storyTitle" data-reveal>Sunflower governance</h2>
-                    <p class="pin-desc" id="storyDesc" data-reveal>
-                        Policies, roles, and constraints that prevent drift and enforce accountable autonomy.
-                    </p>
+            <div class="daena-os-wrap" id="daenaOSStory">
+                <div class="daena-os-left">
+                    <div class="daena-os-visual glass">
+                        <h3>Daena</h3>
+                        <p class="daena-tagline">AI-Autonomous Company OS</p>
+                    </div>
                 </div>
-
-                <div class="pin-right">
-                    <div class="how-right">
-                        <div class="blueprint-selector" id="blueprintSelector">
-                            <button class="blueprint-btn is-active" data-step="0">Sunflower</button>
-                            <button class="blueprint-btn" data-step="1">Honeycomb</button>
-                            <button class="blueprint-btn" data-step="2">Agent Swarms</button>
-                            <button class="blueprint-btn" data-step="3">Audit Trail</button>
-                        </div>
-                        <div class="story-video-wrapper">
-                            <video
-                                id="storyVideo"
-                                class="story-video"
-                                src="assets/video/daena-scroll.mp4"
-                                muted
-                                playsinline
-                                preload="auto"
-                            ></video>
-                        </div>
+                <div class="daena-os-right">
+                    <div class="daena-step" data-step="0">
+                        <p class="eyebrow">Step 1</p>
+                        <h2 class="section-title">Governance</h2>
+                        <p>Policy-driven execution with auditable, traceable decision-making. ABAC tiers, Merkle-notarized lineage, and auto threat detection.</p>
+                    </div>
+                    <div class="daena-step" data-step="1">
+                        <p class="eyebrow">Step 2</p>
+                        <h2 class="section-title">Auditable Memory</h2>
+                        <p>Every decision is traceable. Logs, evidence, and outcomes remain queryable and reviewable. NBMF Memory with 60%+ cost savings.</p>
+                    </div>
+                    <div class="daena-step" data-step="2">
+                        <p class="eyebrow">Step 3</p>
+                        <h2 class="section-title">Agent Swarms</h2>
+                        <p>Parallel routing, model switching, and conflict resolution for real work. Self-organizing networks with phase-locked rounds.</p>
+                    </div>
+                    <div class="daena-step" data-step="3">
+                        <p class="eyebrow">Step 4</p>
+                        <h2 class="section-title">Security & Observability</h2>
+                        <p>Real-time monitoring, prompt injection detection, and comprehensive audit trails. Enterprise-grade security with immune system responses.</p>
                     </div>
                 </div>
             </div>
@@ -2482,7 +2482,8 @@
 
 
 
-    <!-- Chapter 5: Use Cases -->
+
+    <!-- Chapter 4: Use Cases (from back to front) -->
     <section id="usecases" class="section">
         <div class="container">
             <div class="section-head" data-reveal>
@@ -2514,7 +2515,7 @@
         </div>
     </section>
 
-    <!-- Chapter 4: Portfolio as Characters -->
+    <!-- Chapter 5: Portfolio (one-by-one reveal, Daena first) -->
     <section id="portfolio" class="section">
         <div class="container">
             <div class="section-head" data-reveal>
@@ -2563,19 +2564,38 @@
         </div>
     </section>
 
-    <!-- Chapter 6: Founder (minimal) -->
+    <!-- Chapter 6: Credibility Strip -->
+    <section id="credibility" class="section section-credibility">
+        <div class="container">
+            <div class="credibility-strip glass">
+                <div class="credibility-item">
+                    <p class="credibility-label">Accepted by</p>
+                    <p class="credibility-value">Google Startup Program</p>
+                </div>
+                <div class="credibility-item">
+                    <p class="credibility-label">Patent Pending</p>
+                    <p class="credibility-value">Sunflower-Honeycomb + NBMF</p>
+                </div>
+                <div class="credibility-item">
+                    <p class="credibility-label">Trusted by</p>
+                    <p class="credibility-value">Enterprise Leaders</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 7: Founder (minimal) -->
     <section id="founder" class="section">
         <div class="container">
             <div class="section-head" data-reveal>
                 <p class="eyebrow">Founder</p>
                 <h2 class="section-title">Masoud Masoori</h2>
             </div>
-            <div class="glass" style="max-width: 700px; margin: 0 auto; padding: 26px; text-align: center;" data-reveal>
-                <p>Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in Canada in 2022. With a background in AI, deep learning, and robotics, he is building Daena and VibeAgent as a Canadian deep-tech platform for AI-native companies.</p>
-                <div style="margin-top: 20px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <div class="founder-card glass" data-reveal>
+                <p class="founder-bio">Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in Canada in 2022. With a background in AI, deep learning, and robotics, he is building Daena and VibeAgent as a Canadian deep-tech platform for AI-native companies.</p>
+                <div class="founder-links">
                     <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-ghost">📧 Email</a>
                     <a href="https://www.linkedin.com/in/masoud-masoori" target="_blank" class="btn btn-ghost">LinkedIn</a>
-                    <a href="Masoud_Masoori Senior AI-ML Architect_Resume.pdf" download class="btn btn-ghost" style="font-size: 12px;">📄 Resume</a>
                 </div>
             </div>
         </div>
@@ -2611,6 +2631,9 @@
         </div>
     </footer>
 
+    <!-- Motion One (lightweight animations) -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@motionone/dom@latest/dist/motionone.es.js"></script>
+    
     <!-- GSAP (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>

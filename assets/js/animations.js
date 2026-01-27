@@ -68,8 +68,40 @@
     initReveals();
     initStaggers();
     initCounters();
-    initPinnedStory();
+    initDaenaOSStory();
     initPortfolioAnimation();
+    initNavbarScrollSpy();
+  }
+
+  function initNavbarScrollSpy() {
+    const navLinks = qsa(".nav-links a");
+    const sections = ["#top", "#problem", "#daena-os", "#usecases", "#portfolio", "#credibility", "#founder", "#contact"];
+    
+    if (!navLinks.length) return;
+
+    const updateActiveLink = () => {
+      const scrollY = window.scrollY + 100;
+      
+      sections.forEach((sectionId, index) => {
+        const section = qs(sectionId);
+        if (!section) return;
+        
+        const sectionTop = section.offsetTop;
+        const sectionBottom = sectionTop + section.offsetHeight;
+        
+        if (scrollY >= sectionTop && scrollY < sectionBottom) {
+          navLinks.forEach(link => link.classList.remove("is-active"));
+          const matchingLink = Array.from(navLinks).find(link => {
+            const href = link.getAttribute("href");
+            return href === sectionId || href.includes(sectionId.replace("#", ""));
+          });
+          if (matchingLink) matchingLink.classList.add("is-active");
+        }
+      });
+    };
+
+    window.addEventListener("scroll", updateActiveLink, { passive: true });
+    updateActiveLink();
   }
 
   function initReveals() {
@@ -155,6 +187,14 @@
     const cards = Array.from(portfolioGrid.querySelectorAll(".card"));
     if (!cards.length) return;
 
+    // Ensure Daena is first
+    const daenaCard = cards.find(card => card.textContent.includes("Daena"));
+    if (daenaCard && cards.indexOf(daenaCard) !== 0) {
+      portfolioGrid.insertBefore(daenaCard, cards[0]);
+      cards.splice(cards.indexOf(daenaCard), 1);
+      cards.unshift(daenaCard);
+    }
+
     if (prefersReduced) {
       cards.forEach(card => {
         card.classList.add("is-visible");
@@ -172,7 +212,7 @@
       transformPerspective: 1200
     });
 
-    // Animate cards coming from behind to front sequentially
+    // Animate cards coming from behind to front sequentially (Daena first)
     cards.forEach((card, index) => {
       gsap.to(card, {
         opacity: 1,
@@ -180,6 +220,7 @@
         z: 0,
         duration: 0.8,
         ease: "power3.out",
+        delay: index * 0.15,
         scrollTrigger: {
           trigger: card,
           start: "top 85%",
@@ -220,6 +261,37 @@
           el.textContent = isFloat ? obj.val.toFixed(1) : String(Math.round(obj.val));
         }
       });
+    });
+  }
+
+  function initDaenaOSStory() {
+    const wrap = qs("#daenaOSStory");
+    const steps = qsa(".daena-step");
+    if (!wrap || !steps.length) return;
+
+    if (prefersReduced) {
+      steps[0].classList.add("is-active");
+      return;
+    }
+
+    // Pin the section and animate steps
+    ScrollTrigger.create({
+      trigger: wrap,
+      start: "top top",
+      end: "+=3000",
+      pin: true,
+      scrub: 0.6,
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const stepIndex = Math.min(
+          Math.floor(progress * steps.length),
+          steps.length - 1
+        );
+        
+        steps.forEach((step, i) => {
+          step.classList.toggle("is-active", i === stepIndex);
+        });
+      }
     });
   }
 
