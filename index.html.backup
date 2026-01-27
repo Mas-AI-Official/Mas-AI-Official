@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=5, viewport-fit=cover, user-scalable=yes">
-    <title>Mas-AI Technologies Inc. | Premium AI Platform</title>
+    <title>MAS-AI | AI-Autonomous Company OS</title>
     <meta name="description"
-        content="Mas-AI Technologies Inc. - Governance-first AI platform for autonomous companies and agent swarms. Premium AI solutions with patent-pending technologies.">
+        content="Governance-first autonomy for AI departments and agent swarms in real time. Auditable, policy-driven, traceable execution. Daena is the VP interface.">
     <meta name="keywords"
         content="MAS-AI, MAS AI, MAS-AI Inc, MAS AI company, MAS-AI Canada, Daena AI, Daena multi-agent system, AI VP system, Sunflower Architecture AI, Honeycomb Governance AI, Multi-agent orchestration platform, LLM orchestration, AI-native company OS, Agent collaboration system, AI CEO, AI VP systems, Autonomous agent platforms, artificial intelligence VP, autonomous company, AI-native company, 48+ AI agents, NBMF Memory, Enterprise-DNA, Genome, Epigenome, Lineage, Immune system, Hex-Mesh Communication, patent pending AI, Med Smart, Nature NLP, Construction AI, AI portfolio, multi-agent systems, SFHC, Self-Fulfilling Hierarchical Communication, business intelligence AI, enterprise AI, autonomous decision making, AI governance, trust pipeline, Consulate agents, Google Startup Program, AI innovation, neural memory fabric, sunflower honeycomb architecture, Merkle-notarized lineage, prompt injection detection">
     <link rel="icon" href="mas-ai-logo.jpg">
@@ -464,26 +464,23 @@
                 var(--bg);
         }
 
-        /* Navigation - Premium scroll state like aikido.dev */
+        /* Navigation */
         .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            background: rgba(10, 12, 16, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(15, 20, 25, 0.75);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            transition: all 0.3s ease;
         }
 
         .nav.scrolled {
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            background: rgba(10, 12, 16, 0.85);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+            background: rgba(15, 20, 25, 0.9);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .nav-inner {
@@ -492,13 +489,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 80px;
+            height: 70px;
             padding: 0 24px;
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .nav.scrolled .nav-inner {
-            height: 64px;
         }
 
         .brand {
@@ -513,31 +505,18 @@
         }
 
         .brand img {
-            height: 40px;
+            height: 32px;
             width: auto;
             max-width: 100px;
             object-fit: contain;
             border-radius: 6px;
             box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .nav.scrolled .brand img {
-            height: 32px;
         }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 24px;
             align-items: center;
-            flex: 1;
-            justify-content: center;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
         }
 
         .nav-links a {
@@ -561,12 +540,6 @@
             font-size: 28px;
             cursor: pointer;
             padding: 8px;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-toggle {
-                display: block;
-            }
         }
 
         .mobile-menu {
@@ -982,234 +955,10 @@
             margin: 0;
         }
 
-        /* Platform Pillars */
-        .platform-pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 48px;
-        }
-
-        .pillar-card {
-            background: var(--glass-card-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-card-border);
-            border-radius: 20px;
-            padding: 40px 32px;
-            text-align: center;
-            transition: all 0.4s ease;
-        }
-
-        .pillar-card:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255, 215, 0, 0.3);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 215, 0, 0.1);
-        }
-
-        .pillar-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .pillar-title {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 16px;
-        }
-
-        .pillar-description {
-            color: var(--muted);
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        /* Use Cases */
-        .use-cases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-            margin-top: 48px;
-        }
-
-        .use-case-card {
-            background: var(--glass-card-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-card-border);
-            border-radius: 16px;
-            padding: 32px 24px;
-            text-align: center;
-            transition: all 0.4s ease;
-        }
-
-        .use-case-card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0, 188, 212, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        }
-
-        .use-case-icon {
-            font-size: 40px;
-            margin-bottom: 16px;
-        }
-
-        .use-case-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--cyan);
-            margin-bottom: 12px;
-        }
-
-        .use-case-description {
-            color: var(--muted);
-            font-size: 15px;
-            line-height: 1.6;
-        }
-
-        /* Proof Strip */
-        .proof-strip {
-            background: var(--glass-card-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-card-border);
-            border-radius: 20px;
-            padding: 48px 32px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 32px;
-            text-align: center;
-        }
-
-        .proof-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .proof-value {
-            font-size: 48px;
-            font-weight: 800;
-            background: var(--accent);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .proof-label {
-            color: var(--muted);
-            font-size: 14px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* Founder Short */
-        .founder-short {
-            text-align: center;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .founder-name {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--gold);
-            margin-bottom: 20px;
-        }
-
-        .founder-bio {
-            font-size: 18px;
-            color: var(--muted);
-            line-height: 1.8;
-            margin-bottom: 32px;
-        }
-
-        .founder-links {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .founder-links a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 12px 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .founder-links a:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-            transform: translateY(-2px);
-        }
-
-        /* Contact Actions */
-        .contact-actions {
-            display: flex;
-            gap: 16px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 48px;
-        }
-
-        /* Chat Bubble */
-        .chat-bubble {
-            position: fixed;
-            bottom: 24px;
-            right: 24px;
-            background: var(--glass-card-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--glass-card-border);
-            border-radius: 50px;
-            padding: 16px 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-        }
-
-        .chat-bubble:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-            border-color: var(--gold);
-        }
-
-        .chat-bubble-icon {
-            font-size: 24px;
-        }
-
-        .chat-bubble-text {
-            color: var(--text);
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-            .chat-bubble {
-                bottom: 16px;
-                right: 16px;
-                padding: 12px 20px;
-            }
-            .chat-bubble-text {
-                display: none;
-            }
-        }
-
         /* Portfolio Projects */
         .portfolio-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 32px;
             margin-top: 64px;
         }
@@ -2308,34 +2057,6 @@
                 min-height: 70vh;
             }
         }
-
-        /* Scroll Reveal System */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .reveal.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Respect reduced motion preference */
-        @media (prefers-reduced-motion: reduce) {
-            .reveal {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
-        }
-
-        /* Staggered reveal delays for cards */
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-        .reveal-delay-5 { transition-delay: 0.5s; }
     </style>
 </head>
 
@@ -2356,38 +2077,55 @@
                 <span>MAS-AI</span>
             </a>
             <div class="nav-links">
-                <a href="#platform">Platform</a>
+                <a href="#daena">Daena</a>
                 <a href="#portfolio">Portfolio</a>
-                <a href="#use-cases">Use Cases</a>
-                <a href="/investors.html">Investors</a>
+                <a href="#founder">Founder</a>
+                <a href="/investors.html">For Investors</a>
                 <a href="#contact">Contact</a>
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
         </div>
         <div class="mobile-menu" id="mobileMenu">
-            <a href="#platform" class="btn btn-ghost">Platform</a>
+            <a href="#daena" class="btn btn-ghost">Daena</a>
             <a href="#portfolio" class="btn btn-ghost">Portfolio</a>
-            <a href="#use-cases" class="btn btn-ghost">Use Cases</a>
-            <a href="/investors.html" class="btn btn-ghost">Investors</a>
+            <a href="#founder" class="btn btn-ghost">Founder</a>
+            <a href="/investors.html" class="btn btn-ghost">For Investors</a>
             <a href="#contact" class="btn btn-ghost">Contact</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Daena Focus -->
     <section class="hero" id="hero">
-        <div class="hero-content reveal">
-            <h1 class="hero-title">Mas-AI Technologies Inc.</h1>
+        <div class="hero-content">
+            <h1 class="hero-title">Meet Daena</h1>
             <div class="hero-text-content">
-                <p class="hero-subtitle">Governance-first AI platform for autonomous companies and agent swarms.</p>
+                <p class="hero-subtitle">AI-Autonomous Company OS for Daena</p>
+                <p class="hero-description">Governance-first autonomy for AI departments and agent swarms in real time.
+                </p>
+                <p class="hero-description">Auditable, policy-driven, and traceable execution across the company.</p>
             </div>
             <div class="hero-cta">
-                <a href="https://daena.mas-ai.co/" class="btn btn-primary"
+                <a href="https://daena.mas-ai.co/" class="btn btn-primary btn-shimmer"
                     style="font-size: 18px; padding: 16px 32px;">
-                    Launch Daena Demo →
+                    Explore Daena →
                 </a>
-                <a href="https://github.com/Mas-AI-Official/AI-Autonomus-company-OS" class="btn btn-ghost" 
-                    style="font-size: 18px; padding: 16px 32px;" target="_blank" rel="noopener noreferrer">
-                    See Architecture →
+                <a href="https://daena.mas-ai.co/" class="btn btn-ghost" style="font-size: 18px; padding: 16px 32px;">
+                    Live Daena demo →
+                </a>
+            </div>
+            <div style="margin-top: 16px; text-align: center;">
+                <a href="https://github.com/Mas-AI-Official/AI-Autonomus-company-OS"
+                    style="font-size: 14px; color: var(--muted); text-decoration: none; transition: color 0.3s ease;"
+                    onmouseover="this.style.color='var(--gold)'; this.style.textDecoration='underline';"
+                    onmouseout="this.style.color='var(--muted)'; this.style.textDecoration='none';" target="_blank"
+                    rel="noopener noreferrer">
+                    Read the Company OS architecture docs
+                </a>
+            </div>
+            <div class="hero-cta" style="margin-top: 20px;">
+                <a href="https://naturenlp.mas-ai.co/" class="btn btn-neon"
+                    style="font-size: 16px; padding: 12px 24px;">
+                    Also Explore NatureNLP →
                 </a>
             </div>
             <div class="hero-stats">
@@ -2411,28 +2149,16 @@
         </div>
     </section>
 
-    <!-- Platform Pillars Section -->
-    <section class="section-wrapper" id="platform">
-        <div class="section-card">
-            <h2 class="section-title reveal">Platform Pillars</h2>
-            <p class="section-subtitle reveal">The foundation of governance-first AI autonomy</p>
-            <div class="platform-pillars-grid">
-                <div class="pillar-card reveal reveal-delay-1">
-                    <div class="pillar-icon">🛡️</div>
-                    <h3 class="pillar-title">Governance</h3>
-                    <p class="pillar-description">Policy-driven execution with auditable, traceable decision-making. ABAC tiers, Merkle-notarized lineage, and auto threat detection.</p>
-                </div>
-                <div class="pillar-card reveal reveal-delay-2">
-                    <div class="pillar-icon">🎯</div>
-                    <h3 class="pillar-title">Orchestration</h3>
-                    <p class="pillar-description">Self-organizing agent networks with phase-locked rounds, quorum consensus, and infinite scalability through Hex-Mesh Communication.</p>
-                </div>
-                <div class="pillar-card reveal reveal-delay-3">
-                    <div class="pillar-icon">🔍</div>
-                    <h3 class="pillar-title">Security & Observability</h3>
-                    <p class="pillar-description">Real-time monitoring, prompt injection detection, and comprehensive audit trails. Enterprise-grade security with immune system responses.</p>
-                </div>
-            </div>
+    <!-- Mas-AI Company Intro -->
+    <section class="section-wrapper" id="company-intro" style="padding-top: 3rem;">
+        <div class="section-card" style="padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 2rem);">
+            <p
+                style="text-align: center; font-size: clamp(18px, 2.5vw, 22px); color: var(--text); line-height: 1.6; max-width: 900px; margin: 0 auto;">
+                <strong style="color: var(--gold);">Mas-AI Technologies Inc.</strong> is the company behind <strong
+                    style="color: var(--gold);">Daena</strong>, the VP interface for our AI-native Company OS, and
+                <strong style="color: var(--cyan);">VibeAgent</strong>, the interface that connects people to Daena's
+                architecture.
+            </p>
         </div>
     </section>
 
@@ -2536,68 +2262,20 @@
         </div>
     </section>
 
-    <!-- Use Cases Section -->
-    <section class="section-wrapper" id="use-cases">
+    <!-- Testimonials & Recognition Section -->
+    <section class="section-wrapper" id="testimonials">
         <div class="section-card">
-            <h2 class="section-title reveal">Use Cases</h2>
-            <p class="section-subtitle reveal">
-                Real-world applications of governance-first AI autonomy
-            </p>
-            <div class="use-cases-grid">
-                <div class="use-case-card reveal reveal-delay-1">
-                    <div class="use-case-icon">🏢</div>
-                    <h3 class="use-case-title">Enterprise Operations</h3>
-                    <p class="use-case-description">Autonomous coordination of departments, resource allocation, and strategic planning with full audit trails.</p>
+            <h2 class="section-title">Recognition & Testimonials</h2>
+            <div style="text-align: center; margin-bottom: 48px;">
+                <div
+                    style="display: inline-block; background: var(--accent); color: #0b0b14; padding: 12px 24px; border-radius: 50px; font-weight: 700; font-size: 18px; margin-bottom: 32px;">
+                    🚀 Accepted by Google Startup Program
                 </div>
-                <div class="use-case-card reveal reveal-delay-2">
-                    <div class="use-case-icon">📊</div>
-                    <h3 class="use-case-title">Business Intelligence</h3>
-                    <p class="use-case-description">Real-time data analysis, pattern recognition, and decision support across multiple data sources.</p>
-                </div>
-                <div class="use-case-card reveal reveal-delay-3">
-                    <div class="use-case-icon">🔐</div>
-                    <h3 class="use-case-title">Compliance & Governance</h3>
-                    <p class="use-case-description">Policy-driven execution with Merkle-notarized lineage, ABAC access control, and automated compliance reporting.</p>
-                </div>
-                <div class="use-case-card reveal reveal-delay-4">
-                    <div class="use-case-icon">🤝</div>
-                    <h3 class="use-case-title">Customer Service</h3>
-                    <p class="use-case-description">Intelligent routing, context-aware responses, and continuous learning from customer interactions.</p>
-                </div>
-                <div class="use-case-card reveal reveal-delay-5">
-                    <div class="use-case-icon">⚡</div>
-                    <h3 class="use-case-title">Content Operations</h3>
-                    <p class="use-case-description">Autonomous content planning, creation, optimization, and distribution across multiple platforms.</p>
-                </div>
+                <p class="section-subtitle" style="max-width: 800px; margin: 0 auto;">
+                    Daena has been recognized by industry leaders and academic experts for its revolutionary approach to
+                    AI systems
+                </p>
             </div>
-        </div>
-    </section>
-
-    <!-- Proof Strip Section -->
-    <section class="section-wrapper" id="proof">
-        <div class="proof-strip">
-            <div class="proof-item reveal">
-                <div class="proof-value">48+</div>
-                <div class="proof-label">AI Agents</div>
-            </div>
-            <div class="proof-item reveal reveal-delay-1">
-                <div class="proof-value">60%+</div>
-                <div class="proof-label">Cost Savings</div>
-            </div>
-            <div class="proof-item reveal reveal-delay-2">
-                <div class="proof-value">99.4%</div>
-                <div class="proof-label">Accuracy</div>
-            </div>
-            <div class="proof-item reveal reveal-delay-3">
-                <div class="proof-value">🚀</div>
-                <div class="proof-label">Google Startup Program</div>
-            </div>
-            <div class="proof-item reveal reveal-delay-4">
-                <div class="proof-value">2</div>
-                <div class="proof-label">Patents Pending</div>
-            </div>
-        </div>
-    </section>
 
             <div class="portfolio-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
                 <div class="project-card">
@@ -2670,16 +2348,17 @@
     <!-- Portfolio Section -->
     <section class="section-wrapper" id="portfolio">
         <div class="section-card">
-            <h2 class="section-title reveal">Portfolio</h2>
-            <p class="section-subtitle reveal">
-                Character-like AI solutions built on our platform
+            <h2 class="section-title">Our Portfolio</h2>
+            <p class="section-subtitle">
+                MAS-AI Technology Inc. develops cutting-edge AI solutions across multiple domains
             </p>
             <div class="portfolio-grid">
-                <div class="project-card reveal reveal-delay-1">
+                <div class="project-card">
                     <div class="project-icon">🧠</div>
                     <h3 class="project-title">Daena</h3>
                     <p class="project-description">
-                        The blueprint VP interface for the AI-native Company OS. Coordinates 48+ agents across departments with governance-first orchestration.
+                        The VP interface for the AI-native Company OS. Coordinates AI agents across departments with
+                        governance-first orchestration. Plans, executes, and learns continuously.
                     </p>
                     <div class="project-tags">
                         <span class="project-tag">AI VP</span>
@@ -2692,11 +2371,12 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card reveal reveal-delay-2">
+                <div class="project-card">
                     <div class="project-icon">🌿</div>
                     <h3 class="project-title">NatureNLP</h3>
                     <p class="project-description">
-                        Efficiency-first NLP research prototype. Reducing compute and energy costs while maintaining language performance.
+                        Efficiency-first NLP research prototype. Reducing compute and energy costs while maintaining
+                        language performance through nature-inspired computation principles.
                     </p>
                     <div class="project-tags">
                         <span class="project-tag">Efficiency-First NLP</span>
@@ -2709,15 +2389,16 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card reveal reveal-delay-3">
+                <div class="project-card">
                     <div class="project-icon">⚙️</div>
                     <h3 class="project-title">ContentOPS</h3>
                     <p class="project-description">
-                        Autonomous content operations system built on Daena OS. Self-coordinating system that continuously plans, executes, and improves.
+                        Autonomous content operations system built on Daena OS. A self-coordinating system that continuously plans, executes, and improves content operations based on real-world feedback — not a static automation pipeline.
                     </p>
                     <div class="project-tags">
                         <span class="project-tag">Autonomous Operations</span>
                         <span class="project-tag">Daena OS</span>
+                        <span class="project-tag">Multi-Platform</span>
                     </div>
                     <div style="margin-top: 1rem;">
                         <a href="https://mas-ai-official.github.io/contentops-web/" target="_blank" rel="noopener noreferrer" class="btn btn-primary"
@@ -2726,11 +2407,12 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card reveal reveal-delay-4">
+                <div class="project-card">
                     <div class="project-icon">🎨</div>
                     <h3 class="project-title">VibeAgent</h3>
                     <p class="project-description">
-                        The user-facing interface to Daena. Gives teams a clear way to interact with Daena's architecture and configure agents.
+                        The user-facing interface to Daena. It gives teams a clear way to interact with Daena's
+                        architecture, configure agents, and monitor what the AI VP is doing for the company.
                     </p>
                     <div class="project-tags">
                         <span class="project-tag">Interface</span>
@@ -2743,7 +2425,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card reveal reveal-delay-5">
+                <div class="project-card">
                     <div class="project-icon">🏥</div>
                     <h3 class="project-title">Med Smart</h3>
                     <p class="project-description">
@@ -2760,7 +2442,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="project-card reveal reveal-delay-5">
+                <div class="project-card">
                     <div class="project-icon">🏗️</div>
                     <h3 class="project-title">Construction AI</h3>
                     <p class="project-description">
@@ -2782,20 +2464,170 @@
         </div>
     </section>
 
-    <!-- Founder Section - Short -->
+    <!-- Founder Section -->
     <section class="section-wrapper" id="founder">
         <div class="section-card">
-            <h2 class="section-title reveal">Founder</h2>
-            <div class="founder-short reveal">
-                <h3 class="founder-name">Masoud Masoori</h3>
-                <p class="founder-bio">
-                    Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in Canada in 2022. 
-                    With a background in AI, deep learning, and robotics, he is building Daena and VibeAgent as a Canadian deep-tech platform for AI-native companies.
-                </p>
-                <div class="founder-links">
-                    <a href="mailto:masoud.masoori@mas-ai.co">📧 Email</a>
-                    <a href="https://www.linkedin.com/in/masoud-masoori" target="_blank">LinkedIn</a>
-                    <a href="Masoud_Masoori Senior AI-ML Architect_Resume.pdf" download>📄 Resume</a>
+            <h2 class="section-title">About the Founder</h2>
+            <div class="founder-section">
+                <!-- Header Section -->
+                <div class="founder-header">
+                    <h3 class="founder-name">Masoud Masoori</h3>
+                    <div class="founder-title">Senior AI Architect | Machine Learning Engineer | Multi-Agent Systems
+                        Founder</div>
+                    <div
+                        style="background: rgba(255,215,0,0.12); border-left: 4px solid var(--gold); border-radius: 12px; padding: clamp(1.25rem, 3vw, 1.5rem); margin: 1.5rem 0; color: #f0f4f8; line-height: 1.8; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        <p style="margin: 0;">
+                            Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in Canada in
+                            2022. With a background in AI, deep learning, and robotics, he is building Daena and
+                            VibeAgent as a Canadian deep-tech platform for AI-native companies.
+                        </p>
+                    </div>
+                    <div class="founder-contact">
+                        <div class="founder-contact-item">
+                            <span>📍</span>
+                            <span>Richmond Hill, ON</span>
+                        </div>
+                        <div class="founder-contact-item">
+                            <span>📧</span>
+                            <a href="mailto:masoud.masoori@mas-ai.co">masoud.masoori@mas-ai.co</a>
+                        </div>
+                        <div class="founder-contact-item">
+                            <span>📞</span>
+                            <span>647-677-1444</span>
+                        </div>
+                        <div class="founder-contact-item">
+                            <a href="https://www.linkedin.com/in/masoud-masoori" target="_blank">LinkedIn</a>
+                            <span>|</span>
+                            <a href="https://github.com/Masoud-Masoori" target="_blank">GitHub</a>
+                            <span>|</span>
+                            <a href="https://mas-ai.co" target="_blank">Portfolio</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Two Column Layout -->
+                <div class="founder-content">
+                    <!-- Left Column -->
+                    <div class="founder-left">
+                        <div class="founder-card cyan">
+                            <h4>📋 Professional Summary</h4>
+                            <p>Senior AI Architect and ML Engineer who designs AI roadmaps, governance, and production
+                                platforms end-to-end. Founder of Mas-AI Technology Inc.; inventor on two patents pending
+                                Sunflower-Honeycomb Memory Architecture and NBMF. Built Daena, a governed multiagent/LLM
+                                platform (48+ agents) with model switching, consensus/merge, auditable ABAC memory, and
+                                real-time voice. Lead from use-case portfolio & prioritization and KPI/ROI definition to
+                                reference architectures (Azure/GCP/AWS), data pipelines and MLOps, security/compliance,
+                                and executive-ready delivery playbooks.</p>
+                        </div>
+
+                        <div class="founder-card gold">
+                            <h4>💼 Professional Experience</h4>
+                            <div style="margin-bottom: 1.5rem;">
+                                <h5 style="color: var(--gold);">AI Architect / ML Systems Engineer - Mas-AI Technology
+                                    Inc.</h5>
+                                <ul>
+                                    <li>✅ Designed and shipped <strong>Daena (v11)</strong>: multi-agent "VP" with model
+                                        switching consensus/merge, CMP bus, reflexive memory, ABAC governance, and
+                                        realtime voice</li>
+                                    <li>✅ Built production backend (FastAPI + WebSockets), live dashboards
+                                        (HTMX/Tailwind), and CI/CD (GitHub Actions); Azure OpenAI + GCP hybrid</li>
+                                    <li>✅ AI Strategy & Roadmap: Drove division-level AI acceleration plan with
+                                        near-term pilots and 12-18-month roadmap</li>
+                                    <li>✅ Governance & Responsible AI: Stood up Sunflower-Honeycomb memory/governance
+                                        (ABAC tiers, audit, retention)</li>
+                                    <li>✅ Implemented LLM routing across OpenAI, DeepSeek, Qwen, Mistral, Gemini, Yi
+                                        with guardrails, audits, and explainability</li>
+                                    <li>✅ Advanced NatureHive NLP (v3-v7) research (≈2.4× token throughput; ≈35% lower
+                                        perplexity vs GPT-2 baseline)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 style="color: var(--muted); font-size: 0.95rem;">Computer Technician / Engineer -
+                                    Ivy Technology, North York, ON | 2022-2025</h5>
+                                <p style="font-size: 0.9rem; margin: 0;">Diagnosed/repaired high-volume Dell/HP/Lenovo
+                                    systems; standardized SOP/QC to cut repeat faults. Used Python and Excel for
+                                    troubleshooting pattern analysis.</p>
+                            </div>
+                        </div>
+
+                        <div class="founder-card purple">
+                            <h4>🚀 AI/ML Projects</h4>
+                            <ul>
+                                <li>🚀 <strong>Daena AI (v11)</strong> - Autonomous AI VP & Agent Company Orchestrator:
+                                    multi-agent orchestration, LLM switching, ABAC, CMP bus, voice; production
+                                    dashboards, audits, and recovery flows</li>
+                                <li>🧠 <strong>NatureHive NLP (v3-v7)</strong> - Nature-inspired LLM with improved
+                                    throughput and reduced perplexity vs GPT-2 baseline</li>
+                                <li>🚇 <strong>Transit Forecaster</strong> - Regression model (R²=0.81) predicting
+                                    public transit demand using historical and seasonal data</li>
+                                <li>🌐 <strong>LingoVids</strong> - Whisper transcription + XTTS multilingual voice
+                                    cloning for synchronized dubs</li>
+                                <li>🤖 <strong>JetAuto Robotics Controller</strong> - ROS1 controller; square-path
+                                    motion and obstacle handling; Gazebo + hardware deployment</li>
+                                <li>💊 <strong>MedScan</strong> - Pill & Prescription Assistant: mobile CV+OCR (YOLO,
+                                    Tesseract, TF-Lite) for pill/prescription scanning with alerts</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="founder-right">
+                        <div class="founder-card cyan">
+                            <h4>🎓 Education</h4>
+                            <p>Seneca College - Graduate Certificate in Artificial Intelligence (AIG)<br>MSc, Civil
+                                Engineering-Transportation<br>TOEFL Score: 100 (2024)</p>
+                        </div>
+
+                        <div class="founder-card gold">
+                            <h4>🏗️ Patent Pending: Sunflower-Honeycomb Memory Architecture (2025)</h4>
+                            <p>Composable agent memory with reflexive memory hooks, ABAC tiers, and CMP message bus for
+                                auditability and governance</p>
+                        </div>
+
+                        <div class="founder-card purple">
+                            <h4>🧠 Patent Pending: NBMF - Neuro-Bio Matrix Fusion (2025)</h4>
+                            <p>Oscillatory gating + memory-slot fusion over recursive topology to stabilize long-context
+                                LLM reasoning</p>
+                        </div>
+
+                        <div class="founder-card cyan">
+                            <h4>☁️ Platforms & MLOps</h4>
+                            <p>Azure OpenAI, GCP, AWS; pipelines; model registry/monitoring; drift detection; CI/CD
+                                (GitHub Actions, Jenkins)</p>
+                        </div>
+
+                        <div class="founder-card gold">
+                            <h4>💻 Data & Backend Engineering</h4>
+                            <p>Python, FastAPI, WebSockets, SQL/NoSQL; observability; cost & performance guardrails</p>
+                        </div>
+
+                        <div class="founder-card purple">
+                            <h4>🤖 NLP/Agents</h4>
+                            <p>Transformers, LangChain, LangGraph, RAG, Whisper; LLM routing and response merging;
+                                prompt engineering</p>
+                        </div>
+
+                        <div class="founder-card cyan">
+                            <h4>🛡️ Security & SRE</h4>
+                            <p>OAuth/JWT, RBAC/ABAC, audit logging, PIA/TRA readiness; logging/metrics/tracing; on-call
+                                runbooks</p>
+                        </div>
+
+                        <div class="founder-card gold">
+                            <h4>🏆 Certifications</h4>
+                            <p>AWS Cloud Practitioner - Cloud & Security (2025)<br>Introduction to Cybersecurity (Cisco,
+                                2024)<br>Python for Everybody - University of Michigan (2024)<br>Computer Systems
+                                Certificate - Ministry of Labor, Iran (Score: 96/100)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resume Download -->
+                <div class="resume-download">
+                    <a href="Masoud_Masoori Senior AI-ML Architect_Resume.pdf" class="resume-link"
+                        download="Masoud_Masoori Senior AI-ML Architect_Resume.pdf">
+                        📄 Download Resume (PDF)
+                    </a>
                 </div>
             </div>
         </div>
@@ -2804,24 +2636,15 @@
     <!-- Contact Section -->
     <section class="section-wrapper" id="contact">
         <div class="section-card">
-            <h2 class="section-title reveal">Contact</h2>
-            <p class="section-subtitle reveal">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">
                 Ready to transform your business with AI? Let's talk.
             </p>
-            <div class="contact-actions reveal">
+            <div style="text-align: center; margin-top: 48px;">
                 <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-primary"
                     style="font-size: 18px; padding: 16px 32px;">
-                    📧 Email Us
+                    Contact Us
                 </a>
-                <a href="https://calendly.com/mas-ai" class="btn btn-ghost" 
-                    style="font-size: 18px; padding: 16px 32px;" target="_blank" rel="noopener noreferrer">
-                    📅 Book a Call
-                </a>
-            </div>
-            <!-- Chat Bubble (floating) -->
-            <div class="chat-bubble" id="chatBubble">
-                <div class="chat-bubble-icon">💬</div>
-                <div class="chat-bubble-text">Need help? Let's chat!</div>
             </div>
         </div>
     </section>
@@ -2868,8 +2691,8 @@
                 scrollBg.classList.add('scene-4');
             }
 
-            // Navbar scroll effect - premium scroll state
-            if (scrollY > 100) {
+            // Navbar scroll effect
+            if (scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
@@ -2917,40 +2740,9 @@
                 }
             });
         });
-
-        // Scroll Reveal System with IntersectionObserver
-        const revealElements = document.querySelectorAll('.reveal');
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        if (!prefersReducedMotion && revealElements.length > 0) {
-            const revealObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-
-            revealElements.forEach(el => revealObserver.observe(el));
-        } else {
-            // If reduced motion, show all immediately
-            revealElements.forEach(el => el.classList.add('is-visible'));
-        }
-
-        // Chat bubble click handler
-        const chatBubble = document.getElementById('chatBubble');
-        if (chatBubble) {
-            chatBubble.addEventListener('click', () => {
-                window.location.href = 'mailto:masoud.masoori@mas-ai.co?subject=Inquiry from Mas-AI Website';
-            });
-        }
     </script>
-    <!-- Metatron Hexagonal Node Network - Optimized -->
-    <script src="metatron-hex-network-optimized.js"></script>
+    <!-- Metatron Hexagonal Node Network -->
+    <script src="metatron-hex-network.js"></script>
 </body>
 
 </html>
