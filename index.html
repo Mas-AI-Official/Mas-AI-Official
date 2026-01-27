@@ -2440,24 +2440,37 @@
         </div>
     </section>
 
-    <!-- Chapter 2: How it works (pinned story) -->
-    <section class="section pin-story" id="architecture" data-reveal>
+    <!-- Chapter 2: How it works (scroll-controlled video + orbit selector) -->
+    <section class="section pin-story" id="architecture">
         <div class="container">
-            <div class="pin-wrap glass">
+            <div class="pin-wrap glass" id="daenaStory">
                 <div class="pin-left">
                     <p class="eyebrow" data-reveal>How it works</p>
-                    <h2 class="pin-title" data-story-title data-reveal>Sunflower governance</h2>
-                    <p class="pin-desc" data-story-desc data-reveal>
+                    <h2 class="pin-title" id="storyTitle" data-reveal>Sunflower governance</h2>
+                    <p class="pin-desc" id="storyDesc" data-reveal>
                         Policies, roles, and constraints that prevent drift and enforce accountable autonomy.
                     </p>
                 </div>
 
                 <div class="pin-right">
-                    <div class="story-visual">
-                        <div class="story-step is-active" data-step="0">Sunflower</div>
-                        <div class="story-step" data-step="1">Honeycomb</div>
-                        <div class="story-step" data-step="2">Agent Swarms</div>
-                        <div class="story-step" data-step="3">Audit Trail</div>
+                    <div class="how-right">
+                        <div class="orbit" id="orbit">
+                            <button class="node is-active" data-step="0">Sunflower</button>
+                            <button class="node" data-step="1">Honeycomb</button>
+                            <button class="node" data-step="2">Agent Swarms</button>
+                            <button class="node" data-step="3">Audit Trail</button>
+                            <div class="orbit-center">Daena</div>
+                        </div>
+                        <div class="story-video-wrapper">
+                            <video
+                                id="storyVideo"
+                                class="story-video"
+                                src="assets/video/daena-scroll.mp4"
+                                muted
+                                playsinline
+                                preload="auto"
+                            ></video>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2467,33 +2480,6 @@
 
 
 
-    <!-- Chapter 3: Proof -->
-    <section class="section" id="proof">
-        <div class="container">
-            <div class="section-head" data-reveal>
-                <p class="eyebrow">Proof</p>
-                <h2 class="section-title">Results that speak</h2>
-            </div>
-            <div class="stats" data-stagger>
-                <div class="stat glass" data-reveal>
-                    <div class="stat-num countup" data-count="48">0</div>
-                    <div class="stat-label">AI Agents</div>
-                </div>
-                <div class="stat glass" data-reveal>
-                    <div class="stat-num countup" data-count="60">0</div>
-                    <div class="stat-label">Cost Savings +</div>
-                </div>
-                <div class="stat glass" data-reveal>
-                    <div class="stat-num countup" data-count="99.4">0</div>
-                    <div class="stat-label">Accuracy %</div>
-                </div>
-                <div class="stat glass" data-reveal>
-                    <div class="stat-num countup" data-count="300">0</div>
-                    <div class="stat-label">ROI %</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- Chapter 5: Use Cases -->
     <section id="usecases" class="section">
@@ -2536,7 +2522,7 @@
                 <p class="section-sub">Built under Mas-AI Technologies Inc.</p>
             </div>
 
-            <div class="grid cols4" data-stagger>
+            <div class="grid-portfolio" data-stagger>
                 <article class="glass card" data-reveal>
                     <h3>🧠 Daena</h3>
                     <p>AI-autonomous company OS with governance and auditable memory.</p>
@@ -2560,45 +2546,19 @@
                     <p>Interactive agent experiences and real-time ops for creators and teams.</p>
                     <a class="btn btn-ghost" href="https://daena.mas-ai.co/#demos" target="_blank" rel="noopener">Explore</a>
                 </article>
+
+                <article class="glass card" data-reveal>
+                    <h3>🏥 Med Smart</h3>
+                    <p>AI-powered healthcare solution for intelligent medical diagnosis and patient care management.</p>
+                    <a class="btn btn-ghost" href="/medsmart.html">Explore</a>
+                </article>
+
+                <article class="glass card" data-reveal>
+                    <h3>🏗️ Construction AI</h3>
+                    <p>AI system for construction permit analysis, building code compliance, and project management.</p>
+                    <a class="btn btn-ghost" href="/construction-ai.html">Explore</a>
+                </article>
             </div>
-        </div>
-    </section>
-                <div class="project-card reveal reveal-delay-5">
-                    <div class="project-icon">🏥</div>
-                    <h3 class="project-title">Med Smart</h3>
-                    <p class="project-description">
-                        AI-powered healthcare solution for intelligent medical diagnosis and patient care management.
-                    </p>
-                    <div class="project-tags">
-                        <span class="project-tag">Healthcare AI</span>
-                        <span class="project-tag">Medical Diagnosis</span>
-                    </div>
-                    <div style="margin-top: 1rem;">
-                        <a href="medsmart.html" class="btn btn-primary"
-                            style="font-size: 14px; padding: 10px 20px; display: inline-block;">
-                            Explore more →
-                        </a>
-                    </div>
-                </div>
-                <div class="project-card reveal reveal-delay-5">
-                    <div class="project-icon">🏗️</div>
-                    <h3 class="project-title">Construction AI</h3>
-                    <p class="project-description">
-                        AI system for construction permit analysis, building code compliance, and project management.
-                    </p>
-                    <div class="project-tags">
-                        <span class="project-tag">Construction</span>
-                        <span class="project-tag">Permit Analysis</span>
-                    </div>
-                    <div style="margin-top: 1rem;">
-                        <a href="construction-ai.html" class="btn btn-primary"
-                            style="font-size: 14px; padding: 10px 20px; display: inline-block;">
-                            Explore more →
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
         </div>
     </section>
 

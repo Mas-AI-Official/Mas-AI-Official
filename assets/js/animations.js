@@ -178,73 +178,141 @@
   }
 
   function initPinnedStory() {
-    const wrap = qs(".pin-story");
-    const title = qs("[data-story-title]");
-    const desc = qs("[data-story-desc]");
-    const steps = qsa(".story-step");
+    const wrap = qs("#daenaStory");
+    const title = qs("#storyTitle");
+    const desc = qs("#storyDesc");
+    const video = qs("#storyVideo");
+    const nodes = qsa(".node");
 
-    if (!wrap || !title || !desc || steps.length < 2) return;
+    if (!wrap || !title || !desc) return;
 
-    const content = [
-      {
-        title: "Sunflower governance",
+    const steps = [
+      { 
+        title: "Sunflower governance", 
         desc: "Policies, roles, and constraints that prevent drift and enforce accountable autonomy.",
-        active: 0,
+        at: 0.00 
       },
-      {
-        title: "Honeycomb departments",
-        desc: "A scalable org structure where agents cooperate inside departments and across the hive.",
-        active: 1,
+      { 
+        title: "Honeycomb departments", 
+        desc: "Agents organized as departments for scalable execution and cross-hive collaboration.",
+        at: 0.33 
       },
-      {
-        title: "Agent swarms",
-        desc: "Task-based routing, parallel execution, and model switching with conflict resolution.",
-        active: 2,
+      { 
+        title: "Agent swarms", 
+        desc: "Parallel routing, model switching, and conflict resolution for real work.",
+        at: 0.66 
       },
-      {
-        title: "Auditable memory",
-        desc: "Every decision is traceable. Logs, evidence, and outcomes stay queryable and reviewable.",
-        active: 3,
+      { 
+        title: "Audit trail", 
+        desc: "Every decision is traceable. Logs, evidence, and outcomes remain reviewable.",
+        at: 0.90 
       }
     ];
 
+    // Layout orbit nodes
+    function layoutOrbit() {
+      if (!nodes.length) return;
+      const r = 44; // percent radius
+      const center = 50;
+      nodes.forEach((n, i) => {
+        const angle = (Math.PI * 2 * i) / nodes.length - Math.PI / 2;
+        const x = center + r * Math.cos(angle);
+        const y = center + r * Math.sin(angle);
+        n.style.left = x + "%";
+        n.style.top = y + "%";
+      });
+    }
+    layoutOrbit();
+    window.addEventListener("resize", layoutOrbit);
+
+    // Set active step
+    function setStep(stepIndex) {
+      const step = steps[stepIndex];
+      if (!step) return;
+      
+      title.textContent = step.title;
+      desc.textContent = step.desc;
+      
+      nodes.forEach((n, i) => {
+        n.classList.toggle("is-active", i === stepIndex);
+      });
+    }
+
+    // Click handlers for orbit nodes
+    nodes.forEach((n, i) => {
+      n.addEventListener("click", () => {
+        if (prefersReduced) {
+          setStep(i);
+          return;
+        }
+        // Smooth scroll to trigger the scroll-video at the right position
+        const wrapRect = wrap.getBoundingClientRect();
+        const scrollY = window.scrollY + wrapRect.top;
+        const sectionHeight = 2200; // Match the ScrollTrigger end
+        const targetScroll = scrollY + (sectionHeight * steps[i].at);
+        window.scrollTo({ top: targetScroll, behavior: "smooth" });
+      });
+    });
+
     if (prefersReduced) {
-      // No pinning, just show first state
-      setStoryState(0);
+      setStep(0);
+      if (video) {
+        video.currentTime = 0;
+      }
       return;
     }
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
+    // Scroll-controlled video
+    if (video) {
+      video.addEventListener("loadedmetadata", () => {
+        const dur = video.duration || 1;
+
+        ScrollTrigger.create({
+          trigger: wrap,
+          start: CONFIG.pinStory.start,
+          end: CONFIG.pinStory.end,
+          pin: true,
+          scrub: CONFIG.pinStory.scrub,
+          onUpdate: (self) => {
+            const p = self.progress;
+            
+            // Update text based on progress
+            const stepIndex = 
+              p < 0.25 ? 0 :
+              p < 0.50 ? 1 :
+              p < 0.75 ? 2 : 3;
+            setStep(stepIndex);
+
+            // Map scroll progress to video time
+            const time = p * (dur - 0.05);
+            // Smoother updates - only update if difference is significant
+            if (Math.abs(video.currentTime - time) > 0.02) {
+              video.currentTime = time;
+            }
+          }
+        });
+      });
+    } else {
+      // Fallback if no video - just use scroll trigger for text updates
+      ScrollTrigger.create({
         trigger: wrap,
         start: CONFIG.pinStory.start,
         end: CONFIG.pinStory.end,
-        scrub: CONFIG.pinStory.scrub,
         pin: true,
-        anticipatePin: 1,
-      }
-    });
-
-    // We create 4 "chapters"
-    content.forEach((_, i) => {
-      tl.add(() => setStoryState(i), i); // callback at each label index
-      tl.to({}, { duration: 1 });       // spacing for each chapter
-    });
-
-    function setStoryState(i) {
-      const c = content[i];
-      if (!c) return;
-
-      title.textContent = c.title;
-      desc.textContent = c.desc;
-
-      steps.forEach(s => s.classList.remove("is-active"));
-      const activeEl = Array.from(steps).find(s => parseInt(s.getAttribute("data-step"), 10) === c.active);
-      if (activeEl) activeEl.classList.add("is-active");
-
-      // Tiny pop animation for the visual step
-      gsap.fromTo(activeEl, { scale: 0.98 }, { scale: 1, duration: 0.25, ease: "power2.out" });
+        scrub: CONFIG.pinStory.scrub,
+        onUpdate: (self) => {
+          const p = self.progress;
+          const stepIndex = 
+            p < 0.25 ? 0 :
+            p < 0.50 ? 1 :
+            p < 0.75 ? 2 : 3;
+          setStep(stepIndex);
+        }
+      });
     }
+
+    // Initial state
+    setStep(0);
   }
 
   function init() {
