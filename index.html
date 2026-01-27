@@ -480,6 +480,10 @@
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .site-header {
+            position: relative;
+        }
+
         .nav.scrolled {
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
@@ -1553,32 +1557,37 @@
         }
 
         .mobile-nav {
-            display: none !important;
-            position: fixed;
-            top: 60px;
+            display: none;
+            position: absolute;
+            top: 100%;
             left: 0;
             right: 0;
             width: 100%;
-            max-height: calc(100vh - 60px);
             background: rgba(11, 11, 20, 0.95);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             z-index: 9999;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-20px);
-            transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+            max-height: 0;
+            overflow: hidden;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease, max-height 0.4s ease;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .mobile-nav.is-open {
-            display: block !important;
+            display: block;
             opacity: 1;
             visibility: visible;
+            max-height: 600px;
             transform: translateY(0);
+        }
+
+        /* Ensure header adjusts when menu is open */
+        .site-header:has(.mobile-nav.is-open) {
+            z-index: 10000;
         }
 
         .mobile-nav .container {
@@ -1667,6 +1676,12 @@
             .hero {
                 padding: 120px 20px 60px !important;
                 min-height: auto;
+                margin-top: 60px;
+            }
+
+            /* Adjust hero padding when mobile menu is open */
+            .site-header:has(.mobile-nav.is-open) ~ .hero {
+                margin-top: calc(60px + var(--mobile-menu-height, 0px));
             }
 
             .hero-title {
