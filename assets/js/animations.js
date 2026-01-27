@@ -39,10 +39,11 @@
         requestAnimationFrame(() => {
           requestAnimationFrame(() => {
             if (isOpen) {
-              // Force reflow to get accurate height
-              panel.style.display = 'block';
-              const menuHeight = panel.offsetHeight || panel.scrollHeight;
-              hero.style.marginTop = `${60 + menuHeight}px`;
+              // Get accurate height after menu is displayed
+              const menuHeight = panel.offsetHeight || panel.scrollHeight || panel.clientHeight;
+              // Add header height (60px) + menu height
+              const totalOffset = 60 + menuHeight;
+              hero.style.marginTop = `${totalOffset}px`;
               hero.style.transition = "margin-top 0.3s ease";
             } else {
               hero.style.marginTop = "60px";
