@@ -1677,11 +1677,7 @@
                 padding: 120px 20px 60px !important;
                 min-height: auto;
                 margin-top: 60px;
-            }
-
-            /* Adjust hero padding when mobile menu is open */
-            .site-header:has(.mobile-nav.is-open) ~ .hero {
-                margin-top: calc(60px + var(--mobile-menu-height, 0px));
+                transition: margin-top 0.3s ease;
             }
 
             .hero-title {

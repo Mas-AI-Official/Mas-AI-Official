@@ -30,18 +30,40 @@
   function initMobileNav() {
     const btn = qs("[data-mobile-nav]");
     const panel = qs("[data-mobile-nav-panel]");
+    const hero = qs(".hero");
     if (!btn || !panel) return;
+
+    const updateSpacing = (isOpen) => {
+      if (hero) {
+        if (isOpen) {
+          const menuHeight = panel.scrollHeight;
+          hero.style.marginTop = `${60 + menuHeight}px`;
+          hero.style.transition = "margin-top 0.3s ease";
+        } else {
+          hero.style.marginTop = "60px";
+        }
+      }
+    };
 
     btn.addEventListener("click", () => {
       const open = panel.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
+      updateSpacing(open);
     });
 
     // close on link click
     qsa("a", panel).forEach(a => a.addEventListener("click", () => {
       panel.classList.remove("is-open");
       btn.setAttribute("aria-expanded", "false");
+      updateSpacing(false);
     }));
+
+    // Handle window resize
+    window.addEventListener("resize", () => {
+      if (panel.classList.contains("is-open")) {
+        updateSpacing(true);
+      }
+    });
   }
 
   function initNavbarShrink() {
