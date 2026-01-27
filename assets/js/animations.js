@@ -75,14 +75,29 @@
 
   function initNavbarScrollSpy() {
     const navLinks = qsa(".nav-links a");
-    const sections = ["#top", "#problem", "#daena-os", "#usecases", "#portfolio", "#credibility", "#founder", "#contact"];
-    
     if (!navLinks.length) return;
 
     const updateActiveLink = () => {
-      const scrollY = window.scrollY + 100;
+      const scrollY = window.scrollY + 150;
       
-      sections.forEach((sectionId, index) => {
+      // Map nav links to sections
+      const linkSectionMap = {
+        "#daena-os": "#daena-os",
+        "#portfolio": "#portfolio",
+        "#usecases": "#usecases",
+        "/investors.html": null, // External link
+        "#contact": "#contact"
+      };
+      
+      navLinks.forEach(link => {
+        const href = link.getAttribute("href");
+        const sectionId = linkSectionMap[href];
+        
+        if (!sectionId) {
+          link.classList.remove("is-active");
+          return;
+        }
+        
         const section = qs(sectionId);
         if (!section) return;
         
@@ -90,12 +105,8 @@
         const sectionBottom = sectionTop + section.offsetHeight;
         
         if (scrollY >= sectionTop && scrollY < sectionBottom) {
-          navLinks.forEach(link => link.classList.remove("is-active"));
-          const matchingLink = Array.from(navLinks).find(link => {
-            const href = link.getAttribute("href");
-            return href === sectionId || href.includes(sectionId.replace("#", ""));
-          });
-          if (matchingLink) matchingLink.classList.add("is-active");
+          navLinks.forEach(l => l.classList.remove("is-active"));
+          link.classList.add("is-active");
         }
       });
     };
