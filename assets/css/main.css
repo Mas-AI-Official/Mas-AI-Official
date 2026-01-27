@@ -84,14 +84,18 @@ body::before{
 
 /* Universal container that forces alignment */
 .container{
-  width: min(var(--container), 100%);
+  width: min(var(--container), calc(100% - 48px));
   margin: 0 auto;
   padding-inline: var(--px);
+  max-width: 100%;
 }
 
 /* Section spacing, consistent everywhere */
 .section{
   padding: clamp(56px, 7vw, 110px) 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .section-title{
@@ -401,9 +405,10 @@ header.site-header.is-scrolled{
   min-height: 70vh;
   display:grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 24px;
-  padding: 28px;
+  gap: 32px;
+  padding: 32px;
   align-items: center;
+  max-width: 100%;
 }
 
 .pin-left{
@@ -426,58 +431,52 @@ header.site-header.is-scrolled{
   margin: 0;
 }
 
-/* Orbit selector */
+/* Blueprint selector - horizontal line */
 .how-right{
   display: flex;
   flex-direction: column;
   gap: 18px;
   align-items: center;
+  width: 100%;
 }
 
-.orbit{
-  position: relative;
-  width: min(360px, 100%);
-  aspect-ratio: 1/1;
-  margin: 0 auto;
-}
-
-.orbit-center{
-  position: absolute;
-  inset: 35%;
-  display: grid;
-  place-items: center;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.06);
+.blueprint-selector{
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 8px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
   border: 1px solid rgba(255,255,255,0.08);
-  font-weight: 700;
-  font-size: 18px;
-  color: var(--text);
 }
 
-.node{
-  position: absolute;
-  padding: 10px 16px;
-  border-radius: 999px;
+.blueprint-btn{
+  padding: 8px 14px;
+  border-radius: 8px;
   border: 1px solid rgba(255,255,255,0.10);
   background: rgba(0,0,0,0.30);
-  color: rgba(235,245,255,0.85);
+  color: rgba(235,245,255,0.75);
   cursor: pointer;
-  transform: translate(-50%, -50%);
-  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
-  font-size: 14px;
+  transition: all 0.2s ease;
+  font-size: 13px;
   font-weight: 600;
   white-space: nowrap;
+  flex: 1;
+  text-align: center;
 }
 
-.node:hover{
-  background: rgba(255,255,255,0.08);
+.blueprint-btn:hover{
+  background: rgba(255,255,255,0.06);
+  color: rgba(235,245,255,0.9);
 }
 
-.node.is-active{
-  background: rgba(255,255,255,0.10);
-  transform: translate(-50%, -50%) scale(1.05);
-  border-color: rgba(255,215,0,0.3);
+.blueprint-btn.is-active{
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,215,0,0.4);
   color: var(--text);
+  transform: scale(1.02);
 }
 
 /* Scroll-video wrapper */
@@ -496,12 +495,27 @@ header.site-header.is-scrolled{
   display: block;
 }
 
-/* Portfolio grid - 3x2 */
+/* Portfolio grid - 3x2 with scroll animation */
 .grid-portfolio{
   display: grid;
-  gap: 18px;
+  gap: 20px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 32px;
+  margin-top: 40px;
+  perspective: 1200px;
+  width: 100%;
+  max-width: 100%;
+}
+
+.grid-portfolio .card{
+  transform-style: preserve-3d;
+  opacity: 0;
+  transform: translateZ(-300px) scale(0.75);
+  will-change: transform, opacity;
+}
+
+.grid-portfolio .card.is-visible{
+  opacity: 1;
+  transform: translateZ(0) scale(1);
 }
 
 /* Grid system */
@@ -549,10 +563,12 @@ header.site-header.is-scrolled{
   .nav-links{display:none;}
   .nav-burger{display:flex;}
   .stats{grid-template-columns: repeat(2, minmax(0, 1fr));}
-  .pin-wrap{grid-template-columns: 1fr; min-height: auto; gap: 24px;}
+  .pin-wrap{grid-template-columns: 1fr; min-height: auto; gap: 24px; padding: 24px;}
   .grid.cols4{grid-template-columns: repeat(2, minmax(0, 1fr));}
-  .grid-portfolio{grid-template-columns: repeat(2, minmax(0, 1fr));}
+  .grid-portfolio{grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;}
   .story-video{height: min(46vh, 400px);}
+  .blueprint-selector{flex-wrap: wrap;}
+  .blueprint-btn{font-size: 12px; padding: 6px 12px;}
 }
 
 @media (max-width: 560px){

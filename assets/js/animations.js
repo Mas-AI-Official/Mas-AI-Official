@@ -69,6 +69,7 @@
     initStaggers();
     initCounters();
     initPinnedStory();
+    initPortfolioAnimation();
   }
 
   function initReveals() {
@@ -106,7 +107,7 @@
     });
   }
 
-  function initStaggers() {
+    function initStaggers() {
     const groups = qsa("[data-stagger]");
     if (!groups.length) return;
 
@@ -147,6 +148,50 @@
     });
   }
 
+  function initPortfolioAnimation() {
+    const portfolioGrid = qs(".grid-portfolio");
+    if (!portfolioGrid) return;
+
+    const cards = Array.from(portfolioGrid.querySelectorAll(".card"));
+    if (!cards.length) return;
+
+    if (prefersReduced) {
+      cards.forEach(card => {
+        card.classList.add("is-visible");
+      });
+      return;
+    }
+
+    // Set initial state - cards start from behind (small, far back)
+    gsap.set(cards, {
+      opacity: 0,
+      scale: 0.8,
+      z: -200,
+      transformPerspective: 1000
+    });
+
+    // Animate cards coming from behind to front
+    cards.forEach((card, index) => {
+      gsap.to(card, {
+        opacity: 1,
+        scale: 1,
+        z: 0,
+        duration: 0.8,
+        ease: "power3.out",
+        delay: index * 0.1,
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none none",
+          once: true,
+          onEnter: () => {
+            card.classList.add("is-visible");
+          }
+        }
+      });
+    });
+  }
+
   function initCounters() {
     const els = qsa(".countup");
     if (!els.length) return;
@@ -182,7 +227,7 @@
     const title = qs("#storyTitle");
     const desc = qs("#storyDesc");
     const video = qs("#storyVideo");
-    const nodes = qsa(".node");
+    const buttons = qsa(".blueprint-btn");
 
     if (!wrap || !title || !desc) return;
 
@@ -209,22 +254,6 @@
       }
     ];
 
-    // Layout orbit nodes
-    function layoutOrbit() {
-      if (!nodes.length) return;
-      const r = 44; // percent radius
-      const center = 50;
-      nodes.forEach((n, i) => {
-        const angle = (Math.PI * 2 * i) / nodes.length - Math.PI / 2;
-        const x = center + r * Math.cos(angle);
-        const y = center + r * Math.sin(angle);
-        n.style.left = x + "%";
-        n.style.top = y + "%";
-      });
-    }
-    layoutOrbit();
-    window.addEventListener("resize", layoutOrbit);
-
     // Set active step
     function setStep(stepIndex) {
       const step = steps[stepIndex];
@@ -233,14 +262,14 @@
       title.textContent = step.title;
       desc.textContent = step.desc;
       
-      nodes.forEach((n, i) => {
-        n.classList.toggle("is-active", i === stepIndex);
+      buttons.forEach((btn, i) => {
+        btn.classList.toggle("is-active", i === stepIndex);
       });
     }
 
-    // Click handlers for orbit nodes
-    nodes.forEach((n, i) => {
-      n.addEventListener("click", () => {
+    // Click handlers for blueprint buttons
+    buttons.forEach((btn, i) => {
+      btn.addEventListener("click", () => {
         if (prefersReduced) {
           setStep(i);
           return;
