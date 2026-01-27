@@ -278,18 +278,24 @@
   function initDaenaOSStory() {
     const wrap = qs("#daenaOSStory");
     const steps = qsa(".daena-step");
+    const nodes = qsa(".daena-orbit-node");
     if (!wrap || !steps.length) return;
 
     if (prefersReduced) {
       steps[0].classList.add("is-active");
+      if (nodes[0]) nodes[0].classList.add("is-active");
       return;
     }
+
+    // Calculate total height needed for all steps
+    const stepHeight = window.innerHeight * 0.8; // 80vh per step
+    const totalHeight = stepHeight * steps.length;
 
     // Pin the section and animate steps
     ScrollTrigger.create({
       trigger: wrap,
       start: "top top",
-      end: "+=3000",
+      end: `+=${totalHeight}`,
       pin: true,
       scrub: 0.6,
       onUpdate: (self) => {
@@ -299,8 +305,14 @@
           steps.length - 1
         );
         
+        // Update steps
         steps.forEach((step, i) => {
           step.classList.toggle("is-active", i === stepIndex);
+        });
+        
+        // Update orbit nodes
+        nodes.forEach((node, i) => {
+          node.classList.toggle("is-active", i === stepIndex);
         });
       }
     });
