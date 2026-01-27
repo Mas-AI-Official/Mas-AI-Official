@@ -684,25 +684,25 @@ header.site-header.is-scrolled .brand-logo{
 
 .daena-orbit-node{
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 75px;
+  height: 75px;
   border-radius: 50%;
   background: var(--glass);
   border: 2px solid var(--glassBorder);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: clamp(10px, 1.1vw, 12px);
+  font-size: clamp(10px, 1vw, 11px);
   font-weight: 600;
   text-align: center;
-  padding: 8px;
+  padding: 6px;
   transition: all 0.4s ease;
   cursor: pointer;
-  transform: translate(-50%, -50%);
-  line-height: 1.2;
+  line-height: 1.15;
   word-break: break-word;
   color: var(--text);
   white-space: normal;
+  overflow: hidden;
 }
 
 .daena-orbit-node.is-active{

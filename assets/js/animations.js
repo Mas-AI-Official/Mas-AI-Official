@@ -281,22 +281,33 @@
     const nodes = qsa(".daena-orbit-node");
     if (!wrap || !steps.length) return;
 
-    // Layout orbit nodes in circle
+    // Layout orbit nodes in circle - proper positioning
     function layoutOrbitNodes() {
       if (!nodes.length) return;
+      const orbit = qs("#daenaOrbit");
+      if (!orbit) return;
+      
       const centerX = 50;
       const centerY = 50;
-      const radius = 40; // percentage
+      const radius = 38; // percentage from center
       
       nodes.forEach((node, i) => {
+        // Start from top, go clockwise
         const angle = (Math.PI * 2 * i) / nodes.length - Math.PI / 2;
         const x = centerX + radius * Math.cos(angle);
         const y = centerY + radius * Math.sin(angle);
         node.style.left = x + "%";
         node.style.top = y + "%";
+        node.style.transform = "translate(-50%, -50%)";
       });
     }
-    layoutOrbitNodes();
+    
+    // Wait for DOM to be ready
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", layoutOrbitNodes);
+    } else {
+      layoutOrbitNodes();
+    }
     window.addEventListener("resize", layoutOrbitNodes);
 
     // Set active step
@@ -354,6 +365,9 @@
         setStep(stepIndex);
       }
     });
+
+    // Initial state
+    setStep(0);
   }
 
   function initPinnedStory() {
