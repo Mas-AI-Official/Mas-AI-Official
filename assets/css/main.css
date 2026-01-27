@@ -21,15 +21,25 @@
 }
 
 *{box-sizing:border-box}
-html{scroll-padding-top: calc(var(--headerH) + 14px);}
-html,body{height:100%}
+html{
+  scroll-padding-top: calc(var(--headerH) + 14px);
+  height: 100%;
+  width: 100%;
+}
+html,body{
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
 body{
-  margin:0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--bg);
   color: var(--text);
-  overflow-x:hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   min-height: 100vh;
+  position: relative;
 }
 
 /* Metatron background at z-index 0 */
@@ -43,14 +53,27 @@ canvas#metatron-hex-canvas,
   pointer-events: none;
 }
 
-/* GLOBAL tint overlay - consistent black glass everywhere */
+/* GLOBAL tint overlay - consistent black glass everywhere - FULL PAGE COVERAGE */
 body::before{
   content:"";
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
   z-index: 1;
   pointer-events: none;
   background: var(--pageTint);
+  /* Ensure it covers all scrollable content - stays fixed during scroll */
+  transform: translateZ(0);
+  will-change: transform;
+  /* Force full coverage */
+  margin: 0;
+  padding: 0;
 }
 
 /* Everything else sits above */

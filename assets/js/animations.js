@@ -83,20 +83,26 @@
         return;
       }
 
-      gsap.fromTo(el,
-        { y: CONFIG.reveal.y, opacity: 0, filter: `blur(${CONFIG.reveal.blurFrom}px)` },
-        {
-          y: 0,
-          opacity: 1,
-          filter: "blur(0px)",
-          duration: CONFIG.reveal.duration,
-          ease: CONFIG.reveal.ease,
-          scrollTrigger: {
-            trigger: el,
-            start: CONFIG.reveal.start,
-          }
+      // Ensure element is visible for ScrollTrigger
+      gsap.set(el, {
+        opacity: 0,
+        y: CONFIG.reveal.y,
+        filter: `blur(${CONFIG.reveal.blurFrom}px)`
+      });
+
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: CONFIG.reveal.duration,
+        ease: CONFIG.reveal.ease,
+        scrollTrigger: {
+          trigger: el,
+          start: CONFIG.reveal.start,
+          toggleActions: "play none none none",
+          once: false
         }
-      );
+      });
     });
   }
 
@@ -105,7 +111,7 @@
     if (!groups.length) return;
 
     groups.forEach(wrap => {
-      const kids = wrap.querySelectorAll("[data-reveal]");
+      const kids = Array.from(wrap.querySelectorAll("[data-reveal]"));
       if (!kids.length) return;
 
       if (prefersReduced) {
@@ -117,20 +123,27 @@
         return;
       }
 
-      gsap.fromTo(kids,
-        { y: 18, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          stagger: CONFIG.stagger.each,
-          scrollTrigger: {
-            trigger: wrap,
-            start: "top 80%",
-          }
+      // Set initial state for all children
+      gsap.set(kids, {
+        opacity: 0,
+        y: 18,
+        filter: `blur(${CONFIG.reveal.blurFrom}px)`
+      });
+
+      gsap.to(kids, {
+        opacity: 1,
+        y: 0,
+        filter: "blur(0px)",
+        duration: 0.6,
+        ease: "power3.out",
+        stagger: CONFIG.stagger.each,
+        scrollTrigger: {
+          trigger: wrap,
+          start: "top 80%",
+          toggleActions: "play none none none",
+          once: false
         }
-      );
+      });
     });
   }
 
