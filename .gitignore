@@ -1,44 +1,41 @@
-# Sensitive files - NEVER commit these
+# Security - Never commit these files
 id_rsa
-id_rsa.ppk
 id_rsa.pub
+id_rsa.ppk
 *.pem
 *.key
-*.ppk
-*SSH*
-*Pass*
-*password*
-*secret*
+*.p12
+*.pfx
+*pass*.txt
+*pass*.md
+*password*.txt
+*password*.md
+SSH Pass.txt
 *.env
-.env.local
-.env.*.local
+.env.*
+secrets/
+*.secret
 
 # OS files
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
 *.swp
 *.swo
 *~
 
-# IDE
-.vscode/
-.idea/
-*.code-workspace
-
-# Logs
+# Build files
+node_modules/
+dist/
+build/
 *.log
-npm-debug.log*
 
 # Temporary files
 *.tmp
 *.temp
 *.bak
-
-# Certificates and sensitive documents
-*Certificate*
-*Resume*.pdf
-*.docx
-
-# Package files
-node_modules/
-package-lock.json
+*.backup
