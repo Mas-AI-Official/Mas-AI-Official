@@ -2344,12 +2344,9 @@
     <!-- Metatron Background -->
     <canvas id="metatron-hex-canvas"></canvas>
 
-    <!-- Metatron Background -->
-    <canvas id="metatron-hex-canvas"></canvas>
-
     <!-- Navigation -->
     <header class="site-header" id="siteHeader">
-        <div class="nav-inner">
+        <div class="container nav-inner">
             <a class="brand" href="/">
                 <img class="brand-logo" src="mas-ai-logo.jpg" alt="MAS-AI" />
                 <span class="brand-name">MAS-AI</span>
@@ -2373,43 +2370,47 @@
 
         <!-- mobile menu -->
         <div class="mobile-nav" data-mobile-nav-panel>
-            <a href="#platform">Platform</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#usecases">Use Cases</a>
-            <a href="/investors.html">Investors</a>
-            <a href="#contact">Contact</a>
-            <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Launch Demo</a>
+            <div class="container">
+                <a href="#platform">Platform</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#usecases">Use Cases</a>
+                <a href="/investors.html">Investors</a>
+                <a href="#contact">Contact</a>
+                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Launch Demo</a>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
-    <section class="hero reveal" id="top">
-        <div class="glass hero-glass">
-            <p class="eyebrow">Meet Daena</p>
-            <h1>The AI-autonomous company OS.</h1>
-            <p class="subhead">Governance-first orchestration with auditable memory and evolving agent swarms.</p>
+    <section class="hero" id="top">
+        <div class="container">
+            <div class="glass hero-glass" data-reveal>
+                <p class="eyebrow">Meet Daena</p>
+                <h1>The AI-autonomous company OS.</h1>
+                <p class="subhead">Governance-first orchestration with auditable memory and evolving agent swarms.</p>
 
-            <div class="hero-actions">
-                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Launch Daena Demo</a>
-                <a class="btn btn-ghost" href="#architecture">Explore Architecture</a>
-            </div>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Launch Daena Demo</a>
+                    <a class="btn btn-ghost" href="#architecture">Explore Architecture</a>
+                </div>
 
-            <div class="stats">
-                <div class="stat glass reveal">
-                    <div class="stat-num countup" data-count="48">0</div>
-                    <div class="stat-label">AI Agents</div>
-                </div>
-                <div class="stat glass reveal" data-delay="0.08">
-                    <div class="stat-num countup" data-count="60">0</div>
-                    <div class="stat-label">Cost Savings +</div>
-                </div>
-                <div class="stat glass reveal" data-delay="0.16">
-                    <div class="stat-num countup" data-count="99.4">0</div>
-                    <div class="stat-label">Accuracy %</div>
-                </div>
-                <div class="stat glass reveal" data-delay="0.24">
-                    <div class="stat-num countup" data-count="300">0</div>
-                    <div class="stat-label">ROI %</div>
+                <div class="stats">
+                    <div class="stat glass">
+                        <div class="stat-num countup" data-count="48">0</div>
+                        <div class="stat-label">AI Agents</div>
+                    </div>
+                    <div class="stat glass">
+                        <div class="stat-num countup" data-count="60">0</div>
+                        <div class="stat-label">Cost Savings +</div>
+                    </div>
+                    <div class="stat glass">
+                        <div class="stat-num countup" data-count="99.4">0</div>
+                        <div class="stat-label">Accuracy %</div>
+                    </div>
+                    <div class="stat glass">
+                        <div class="stat-num countup" data-count="300">0</div>
+                        <div class="stat-label">ROI %</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2417,43 +2418,47 @@
 
     <!-- Chapter 1: What Daena does -->
     <section class="section" id="platform">
-        <div class="section-head reveal">
-            <p class="eyebrow">What Daena does</p>
-            <h2>Platform Pillars</h2>
-        </div>
-        <div class="tile-grid reveal-stagger" data-stagger="0.1">
-            <article class="tile glass">
-                <h3>🛡️ Governance</h3>
-                <p>Policy-driven execution with auditable, traceable decision-making. ABAC tiers, Merkle-notarized lineage, and auto threat detection.</p>
-            </article>
-            <article class="tile glass">
-                <h3>🎯 Orchestration</h3>
-                <p>Self-organizing agent networks with phase-locked rounds, quorum consensus, and infinite scalability through Hex-Mesh Communication.</p>
-            </article>
-            <article class="tile glass">
-                <h3>🔍 Security & Observability</h3>
-                <p>Real-time monitoring, prompt injection detection, and comprehensive audit trails. Enterprise-grade security with immune system responses.</p>
-            </article>
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <p class="eyebrow">What Daena does</p>
+                <h2 class="section-title">Platform Pillars</h2>
+            </div>
+            <div class="grid cols4" data-stagger>
+                <article class="glass card" data-reveal>
+                    <h3>🛡️ Governance</h3>
+                    <p>Policy-driven execution with auditable, traceable decision-making. ABAC tiers, Merkle-notarized lineage, and auto threat detection.</p>
+                </article>
+                <article class="glass card" data-reveal>
+                    <h3>🎯 Orchestration</h3>
+                    <p>Self-organizing agent networks with phase-locked rounds, quorum consensus, and infinite scalability through Hex-Mesh Communication.</p>
+                </article>
+                <article class="glass card" data-reveal>
+                    <h3>🔍 Security & Observability</h3>
+                    <p>Real-time monitoring, prompt injection detection, and comprehensive audit trails. Enterprise-grade security with immune system responses.</p>
+                </article>
+            </div>
         </div>
     </section>
 
     <!-- Chapter 2: How it works (pinned story) -->
-    <section class="pin-story" id="architecture">
-        <div class="pin-wrap glass">
-            <div class="pin-left">
-                <p class="eyebrow">How it works</p>
-                <h2 class="pin-title" data-story-title>Sunflower governance</h2>
-                <p class="pin-desc" data-story-desc>
-                    Policies, roles, and constraints that prevent drift and enforce accountable autonomy.
-                </p>
-            </div>
+    <section class="section pin-story" id="architecture">
+        <div class="container">
+            <div class="pin-wrap glass">
+                <div class="pin-left">
+                    <p class="eyebrow">How it works</p>
+                    <h2 class="pin-title" data-story-title>Sunflower governance</h2>
+                    <p class="pin-desc" data-story-desc>
+                        Policies, roles, and constraints that prevent drift and enforce accountable autonomy.
+                    </p>
+                </div>
 
-            <div class="pin-right">
-                <div class="story-visual">
-                    <div class="story-step is-active" data-step="0">Sunflower</div>
-                    <div class="story-step" data-step="1">Honeycomb</div>
-                    <div class="story-step" data-step="2">Agent Swarms</div>
-                    <div class="story-step" data-step="3">Audit Trail</div>
+                <div class="pin-right">
+                    <div class="story-visual">
+                        <div class="story-step is-active" data-step="0">Sunflower</div>
+                        <div class="story-step" data-step="1">Honeycomb</div>
+                        <div class="story-step" data-step="2">Agent Swarms</div>
+                        <div class="story-step" data-step="3">Audit Trail</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2464,57 +2469,61 @@
 
     <!-- Chapter 3: Proof -->
     <section class="section" id="proof">
-        <div class="section-head reveal">
-            <p class="eyebrow">Proof</p>
-            <h2>Results that speak</h2>
-        </div>
-        <div class="stats reveal-stagger" data-stagger="0.1">
-            <div class="stat glass">
-                <div class="stat-num countup" data-count="48">0</div>
-                <div class="stat-label">AI Agents</div>
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <p class="eyebrow">Proof</p>
+                <h2 class="section-title">Results that speak</h2>
             </div>
-            <div class="stat glass">
-                <div class="stat-num countup" data-count="60">0</div>
-                <div class="stat-label">Cost Savings +</div>
-            </div>
-            <div class="stat glass">
-                <div class="stat-num countup" data-count="99.4">0</div>
-                <div class="stat-label">Accuracy %</div>
-            </div>
-            <div class="stat glass">
-                <div class="stat-num countup" data-count="300">0</div>
-                <div class="stat-label">ROI %</div>
+            <div class="stats" data-stagger>
+                <div class="stat glass" data-reveal>
+                    <div class="stat-num countup" data-count="48">0</div>
+                    <div class="stat-label">AI Agents</div>
+                </div>
+                <div class="stat glass" data-reveal>
+                    <div class="stat-num countup" data-count="60">0</div>
+                    <div class="stat-label">Cost Savings +</div>
+                </div>
+                <div class="stat glass" data-reveal>
+                    <div class="stat-num countup" data-count="99.4">0</div>
+                    <div class="stat-label">Accuracy %</div>
+                </div>
+                <div class="stat glass" data-reveal>
+                    <div class="stat-num countup" data-count="300">0</div>
+                    <div class="stat-label">ROI %</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Chapter 5: Use Cases -->
     <section id="usecases" class="section">
-        <div class="section-head reveal">
-            <p class="eyebrow">Use Cases</p>
-            <h2>Where Daena fits</h2>
-        </div>
-        <div class="tile-grid reveal-stagger" data-stagger="0.08">
-            <article class="tile glass">
-                <h3>🏢 Enterprise Operations</h3>
-                <p>Autonomous coordination of departments, resource allocation, and strategic planning with full audit trails.</p>
-            </article>
-            <article class="tile glass">
-                <h3>📊 Business Intelligence</h3>
-                <p>Real-time data analysis, pattern recognition, and decision support across multiple data sources.</p>
-            </article>
-            <article class="tile glass">
-                <h3>🔐 Compliance & Governance</h3>
-                <p>Policy-driven execution with Merkle-notarized lineage, ABAC access control, and automated compliance reporting.</p>
-            </article>
-            <article class="tile glass">
-                <h3>🤝 Customer Service</h3>
-                <p>Intelligent routing, context-aware responses, and continuous learning from customer interactions.</p>
-            </article>
-            <article class="tile glass">
-                <h3>⚡ Content Operations</h3>
-                <p>Autonomous content planning, creation, optimization, and distribution across multiple platforms.</p>
-            </article>
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <p class="eyebrow">Use Cases</p>
+                <h2 class="section-title">Where Daena fits</h2>
+            </div>
+            <div class="grid cols4" data-stagger>
+                <article class="glass card" data-reveal>
+                    <h3>🏢 Enterprise Operations</h3>
+                    <p>Autonomous coordination of departments, resource allocation, and strategic planning with full audit trails.</p>
+                </article>
+                <article class="glass card" data-reveal>
+                    <h3>📊 Business Intelligence</h3>
+                    <p>Real-time data analysis, pattern recognition, and decision support across multiple data sources.</p>
+                </article>
+                <article class="glass card" data-reveal>
+                    <h3>🔐 Compliance & Governance</h3>
+                    <p>Policy-driven execution with Merkle-notarized lineage, ABAC access control, and automated compliance reporting.</p>
+                </article>
+                <article class="glass card" data-reveal>
+                    <h3>🤝 Customer Service</h3>
+                    <p>Intelligent routing, context-aware responses, and continuous learning from customer interactions.</p>
+                </article>
+                <article class="glass card" data-reveal>
+                    <h3>⚡ Content Operations</h3>
+                    <p>Autonomous content planning, creation, optimization, and distribution across multiple platforms.</p>
+                </article>
+            </div>
         </div>
     </section>
 
@@ -2588,36 +2597,38 @@
 
     <!-- Chapter 4: Portfolio as Characters -->
     <section id="portfolio" class="section">
-        <div class="section-head reveal">
-            <p class="eyebrow">Portfolio</p>
-            <h2>Blueprints and products</h2>
-            <p>Built under Mas-AI Technologies Inc.</p>
-        </div>
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <p class="eyebrow">Portfolio</p>
+                <h2 class="section-title">Blueprints and products</h2>
+                <p class="section-sub">Built under Mas-AI Technologies Inc.</p>
+            </div>
 
-        <div class="tile-grid reveal-stagger" data-stagger="0.08">
-            <article class="tile glass">
-                <h3>🧠 Daena</h3>
-                <p>AI-autonomous company OS with governance and auditable memory.</p>
-                <a class="btn btn-ghost" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Open</a>
-            </article>
+            <div class="grid cols4" data-stagger>
+                <article class="glass card" data-reveal>
+                    <h3>🧠 Daena</h3>
+                    <p>AI-autonomous company OS with governance and auditable memory.</p>
+                    <a class="btn btn-ghost" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Open</a>
+                </article>
 
-            <article class="tile glass">
-                <h3>🌿 NatureNLP</h3>
-                <p>Scientific NLP engine for extraction, classification, and research workflows.</p>
-                <a class="btn btn-ghost" href="/naturenlp.html">Explore</a>
-            </article>
+                <article class="glass card" data-reveal>
+                    <h3>🌿 NatureNLP</h3>
+                    <p>Scientific NLP engine for extraction, classification, and research workflows.</p>
+                    <a class="btn btn-ghost" href="/naturenlp.html">Explore</a>
+                </article>
 
-            <article class="tile glass">
-                <h3>⚙️ ContentOPS</h3>
-                <p>Content factory automation for multi-account workflows and publishing pipelines.</p>
-                <a class="btn btn-ghost" href="/contentops.html">Explore</a>
-            </article>
+                <article class="glass card" data-reveal>
+                    <h3>⚙️ ContentOPS</h3>
+                    <p>Content factory automation for multi-account workflows and publishing pipelines.</p>
+                    <a class="btn btn-ghost" href="/contentops.html">Explore</a>
+                </article>
 
-            <article class="tile glass">
-                <h3>🎨 VibeAgent</h3>
-                <p>Interactive agent experiences and real-time ops for creators and teams.</p>
-                <a class="btn btn-ghost" href="https://daena.mas-ai.co/#demos" target="_blank" rel="noopener">Explore</a>
-            </article>
+                <article class="glass card" data-reveal>
+                    <h3>🎨 VibeAgent</h3>
+                    <p>Interactive agent experiences and real-time ops for creators and teams.</p>
+                    <a class="btn btn-ghost" href="https://daena.mas-ai.co/#demos" target="_blank" rel="noopener">Explore</a>
+                </article>
+            </div>
         </div>
     </section>
                 <div class="project-card reveal reveal-delay-5">
@@ -2661,44 +2672,50 @@
 
     <!-- Chapter 6: Founder (minimal) -->
     <section id="founder" class="section">
-        <div class="section-head reveal">
-            <p class="eyebrow">Founder</p>
-            <h2>Masoud Masoori</h2>
-        </div>
-        <div class="glass" style="max-width: 700px; margin: 0 auto; padding: 26px; text-align: center;">
-            <p class="reveal">Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in Canada in 2022. With a background in AI, deep learning, and robotics, he is building Daena and VibeAgent as a Canadian deep-tech platform for AI-native companies.</p>
-            <div style="margin-top: 20px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-ghost">📧 Email</a>
-                <a href="https://www.linkedin.com/in/masoud-masoori" target="_blank" class="btn btn-ghost">LinkedIn</a>
-                <a href="Masoud_Masoori Senior AI-ML Architect_Resume.pdf" download class="btn btn-ghost" style="font-size: 12px;">📄 Resume</a>
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <p class="eyebrow">Founder</p>
+                <h2 class="section-title">Masoud Masoori</h2>
+            </div>
+            <div class="glass" style="max-width: 700px; margin: 0 auto; padding: 26px; text-align: center;" data-reveal>
+                <p>Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in Canada in 2022. With a background in AI, deep learning, and robotics, he is building Daena and VibeAgent as a Canadian deep-tech platform for AI-native companies.</p>
+                <div style="margin-top: 20px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-ghost">📧 Email</a>
+                    <a href="https://www.linkedin.com/in/masoud-masoori" target="_blank" class="btn btn-ghost">LinkedIn</a>
+                    <a href="Masoud_Masoori Senior AI-ML Architect_Resume.pdf" download class="btn btn-ghost" style="font-size: 12px;">📄 Resume</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Contact -->
     <section id="contact" class="section">
-        <div class="section-head reveal">
-            <h2>Get in touch</h2>
-            <p>Ready to transform your business with AI? Let's talk.</p>
-        </div>
-        <div class="hero-actions reveal" style="justify-content: center;">
-            <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-primary">📧 Email Us</a>
-            <a href="mailto:masoud.masoori@mas-ai.co?subject=Book a Call" class="btn btn-ghost">📅 Book a Call</a>
+        <div class="container">
+            <div class="section-head" data-reveal>
+                <h2 class="section-title">Get in touch</h2>
+                <p class="section-sub">Ready to transform your business with AI? Let's talk.</p>
+            </div>
+            <div class="hero-actions" style="justify-content: center;" data-reveal>
+                <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-primary">📧 Email Us</a>
+                <a href="mailto:masoud.masoori@mas-ai.co?subject=Book a Call" class="btn btn-ghost">📅 Book a Call</a>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="section" style="padding-top: 60px; padding-bottom: 40px; text-align: center; border-top: 1px solid var(--border);">
-        <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
-            <a href="https://daena.mas-ai.co" class="btn btn-ghost" style="font-size: 14px;">Daena AI</a>
-            <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-ghost" style="font-size: 14px;">Email</a>
-            <a href="https://www.linkedin.com/in/masoud-masoori/" class="btn btn-ghost" style="font-size: 14px;">LinkedIn</a>
-            <a href="https://github.com/Masoud-Masoori" class="btn btn-ghost" style="font-size: 14px;">GitHub</a>
+    <footer class="section" style="padding-top: 60px; padding-bottom: 40px; text-align: center; border-top: 1px solid var(--strokeSoft);">
+        <div class="container">
+            <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                <a href="https://daena.mas-ai.co" class="btn btn-ghost" style="font-size: 14px;">Daena AI</a>
+                <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-ghost" style="font-size: 14px;">Email</a>
+                <a href="https://www.linkedin.com/in/masoud-masoori/" class="btn btn-ghost" style="font-size: 14px;">LinkedIn</a>
+                <a href="https://github.com/Masoud-Masoori" class="btn btn-ghost" style="font-size: 14px;">GitHub</a>
+            </div>
+            <p style="color: var(--muted2); font-size: 12px; margin: 0;">
+                © 2025 Mas-AI Technology Inc. All rights reserved.<br>
+                Patent-pending: Sunflower-Honeycomb architecture + NBMF / Enterprise-DNA
+            </p>
         </div>
-        <p style="color: var(--muted2); font-size: 12px; margin: 0;">
-            © 2025 Mas-AI Technology Inc. All rights reserved.<br>
-            Patent-pending: Sunflower-Honeycomb architecture + NBMF / Enterprise-DNA
-        </p>
     </footer>
 
     <!-- GSAP (CDN) -->

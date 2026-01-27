@@ -1,12 +1,11 @@
 (() => {
   const CONFIG = {
     reveal: {
-      y: 40,
-      scaleFrom: 0.95,
-      blurFrom: 10,
-      duration: 0.9,
+      y: 26,
+      blurFrom: 8,
+      duration: 0.8,
       ease: "power3.out",
-      start: "top 86%",
+      start: "top 85%",
     },
     stagger: {
       each: 0.08,
@@ -19,9 +18,6 @@
       end: "+=2200",
       scrub: 0.9,
     },
-    lowPower: {
-      maxBlurMobile: 8,
-    }
   };
 
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -76,12 +72,10 @@
   }
 
   function initReveals() {
-    const els = qsa(".reveal");
+    const els = qsa("[data-reveal]");
     if (!els.length) return;
 
     els.forEach(el => {
-      const delay = parseFloat(el.getAttribute("data-delay") || "0");
-
       if (prefersReduced) {
         el.style.opacity = "1";
         el.style.transform = "none";
@@ -89,41 +83,33 @@
         return;
       }
 
-      gsap.to(el, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        filter: "blur(0px)",
-        duration: CONFIG.reveal.duration,
-        ease: CONFIG.reveal.ease,
-        delay,
-        scrollTrigger: {
-          trigger: el,
-          start: CONFIG.reveal.start,
+      gsap.fromTo(el,
+        { y: CONFIG.reveal.y, opacity: 0, filter: `blur(${CONFIG.reveal.blurFrom}px)` },
+        {
+          y: 0,
+          opacity: 1,
+          filter: "blur(0px)",
+          duration: CONFIG.reveal.duration,
+          ease: CONFIG.reveal.ease,
+          scrollTrigger: {
+            trigger: el,
+            start: CONFIG.reveal.start,
+          }
         }
-      });
+      );
     });
-
-    // Set initial states more gently on low power
-    if (lowPower) {
-      els.forEach(el => {
-        el.style.filter = `blur(${Math.min(CONFIG.reveal.blurFrom, CONFIG.lowPower.maxBlurMobile)}px)`;
-      });
-    }
   }
 
   function initStaggers() {
-    const groups = qsa(".reveal-stagger");
+    const groups = qsa("[data-stagger]");
     if (!groups.length) return;
 
-    groups.forEach(group => {
-      const children = Array.from(group.children);
-      if (!children.length) return;
-
-      const staggerEach = parseFloat(group.getAttribute("data-stagger") || CONFIG.stagger.each);
+    groups.forEach(wrap => {
+      const kids = wrap.querySelectorAll("[data-reveal]");
+      if (!kids.length) return;
 
       if (prefersReduced) {
-        children.forEach(c => {
+        kids.forEach(c => {
           c.style.opacity = "1";
           c.style.transform = "none";
           c.style.filter = "none";
@@ -131,19 +117,20 @@
         return;
       }
 
-      gsap.to(children, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        filter: "blur(0px)",
-        duration: 0.9,
-        ease: "power3.out",
-        stagger: { each: staggerEach },
-        scrollTrigger: {
-          trigger: group,
-          start: "top 82%",
+      gsap.fromTo(kids,
+        { y: 18, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: CONFIG.stagger.each,
+          scrollTrigger: {
+            trigger: wrap,
+            start: "top 80%",
+          }
         }
-      });
+      );
     });
   }
 
