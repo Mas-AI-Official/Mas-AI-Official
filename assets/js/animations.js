@@ -36,9 +36,12 @@
     const updateSpacing = (isOpen) => {
       if (hero) {
         if (isOpen) {
-          const menuHeight = panel.scrollHeight;
-          hero.style.marginTop = `${60 + menuHeight}px`;
-          hero.style.transition = "margin-top 0.3s ease";
+          // Wait for menu to expand, then calculate height
+          setTimeout(() => {
+            const menuHeight = panel.scrollHeight || panel.offsetHeight;
+            hero.style.marginTop = `${60 + menuHeight}px`;
+            hero.style.transition = "margin-top 0.3s ease";
+          }, 50);
         } else {
           hero.style.marginTop = "60px";
         }
