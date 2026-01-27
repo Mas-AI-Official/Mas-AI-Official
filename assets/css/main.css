@@ -53,16 +53,20 @@ canvas#metatron-hex-canvas,
   pointer-events: none;
 }
 
-/* global black glass overlay that covers TOP to BOTTOM and left to right */
+/* global black glass overlay that covers TOP to BOTTOM and left to right - FULL BLEED */
 body::before{
   content:"";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: rgba(0,0,0,0.55);
-  backdrop-filter: blur(14px) saturate(1.1);
-  -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  z-index: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
 }
 
 /* subtle vignette so edges feel premium, not "empty" */
@@ -71,8 +75,10 @@ body::after{
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(1200px 700px at 50% 20%, rgba(0,0,0,0.0), rgba(0,0,0,0.55));
-  z-index: 0;
+  background: radial-gradient(1400px 800px at 50% 20%, rgba(0,0,0,0.0), rgba(0,0,0,0.6));
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
 }
 
 /* everything real sits above the overlay */
@@ -88,13 +94,26 @@ body::after{
   box-sizing: border-box;
 }
 
-/* one section spacing rule */
+/* Section Shell - full-bleed black glass for every section */
 .section{
   padding-block: var(--sectionY);
   width: 100%;
+  max-width: 100vw;
   overflow-x: hidden;
   box-sizing: border-box;
   position: relative;
+}
+
+/* Full-bleed black glass overlay for each section */
+.section::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* typography that never explodes (fixes step 3/4 going lost) */
@@ -131,6 +150,12 @@ body::after{
   margin: 0 0 28px 0;
   color: var(--muted);
   line-height: 1.6;
+}
+
+.section-sub-centered{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .eyebrow{
@@ -437,6 +462,14 @@ header.site-header.is-scrolled .brand-logo{
   width: 100%;
   padding: 34px 26px;
   box-sizing: border-box;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.hero-glass .subhead{
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 }
 
 .hero-actions{
@@ -611,15 +644,22 @@ header.site-header.is-scrolled .brand-logo{
 }
 
 .daena-os-visual{
-  padding: 48px 32px;
-  text-align: center;
+  padding: 32px 24px;
   position: relative;
 }
 
+.daena-label{
+  font-size: clamp(20px, 2.5vw, 28px);
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 24px;
+  padding-left: 4px;
+}
+
 .daena-orbit{
-  width: 280px;
-  height: 280px;
-  margin: 0 auto 24px;
+  width: 320px;
+  height: 320px;
+  margin: 0 auto;
   position: relative;
 }
 
@@ -628,6 +668,22 @@ header.site-header.is-scrolled .brand-logo{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: var(--glass);
+  border: 2px solid var(--glassBorder);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: clamp(16px, 1.8vw, 20px);
+  z-index: 2;
+  color: var(--text);
+}
+
+.daena-orbit-node{
+  position: absolute;
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -636,29 +692,17 @@ header.site-header.is-scrolled .brand-logo{
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 18px;
-  z-index: 2;
-}
-
-.daena-orbit-node{
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  background: var(--glass);
-  border: 2px solid var(--glassBorder);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
+  font-size: clamp(10px, 1.1vw, 12px);
   font-weight: 600;
   text-align: center;
-  padding: 6px;
+  padding: 8px;
   transition: all 0.4s ease;
   cursor: pointer;
   transform: translate(-50%, -50%);
   line-height: 1.2;
+  word-break: break-word;
+  color: var(--text);
+  white-space: normal;
 }
 
 .daena-orbit-node.is-active{
@@ -666,38 +710,19 @@ header.site-header.is-scrolled .brand-logo{
   border-color: var(--gold);
   box-shadow: 0 0 20px rgba(255,215,0,0.3);
   z-index: 3;
+  transform: translate(-50%, -50%) scale(1.08);
 }
 
-.daena-orbit-node.is-active[style*="top: 0"]{
-  transform: translate(-50%, -50%) scale(1.1);
+.daena-orbit-node:hover{
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.2);
 }
 
-.daena-orbit-node.is-active[style*="right: 0"]{
-  transform: translate(50%, -50%) scale(1.1);
-}
-
-.daena-orbit-node.is-active[style*="bottom: 0"]{
-  transform: translate(-50%, 50%) scale(1.1);
-}
-
-.daena-orbit-node.is-active[style*="left: 0"]{
-  transform: translate(-50%, -50%) scale(1.1);
-}
-
-.daena-os-visual h3{
-  font-size: clamp(32px, 4vw, 48px);
-  font-weight: 900;
-  margin: 0 0 12px;
-  background: linear-gradient(90deg, var(--gold), var(--cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.daena-tagline{
+.daena-step-subtitle{
   font-size: clamp(14px, 1.6vw, 18px);
   color: var(--muted);
-  margin: 0;
+  margin: 0 0 16px;
+  font-weight: 600;
 }
 
 .daena-os-right{

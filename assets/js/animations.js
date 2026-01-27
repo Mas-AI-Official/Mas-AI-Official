@@ -281,9 +281,52 @@
     const nodes = qsa(".daena-orbit-node");
     if (!wrap || !steps.length) return;
 
+    // Layout orbit nodes in circle
+    function layoutOrbitNodes() {
+      if (!nodes.length) return;
+      const centerX = 50;
+      const centerY = 50;
+      const radius = 40; // percentage
+      
+      nodes.forEach((node, i) => {
+        const angle = (Math.PI * 2 * i) / nodes.length - Math.PI / 2;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + radius * Math.sin(angle);
+        node.style.left = x + "%";
+        node.style.top = y + "%";
+      });
+    }
+    layoutOrbitNodes();
+    window.addEventListener("resize", layoutOrbitNodes);
+
+    // Set active step
+    function setStep(stepIndex) {
+      steps.forEach((step, i) => {
+        step.classList.toggle("is-active", i === stepIndex);
+      });
+      nodes.forEach((node, i) => {
+        node.classList.toggle("is-active", i === stepIndex);
+      });
+    }
+
+    // Click handlers
+    nodes.forEach((node, i) => {
+      node.addEventListener("click", () => {
+        if (prefersReduced) {
+          setStep(i);
+          return;
+        }
+        setStep(i);
+        // Scroll to show the step
+        const step = steps[i];
+        if (step) {
+          step.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+    });
+
     if (prefersReduced) {
-      steps[0].classList.add("is-active");
-      if (nodes[0]) nodes[0].classList.add("is-active");
+      setStep(0);
       return;
     }
 
@@ -300,20 +343,15 @@
       scrub: 0.6,
       onUpdate: (self) => {
         const progress = self.progress;
-        const stepIndex = Math.min(
-          Math.floor(progress * steps.length),
-          steps.length - 1
-        );
+        // Map progress to step index (0 = Sunflower+Honeycomb, 1-4 = individual)
+        let stepIndex = 0;
+        if (progress < 0.2) stepIndex = 0; // Sunflower+Honeycomb
+        else if (progress < 0.4) stepIndex = 1; // Sunflower
+        else if (progress < 0.6) stepIndex = 2; // Honeycomb
+        else if (progress < 0.8) stepIndex = 3; // Agent Swarms
+        else stepIndex = 4; // Audit Trail
         
-        // Update steps
-        steps.forEach((step, i) => {
-          step.classList.toggle("is-active", i === stepIndex);
-        });
-        
-        // Update orbit nodes
-        nodes.forEach((node, i) => {
-          node.classList.toggle("is-active", i === stepIndex);
-        });
+        setStep(stepIndex);
       }
     });
   }
