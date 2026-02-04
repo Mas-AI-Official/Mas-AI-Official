@@ -13,11 +13,11 @@
     <style>
         /* Specific enhancements for Investor Page */
         :root {
-            /* Matched with index.html unified variables */
-            --glass-card-bg: rgba(10, 12, 16, 0.85);
-            --glass-card-border: rgba(255, 255, 255, 0.06);
-            --glass-card-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-            --glass-card-blur: blur(24px);
+            /* Matched with index.html unified variables - LIGHTER */
+            --glass-card-bg: rgba(10, 12, 16, 0.45);
+            --glass-card-border: rgba(255, 255, 255, 0.1);
+            --glass-card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --glass-card-blur: blur(12px);
         }
 
         /* Prevent text overflow on long lines */
@@ -154,19 +154,11 @@
         }
 
         /* Clearer Canvas Visibility: Remove section glassy backgrounds */
-        .section::before {
-            display: none !important;
-        }
-
-        /* Hero-specific overlay (follows main site rules) */
+        .section::before,
         .hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(11, 11, 20, 0.2);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            z-index: 0;
+            display: none !important;
+            background: transparent !important;
+            backdrop-filter: none !important;
         }
 
         .section>* {
@@ -245,7 +237,7 @@
 <body>
     <!-- Blended Background Canvas -->
     <canvas id="investor-canvas"
-        style="position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.9;"></canvas>
+        style="position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 1;"></canvas>
 
     <!-- Navigation -->
     <header class="site-header" id="siteHeader">
