@@ -132,7 +132,12 @@
             border-radius: 24px;
             border: 1px solid var(--glass-card-border);
             box-shadow: var(--shadow);
-            filter: grayscale(20%);
+            filter: grayscale(100%) contrast(1.1);
+            transition: filter 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .founder-image-wrap.is-visible img {
+            filter: grayscale(0%) contrast(1);
         }
 
         .founder-image-wrap::before {
@@ -143,6 +148,22 @@
             border-radius: 30px;
             opacity: 0.2;
             z-index: -1;
+        }
+
+        /* Main-site style base layers */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at top right, rgba(255, 215, 0, 0.08) 0%, transparent 60%),
+                radial-gradient(circle at bottom left, rgba(76, 175, 80, 0.06) 0%, transparent 65%),
+                linear-gradient(135deg, #050508 0%, #0f1115 50%, #050508 100%);
+            z-index: -5;
+            pointer-events: none;
         }
 
         /* Founder Name Badge at Top */
@@ -342,8 +363,13 @@
             <div class="pitch-deck-grid" data-reveal>
                 <!-- Daena Card -->
                 <div class="deck-card">
-                    <div class="deck-preview">
-                        <img src="mas-ai-logo.jpg" alt="Daena Preview" style="object-fit: contain; padding: 20px;">
+                    <div class="deck-preview"
+                        style="background: url('https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800') center/cover;">
+                        <div
+                            style="position:absolute; inset:0; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);">
+                        </div>
+                        <img src="mas-ai-logo.jpg" alt="Daena Logo"
+                            style="width: 60px; height: 60px; object-fit: contain; z-index: 1;">
                     </div>
                     <div class="deck-info">
                         <h3>Daena Pitch Deck</h3>
@@ -359,8 +385,12 @@
 
                 <!-- NatureNLP Card -->
                 <div class="deck-card">
-                    <div class="deck-preview" style="background: radial-gradient(circle at center, #1a2e1a, #050508);">
-                        <span style="font-size: 50px;">🌿</span>
+                    <div class="deck-preview"
+                        style="background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800') center/cover;">
+                        <div
+                            style="position:absolute; inset:0; background: rgba(0,0,0,0.4); backdrop-filter: blur(2px);">
+                        </div>
+                        <span style="font-size: 50px; z-index: 1;">🌿</span>
                     </div>
                     <div class="deck-info">
                         <h3>NatureNLP Pitch Deck</h3>
@@ -490,7 +520,6 @@
                     for our next phase.</p>
                 <div class="hero-actions hero-actions-centered">
                     <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-primary">📧 masoud.masoori@mas-ai.co</a>
-                    <a href="mailto:masoud.masori@gmail.com" class="btn btn-ghost">📧 masoud.masori@gmail.com</a>
                 </div>
             </div>
         </div>
@@ -533,6 +562,16 @@
                 burger.querySelector('span').parentElement.classList.toggle('active');
             });
         }
+
+        // GSAP: B&W to Color effect for founder image
+        gsap.to('.founder-image-wrap', {
+            scrollTrigger: {
+                trigger: '#founder',
+                start: 'top 80%',
+                onEnter: () => document.querySelector('.founder-image-wrap').classList.add('is-visible'),
+                onLeaveBack: () => document.querySelector('.founder-image-wrap').classList.remove('is-visible'),
+            }
+        });
 
         // Ensure nav changes on scroll
         window.addEventListener('scroll', () => {

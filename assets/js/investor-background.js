@@ -56,7 +56,7 @@ class BlendedInvestorBackground {
         // Root node
         this.nodes.push({ x: this.centerX, y: this.centerY, glow: 1 });
 
-        // Hex Layers
+        // Create Metatron Hex Grid
         for (let l = 1; l <= layers; l++) {
             const radius = spacing * l;
             const nodesInLayer = 6 * l;
@@ -70,14 +70,13 @@ class BlendedInvestorBackground {
             }
         }
 
-        // Connections (Organic Veins)
+        // Connections (Organic Veins + Geometric Lines)
         this.nodes.forEach((node, i) => {
-            // Find nearest neighbors to connect via "veins"
             const neighbors = this.nodes
                 .map((other, j) => ({ index: j, dist: Math.sqrt((node.x - other.x) ** 2 + (node.y - other.y) ** 2) }))
                 .filter(n => n.dist > 0 && n.dist < spacing * 1.8)
                 .sort((a, b) => a.dist - b.dist)
-                .slice(0, 3);
+                .slice(0, 4);
 
             neighbors.forEach(n => {
                 const exists = this.connections.some(c => (c.from === i && c.to === n.index) || (c.from === n.index && c.to === i));
@@ -86,22 +85,17 @@ class BlendedInvestorBackground {
                         from: i,
                         to: n.index,
                         progress: Math.random(),
-                        speed: 0.005 + Math.random() * 0.01,
-                        // Curvature for organic look
-                        cpX: (this.nodes[i].x + this.nodes[n.index].x) / 2 + (Math.random() - 0.5) * 40,
-                        cpY: (this.nodes[i].y + this.nodes[n.index].y) / 2 + (Math.random() - 0.5) * 40,
-                        type: Math.random() > 0.5 ? 'gold' : 'green'
+                        speed: 0.003 + Math.random() * 0.005,
+                        // Curvature for organic look (NatureNLP style)
+                        cpX: (this.nodes[i].x + this.nodes[n.index].x) / 2 + (Math.random() - 0.5) * 80,
+                        cpY: (this.nodes[i].y + this.nodes[n.index].y) / 2 + (Math.random() - 0.5) * 80,
+                        type: Math.random() > 0.4 ? 'green' : 'gold'
                     });
                 }
             });
 
-            // Random droplets on nodes
-            if (Math.random() > 0.7) {
-                this.droplets.push({
-                    nodeIdx: i,
-                    size: 2 + Math.random() * 4,
-                    sparkle: Math.random() * Math.PI * 2
-                });
+            if (Math.random() > 0.6) {
+                this.droplets.push({ nodeIdx: i, size: 2 + Math.random() * 3, sparkle: Math.random() * Math.PI * 2 });
             }
         });
     }
@@ -111,29 +105,27 @@ class BlendedInvestorBackground {
         const to = this.nodes[conn.to];
         const ctx = this.ctx;
 
-        // Draw Curved Veins
         ctx.beginPath();
         ctx.moveTo(from.x, from.y);
         ctx.quadraticCurveTo(conn.cpX, conn.cpY, to.x, to.y);
 
-        const alpha = 0.08;
-        ctx.strokeStyle = conn.type === 'gold' ?
-            `rgba(255, 215, 0, ${alpha})` :
-            `rgba(76, 175, 80, ${alpha})`;
+        const alpha = 0.12;
+        ctx.strokeStyle = conn.type === 'green' ?
+            `rgba(76, 175, 80, ${alpha})` :
+            `rgba(255, 215, 0, ${alpha})`;
 
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 1.0;
         ctx.stroke();
 
-        // Flowing Pulse
-        if (!this.reducedMotion) {
+        // Flowing Pulse (Nature-Energy)
+        if (!this.reducedMotion && Math.random() > 0.1) {
             const t = conn.progress;
-            // Calculate point on quadratic curve
             const px = (1 - t) ** 2 * from.x + 2 * (1 - t) * t * conn.cpX + t ** 2 * to.x;
             const py = (1 - t) ** 2 * from.y + 2 * (1 - t) * t * conn.cpY + t ** 2 * to.y;
 
             ctx.beginPath();
-            ctx.arc(px, py, 1.5, 0, Math.PI * 2);
-            ctx.fillStyle = conn.type === 'gold' ? 'rgba(255, 215, 0, 0.4)' : 'rgba(76, 175, 80, 0.4)';
+            ctx.arc(px, py, 1.2, 0, Math.PI * 2);
+            ctx.fillStyle = conn.type === 'green' ? 'rgba(76, 175, 80, 0.4)' : 'rgba(255, 215, 0, 0.4)';
             ctx.fill();
 
             conn.progress += conn.speed;
@@ -156,30 +148,39 @@ class BlendedInvestorBackground {
         ctx.fill();
     }
 
-    drawMetatronCircles() {
+    drawMetatronBlueprint() {
         const ctx = this.ctx;
         ctx.save();
-        ctx.globalAlpha = 0.03;
+
+        // Central Pattern Rotate
+        ctx.translate(this.centerX, this.centerY);
+        if (!this.reducedMotion) {
+            ctx.rotate(this.time * 0.0005);
+        }
+        ctx.translate(-this.centerX, -this.centerY);
+
+        ctx.globalAlpha = 0.04;
         ctx.strokeStyle = '#FFD700';
         ctx.lineWidth = 1;
 
-        // 13 Circle Pattern
-        const baseRadius = 60;
+        const baseRadius = 120;
         const circles = [
-            { x: this.centerX, y: this.centerY }, // Center
-            ...Array.from({ length: 6 }, (_, i) => { // Inner
+            { x: this.centerX, y: this.centerY },
+            ...Array.from({ length: 6 }, (_, i) => {
                 const a = (Math.PI * 2 * i) / 6 - Math.PI / 2;
                 return { x: this.centerX + baseRadius * Math.cos(a), y: this.centerY + baseRadius * Math.sin(a) };
             }),
-            ...Array.from({ length: 6 }, (_, i) => { // Outer
-                const a = (Math.PI * 2 * i) / 6 - Math.PI / 2;
-                return { x: this.centerX + (baseRadius * 2) * Math.cos(a), y: this.centerY + (baseRadius * 2) * Math.sin(a) };
+            ...Array.from({ length: 12 }, (_, i) => {
+                const a = (Math.PI * 2 * i) / 12 - Math.PI / 2;
+                const r = i % 2 === 0 ? baseRadius * 2 : baseRadius * 1.732;
+                return { x: this.centerX + r * Math.cos(a), y: this.centerY + r * Math.sin(a) };
             })
         ];
 
+        // Draw Blueprint Circles
         circles.forEach(c => {
             ctx.beginPath();
-            ctx.arc(c.x, c.y, baseRadius, 0, Math.PI * 2);
+            ctx.arc(c.x, c.y, baseRadius * 0.8, 0, Math.PI * 2);
             ctx.stroke();
         });
 
