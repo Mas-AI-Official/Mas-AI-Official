@@ -203,7 +203,7 @@ class BlendedInvestorBackground {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Draw Metatron Base
-        this.drawMetatronCircles();
+        this.drawMetatronBlueprint();
 
         // Draw Connections First
         this.connections.forEach(c => this.drawConnection(c));
@@ -224,7 +224,7 @@ class BlendedInvestorBackground {
 
     renderStatic() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.drawMetatronCircles();
+        this.drawMetatronBlueprint();
         this.connections.forEach(c => this.drawConnection(c));
         this.droplets.forEach(d => this.drawDroplet(d));
     }
