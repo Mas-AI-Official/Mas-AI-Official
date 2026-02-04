@@ -7,232 +7,187 @@
     <title>Invest in Daena | Mas-AI Technologies Inc.</title>
     <meta name="description"
         content="Daena - The governed AI-native OS for building and operating an AI company. Multi-agent orchestration with enterprise-grade control.">
-    <meta name="keywords" content="Mas-AI, Daena, AI OS, Multi-agent system, AI Governance, NatureNLP, AI Investment">
-
-    <!-- Open Graph / SEO -->
-    <meta property="og:title" content="Mas-AI: The AI Company Operating System">
-    <meta property="og:description" content="Governance-first execution for the AI era. Meet Daena.">
-    <meta property="og:image" content="https://mas-ai.co/assets/img/founder.jpg">
-    <meta property="og:type" content="website">
 
     <!-- Icon -->
     <link rel="icon" href="mas-ai-logo.jpg">
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="assets/css/main.css">
-
-    <!-- Fonts (Google Fonts) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
 
+    <!-- CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="assets/css/main.css"> <!-- Leverages main site variables -->
+
     <style>
-        /* Investor Page Specific Overrides & Additions */
+        /* --- INVESTOR PAGE OVERRIDES & THEME --- */
         :root {
+            /* Toned down glass for better readability per request */
+            --glass-card-bg: rgba(8, 10, 20, 0.75);
+            --glass-strong: rgba(5, 7, 10, 0.92);
+            --glass-border: rgba(255, 255, 255, 0.08);
+
+            --gold: #FFD700;
+            --cyan: #00BCD4;
+            --green-nature: #4CAF50;
+
             --font-display: 'Outfit', sans-serif;
             --font-body: 'Inter', sans-serif;
-            --hex-gap: 20px;
-            --card-glass: rgba(13, 15, 20, 0.7);
-            --card-border: rgba(255, 215, 0, 0.1);
         }
 
+        /* Typography & Layout Safety */
         body {
+            background-color: #02030a;
+            /* Fallback */
+            color: #eaf0ff;
             font-family: var(--font-body);
+            overflow-x: hidden;
+            overflow-y: scroll;
+            /* Ensure scrollbar doesn't jump */
         }
 
         h1,
         h2,
         h3,
         h4,
-        h5,
-        h6,
-        .brand,
-        .btn {
+        .font-display {
             font-family: var(--font-display);
+            overflow-wrap: anywhere;
+            word-break: break-word;
+            hyphens: auto;
         }
 
-        /* Ambient Hex Background */
-        .hex-bg {
+        p {
+            overflow-wrap: anywhere;
+        }
+
+        /* Reduced Glare Glass Overlay */
+        .glass-overlay-finisher {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                radial-gradient(circle at 15% 50%, rgba(255, 215, 0, 0.03) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(0, 188, 212, 0.03) 0%, transparent 25%);
+            inset: 0;
+            background: rgba(2, 3, 10, 0.2);
+            /* Reduced opacity from 0.4 */
+            backdrop-filter: blur(1px);
+            /* Reduced blur */
             z-index: -1;
             pointer-events: none;
         }
 
-        .hex-grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-size: 60px 104px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='104' viewBox='0 0 60 104'%3E%3Cpath d='M30 0l25.98 15v30L30 60 4.02 45V15z' fill='none' stroke='rgba(255,255,255,0.03)' stroke-width='1'/%3E%3C/svg%3E");
-            opacity: 0.3;
-            z-index: -2;
-            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
-        }
-
-        /* Sticky Mini Nav */
-        .sticky-nav {
-            position: sticky;
-            top: 73px;
-            /* Below main header */
-            z-index: 90;
-            background: rgba(5, 7, 10, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 12px 0;
-            overflow-x: auto;
-            white-space: nowrap;
-            display: flex;
-            justify-content: center;
-        }
-
-        .sticky-nav::-webkit-scrollbar {
-            height: 0px;
-            background: transparent;
-        }
-
-        .sticky-nav-links {
-            display: flex;
-            gap: 24px;
-            padding: 0 24px;
-        }
-
-        .sticky-nav-link {
-            color: var(--muted);
-            font-size: 13px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: all 0.3s;
-            position: relative;
-            padding: 4px 0;
-        }
-
-        .sticky-nav-link:hover,
-        .sticky-nav-link.active {
-            color: var(--gold);
-        }
-
-        .sticky-nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--gold);
-            box-shadow: 0 0 8px var(--gold);
-        }
-
-        /* Sections */
-        .investor-section {
-            padding: 100px 0;
-            border-top: 1px solid rgba(255, 255, 255, 0.03);
-        }
-
-        .investor-section:nth-child(even) {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent);
-        }
-
-        /* Cards & Glassmorphism */
+        /* Component: Glass Card */
         .glass-card {
-            background: var(--card-glass);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-            transition: transform 0.3s, box-shadow 0.3s;
+            background: var(--glass-card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            /* Softer shadow */
+            transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
         .glass-card:hover {
-            border-color: rgba(255, 215, 0, 0.3);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 0 20px rgba(255, 215, 0, 0.02);
             transform: translateY(-4px);
+            border-color: rgba(255, 215, 0, 0.2);
         }
 
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
-            margin-top: 48px;
-        }
-
-        /* Honeycomb layout helpers */
-        .honeycomb-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 24px;
+        /* Component: Buttons */
+        .btn-gold {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+            border: 1px solid rgba(255, 215, 0, 0.4);
+            color: var(--gold);
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
+            text-align: center;
         }
 
-        /* Governance Pipeline Visualization */
-        .pipeline-viz {
+        .btn-gold:hover {
+            background: rgba(255, 215, 0, 0.25);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Typography Shimmer */
+        .shimmer-text-gold {
+            background: linear-gradient(90deg, #FFD700 0%, #FFA500 25%, #FFD700 50%, #FFA500 75%, #FFD700 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 5s linear infinite;
+            /* Slower shimmer for readability */
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Deck Card Specifics */
+        .deck-preview {
+            aspect-ratio: 16/9;
+            width: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            margin: 60px 0;
+            justify-content: center;
             position: relative;
-            flex-wrap: wrap;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .pipeline-step {
-            flex: 1;
-            min-width: 140px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .pipeline-step-box {
-            background: rgba(10, 10, 10, 0.8);
-            border: 1px solid rgba(0, 188, 212, 0.3);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 12px;
+        .deck-preview-icon {
+            font-size: 3rem;
+            opacity: 0.5;
             transition: 0.3s;
         }
 
-        .pipeline-step-box:hover {
-            border-color: var(--cyan);
-            box-shadow: 0 0 15px rgba(0, 188, 212, 0.2);
+        .glass-card:hover .deck-preview-icon {
+            opacity: 1;
+            transform: scale(1.1);
         }
 
-        .pipeline-arrow {
-            color: var(--muted);
-            font-size: 24px;
-        }
-
-        /* Founder Section */
-        .founder-story {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-        }
-
-        .founder-img-container {
-            position: relative;
-        }
-
+        /* Founder Image */
         .founder-img {
-            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
             border-radius: 20px;
-            filter: grayscale(20%);
-            transition: 0.5s;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            filter: grayscale(80%) contrast(1.1);
+            /* Slightly less grayscale */
+            transition: 0.5s;
         }
 
         .founder-img:hover {
@@ -240,561 +195,413 @@
             border-color: var(--gold);
         }
 
-        .founder-badge {
-            position: absolute;
-            bottom: -20px;
-            right: -20px;
-            background: var(--bg);
-            border: 1px solid var(--gold);
-            padding: 12px 24px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        /* Sticky Nav Active State */
+        .sticky-subnav a.active {
+            color: var(--gold);
+            border-bottom: 2px solid var(--gold);
         }
 
-        /* Roadmap Timeline */
-        .timeline {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 40px 0;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 24px;
-            height: 100%;
-            width: 2px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 40px;
-        }
-
-        .timeline-marker {
-            position: absolute;
-            left: 15px;
-            top: 0;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--bg);
-            border: 2px solid var(--gold);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        /* Animations */
-        @keyframes pulse-gold {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4);
-            }
-
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
-            }
-
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
-            }
-        }
-
-        .pulse-btn {
-            animation: pulse-gold 2s infinite;
-        }
-
-        /* Responsive */
+        /* Mobile Fixes */
         @media (max-width: 768px) {
-            .founder-story {
-                grid-template-columns: 1fr;
+
+            .btn-gold,
+            .btn-secondary {
+                width: 100%;
+                /* Full width buttons on mobile */
             }
 
-            .pipeline-viz {
-                flex-direction: column;
-                gap: 40px;
+            h1 {
+                font-size: 2.5rem !important;
             }
 
-            .pipeline-arrow {
-                transform: rotate(90deg);
+            section {
+                padding-top: 4rem !important;
+                padding-bottom: 4rem !important;
             }
-        }
-
-        /* Placeholder styling */
-        .placeholder {
-            color: var(--muted);
-            font-style: italic;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .video-placeholder {
-            width: 100%;
-            aspect-ratio: 16/9;
-            background: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .video-placeholder::before {
-            content: "90s Demo Video Placeholder";
-            color: rgba(255, 255, 255, 0.5);
-            font-family: monospace;
         }
     </style>
 </head>
 
-<body>
+<body class="antialiased">
 
-    <!-- Ambient Backgrounds -->
-    <div class="hex-bg"></div>
-    <div class="hex-grid-overlay"></div>
-    <div class="metatron-bg"></div>
+    <!-- NEW BLENDED BACKGROUND SYSTEM -->
+    <script src="mas-ai-background.js"></script>
+    <div class="glass-overlay-finisher"></div>
 
-    <!-- Main Header (Consistent with Main Site) -->
-    <header class="site-header" id="header">
-        <div class="container">
-            <div class="nav-inner">
-                <a href="/" class="brand">
-                    <img src="mas-ai-logo.jpg" alt="MAS-AI Logo">
-                    <span>MAS-AI</span>
-                </a>
-                <div class="nav-links">
-                    <a href="/#daena">Product</a>
-                    <a href="/#vision">Vision</a>
-                    <a href="/investors.html" class="is-active">Investors</a>
-                </div>
-                <div class="nav-cta">
-                    <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-primary">Book a Call</a>
-                </div>
+    <!-- MAIN NAVBAR (Matches mas-ai.co) -->
+    <header
+        class="fixed top-0 w-full z-50 transition-all duration-300 bg-black/50 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3 group">
+                <img src="mas-ai-logo.jpg" alt="MAS-AI"
+                    class="w-10 h-10 rounded-lg border border-white/10 shadow-lg group-hover:border-[#FFD700]/50 transition-all">
+                <span
+                    class="font-display font-bold text-xl tracking-tight text-white group-hover:text-[#FFD700] transition-colors">MAS-AI</span>
+            </a>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="#problem" class="text-sm font-medium text-gray-300 hover:text-white transition">Problem</a>
+                <a href="#decks" class="text-sm font-medium text-gray-300 hover:text-white transition">Pitch Decks</a>
+                <a href="mailto:masoud.masoori@mas-ai.co" class="btn-gold !py-2 !px-6 !text-xs">Invest</a>
             </div>
         </div>
     </header>
 
-    <!-- Sticky Investor Nav -->
-    <nav class="sticky-nav">
-        <div class="sticky-nav-links">
-            <a href="#overview" class="sticky-nav-link active">Overview</a>
-            <a href="#problem" class="sticky-nav-link">Problem</a>
-            <a href="#solution" class="sticky-nav-link">Solution</a>
-            <a href="#governance" class="sticky-nav-link">Governance</a>
-            <a href="#products" class="sticky-nav-link">Products</a>
-            <a href="#traction" class="sticky-nav-link">Traction</a>
-            <a href="#roadmap" class="sticky-nav-link">Roadmap</a>
-            <a href="#founder" class="sticky-nav-link">Founder</a>
-            <a href="#partners" class="sticky-nav-link">Partners</a>
+    <!-- SUB-NAV (Sticky) -->
+    <nav
+        class="sticky-subnav fixed top-16 w-full z-40 bg-black/80 backdrop-blur-xl border-b border-white/5 overflow-x-auto py-3 no-scrollbar">
+        <div
+            class="max-w-7xl mx-auto px-6 flex gap-6 md:gap-8 min-w-max justify-start md:justify-center text-sm font-medium text-gray-400">
+            <a href="#hero" class="hover:text-[#FFD700] transition-colors whitespace-nowrap">Overview</a>
+            <a href="#problem" class="hover:text-[#FFD700] transition-colors whitespace-nowrap">Problem</a>
+            <a href="#solution" class="hover:text-[#FFD700] transition-colors whitespace-nowrap">Solution</a>
+            <a href="#products" class="hover:text-[#FFD700] transition-colors whitespace-nowrap">Products</a>
+            <a href="#decks" class="hover:text-[#FFD700] transition-colors text-white whitespace-nowrap">Pitch Decks</a>
+            <a href="#why-us" class="hover:text-[#FFD700] transition-colors whitespace-nowrap">Why Us</a>
+            <a href="#roadmap" class="hover:text-[#FFD700] transition-colors whitespace-nowrap">Roadmap</a>
+            <a href="#founder" class="hover:text-[#FFD700] transition-colors whitespace-nowrap">Founder</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="overview" class="hero" style="min-height: 80vh; padding-top: 60px;">
-        <div class="container" style="text-align: center;">
-            <div class="hero-eyebrow">The AI Company Operating System</div>
-            <h1 class="hero-main-title">
-                <span class="hero-gold-shimmer">DAENA</span>
-                <span class="hero-subtitle-neon"
-                    style="display: block; margin-top: 10px; font-size: 0.5em; text-transform: uppercase; letter-spacing: 2px;">Governed
-                    Multi-Agent Orchestration</span>
+    <!-- 1. HERO -->
+    <section id="hero" class="min-h-screen flex items-center justify-center pt-32 pb-20 px-4 relative">
+        <div class="max-w-5xl mx-auto text-center z-10 w-full">
+            <div
+                class="inline-block mb-6 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-[#00BCD4] text-xs font-bold tracking-widest uppercase backdrop-blur-sm">
+                Seeking Strategic Partners
+            </div>
+
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight">
+                MAS-AI <br>
+                <span class="shimmer-text-gold">Governed AI Agent OS</span>
             </h1>
 
-            <p class="hero-description" style="max-width: 800px; margin: 24px auto;">
-                Building the "Founder-Grade Control Room" for the AI era. <br>
-                Execute complex workflows with enterprise-grade control, auditability, and secure orchestration.
+            <p class="text-lg md:text-2xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
+                + Energy-Efficient NLP. <br>
+                <span class="text-white font-medium">Anti-leak. Accountable. Execution-Focused.</span>
             </p>
 
-            <div class="hero-cta">
-                <a href="mailto:masoud.masoori@mas-ai.co?subject=Investor%20Inquiry%20-%20Book%20Call"
-                    class="btn btn-primary pulse-btn">Book a call</a>
-                <a href="mailto:masoud.masoori@mas-ai.co?subject=Request%20Deck" class="btn btn-ghost">Request Deck</a>
-            </div>
-
-            <div class="hero-stats" style="margin-top: 60px; justify-content: center;">
-                <div class="stat-card">
-                    <div class="stat-value">48+</div>
-                    <div class="stat-label">Specialized Agents</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">3</div>
-                    <div class="stat-label">Memory Tiers (NBMF)</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-value">100%</div>
-                    <div class="stat-label">Auditable Actions</div>
-                </div>
-            </div>
-
-            <!-- Download One Pager -->
-            <div style="margin-top: 40px;">
-                <a href="#"
-                    style="color: var(--muted); font-size: 14px; text-decoration: underline; opacity: 0.7;">Download
-                    One-Pager (PDF)</a>
+            <div
+                class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 w-full max-w-md mx-auto sm:max-w-none">
+                <a href="#decks" class="btn-gold text-base w-full sm:w-auto">
+                    Open Pitch Decks
+                </a>
+                <a href="mailto:masoud.masoori@mas-ai.co" class="btn-secondary text-base w-full sm:w-auto">
+                    Book a Call
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Problem Section -->
-    <section id="problem" class="investor-section">
-        <div class="container">
-            <div class="section-head">
-                <h2 class="section-title">Why "Chat" Isn't Enough</h2>
-                <div class="section-sub">Enterprises need execution, not just conversation.</div>
+    <!-- 2. PROBLEM -->
+    <section id="problem" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4">The Enterprise AI Gap</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Why agent ecosystems leak and why governance matters.</p>
             </div>
 
-            <div class="feature-grid">
+            <div class="grid md:grid-cols-3 gap-8">
                 <div class="glass-card">
-                    <h3 style="color: #ff4444; margin-bottom: 12px;">Data Leakage</h3>
-                    <p style="color: var(--muted);">Employees pasting sensitive IP into public LLMs. No memory
-                        boundaries or role-based access control.</p>
-                </div>
-                <div class="glass-card">
-                    <h3 style="color: #ff4444; margin-bottom: 12px;">Lack of Control</h3>
-                    <p style="color: var(--muted);">"Agent tools" that loop indefinitely or take unpredictable actions
-                        without human-in-the-loop gates.</p>
-                </div>
-                <div class="glass-card">
-                    <h3 style="color: #ff4444; margin-bottom: 12px;">No Audit Trail</h3>
-                    <p style="color: var(--muted);">Black-box execution. When mistakes happen, there is no log of
-                        <em>why</em> the agent made that decision.</p>
-                </div>
-                <div class="glass-card">
-                    <h3 style="color: #ff4444; margin-bottom: 12px;">Vendor Lock-in</h3>
-                    <p style="color: var(--muted);">Trapped in a single model ecosystem. Enterprises need multi-LLM
-                        routing for cost and quality.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Solution Section -->
-    <section id="solution" class="investor-section">
-        <div class="container">
-            <div class="daena-os-wrap">
-                <div class="daena-os-left">
-                    <h2 class="section-title">The Solution: <span style="color: var(--cyan);">Daena OS</span></h2>
-                    <p class="p" style="margin-bottom: 24px;">
-                        A governed orchestration layer that sits between your business goals and the raw power of LLMs.
+                    <div class="text-4xl mb-6">⚠️</div>
+                    <h3 class="text-xl font-bold text-red-400 mb-3">Silent Data Leaks</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Ungoverned agents copy-paste sensitive IP into public models. Without a "Permissions OS", your
+                        data is training your competitors.
                     </p>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-                            <span style="color: var(--gold);">✓</span> Multi-Agent Workflow Engine
-                        </li>
-                        <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-                            <span style="color: var(--gold);">✓</span> Multi-LLM Routing (Best model for the job)
-                        </li>
-                        <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-                            <span style="color: var(--gold);">✓</span> Enterprise-grade Governance
-                        </li>
-                        <li style="margin-bottom: 12px; display: flex; align-items: center; gap: 10px;">
-                            <span style="color: var(--gold);">✓</span> Founder/CEO Control Dashboard
-                        </li>
-                    </ul>
                 </div>
-                <div class="daena-os-right">
-                    <!-- 90s Demo Placeholder -->
-                    <div class="video-placeholder">
-                        <div style="text-align: center;">
-                            <div style="font-size: 40px; margin-bottom: 10px;">▶</div>
-                            <div>Watch the 90s Demo</div>
+                <div class="glass-card">
+                    <div class="text-4xl mb-6">📉</div>
+                    <h3 class="text-xl font-bold text-red-400 mb-3">Context Amnesia</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Chat-based AI forgets decisions the moment the tab closes. Enterprises need persistent, evolving
+                        memory state across departments.
+                    </p>
+                </div>
+                <div class="glass-card">
+                    <div class="text-4xl mb-6">⚖️</div>
+                    <h3 class="text-xl font-bold text-red-400 mb-3">No Accountability</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        When an autonomous agent errs, who is responsible? We provide a Merkle-signed decision log for
+                        full auditability.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. SOLUTION -->
+    <section id="solution" class="py-20 px-4 bg-white/[0.02]">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">Daena OS:<br>The "Adult in the Room"</h2>
+                <p class="text-gray-300 text-lg mb-8 leading-relaxed">
+                    Daena is the Operating System that sits between your business goals and your AI workforce. She
+                    enforces policy, manages memory, and requires sign-off for critical actions.
+                </p>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-4">
+                        <span class="text-[#00BCD4] text-xl">✓</span>
+                        <span class="text-gray-300"><strong>Integrity Shield:</strong> Pre-action policy checks.</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <span class="text-[#00BCD4] text-xl">✓</span>
+                        <span class="text-gray-300"><strong>Neural-Backed Memory:</strong> Long-term enterprise
+                            recall.</span>
+                    </li>
+                    <li class="flex items-center gap-4">
+                        <span class="text-[#00BCD4] text-xl">✓</span>
+                        <span class="text-gray-300"><strong>Founder Council:</strong> Human-in-the-loop approval
+                            UI.</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="glass-card bg-black/40 flex items-center justify-center min-h-[300px]">
+                <!-- Abstract UI Representation -->
+                <div class="text-center">
+                    <div
+                        class="w-16 h-16 rounded-full border-2 border-[#00BCD4] mx-auto flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(0,188,212,0.3)]">
+                        <span class="text-2xl">🛡️</span>
+                    </div>
+                    <div class="font-display font-medium text-xl">Governance Layer Active</div>
+                    <div class="text-xs text-gray-500 mt-2 uppercase tracking-widest">Running Checks...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. PITCH DECKS (CRITICAL UPDATE) -->
+    <section id="decks" class="py-24 px-4 relative">
+        <!-- Background Highlight -->
+        <div class="absolute inset-0 bg-gradient-to-b from-[#FFD700]/5 to-transparent pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <h2 class="text-center text-4xl md:text-5xl font-bold mb-4">Investment Materials</h2>
+            <p class="text-center text-gray-400 mb-16 max-w-2xl mx-auto">Review our distinct decks for the OS Platform
+                (Daena) and the Research Lab (NatureNLP).</p>
+
+            <div class="grid md:grid-cols-2 gap-8 md:gap-12">
+                <!-- CARD 1: DAENA -->
+                <article class="glass-card flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-2 h-8 bg-[#00BCD4] rounded-full"></div>
+                        <h3 class="text-2xl font-bold text-white">Daena OS</h3>
+                    </div>
+
+                    <div class="deck-preview bg-black/40">
+                        <div class="text-center">
+                            <div class="deck-preview-icon">💠</div>
+                            <div class="text-xs text-gray-500 uppercase mt-2 font-bold tracking-widest">Platform Deck
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Governance Section (Key Differentiator) -->
-    <section id="governance" class="investor-section" style="background: rgba(0, 188, 212, 0.02);">
-        <div class="container">
-            <div class="section-head">
-                <div class="eyebrow" style="color: var(--cyan);">Enterprise Safety Core</div>
-                <h2 class="section-title">Governance First. Execution Second.</h2>
-                <div class="section-sub">
-                    Daena is built to be trusted. Every action passes through strict validation gates so you can sleep
-                    at night while agents work.
-                </div>
-            </div>
+                    <p class="text-gray-400 text-sm mb-8 flex-grow">
+                        The Pitch for the Governable AI Agent Operating System. Detailed market analysis, competitive
+                        moat, and product architecture.
+                    </p>
 
-            <!-- Governance Pipeline Viz -->
-            <div class="pipeline-viz">
-                <div class="pipeline-step">
-                    <div class="pipeline-step-box">
-                        <div style="color: var(--text); font-weight: 700;">Intent</div>
-                        <div style="font-size: 12px; color: var(--muted); margin-top: 6px;">User Request</div>
+                    <div class="flex flex-col gap-3">
+                        <a href="https://daena.mas-ai.co/pitch-deck.html" target="_blank"
+                            class="btn-gold w-full flex items-center justify-center gap-2">
+                            <span>📂 Open Deck</span>
+                        </a>
+                        <a href="https://daena.mas-ai.co/" target="_blank"
+                            class="btn-secondary w-full flex items-center justify-center gap-2">
+                            <span>▶ Watch Daena in Action</span>
+                        </a>
                     </div>
-                </div>
-                <div class="pipeline-arrow">→</div>
+                </article>
 
-                <div class="pipeline-step">
-                    <div class="pipeline-step-box" style="border-color: var(--gold);">
-                        <div style="color: var(--gold); font-weight: 700;">Safety Policy</div>
-                        <div style="font-size: 12px; color: var(--muted); margin-top: 6px;">Perms check (PII, Auth)
+                <!-- CARD 2: NATURE NLP -->
+                <article class="glass-card flex flex-col h-full">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-2 h-8 bg-[#4CAF50] rounded-full"></div>
+                        <h3 class="text-2xl font-bold text-white">NatureNLP</h3>
+                    </div>
+
+                    <div class="deck-preview bg-black/40">
+                        <div class="text-center">
+                            <div class="deck-preview-icon">🌿</div>
+                            <div class="text-xs text-gray-500 uppercase mt-2 font-bold tracking-widest">Research Deck
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="pipeline-arrow">→</div>
 
-                <div class="pipeline-step">
-                    <div class="pipeline-step-box">
-                        <div style="color: var(--text); font-weight: 700;">Routing</div>
-                        <div style="font-size: 12px; color: var(--muted); margin-top: 6px;">Best Model/Agent</div>
-                    </div>
-                </div>
-                <div class="pipeline-arrow">→</div>
-
-                <div class="pipeline-step">
-                    <div class="pipeline-step-box" style="border-color: var(--cyan);">
-                        <div style="color: var(--cyan); font-weight: 700;">Approval Gate</div>
-                        <div style="font-size: 12px; color: var(--muted); margin-top: 6px;">Human High-Risk Review</div>
-                    </div>
-                </div>
-                <div class="pipeline-arrow">→</div>
-
-                <div class="pipeline-step">
-                    <div class="pipeline-step-box">
-                        <div style="color: var(--text); font-weight: 700;">Execution</div>
-                        <div style="font-size: 12px; color: var(--muted); margin-top: 6px;">Audit Logged</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="feature-grid">
-                <div class="glass-card">
-                    <h4>Role-Based Access</h4>
-                    <p style="font-size: 14px; color: var(--muted); margin-top: 8px;">Granular permissions. Marketing
-                        agents can't access Production DB. Interns can't deploy code.</p>
-                </div>
-                <div class="glass-card">
-                    <h4>Audit Logs</h4>
-                    <p style="font-size: 14px; color: var(--muted); margin-top: 8px;">Full traceability. Replay any
-                        agent session to see exactly what tools were used and why.</p>
-                </div>
-                <div class="glass-card">
-                    <h4>Safe Model Routing</h4>
-                    <p style="font-size: 14px; color: var(--muted); margin-top: 8px;">Orchestrate between models with
-                        policy constraints (e.g. "No PII to external closed-source models").</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products Section -->
-    <section id="products" class="investor-section">
-        <div class="container">
-            <div class="section-head">
-                <h2 class="section-title">Product Ecosystem</h2>
-            </div>
-
-            <h3 style="margin-bottom: 24px; border-left: 4px solid var(--gold); padding-left: 16px;">Core: Daena OS</h3>
-            <div class="honeycomb-grid">
-                <div class="glass-card" style="width: 300px;">
-                    <img src="https://img.icons8.com/ios/50/FFD700/network.png" width="40" style="margin-bottom:16px;">
-                    <h4>Orchestrator</h4>
-                    <p style="font-size: 13px; color: var(--muted);">Central brain managing agent handoffs.</p>
-                </div>
-                <div class="glass-card" style="width: 300px;">
-                    <img src="https://img.icons8.com/ios/50/FFD700/memory-slot.png" width="40"
-                        style="margin-bottom:16px;">
-                    <h4>Memory (NBMF)</h4>
-                    <p style="font-size: 13px; color: var(--muted);">Long-term, tiered memory fabric.</p>
-                </div>
-                <div class="glass-card" style="width: 300px;">
-                    <img src="https://img.icons8.com/ios/50/FFD700/shield.png" width="40" style="margin-bottom:16px;">
-                    <h4>Security</h4>
-                    <p style="font-size: 13px; color: var(--muted);">Integrity checks and approval gates.</p>
-                </div>
-                <div class="glass-card" style="width: 300px;">
-                    <img src="https://img.icons8.com/ios/50/FFD700/webhook.png" width="40" style="margin-bottom:16px;">
-                    <h4>Integrations</h4>
-                    <p style="font-size: 13px; color: var(--muted);">Connects to your existing toolstack.</p>
-                </div>
-            </div>
-
-            <div style="margin-top: 80px;">
-                <h3 style="margin-bottom: 24px; border-left: 4px solid var(--cyan); padding-left: 16px;">Expansion:
-                    NatureNLP</h3>
-                <div class="glass-card" style="display: flex; gap: 32px; align-items: center; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 300px;">
-                        <h4>Applied NLP & Energy Efficiency</h4>
-                        <p style="color: var(--muted); margin-top: 12px;">
-                            A solution for low-cost and ENERGY-efficient Data Training. NatureNLP creates specialized
-                            domain pipelines (evaluation, classification, knowledge extraction) that plug directly into
-                            Daena for enhanced domain intelligence.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Traction Section -->
-    <section id="traction" class="investor-section">
-        <div class="container">
-            <h2 class="section-title">Traction</h2>
-            <div class="feature-grid">
-                <div class="glass-card">
-                    <div class="stat-value">[X]</div>
-                    <div class="stat-label">Active Pilots</div>
-                </div>
-                <div class="glass-card">
-                    <div class="stat-value">[Month Year]</div>
-                    <div class="stat-label">Product Launch</div>
-                </div>
-                <div class="glass-card">
-                    <div class="stat-value">[Users]</div>
-                    <div class="stat-label">Waitlist</div>
-                </div>
-                <div class="glass-card">
-                    <div class="stat-value">Live</div>
-                    <div class="stat-label">Demo Ready</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Roadmap to Revenue -->
-    <section id="roadmap" class="investor-section">
-        <div class="container">
-            <h2 class="section-title" style="text-align: center;">Execution Roadmap</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div style="font-weight: 700; color: var(--gold); margin-bottom: 4px;">Next 90 Days</div>
-                    <h4 style="margin-bottom: 8px;">Pilot Validation & Hardening</h4>
-                    <p style="color: var(--muted); font-size: 14px;">Deploying Daena with select design partners.
-                        Refining governance UI and expanding tool integrations.</p>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div style="font-weight: 700; color: var(--gold); margin-bottom: 4px;">6 Months</div>
-                    <h4 style="margin-bottom: 8px;">Public Beta & NatureNLP Integration</h4>
-                    <p style="color: var(--muted); font-size: 14px;">Opening access to waitlist. Fully integrating
-                        NatureNLP pipelines for specialized legal/finance verticals.</p>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div style="font-weight: 700; color: var(--gold); margin-bottom: 4px;">12 Months</div>
-                    <h4 style="margin-bottom: 8px;">The OS Standard</h4>
-                    <p style="color: var(--muted); font-size: 14px;">Marketplace for Agents. Enterprise SLA support.
-                        Establishing Daena as the default OS for AI-native companies.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Founder Section -->
-    <section id="founder" class="investor-section">
-        <div class="container">
-            <div class="founder-story">
-                <div class="founder-img-container">
-                    <img src="assets/img/founder.jpg" alt="Masoud Masoori" class="founder-img">
-                    <div class="founder-badge">
-                        <div style="font-weight: 700; color: var(--text);">Masoud Masoori</div>
-                        <div style="font-size: 12px; color: var(--muted);">Founder & CEO</div>
-                    </div>
-                </div>
-                <div class="founder-text">
-                    <div class="eyebrow" style="color: var(--gold);">My Story</div>
-                    <h2 class="section-title">Built with Resilience</h2>
-                    <p class="p" style="margin-bottom: 20px;">
-                        I’m an immigrant founder who rebuilt my life in Canada through computer science and AI. After
-                        previously working as a senior civil engineer, I transitioned into AI from the ground up to
-                        solve complex automation problems.
-                    </p>
-                    <p class="p" style="margin-bottom: 20px;">
-                        My journey hasn't been without its shadows. I lost my father in a deeply painful family tragedy,
-                        and my mother passing away from cancer a year later. That experience shaped how I build: calm
-                        under pressure, obsessed with safety, and driven by a mission to create systems that actually
-                        help people.
-                    </p>
-                    <p class="p">
-                        I build "Governance-First" because I value trust above all else. Daena is the culmination of
-                        that philosophy—fast execution, but never reckless.
+                    <p class="text-gray-400 text-sm mb-8 flex-grow">
+                        The Pitch for Efficiency-First AI. How we reduce compute costs by 10x using biological
+                        efficiency principles and sparse modeling.
                     </p>
 
-                    <div style="margin-top: 30px; display: flex; gap: 16px;">
-                        <span class="placeholder">Execution Speed</span>
-                        <span class="placeholder">Deep Tech</span>
-                        <span class="placeholder">Product Obsession</span>
+                    <div class="flex flex-col gap-3">
+                        <a href="https://naturenlp.mas-ai.co/pitch-deck.html" target="_blank"
+                            class="btn-gold w-full flex items-center justify-center gap-2">
+                            <span>📂 Open Deck</span>
+                        </a>
+                        <a href="https://naturenlp.mas-ai.co/" target="_blank"
+                            class="btn-secondary w-full flex items-center justify-center gap-2">
+                            <span>▶ Watch NatureNLP in Action</span>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. WHY INVESTORS CHOOSE -->
+    <section id="why-us" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Why Investors Choose Daena</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                    <h4 class="text-[#FFD700] font-bold mb-2">Timing</h4>
+                    <p class="text-sm text-gray-400">The "Chat" hype is fading. Enterprises are demanding "Execution"
+                        and "Control". We are the first OS to provide both.</p>
+                </div>
+                <div class="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                    <h4 class="text-[#00BCD4] font-bold mb-2">Anti-Fragile</h4>
+                    <p class="text-sm text-gray-400">Our NBMF memory system gets smarter with use, creating a
+                        compounding data moat that shallow wrappers cannot copy.</p>
+                </div>
+                <div class="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                    <h4 class="text-[#4CAF50] font-bold mb-2">Cost Leader</h4>
+                    <p class="text-sm text-gray-400">NatureNLP integration means we run heavy workloads for a fraction
+                        of the inference cost of competitors.</p>
+                </div>
+                <div class="p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm">
+                    <h4 class="text-white font-bold mb-2">Founder-Led</h4>
+                    <p class="text-sm text-gray-400">Built by a senior engineer who solves real operational problems,
+                        not just research demos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. ROADMAP -->
+    <section id="roadmap" class="py-20 px-4 bg-white/[0.02]">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 text-center">Protocol Roadmap</h2>
+            <div class="space-y-8 border-l border-white/10 ml-4 pl-8 relative">
+                <!-- 90 Days -->
+                <div class="relative">
+                    <div
+                        class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-[#FFD700] shadow-[0_0_15px_#FFD700]">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Next 90 Days: Pilot Hardening</h3>
+                    <p class="text-gray-400">Deploying Daena v1.0 with 3 key design partners (Legal & Finance). Refining
+                        the "Council" UI for non-technical approvals.</p>
+                </div>
+                <!-- 6 Months -->
+                <div class="relative">
+                    <div
+                        class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-[#00BCD4] border border-[#00BCD4] bg-black">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">6 Months: Vertical Integration</h3>
+                    <p class="text-gray-400">Full integration of NatureNLP specifically for legal document auditing. 13x
+                        compression achievement.</p>
+                </div>
+                <!-- 12 Months -->
+                <div class="relative">
+                    <div
+                        class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-white/20 border border-white/40 bg-black">
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">12 Months: Public Marketplace</h3>
+                    <p class="text-gray-400">Opening the Agent Marketplace. 3rd party developers can build
+                        "Daena-Compliant" agents.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. FOUNDER STORY -->
+    <section id="founder" class="py-24 px-4">
+        <div class="max-w-6xl mx-auto glass-card p-6 md:p-12">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="relative group">
+                    <!-- Adjusted asset path to new location -->
+                    <img src="assets/img/founder-new.jpg" alt="Masoud Masoori"
+                        class="founder-img w-full max-w-sm mx-auto shadow-2xl">
+                    <div
+                        class="absolute bottom-6 left-6 right-6 bg-black/80 backdrop-blur-md p-4 rounded-xl border border-white/10 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="font-bold text-white">Masoud Masoori</div>
+                        <div class="text-xs text-[#FFD700] uppercase tracking-wider">Founder & CEO</div>
+                    </div>
+                </div>
+                <div>
+                    <h2 class="text-3xl font-bold mb-6">Built from Resilience</h2>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        I am a career engineer who pivoted to solve the "automation gap" in enterprise.
+                        My journey—marked by rebuilding my life as an immigrant in Canada and overcoming deep personal
+                        loss—has forged a leadership style based on <strong>trust</strong> and <strong>absolute
+                            accountability</strong>.
+                    </p>
+                    <p class="text-gray-300 mb-8 leading-relaxed">
+                        I built Daena because I believe powerful AI systems demand powerful controls. We are building
+                        the safe foundation for an autonomous future.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://linkedin.com/in/masoud-masoori" target="_blank"
+                            class="text-[#FFD700] border-b border-[#FFD700] hover:text-white hover:border-white transition pb-1">
+                            Connect on LinkedIn
+                        </a>
+                        <span class="text-gray-600">|</span>
+                        <a href="mailto:masoud.masoori@mas-ai.co" class="text-white hover:text-[#00BCD4] transition">
+                            masoud.masoori@mas-ai.co
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Partners / Who this is for -->
-    <section id="partners" class="investor-section">
-        <div class="container">
-            <div class="glass-card" style="text-align: center;">
-                <h2 style="margin-bottom: 20px;">Built for the Future Enterprise</h2>
-                <div class="honeycomb-grid">
-                    <div style="padding: 12px 24px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;">
-                        Accelerators</div>
-                    <div style="padding: 12px 24px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;">
-                        Enterprise Innovation Teams</div>
-                    <div style="padding: 12px 24px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;">
-                        Regulated Startups</div>
-                    <div style="padding: 12px 24px; border: 1px solid rgba(255,255,255,0.1); border-radius: 50px;">AI
-                        Agencies</div>
-                </div>
+    <!-- 8. CONTACT -->
+    <section id="contact" class="py-24 px-4 bg-black/60 backdrop-blur-sm">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-4xl font-bold mb-6">Partner with Us</h2>
+            <p class="text-gray-400 mb-10 max-w-2xl mx-auto">
+                We are currently accepting inquiries from accelerators, strategic partners, and early-stage investors.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="mailto:masoud.masoori@mas-ai.co" class="btn-gold px-12 py-4 text-lg">
+                    Book a Meeting
+                </a>
             </div>
+
+            <footer class="mt-20 pt-10 border-t border-white/5 text-center text-xs text-gray-600">
+                <p class="mb-4">
+                    Emails: <a href="mailto:masoud.masoori@mas-ai.co"
+                        class="hover:text-white">masoud.masoori@mas-ai.co</a> • <a href="mailto:masoud.masori@gmail.com"
+                        class="hover:text-white">masoud.masori@gmail.com</a>
+                </p>
+                <p>
+                    &copy; 2026 MAS-AI Technologies Inc. • Toronto, Canada<br>
+                    Daena and NatureNLP are trademarks of MAS-AI Technologies Inc.
+                </p>
+            </footer>
         </div>
     </section>
 
-    <!-- Contact / Footer -->
-    <footer id="contact"
-        style="background: rgba(0,0,0,0.5); padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.05);">
-        <div class="container" style="text-align: center;">
-            <h2 class="section-title">Let's Build the Safe AI Future</h2>
-            <p style="color: var(--muted); margin-bottom: 40px;">We can share a security overview and architecture
-                diagram on request.</p>
-
-            <div style="display: flex; gap: 16px; justify-content: center; margin-bottom: 60px;">
-                <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-primary">Book a Call</a>
-                <a href="mailto:masoud.masoori@mas-ai.co?subject=Request%20Deck" class="btn btn-ghost">Request Deck</a>
-            </div>
-
-            <div style="margin-bottom: 40px; color: var(--muted);">
-                <div>Email: <a href="mailto:masoud.masoori@mas-ai.co"
-                        style="color: var(--text);">masoud.masoori@mas-ai.co</a></div>
-            </div>
-
-            <div style="font-size: 12px; color: var(--muted); opacity: 0.6;">
-                &copy; 2026 Mas-AI Technologies Inc. (Ontario, Canada) <br>
-                All rights reserved. Daena and NatureNLP are trademarks of Mas-AI Technologies Inc.
-            </div>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
+    <!-- Sticky Nav Script -->
     <script>
-        // Scroll Active State for Sticky Nav
-        const sections = document.querySelectorAll("section");
-        const navLinks = document.querySelectorAll(".sticky-nav-link");
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.sticky-subnav a');
 
-        window.onscroll = () => {
-            let current = "";
-            sections.forEach((section) => {
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (scrollY >= sectionTop - 150) {
-                    current = section.getAttribute("id");
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 300)) {
+                    current = section.getAttribute('id');
                 }
             });
 
-            navLinks.forEach((link) => {
-                link.classList.remove("active");
-                if (link.getAttribute("href").includes(current) && current !== "") {
-                    link.classList.add("active");
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
                 }
             });
-        };
+        });
     </script>
 </body>
 
