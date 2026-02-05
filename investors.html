@@ -231,13 +231,47 @@
                 transition: none !important;
             }
         }
+
+        /* ---------------------------------------------------- */
+        /* CRITICAL INVESTOR PAGE OVERRIDES FOR 3D VISIBILITY */
+        /* ---------------------------------------------------- */
+        html,
+        body {
+            background: transparent !important;
+            /* Let canvas show through */
+            overflow-x: hidden;
+        }
+
+        /* Hide global main.css overlays */
+        body::before,
+        body::after {
+            display: none !important;
+            opacity: 0 !important;
+        }
+
+        /* Ensure sections don't block view */
+        .section {
+            background: transparent !important;
+            box-shadow: none !important;
+        }
+
+        /* Ensure content sits on top */
+        main,
+        header,
+        footer,
+        .container,
+        .hero {
+            position: relative;
+            z-index: 2;
+            /* Above canvas */
+        }
     </style>
 </head>
 
 <body>
-    <!-- Blended Background Canvas -->
+    <!-- Blended Background Canvas - Z-Index 0 to sit behind z-index 2 content -->
     <canvas id="investor-canvas"
-        style="position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 1;"></canvas>
+        style="position: fixed; inset: 0; z-index: 0; pointer-events: none; background: #05070a;"></canvas>
 
     <!-- Navigation -->
     <header class="site-header" id="siteHeader">
