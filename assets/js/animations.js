@@ -24,52 +24,46 @@
   const isTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
   const lowPower = (navigator.deviceMemory && navigator.deviceMemory <= 4) || (isTouch && window.innerWidth < 700);
 
-  function qs(sel, root = document){ return root.querySelector(sel); }
-  function qsa(sel, root = document){ return Array.from(root.querySelectorAll(sel)); }
+  function qs(sel, root = document) { return root.querySelector(sel); }
+  function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
 
   function initMobileNav() {
     const btn = qs("[data-mobile-nav]");
     const panel = qs("[data-mobile-nav-panel]");
-    const hero = qs(".hero");
+    const header = qs("#siteHeader");
     if (!btn || !panel) return;
-
-    const updateSpacing = (isOpen) => {
-      if (hero) {
-        // Use requestAnimationFrame to ensure menu is fully rendered
-        requestAnimationFrame(() => {
-          requestAnimationFrame(() => {
-            if (isOpen) {
-              // Get accurate height after menu is displayed
-              const menuHeight = panel.offsetHeight || panel.scrollHeight || panel.clientHeight;
-              // Add header height (60px) + menu height
-              const totalOffset = 60 + menuHeight;
-              hero.style.marginTop = `${totalOffset}px`;
-              hero.style.transition = "margin-top 0.3s ease";
-            } else {
-              hero.style.marginTop = "60px";
-            }
-          });
-        });
-      }
-    };
 
     btn.addEventListener("click", () => {
       const open = panel.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
-      updateSpacing(open);
+      if (header) {
+        header.classList.toggle("mobile-menu-open", open);
+      }
+      // Add or remove body scroll lock
+      document.body.style.overflow = open ? "hidden" : "";
     });
 
-    // close on link click
-    qsa("a", panel).forEach(a => a.addEventListener("click", () => {
-      panel.classList.remove("is-open");
-      btn.setAttribute("aria-expanded", "false");
-      updateSpacing(false);
+    // close on link click with a small delay to allow navigation to trigger
+    qsa("a", panel).forEach(a => a.addEventListener("click", (e) => {
+      // For anchor links, we can close faster. For page links, we need to ensure navigation happens.
+      const href = a.getAttribute("href");
+      const isAnchor = href.startsWith("#");
+
+      setTimeout(() => {
+        panel.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+        if (header) header.classList.remove("mobile-menu-open");
+        document.body.style.overflow = "";
+      }, isAnchor ? 100 : 50);
     }));
 
     // Handle window resize
     window.addEventListener("resize", () => {
-      if (panel.classList.contains("is-open")) {
-        updateSpacing(true);
+      if (window.innerWidth > 768 && panel.classList.contains("is-open")) {
+        panel.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+        if (header) header.classList.remove("mobile-menu-open");
+        document.body.style.overflow = "";
       }
     });
   }
@@ -110,7 +104,7 @@
 
     const updateActiveLink = () => {
       const scrollY = window.scrollY + 150;
-      
+
       // Map nav links to sections
       const linkSectionMap = {
         "#daena-os": "#daena-os",
@@ -119,22 +113,22 @@
         "/investors.html": null, // External link
         "#contact": "#contact"
       };
-      
+
       navLinks.forEach(link => {
         const href = link.getAttribute("href");
         const sectionId = linkSectionMap[href];
-        
+
         if (!sectionId) {
           link.classList.remove("is-active");
           return;
         }
-        
+
         const section = qs(sectionId);
         if (!section) return;
-        
+
         const sectionTop = section.offsetTop;
         const sectionBottom = sectionTop + section.offsetHeight;
-        
+
         if (scrollY >= sectionTop && scrollY < sectionBottom) {
           navLinks.forEach(l => l.classList.remove("is-active"));
           link.classList.add("is-active");
@@ -194,7 +188,7 @@
 
     // Animate title with word stagger
     const words = title.textContent.split(" ");
-    title.innerHTML = words.map((word, i) => 
+    title.innerHTML = words.map((word, i) =>
       `<span style="display: inline-block; opacity: 0; transform: translateY(20px);">${word}</span>`
     ).join(" ");
 
@@ -213,7 +207,7 @@
     });
   }
 
-    function initStaggers() {
+  function initStaggers() {
     const groups = qsa("[data-stagger]");
     if (!groups.length) return;
 
@@ -363,11 +357,11 @@
       if (!nodes.length) return;
       const orbit = qs("#daenaOrbit");
       if (!orbit) return;
-      
+
       const centerX = 50;
       const centerY = 50;
       const radius = 38; // percentage from center
-      
+
       nodes.forEach((node, i) => {
         // Start from top, go clockwise
         const angle = (Math.PI * 2 * i) / nodes.length - Math.PI / 2;
@@ -378,7 +372,7 @@
         node.style.transform = "translate(-50%, -50%)";
       });
     }
-    
+
     // Wait for DOM to be ready
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", layoutOrbitNodes);
@@ -404,7 +398,7 @@
       node.addEventListener("click", () => {
         const stepIndex = nodeToStepMap[nodeIndex];
         if (stepIndex === undefined) return;
-        
+
         if (prefersReduced) {
           setStep(stepIndex);
           return;
@@ -443,7 +437,7 @@
         else if (progress < 0.6) stepIndex = 2; // Honeycomb
         else if (progress < 0.8) stepIndex = 3; // Agent Swarms
         else stepIndex = 4; // Audit Trail
-        
+
         setStep(stepIndex);
       }
     });
@@ -462,25 +456,25 @@
     if (!wrap || !title || !desc) return;
 
     const steps = [
-      { 
-        title: "Sunflower governance", 
+      {
+        title: "Sunflower governance",
         desc: "Policies, roles, and constraints that prevent drift and enforce accountable autonomy.",
-        at: 0.00 
+        at: 0.00
       },
-      { 
-        title: "Honeycomb departments", 
+      {
+        title: "Honeycomb departments",
         desc: "Agents organized as departments for scalable execution and cross-hive collaboration.",
-        at: 0.33 
+        at: 0.33
       },
-      { 
-        title: "Agent swarms", 
+      {
+        title: "Agent swarms",
         desc: "Parallel routing, model switching, and conflict resolution for real work.",
-        at: 0.66 
+        at: 0.66
       },
-      { 
-        title: "Audit trail", 
+      {
+        title: "Audit trail",
         desc: "Every decision is traceable. Logs, evidence, and outcomes remain reviewable.",
-        at: 0.90 
+        at: 0.90
       }
     ];
 
@@ -488,10 +482,10 @@
     function setStep(stepIndex) {
       const step = steps[stepIndex];
       if (!step) return;
-      
+
       title.textContent = step.title;
       desc.textContent = step.desc;
-      
+
       buttons.forEach((btn, i) => {
         btn.classList.toggle("is-active", i === stepIndex);
       });
@@ -534,12 +528,12 @@
           scrub: CONFIG.pinStory.scrub,
           onUpdate: (self) => {
             const p = self.progress;
-            
+
             // Update text based on progress
-            const stepIndex = 
+            const stepIndex =
               p < 0.25 ? 0 :
-              p < 0.50 ? 1 :
-              p < 0.75 ? 2 : 3;
+                p < 0.50 ? 1 :
+                  p < 0.75 ? 2 : 3;
             setStep(stepIndex);
 
             // Map scroll progress to video time
@@ -561,10 +555,10 @@
         scrub: CONFIG.pinStory.scrub,
         onUpdate: (self) => {
           const p = self.progress;
-          const stepIndex = 
+          const stepIndex =
             p < 0.25 ? 0 :
-            p < 0.50 ? 1 :
-            p < 0.75 ? 2 : 3;
+              p < 0.50 ? 1 :
+                p < 0.75 ? 2 : 3;
           setStep(stepIndex);
         }
       });

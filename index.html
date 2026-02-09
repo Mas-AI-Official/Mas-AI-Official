@@ -484,7 +484,7 @@
             position: relative;
         }
 
-        .nav.scrolled {
+        .site-header.is-scrolled {
             backdrop-filter: blur(24px);
             -webkit-backdrop-filter: blur(24px);
             background: rgba(10, 12, 16, 0.85);
@@ -503,7 +503,7 @@
             transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .nav.scrolled .nav-inner {
+        .site-header.is-scrolled .nav-inner {
             height: 64px;
         }
 
@@ -528,7 +528,7 @@
             transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .nav.scrolled .brand img {
+        .site-header.is-scrolled .brand img {
             height: 32px;
         }
 
@@ -1217,6 +1217,7 @@
                 right: 16px;
                 padding: 12px 20px;
             }
+
             .chat-bubble-text {
                 display: none;
             }
@@ -1568,25 +1569,29 @@
 
         .mobile-nav {
             display: none;
-            position: absolute;
-            top: 100%;
+            position: fixed;
+            top: 60px;
             left: 0;
             right: 0;
+            bottom: 0;
             width: 100%;
-            background: rgba(11, 11, 20, 0.95);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+            height: calc(100vh - 60px);
+            background: rgba(11, 11, 20, 0.98);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             z-index: 9999;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .mobile-nav.is-open {
             display: block;
         }
 
-        /* Ensure header adjusts when menu is open */
-        .site-header:has(.mobile-nav.is-open) {
+        /* Ensure header jumps to front when menu is open */
+        .site-header.mobile-menu-open {
             z-index: 10000;
         }
 
@@ -1682,8 +1687,6 @@
             .hero {
                 padding: 120px 20px 60px !important;
                 min-height: auto;
-                margin-top: 60px;
-                transition: margin-top 0.3s ease;
             }
 
             .hero-title {
@@ -2478,11 +2481,25 @@
         }
 
         /* Staggered reveal delays for cards */
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-        .reveal-delay-5 { transition-delay: 0.5s; }
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        .reveal-delay-4 {
+            transition-delay: 0.4s;
+        }
+
+        .reveal-delay-5 {
+            transition-delay: 0.5s;
+        }
     </style>
 </head>
 
@@ -2502,12 +2519,13 @@
                 <a href="#daena-os">Platform</a>
                 <a href="#portfolio">Portfolio</a>
                 <a href="#usecases">Use Cases</a>
-                <a href="/investors.html">Investors</a>
+                <a href="investors.html">Investors</a>
                 <a href="#contact">Contact</a>
             </nav>
 
             <div class="nav-cta">
-                <a class="btn btn-primary nav-cta-desktop" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore Daena</a>
+                <a class="btn btn-primary nav-cta-desktop" href="https://daena.mas-ai.co" target="_blank"
+                    rel="noopener">Explore Daena</a>
                 <button class="nav-burger" aria-label="Open menu" aria-expanded="false" data-mobile-nav>
                     <span></span><span></span><span></span>
                 </button>
@@ -2520,9 +2538,10 @@
                 <a href="#daena-os">Platform</a>
                 <a href="#portfolio">Portfolio</a>
                 <a href="#usecases">Use Cases</a>
-                <a href="/investors.html">Investors</a>
+                <a href="investors.html">Investors</a>
                 <a href="#contact">Contact</a>
-                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore Daena</a>
+                <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore
+                    Daena</a>
             </div>
         </div>
     </header>
@@ -2535,10 +2554,12 @@
                     <span class="hero-gold-shimmer">Meet Daena</span>
                     <span class="hero-subtitle-neon">AI-Autonomous Company OS</span>
                 </h1>
-                <p class="subhead" data-reveal>with governance, auditable memory, and growing agent swarms that evolve with your business.</p>
+                <p class="subhead" data-reveal>with governance, auditable memory, and growing agent swarms that evolve
+                    with your business.</p>
 
                 <div class="hero-actions hero-actions-centered" data-reveal>
-                    <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore Daena</a>
+                    <a class="btn btn-primary" href="https://daena.mas-ai.co" target="_blank" rel="noopener">Explore
+                        Daena</a>
                     <a class="btn btn-ghost" href="#portfolio">Portfolio</a>
                 </div>
 
@@ -2574,15 +2595,18 @@
             <div class="grid cols3" data-stagger>
                 <article class="glass card" data-reveal>
                     <h3>🔴 No Governance</h3>
-                    <p>AI decisions happen in black boxes with no accountability or policy enforcement. Drift happens, and you can't trace why.</p>
+                    <p>AI decisions happen in black boxes with no accountability or policy enforcement. Drift happens,
+                        and you can't trace why.</p>
                 </article>
                 <article class="glass card" data-reveal>
                     <h3>🔴 Fragmented Memory</h3>
-                    <p>Each agent operates in isolation. No shared context, no learning from past decisions, no evolving knowledge base.</p>
+                    <p>Each agent operates in isolation. No shared context, no learning from past decisions, no evolving
+                        knowledge base.</p>
                 </article>
                 <article class="glass card" data-reveal>
                     <h3>🔴 No Scalability</h3>
-                    <p>Adding agents means chaos. No coordination, no conflict resolution, no way to scale beyond a handful of agents.</p>
+                    <p>Adding agents means chaos. No coordination, no conflict resolution, no way to scale beyond a
+                        handful of agents.</p>
                 </article>
             </div>
         </div>
@@ -2608,27 +2632,34 @@
                     <div class="daena-step is-active" data-step="0">
                         <h2 class="section-title">Sunflower + Honeycomb</h2>
                         <p class="daena-step-subtitle">Scalability + Efficiency + Connection</p>
-                        <p>Sunflower governance provides policy-driven execution with infinite scalability. Honeycomb departments enable efficient cross-hive collaboration and clear organizational boundaries. Together, they form the foundation of Daena's architecture.</p>
+                        <p>Sunflower governance provides policy-driven execution with infinite scalability. Honeycomb
+                            departments enable efficient cross-hive collaboration and clear organizational boundaries.
+                            Together, they form the foundation of Daena's architecture.</p>
                     </div>
                     <div class="daena-step" data-step="1">
                         <h2 class="section-title">Sunflower Governance</h2>
                         <p class="daena-step-subtitle">Scalability</p>
-                        <p>Policy-driven execution with auditable, traceable decision-making. ABAC tiers, Merkle-notarized lineage, and auto threat detection. Prevents drift and enforces accountable autonomy at scale.</p>
+                        <p>Policy-driven execution with auditable, traceable decision-making. ABAC tiers,
+                            Merkle-notarized lineage, and auto threat detection. Prevents drift and enforces accountable
+                            autonomy at scale.</p>
                     </div>
                     <div class="daena-step" data-step="2">
                         <h2 class="section-title">Honeycomb Departments</h2>
                         <p class="daena-step-subtitle">Efficiency + Connection</p>
-                        <p>Agents organized as departments for scalable execution and cross-hive collaboration. Clear boundaries, measurable outputs, and efficient resource allocation.</p>
+                        <p>Agents organized as departments for scalable execution and cross-hive collaboration. Clear
+                            boundaries, measurable outputs, and efficient resource allocation.</p>
                     </div>
                     <div class="daena-step" data-step="3">
                         <h2 class="section-title">Agent Swarms</h2>
                         <p class="daena-step-subtitle">Parallel execution</p>
-                        <p>Parallel routing, model switching, and conflict resolution for real work. Self-organizing networks with phase-locked rounds and quorum consensus.</p>
+                        <p>Parallel routing, model switching, and conflict resolution for real work. Self-organizing
+                            networks with phase-locked rounds and quorum consensus.</p>
                     </div>
                     <div class="daena-step" data-step="4">
                         <h2 class="section-title">Audit Trail</h2>
                         <p class="daena-step-subtitle">Traceability</p>
-                        <p>Every decision is traceable. Logs, evidence, and outcomes remain queryable and reviewable. NBMF Memory with 60%+ cost savings and semantic fidelity.</p>
+                        <p>Every decision is traceable. Logs, evidence, and outcomes remain queryable and reviewable.
+                            NBMF Memory with 60%+ cost savings and semantic fidelity.</p>
                     </div>
                 </div>
             </div>
@@ -2650,27 +2681,33 @@
             <div class="grid cols3" data-stagger>
                 <article class="glass card" data-reveal>
                     <h3>🏢 Enterprise Operations</h3>
-                    <p>Autonomous coordination of departments, resource allocation, and strategic planning with full audit trails.</p>
+                    <p>Autonomous coordination of departments, resource allocation, and strategic planning with full
+                        audit trails.</p>
                 </article>
                 <article class="glass card" data-reveal>
                     <h3>📊 Business Intelligence</h3>
-                    <p>Real-time data analysis, pattern recognition, and decision support across multiple data sources.</p>
+                    <p>Real-time data analysis, pattern recognition, and decision support across multiple data sources.
+                    </p>
                 </article>
                 <article class="glass card" data-reveal>
                     <h3>🔐 Compliance & Governance</h3>
-                    <p>Policy-driven execution with Merkle-notarized lineage, ABAC access control, and automated compliance reporting.</p>
+                    <p>Policy-driven execution with Merkle-notarized lineage, ABAC access control, and automated
+                        compliance reporting.</p>
                 </article>
                 <article class="glass card" data-reveal>
                     <h3>🤝 Customer Service</h3>
-                    <p>Intelligent routing, context-aware responses, and continuous learning from customer interactions.</p>
+                    <p>Intelligent routing, context-aware responses, and continuous learning from customer interactions.
+                    </p>
                 </article>
                 <article class="glass card" data-reveal>
                     <h3>⚡ Content Operations</h3>
-                    <p>Autonomous content planning, creation, optimization, and distribution across multiple platforms.</p>
+                    <p>Autonomous content planning, creation, optimization, and distribution across multiple platforms.
+                    </p>
                 </article>
                 <article class="glass card" data-reveal>
                     <h3>🔒 Security & Risk</h3>
-                    <p>Real-time threat detection, prompt injection prevention, and comprehensive security monitoring with immune system responses.</p>
+                    <p>Real-time threat detection, prompt injection prevention, and comprehensive security monitoring
+                        with immune system responses.</p>
                 </article>
             </div>
         </div>
@@ -2695,31 +2732,34 @@
                 <article class="glass card" data-reveal>
                     <h3>🌿 NatureNLP</h3>
                     <p>Scientific NLP engine for extraction, classification, and research workflows.</p>
-                    <a class="btn btn-ghost" href="https://naturenlp.mas-ai.co" target="_blank" rel="noopener">Explore</a>
+                    <a class="btn btn-ghost" href="naturenlp.html">Explore</a>
                 </article>
 
                 <article class="glass card" data-reveal>
                     <h3>⚙️ ContentOPS</h3>
-                    <p>Autonomous content operations system built on Daena OS. Self-coordinating agents with shared memory and policy-enforced execution.</p>
-                    <a class="btn btn-ghost" href="https://contentops.mas-ai.co" target="_blank" rel="noopener">Explore</a>
+                    <p>Autonomous content operations system built on Daena OS. Self-coordinating agents with shared
+                        memory and policy-enforced execution.</p>
+                    <a class="btn btn-ghost" href="https://contentops.mas-ai.co" target="_blank"
+                        rel="noopener">Explore</a>
                 </article>
 
                 <article class="glass card" data-reveal>
                     <h3>🎨 VibeAgent</h3>
                     <p>Interactive agent experiences and real-time ops for creators and teams.</p>
-                    <a class="btn btn-ghost" href="https://daena.mas-ai.co/#demos" target="_blank" rel="noopener">Explore</a>
+                    <a class="btn btn-ghost" href="https://daena.mas-ai.co/#demos" target="_blank"
+                        rel="noopener">Explore</a>
                 </article>
 
                 <article class="glass card" data-reveal>
                     <h3>🏥 Med Smart</h3>
                     <p>AI-powered healthcare solution for intelligent medical diagnosis and patient care management.</p>
-                    <a class="btn btn-ghost" href="https://mas-ai.co/medsmart.html" target="_blank" rel="noopener">Explore</a>
+                    <a class="btn btn-ghost" href="medsmart.html">Explore</a>
                 </article>
 
                 <article class="glass card" data-reveal>
                     <h3>🏗️ Construction AI</h3>
                     <p>AI system for construction permit analysis, building code compliance, and project management.</p>
-                    <a class="btn btn-ghost" href="https://mas-ai.co/construction-ai.html" target="_blank" rel="noopener">Explore</a>
+                    <a class="btn btn-ghost" href="construction-ai.html">Explore</a>
                 </article>
             </div>
         </div>
@@ -2753,10 +2793,13 @@
                 <h2 class="section-title">Masoud Masoori</h2>
             </div>
             <div class="founder-card glass" data-reveal>
-                <p class="founder-bio">Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in Canada in 2022. With a background in AI, deep learning, and robotics, he is building Daena and VibeAgent as a Canadian deep-tech platform for AI-native companies.</p>
+                <p class="founder-bio">Mas-AI was founded by Masoud Masoori, an immigrant entrepreneur who arrived in
+                    Canada in 2022. With a background in AI, deep learning, and robotics, he is building Daena and
+                    VibeAgent as a Canadian deep-tech platform for AI-native companies.</p>
                 <div class="founder-links">
                     <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-ghost">📧 Email</a>
-                    <a href="https://www.linkedin.com/in/masoud-masoori" target="_blank" class="btn btn-ghost">LinkedIn</a>
+                    <a href="https://www.linkedin.com/in/masoud-masoori" target="_blank"
+                        class="btn btn-ghost">LinkedIn</a>
                 </div>
             </div>
         </div>
@@ -2777,12 +2820,14 @@
     </section>
 
     <!-- Footer -->
-    <footer class="section" style="padding-top: 60px; padding-bottom: 40px; text-align: center; border-top: 1px solid var(--strokeSoft);">
+    <footer class="section"
+        style="padding-top: 60px; padding-bottom: 40px; text-align: center; border-top: 1px solid var(--strokeSoft);">
         <div class="container">
             <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
                 <a href="https://daena.mas-ai.co" class="btn btn-ghost" style="font-size: 14px;">Daena AI</a>
                 <a href="mailto:masoud.masoori@mas-ai.co" class="btn btn-ghost" style="font-size: 14px;">Email</a>
-                <a href="https://www.linkedin.com/in/masoud-masoori/" class="btn btn-ghost" style="font-size: 14px;">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/masoud-masoori/" class="btn btn-ghost"
+                    style="font-size: 14px;">LinkedIn</a>
                 <a href="https://github.com/Masoud-Masoori" class="btn btn-ghost" style="font-size: 14px;">GitHub</a>
             </div>
             <p style="color: var(--muted2); font-size: 12px; margin: 0;">
@@ -2794,7 +2839,7 @@
 
     <!-- Motion One (lightweight animations) -->
     <script type="module" src="https://cdn.jsdelivr.net/npm/@motionone/dom@latest/dist/motionone.es.js"></script>
-    
+
     <!-- GSAP (CDN) -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>

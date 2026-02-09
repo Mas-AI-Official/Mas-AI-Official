@@ -276,7 +276,7 @@
     <!-- Navigation -->
     <header class="site-header" id="siteHeader">
         <div class="container nav-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="index.html">
                 <img class="brand-logo" src="mas-ai-logo.jpg" alt="MAS-AI" />
                 <span class="brand-name">MAS-AI</span>
             </a>
@@ -596,17 +596,6 @@
     <script type="module" src="assets/js/investor-experience.js"></script>
 
     <script>
-        // Simple mobile nav toggle integration
-        const burger = document.querySelector('[data-mobile-nav]');
-        const panel = document.querySelector('[data-mobile-nav-panel]');
-        if (burger && panel) {
-            burger.addEventListener('click', () => {
-                const isOpen = panel.classList.toggle('is-open');
-                burger.setAttribute('aria-expanded', isOpen);
-                burger.querySelector('span').parentElement.classList.toggle('active');
-            });
-        }
-
         // GSAP: B&W to Color effect for founder image
         gsap.to('.founder-image-wrap', {
             scrollTrigger: {
