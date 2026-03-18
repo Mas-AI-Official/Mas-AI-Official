@@ -13,39 +13,29 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: 'What is MAS-AI?',
+    question: 'What is MAS-AI Technologies?',
     answer:
-      'MAS-AI Technologies Inc. is a Canadian AI company building Daena, a governance-first multi-agent AI orchestration platform for enterprises. Incorporated in Ontario, January 2026.',
+      'MAS-AI Technologies Inc. is a Canadian AI company building governed AI systems for enterprises. We develop platforms, products, and deployment services for organizations that need trustworthy, auditable AI agent systems.',
   },
   {
     question: 'What is Daena?',
     answer:
-      'Daena is an AI-autonomous company OS that coordinates multiple AI agents with built-in governance, auditable memory (NBMF), and a 10-stage execution pipeline. Every agent action is governed, traced, and auditable.',
+      'Daena is our flagship platform: a governance-first AI agent orchestration system with auditable memory and traceable decisions. Explore it at daena.mas-ai.co.',
   },
   {
-    question: 'What is an AI governance platform?',
+    question: 'Does MAS-AI work with enterprises?',
     answer:
-      'An AI governance platform ensures autonomous AI agents operate within defined policies, with audit trails and compliance controls. Daena embeds governance inside the execution layer rather than monitoring from outside.',
+      'Yes. We help medium and large enterprises deploy AI agent systems with built-in governance, audit trails, and policy enforcement. We offer system deployment, governance integration, and architecture consulting.',
   },
   {
-    question: 'How is Daena different from AI governance monitoring tools?',
+    question: 'What industries do you serve?',
     answer:
-      'Most AI governance platforms (Holistic AI, Cranium, Credo AI) monitor existing AI systems for compliance. Daena runs governed AI agents natively. Governance is inside the execution layer, not added after deployment.',
+      'We build AI products across enterprise operations, healthcare, construction, content operations, and security. Our focus is regulated industries where governance and auditability are essential.',
   },
   {
-    question: 'What is the PhiLattice Architecture?',
+    question: 'Is Daena available for deployment?',
     answer:
-      "PhiLattice is MAS-AI's patent-pending topology for scalable multi-agent orchestration. It combines departmental organization (honeycomb structure) with governance-first coordination, enabling agents to collaborate across departments while maintaining policy enforcement.",
-  },
-  {
-    question: 'What is NBMF (Neural-Backed Memory Fabric)?',
-    answer:
-      "NBMF is MAS-AI's patent-pending memory architecture. It gives AI agents persistent, auditable, queryable memory with full traceability, so every decision and piece of context can be reviewed.",
-  },
-  {
-    question: 'Who is Daena built for?',
-    answer:
-      'Daena is built for enterprises, AI-native companies, and organizations in regulated industries that need to deploy autonomous AI agents with governance, compliance, and auditability.',
+      'Daena is currently in advanced development with 300+ automated tests passing and a working demo. Contact us to discuss early access and pilot opportunities.',
   },
 ]
 
@@ -89,7 +79,7 @@ export default function FAQ() {
   }
 
   return (
-    <section className="relative px-6 py-20 md:py-32">
+    <section id="faq" className="relative px-6 py-20 md:py-32">
       {/* JSON-LD structured data */}
       <script
         type="application/ld+json"
@@ -112,7 +102,9 @@ export default function FAQ() {
             return (
               <div
                 key={index}
-                className={`glass overflow-hidden rounded-xl transition-colors ${isOpen ? 'border-l-2 border-l-mas-cyan' : ''}`}
+                className={`glass overflow-hidden rounded-xl transition-colors ${
+                  isOpen ? 'border-l-2 border-l-[var(--color-mas-cyan)]' : ''
+                }`}
               >
                 {/* Question row */}
                 <button
@@ -120,13 +112,13 @@ export default function FAQ() {
                   className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-display text-base font-semibold text-mas-text sm:text-lg">
+                  <span className="font-display text-base font-semibold text-[var(--color-mas-text)] sm:text-lg">
                     {faq.question}
                   </span>
                   <motion.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
-                    transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] }}
-                    className="shrink-0 text-mas-text-muted"
+                    transition={{ duration: 0.25 }}
+                    className="shrink-0 text-[var(--color-mas-text-muted)]"
                   >
                     <ChevronDown className="h-5 w-5" />
                   </motion.span>
@@ -143,7 +135,7 @@ export default function FAQ() {
                       exit="collapsed"
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-5 text-sm leading-relaxed text-mas-text-secondary sm:text-base">
+                      <div className="px-6 pb-5 text-sm leading-relaxed text-[var(--color-mas-text-secondary)] sm:text-base">
                         {faq.answer}
                       </div>
                     </motion.div>

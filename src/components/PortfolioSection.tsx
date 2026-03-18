@@ -2,54 +2,94 @@
 
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import {
+  Cpu,
+  FileText,
+  GitMerge,
+  Heart,
+  HardHat,
+  ShieldCheck,
+  Sparkles,
+  Film,
+  ArrowUpRight,
+} from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 
 // --- Data -------------------------------------------------------------------
 
 interface PortfolioItem {
   title: string
   description: string
-  href: string
+  icon: LucideIcon
+  badge: string
+  badgeColor: string
+  href?: string
   hero?: boolean
-  badge?: string
-  dimmed?: boolean
-  subtitle?: string
 }
 
 const projects: PortfolioItem[] = [
   {
-    title: 'Daena by MAS-AI',
-    description:
-      'The AI-autonomous company OS with governance built in. 10-stage governed pipeline, PhiLattice Architecture, Neural-Backed Memory Fabric. Two patent-pending innovations. 300+ tests passing.',
+    title: 'Daena',
+    description: 'Governance-first AI agent orchestration platform',
+    icon: Cpu,
+    badge: 'Flagship',
+    badgeColor: 'var(--color-mas-cyan)',
     href: 'https://daena.mas-ai.co',
     hero: true,
-    badge: 'Flagship Platform',
   },
   {
     title: 'ContentOPS',
-    description:
-      'Autonomous content operations built on Daena. Self-coordinating agents with shared memory.',
+    description: 'Autonomous content operations with self-coordinating agents',
+    icon: FileText,
+    badge: 'Active',
+    badgeColor: '#22c55e',
     href: 'https://contentops.mas-ai.co',
   },
   {
+    title: 'MergeLoop',
+    description: 'Developer tool for structured AI workflows',
+    icon: GitMerge,
+    badge: 'Open Source',
+    badgeColor: '#7c3aed',
+    href: 'https://github.com/Mas-AI-Official',
+  },
+  {
     title: 'Med Smart',
-    description:
-      'AI-powered healthcare solution for intelligent medical diagnosis and patient care.',
-    href: '/medsmart',
+    description: 'AI-powered medical diagnosis and patient care management',
+    icon: Heart,
+    badge: 'Built',
+    badgeColor: 'var(--color-mas-cyan)',
+    href: '/medsmart.html',
   },
   {
     title: 'Construction AI',
-    description:
-      'AI system for construction permit analysis, building code compliance, and project management.',
-    href: '/construction-ai',
+    description: 'Building code compliance, permit analysis, and project management',
+    icon: HardHat,
+    badge: 'Built',
+    badgeColor: 'var(--color-mas-cyan)',
+    href: '/construction-ai.html',
   },
   {
-    title: 'NatureNLP',
-    description:
-      'Efficiency-first NLP research prototype exploring oscillatory mechanisms and regenerative learning.',
-    href: '#',
-    dimmed: true,
-    subtitle: '(Research Archive)',
+    title: 'Daena Guard',
+    description: 'AI security and governance for enterprise agent deployments',
+    icon: ShieldCheck,
+    badge: 'In Development',
+    badgeColor: 'var(--color-mas-gold)',
+  },
+  {
+    title: 'VibeAgent',
+    description: 'Interactive agent experiences and real-time operations',
+    icon: Sparkles,
+    badge: 'Demo',
+    badgeColor: '#7c3aed',
+    href: 'https://daena.mas-ai.co/#demos',
+  },
+  {
+    title: 'LigoVids',
+    description: 'AI-powered movie dubbing with actor voice preservation',
+    icon: Film,
+    badge: 'Research',
+    badgeColor: '#6b7280',
   },
 ]
 
@@ -58,7 +98,7 @@ const projects: PortfolioItem[] = [
 const sectionVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.12 },
+    transition: { staggerChildren: 0.08 },
   },
 }
 
@@ -82,12 +122,12 @@ export default function PortfolioSection() {
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16 text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-widest text-mas-cyan">
-            MAS-AI Portfolio
-          </p>
           <h2 className="text-gradient font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
             What We Build
           </h2>
+          <p className="mx-auto mt-4 max-w-xl text-base text-[var(--color-mas-text-secondary)]">
+            Products and projects built under MAS-AI Technologies Inc.
+          </p>
         </div>
 
         {/* Grid */}
@@ -98,65 +138,76 @@ export default function PortfolioSection() {
           animate={isInView ? 'visible' : 'hidden'}
           className="grid grid-cols-1 gap-6 md:grid-cols-3"
         >
-          {projects.map((project) => (
-            <motion.div
-              key={project.title}
-              variants={cardVariants}
-              className={`group relative ${project.hero ? 'md:col-span-2 md:row-span-1' : ''} ${project.dimmed ? 'opacity-60' : ''}`}
-            >
-              <a
-                href={project.href}
-                target={project.href.startsWith('http') ? '_blank' : undefined}
-                rel={project.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className={`
-                  glass flex h-full flex-col justify-between rounded-2xl p-6 transition-transform duration-300
-                  ${!project.dimmed ? 'hover:scale-[1.02]' : ''}
-                  ${project.hero ? 'glow-border md:p-10' : ''}
-                `}
-              >
-                {/* Badge */}
-                {project.badge && (
-                  <span className="mb-4 inline-block w-fit rounded-full border border-mas-gold/30 bg-mas-gold/10 px-3 py-1 text-xs font-semibold text-mas-gold">
+          {projects.map((project) => {
+            const Icon = project.icon
+            const isExternal = project.href?.startsWith('http')
+            const hasLink = Boolean(project.href)
+
+            const cardContent = (
+              <>
+                {/* Top row: icon + badge */}
+                <div className="flex items-start justify-between">
+                  <Icon className="h-6 w-6 text-[var(--color-mas-text-muted)]" />
+                  <span
+                    className="rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                    style={{
+                      backgroundColor: `color-mix(in srgb, ${project.badgeColor} 20%, transparent)`,
+                      color: project.badgeColor,
+                    }}
+                  >
                     {project.badge}
                   </span>
+                </div>
+
+                {/* Title */}
+                <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-[var(--color-mas-text)]">
+                  {project.title}
+                </h3>
+
+                {/* Description */}
+                <p className="mt-2 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
+                  {project.description}
+                </p>
+
+                {/* Link indicator */}
+                {hasLink && (
+                  <div className="mt-4 flex items-center gap-1 text-sm font-medium text-[var(--color-mas-cyan)] transition-colors group-hover:text-[var(--color-mas-text)]">
+                    <span>Explore</span>
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </div>
                 )}
+              </>
+            )
 
-                <div>
-                  {/* Title */}
-                  <h3
-                    className={`font-display text-xl font-bold tracking-tight ${project.hero ? 'text-gradient text-2xl sm:text-3xl' : 'text-mas-text'} flex items-center gap-2`}
+            return (
+              <motion.div
+                key={project.title}
+                variants={cardVariants}
+                className={project.hero ? 'md:col-span-2' : ''}
+              >
+                {hasLink ? (
+                  <a
+                    href={project.href}
+                    target={isExternal ? '_blank' : undefined}
+                    rel={isExternal ? 'noopener noreferrer' : undefined}
+                    className={`glass group flex h-full flex-col rounded-xl p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-mas-cyan)]/30 ${
+                      project.hero ? 'glow-border' : ''
+                    }`}
                   >
-                    {project.title}
-                    {project.subtitle && (
-                      <span className="text-sm font-normal text-mas-text-muted">
-                        {project.subtitle}
-                      </span>
-                    )}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="mt-3 text-sm leading-relaxed text-mas-text-secondary sm:text-base">
-                    {project.description}
-                  </p>
-                </div>
-
-                {/* CTA / Arrow */}
-                <div className="mt-6 flex items-center">
-                  {project.hero ? (
-                    <span className="inline-flex items-center gap-2 rounded-lg bg-mas-cyan px-6 py-2.5 text-sm font-semibold text-mas-bg transition-shadow hover:shadow-[0_0_24px_var(--color-mas-cyan-glow)]">
-                      Explore Daena
-                      <ArrowUpRight className="h-4 w-4" />
-                    </span>
-                  ) : !project.dimmed ? (
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-mas-cyan transition-colors group-hover:text-mas-text">
-                      Learn more
-                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </span>
-                  ) : null}
-                </div>
-              </a>
-            </motion.div>
-          ))}
+                    {cardContent}
+                  </a>
+                ) : (
+                  <div
+                    className={`glass flex h-full cursor-default flex-col rounded-xl p-6 ${
+                      project.hero ? 'glow-border' : ''
+                    }`}
+                  >
+                    {cardContent}
+                  </div>
+                )}
+              </motion.div>
+            )
+          })}
         </motion.div>
       </div>
     </section>

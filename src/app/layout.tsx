@@ -9,11 +9,11 @@ const jetbrains = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', 
 export const metadata: Metadata = {
   metadataBase: new URL('https://mas-ai.co'),
   title: {
-    default: 'MAS-AI | Governance-First AI Agent Platform',
+    default: 'MAS-AI Technologies | Governed AI Systems & Enterprise Deployment',
     template: '%s | MAS-AI',
   },
-  description: 'MAS-AI builds Daena, the AI-autonomous company OS with governed multi-agent orchestration, auditable memory, and traceable decisions. Patent-pending architecture.',
-  keywords: ['AI governance platform', 'governed AI agents', 'AI agent governance', 'auditable AI agents', 'enterprise AI governance', 'AI company OS', 'multi-agent orchestration', 'Daena', 'MAS-AI', 'PhiLattice Architecture', 'NBMF'],
+  description: 'MAS-AI Technologies builds governed AI systems for enterprises. Our flagship platform Daena provides multi-agent orchestration with auditable memory and traceable decisions. Two patent-pending architectures.',
+  keywords: ['MAS-AI', 'governed AI', 'AI governance platform', 'enterprise AI deployment', 'AI agent governance', 'auditable AI agents', 'Daena', 'multi-agent orchestration', 'AI company OS', 'PhiLattice Architecture', 'NBMF', 'enterprise AI consulting'],
   authors: [{ name: 'MAS-AI Technologies Inc.' }],
   creator: 'MAS-AI Technologies Inc.',
   openGraph: {

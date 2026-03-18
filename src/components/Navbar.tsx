@@ -6,9 +6,9 @@ import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 
 const navLinks = [
-  { label: 'Platform', href: '#solution' },
+  { label: 'Platform', href: '#daena' },
   { label: 'Portfolio', href: '#portfolio' },
-  { label: 'Use Cases', href: '#pipeline' },
+  { label: 'Enterprise', href: '#enterprise' },
   { label: 'Investors', href: '/investors.html' },
   { label: 'Contact', href: '#contact' },
 ]
