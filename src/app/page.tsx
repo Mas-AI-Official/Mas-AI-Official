@@ -34,7 +34,7 @@ export default function HomePage() {
       <CustomCursor />
       <DaenaPresence />
       <Navbar />
-      <main className="relative z-[2]">
+      <main className="relative z-[2]" style={{ background: 'transparent' }}>
         <div id="hero">
           <Hero />
         </div>

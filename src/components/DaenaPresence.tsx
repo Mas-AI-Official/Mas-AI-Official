@@ -1,10 +1,21 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { X, ExternalLink } from 'lucide-react'
 import { useSectionState } from '@/hooks/useSectionState'
+
+/**
+ * DaenaPresence: CSS 3D parallax portrait with mouse-follow tilt.
+ *
+ * Uses CSS preserve-3d + perspective for genuine depth parallax.
+ * The portrait tilts toward the cursor (max 15deg) with smooth lerp.
+ * Mood-based glow color and brightness shift per section.
+ * Thought bubbles appear ABOVE the portrait.
+ *
+ * Stable, no drift: position is fixed, only rotateX/Y changes.
+ */
 
 const MOOD_CONFIG: Record<string, {
   glowColor: string
@@ -25,7 +36,7 @@ export default function DaenaPresence() {
   const { activeSection, scrollProgress } = useSectionState()
   const [expanded, setExpanded] = useState(false)
   const [visible, setVisible] = useState(false)
-  const [isMobile, setIsMobile] = useState(true) // default true to prevent flash
+  const [isMobile, setIsMobile] = useState(false)
   const [isReduced, setIsReduced] = useState(false)
   const portraitRef = useRef<HTMLDivElement>(null)
   const tiltRef = useRef({ rx: 0, ry: 0 })
@@ -33,21 +44,15 @@ export default function DaenaPresence() {
   const rafRef = useRef<number>(0)
 
   useEffect(() => {
-    // Detect mobile: check both width AND touch capability
-    const checkMobile = () => {
-      const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0
-      const isNarrow = window.innerWidth < 768
-      setIsMobile(isNarrow || hasTouchScreen)
-    }
-    checkMobile()
+    setIsMobile(window.innerWidth < 768)
     setIsReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
-
-    window.addEventListener('resize', checkMobile)
+    const onResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', onResize)
     const t = setTimeout(() => setVisible(true), 1200)
-    return () => { window.removeEventListener('resize', checkMobile); clearTimeout(t) }
+    return () => { window.removeEventListener('resize', onResize); clearTimeout(t) }
   }, [])
 
-  // Mouse-follow 3D tilt (desktop only, no touch devices)
+  // Mouse-follow 3D tilt (desktop only)
   useEffect(() => {
     if (isMobile || isReduced) return
 
@@ -57,6 +62,7 @@ export default function DaenaPresence() {
       const rect = el.getBoundingClientRect()
       const elCx = rect.left + rect.width / 2
       const elCy = rect.top + rect.height / 2
+      // Normalize to -1..1 based on distance from portrait center
       const nx = Math.max(-1, Math.min(1, (e.clientX - elCx) / 400))
       const ny = Math.max(-1, Math.min(1, (e.clientY - elCy) / 400))
       targetRef.current = { ry: nx * 15, rx: -ny * 10 }
@@ -68,6 +74,7 @@ export default function DaenaPresence() {
       const t = targetRef.current
       c.rx += (t.rx - c.rx) * 0.06
       c.ry += (t.ry - c.ry) * 0.06
+
       if (portraitRef.current) {
         portraitRef.current.style.transform =
           `perspective(800px) rotateX(${c.rx}deg) rotateY(${c.ry}deg)`
@@ -86,76 +93,14 @@ export default function DaenaPresence() {
 
   if (!visible) return null
 
-  // Mobile/tablet: simple avatar button with expand panel
-  if (isMobile) {
-    return (
-      <>
-        <button
-          onClick={() => setExpanded(!expanded)}
-          className="fixed bottom-5 right-5 z-50 h-14 w-14 rounded-2xl overflow-hidden"
-          style={{
-            border: `2px solid ${mood.glowColor}50`,
-            boxShadow: `0 0 20px ${mood.glowColor}20`,
-            WebkitTapHighlightColor: 'transparent',
-          }}
-          aria-label="Open Daena info"
-        >
-          <Image
-            src="/assets/img/daena-nobg.png"
-            alt="Daena AI"
-            width={56}
-            height={56}
-            className="object-cover object-top w-full h-full"
-            loading="lazy"
-          />
-        </button>
-
-        {expanded && (
-          <div
-            className="fixed bottom-20 right-5 z-50 w-64 rounded-2xl p-4"
-            style={{
-              background: 'rgba(8,11,20,0.95)',
-              border: `1px solid ${mood.glowColor}20`,
-              WebkitBackdropFilter: 'blur(20px)',
-              backdropFilter: 'blur(20px)',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.6)',
-            }}
-          >
-            <button
-              onClick={() => setExpanded(false)}
-              className="absolute top-3 right-3 text-gray-500 p-1"
-              aria-label="Close"
-            >
-              <X size={16} />
-            </button>
-            <p className="text-sm text-gray-300 mb-3 pr-6">
-              Governance-first AI agent orchestration by MAS-AI.
-            </p>
-            <a
-              href="https://daena.mas-ai.co"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm font-semibold"
-              style={{ color: mood.glowColor }}
-            >
-              Explore Daena <ExternalLink size={14} />
-            </a>
-          </div>
-        )}
-      </>
-    )
-  }
-
-  // Desktop: portrait with 3D tilt + thought bubbles
+  // Same layout on mobile AND desktop, just smaller on mobile
   return (
     <div
-      className="fixed z-40 flex flex-col items-center gap-3"
-      style={{
-        right: '2rem',
-        top: '50%',
-        transform: 'translateY(-50%)',
-        width: '7rem',
-      }}
+      className={`fixed z-40 flex flex-col items-center gap-2 ${
+        isMobile
+          ? 'right-3 bottom-4 w-16'
+          : 'right-8 top-1/2 -translate-y-1/2 w-28'
+      }`}
     >
       {/* Thought bubble ABOVE */}
       <AnimatePresence mode="wait">
@@ -169,10 +114,8 @@ export default function DaenaPresence() {
             className="mb-1"
           >
             <div
-              className="rounded-xl px-4 py-2 text-xs font-medium text-center"
+              className="rounded-xl px-4 py-2 text-xs font-medium max-w-[140px] text-center leading-snug"
               style={{
-                maxWidth: '140px',
-                lineHeight: '1.4',
                 background: 'rgba(8,11,20,0.9)',
                 border: `1px solid ${mood.glowColor}30`,
                 color: mood.glowColor,
@@ -181,9 +124,9 @@ export default function DaenaPresence() {
             >
               {mood.caption}
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', marginTop: '4px' }}>
-              <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: mood.glowColor + '40' }} />
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: mood.glowColor + '25' }} />
+            <div className="flex flex-col items-center gap-1 mt-1">
+              <div className="w-2 h-2 rounded-full" style={{ background: mood.glowColor + '40' }} />
+              <div className="w-1.5 h-1.5 rounded-full" style={{ background: mood.glowColor + '25' }} />
             </div>
           </motion.div>
         )}
@@ -192,27 +135,20 @@ export default function DaenaPresence() {
       {/* Portrait with 3D tilt */}
       <div
         ref={portraitRef}
+        className={`relative cursor-pointer overflow-visible transition-[filter,box-shadow] duration-500 ${
+          isMobile ? 'w-14 h-20' : 'w-24 h-32'
+        }`}
         onClick={() => setExpanded(!expanded)}
         style={{
-          position: 'relative',
-          width: '96px',
-          height: '128px',
-          cursor: 'pointer',
-          filter: `brightness(${mood.brightness})`,
-          WebkitFilter: `brightness(${mood.brightness})`,
+          filter: `brightness(${mood.brightness}) drop-shadow(0 0 15px ${mood.glowColor}30)`,
           willChange: 'transform',
-          transition: 'filter 0.5s ease',
         }}
       >
-        {/* Glow behind portrait */}
+        {/* Mood glow overlay */}
         <div
+          className="absolute inset-0 z-10 pointer-events-none transition-all duration-700"
           style={{
-            position: 'absolute',
-            inset: '-8px',
-            borderRadius: '16px',
-            background: `radial-gradient(circle, ${mood.glowColor}15, transparent 70%)`,
-            transition: 'background 0.7s ease',
-            pointerEvents: 'none',
+            background: `radial-gradient(ellipse at 50% 30%, ${mood.glowColor}15, transparent 70%)`,
           }}
         />
         <Image
@@ -220,30 +156,18 @@ export default function DaenaPresence() {
           alt="Daena, AI VP of MAS-AI Technologies"
           width={200}
           height={280}
-          className="object-cover object-top"
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-            zIndex: 1,
-          }}
+          className="object-cover object-top w-full h-full"
           priority
         />
       </div>
 
-      {/* Scroll depth bar */}
-      <div style={{ width: '1px', height: '48px', background: 'rgba(107,114,128,0.3)', position: 'relative', borderRadius: '1px', overflow: 'hidden' }}>
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            borderRadius: '1px',
-            background: mood.glowColor,
-            height: `${scrollProgress * 100}%`,
-            transition: 'height 0.1s linear, background 0.5s ease',
-          }}
+      {/* Scroll depth bar (desktop only) */}
+      <div className={`w-px h-12 bg-gray-800/50 relative rounded-full overflow-hidden ${isMobile ? 'hidden' : ''}`}>
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 rounded-full"
+          style={{ background: mood.glowColor }}
+          animate={{ height: `${scrollProgress * 100}%` }}
+          transition={{ duration: 0.1 }}
         />
       </div>
 
@@ -255,68 +179,36 @@ export default function DaenaPresence() {
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.85, x: 10 }}
             transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] as [number, number, number, number] }}
+            className="absolute right-full mr-4 top-0 w-72 rounded-2xl p-5"
             style={{
-              position: 'absolute',
-              right: '100%',
-              marginRight: '16px',
-              top: 0,
-              width: '288px',
-              borderRadius: '16px',
-              padding: '20px',
               background: 'rgba(8,11,20,0.95)',
               border: `1px solid ${mood.glowColor}20`,
-              WebkitBackdropFilter: 'blur(24px)',
               backdropFilter: 'blur(24px)',
               boxShadow: `0 20px 60px rgba(0,0,0,0.6), 0 0 30px ${mood.glowColor}10`,
             }}
           >
-            <button
-              onClick={() => setExpanded(false)}
-              className="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors p-1"
-              aria-label="Close panel"
-            >
+            <button onClick={() => setExpanded(false)} className="absolute top-3 right-3 text-gray-500 hover:text-white transition-colors">
               <X size={16} />
             </button>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '16px' }}>
-              <div
-                style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '12px',
-                  overflow: 'hidden',
-                  border: `1px solid ${mood.glowColor}30`,
-                  flexShrink: 0,
-                }}
-              >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-xl overflow-hidden border" style={{ borderColor: mood.glowColor + '30' }}>
                 <Image src="/assets/img/daena-nobg.png" alt="Daena" width={40} height={40} className="object-cover object-top" />
               </div>
               <div>
-                <p style={{ fontSize: '14px', fontWeight: 700, color: '#fff' }}>Daena</p>
-                <p style={{ fontSize: '12px', color: mood.glowColor, fontFamily: 'monospace' }}>MAS-AI Flagship Platform</p>
+                <p className="text-sm font-bold text-white font-[family-name:var(--font-display)]">Daena</p>
+                <p className="text-xs font-[family-name:var(--font-mono)]" style={{ color: mood.glowColor }}>MAS-AI Flagship Platform</p>
               </div>
             </div>
-            <p style={{ fontSize: '14px', color: '#94a3b8', marginBottom: '16px', lineHeight: '1.6' }}>
+            <p className="text-sm text-gray-400 mb-4 leading-relaxed">
               Governance-first AI agent orchestration. Every agent governed, every decision traced, every action auditable.
             </p>
             <a
               href="https://daena.mas-ai.co"
               target="_blank"
               rel="noopener noreferrer"
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                width: '100%',
-                padding: '10px',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: 700,
-                background: mood.glowColor,
-                color: '#080b14',
-                textDecoration: 'none',
-                transition: 'transform 0.2s ease',
-              }}
+              data-cursor="cta"
+              className="flex items-center justify-center gap-2 w-full py-2.5 rounded-lg text-sm font-bold transition-all duration-300 hover:scale-[1.02]"
+              style={{ background: mood.glowColor, color: '#080b14' }}
             >
               Explore Daena <ExternalLink size={14} />
             </a>

@@ -22,6 +22,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-mas-bg);
 }
 
 /* Lenis smooth scroll */
@@ -38,7 +39,7 @@ html.lenis, html.lenis body {
 }
 
 body {
-  background-color: var(--color-mas-bg);
+  background-color: transparent;
   color: var(--color-mas-text);
   font-family: var(--font-body);
 }

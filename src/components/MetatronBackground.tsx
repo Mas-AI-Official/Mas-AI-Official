@@ -37,9 +37,10 @@ export default function MetatronBackground() {
     let w = 0, h = 0
 
     // Build Metatron's Cube in 3D space
-    // Centered at origin, radius ~300 units
-    const R1 = 180 // inner ring radius
-    const R2 = 360 // outer ring radius
+    // Scale geometry to fit screen (smaller on mobile)
+    const screenScale = Math.min(window.innerWidth, window.innerHeight) / 900
+    const R1 = 180 * screenScale // inner ring radius
+    const R2 = 360 * screenScale // outer ring radius
     const nodes: Node3D[] = []
 
     // Center node
@@ -60,7 +61,7 @@ export default function MetatronBackground() {
     // Add depth layers: duplicate the pattern at z=-200 and z=200
     // This creates the 3D "cube" feel
     const baseCount = nodes.length
-    for (let zOff of [-220, 220]) {
+    for (const zOff of [-220 * screenScale, 220 * screenScale]) {
       // Inner ring at depth
       for (let i = 0; i < 6; i++) {
         const a = (Math.PI * 2 * i) / 6 - Math.PI / 2 + (zOff > 0 ? Math.PI / 6 : 0)
