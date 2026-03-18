@@ -11,7 +11,7 @@ import Footer from '@/components/Footer'
 import MetatronBackground from '@/components/MetatronBackground'
 import SmoothScroll from '@/components/SmoothScroll'
 import CustomCursor from '@/components/CustomCursor'
-import DaenaGuide from '@/components/DaenaGuide'
+import DaenaPresence from '@/components/DaenaPresence'
 
 // Section background wrappers
 function SectionBg({ children, bg, id, className = '' }: {
@@ -32,9 +32,12 @@ export default function HomePage() {
     <SmoothScroll>
       <MetatronBackground />
       <CustomCursor />
+      <DaenaPresence />
       <Navbar />
       <main className="relative z-10">
-        <Hero />
+        <div id="hero">
+          <Hero />
+        </div>
 
         <div className="section-divider" />
 
@@ -91,7 +94,6 @@ export default function HomePage() {
         </SectionBg>
       </main>
       <Footer />
-      <DaenaGuide />
     </SmoothScroll>
   )
 }

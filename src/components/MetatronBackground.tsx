@@ -2,11 +2,19 @@
 
 import { useEffect, useRef, useCallback } from 'react'
 
+/**
+ * MetatronBackground: Sacred geometry hexagonal network with scroll-driven depth dive.
+ *
+ * As the user scrolls down, the hexagonal pattern zooms in, as if diving
+ * deeper into the core of the Metatron's Cube. Each section boundary
+ * corresponds to a deeper "layer." Gold particles flow along connections.
+ * Cursor proximity amplifies node glow within 200px.
+ */
+
 interface HexNode {
-  x: number
-  y: number
+  baseX: number
+  baseY: number
   radius: number
-  glow: number
   layer: number
 }
 
@@ -15,13 +23,14 @@ interface Connection {
   to: number
   progress: number
   speed: number
-  glow: number
+  baseGlow: number
 }
 
 export default function MetatronBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const mouseRef = useRef({ x: -9999, y: -9999 })
   const scrollRef = useRef(0)
+  const scrollMaxRef = useRef(1)
   const animRef = useRef<number>(0)
   const nodesRef = useRef<HexNode[]>([])
   const connectionsRef = useRef<Connection[]>([])
@@ -31,12 +40,12 @@ export default function MetatronBackground() {
     const connections: Connection[] = []
     const cx = w / 2
     const cy = h / 2
-    const layers = isMobile ? 2 : 3
-    const baseRadius = Math.min(w, h) * 0.12
-    const hexSpacing = baseRadius * 1.8
+    const layers = isMobile ? 3 : 5
+    const baseRadius = Math.min(w, h) * 0.08
+    const hexSpacing = baseRadius * 1.6
 
     // Central node
-    nodes.push({ x: cx, y: cy, radius: 6, glow: 1, layer: 0 })
+    nodes.push({ baseX: cx, baseY: cy, radius: 5, layer: 0 })
 
     // Hexagonal layers
     for (let layer = 1; layer <= layers; layer++) {
@@ -45,25 +54,23 @@ export default function MetatronBackground() {
       for (let i = 0; i < count; i++) {
         const angle = (Math.PI * 2 * i) / count - Math.PI / 2
         nodes.push({
-          x: cx + r * Math.cos(angle),
-          y: cy + r * Math.sin(angle),
-          radius: 4,
-          glow: 0.7,
+          baseX: cx + r * Math.cos(angle),
+          baseY: cy + r * Math.sin(angle),
+          radius: Math.max(2, 5 - layer * 0.5),
           layer,
         })
       }
     }
 
-    // Connect each node to 5 nearest
-    const intensity = isMobile ? 0.3 : 1.0
+    // Connect each node to nearest 4-5
     nodes.forEach((node, idx) => {
       const distances = nodes
         .map((other, oi) => ({
           idx: oi,
-          dist: Math.hypot(node.x - other.x, node.y - other.y),
+          dist: Math.hypot(node.baseX - other.baseX, node.baseY - other.baseY),
         }))
         .sort((a, b) => a.dist - b.dist)
-        .slice(1, 6)
+        .slice(1, 5)
 
       distances.forEach((d) => {
         const exists = connections.some(
@@ -76,8 +83,8 @@ export default function MetatronBackground() {
             from: idx,
             to: d.idx,
             progress: Math.random(),
-            speed: 0.006 + Math.random() * 0.012,
-            glow: (0.3 + Math.random() * 0.4) * intensity,
+            speed: 0.004 + Math.random() * 0.008,
+            baseGlow: 0.2 + Math.random() * 0.3,
           })
         }
       })
@@ -94,10 +101,7 @@ export default function MetatronBackground() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const reducedMotion = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches
-    const isMobile = window.innerWidth <= 768
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
     let w = 0
@@ -111,7 +115,8 @@ export default function MetatronBackground() {
       canvas.style.width = w + 'px'
       canvas.style.height = h + 'px'
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      createHexNetwork(w, h, window.innerWidth <= 768)
+      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - h)
+      createHexNetwork(w, h, w <= 768)
     }
     resize()
     window.addEventListener('resize', resize)
@@ -121,6 +126,7 @@ export default function MetatronBackground() {
     }
     const onScroll = () => {
       scrollRef.current = window.scrollY
+      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
     }
     window.addEventListener('mousemove', onMouseMove, { passive: true })
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -135,54 +141,63 @@ export default function MetatronBackground() {
 
       ctx.clearRect(0, 0, w, h)
 
-      const scrollFade = Math.max(0, 1 - scrollRef.current / (h * 0.8))
-      if (scrollFade < 0.01) return
+      // Scroll-driven depth: 0 = top of page, 1 = bottom
+      const depth = Math.min(1, scrollRef.current / scrollMaxRef.current)
 
+      // Zoom factor: starts at 1.0, goes to 3.5 at bottom
+      const zoom = 1 + depth * 2.5
+
+      // Opacity: slightly fades at extreme depth but stays visible
+      const globalAlpha = Math.max(0.04, 0.12 - depth * 0.06)
+
+      // Glow color shifts from cyan to gold as depth increases
+      const cyanWeight = 1 - depth
+      const goldWeight = depth
+
+      const cx = w / 2
+      const cy = h / 2
       const mx = mouseRef.current.x
       const my = mouseRef.current.y
-      const globalAlpha = scrollFade * 0.12 // Max 12% opacity: never obstructs text
 
-      // Draw connections with flowing particles
+      // Draw connections
       for (const conn of connections) {
-        const from = nodes[conn.from]
-        const to = nodes[conn.to]
-        if (!from || !to) continue
+        const fromNode = nodes[conn.from]
+        const toNode = nodes[conn.to]
+        if (!fromNode || !toNode) continue
 
-        const px = from.x + (to.x - from.x) * conn.progress
-        const py = from.y + (to.y - from.y) * conn.progress
+        // Apply zoom: scale positions from center
+        const fx = cx + (fromNode.baseX - cx) * zoom
+        const fy = cy + (fromNode.baseY - cy) * zoom
+        const tx = cx + (toNode.baseX - cx) * zoom
+        const ty = cy + (toNode.baseY - cy) * zoom
 
-        // Mouse proximity boost
+        const px = fx + (tx - fx) * conn.progress
+        const py = fy + (ty - fy) * conn.progress
+
+        // Mouse proximity
         const mdist = Math.hypot(mx - px, my - py)
-        const mouseBoost = mdist < 200 ? (1 - mdist / 200) * 2 : 0
-        const alpha = (conn.glow + mouseBoost * 0.3) * globalAlpha
+        const mouseBoost = mdist < 200 ? (1 - mdist / 200) * 0.3 : 0
+        const alpha = (conn.baseGlow + mouseBoost) * globalAlpha
+
+        // Color blend: cyan to gold based on depth
+        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
+        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
+        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
 
         // Line
-        const grad = ctx.createLinearGradient(from.x, from.y, to.x, to.y)
-        grad.addColorStop(0, `rgba(255, 215, 0, 0)`)
-        grad.addColorStop(
-          Math.max(0, conn.progress - 0.15),
-          `rgba(255, 215, 0, 0)`
-        )
-        grad.addColorStop(conn.progress, `rgba(255, 215, 0, ${alpha})`)
-        grad.addColorStop(
-          Math.min(1, conn.progress + 0.15),
-          `rgba(0, 200, 255, ${alpha * 0.7})`
-        )
-        grad.addColorStop(1, `rgba(0, 200, 255, 0)`)
-
-        ctx.strokeStyle = grad
-        ctx.lineWidth = 1.5
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+        ctx.lineWidth = 1
         ctx.beginPath()
-        ctx.moveTo(from.x, from.y)
-        ctx.lineTo(to.x, to.y)
+        ctx.moveTo(fx, fy)
+        ctx.lineTo(tx, ty)
         ctx.stroke()
 
-        // Flowing particle
-        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 1.5})`
-        ctx.shadowColor = '#FFD700'
-        ctx.shadowBlur = 12 * scrollFade
+        // Particle
+        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 2})`
+        ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`
+        ctx.shadowBlur = 8
         ctx.beginPath()
-        ctx.arc(px, py, 2, 0, Math.PI * 2)
+        ctx.arc(px, py, 1.5, 0, Math.PI * 2)
         ctx.fill()
         ctx.shadowBlur = 0
 
@@ -195,29 +210,35 @@ export default function MetatronBackground() {
       // Draw nodes
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i]
-        const mdist = Math.hypot(mx - n.x, my - n.y)
+        const nx = cx + (n.baseX - cx) * zoom
+        const ny = cy + (n.baseY - cy) * zoom
+
+        // Only render if on screen (with margin)
+        if (nx < -50 || nx > w + 50 || ny < -50 || ny > h + 50) continue
+
+        const mdist = Math.hypot(mx - nx, my - ny)
         const mouseGlow = mdist < 200 ? (1 - mdist / 200) * 0.4 : 0
-        const pulse = 0.6 + Math.sin(Date.now() * 0.003 + i) * 0.4
-        const alpha = (pulse * 0.15 + mouseGlow) * scrollFade
+        const pulse = 0.5 + Math.sin(Date.now() * 0.002 + i * 0.7) * 0.3
+        const alpha = (pulse * 0.1 + mouseGlow) * (globalAlpha / 0.12)
 
-        // Outer glow
-        const rgr = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.radius * 4)
-        rgr.addColorStop(0, `rgba(255, 215, 0, ${alpha * 0.5})`)
-        rgr.addColorStop(0.5, `rgba(0, 200, 255, ${alpha * 0.25})`)
-        rgr.addColorStop(1, 'rgba(0, 0, 0, 0)')
-        ctx.fillStyle = rgr
+        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
+        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
+        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
+
+        // Glow
+        const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, n.radius * zoom * 3)
+        rg.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha * 0.5})`)
+        rg.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        ctx.fillStyle = rg
         ctx.beginPath()
-        ctx.arc(n.x, n.y, n.radius * 4, 0, Math.PI * 2)
+        ctx.arc(nx, ny, n.radius * zoom * 3, 0, Math.PI * 2)
         ctx.fill()
 
-        // Core dot
-        ctx.fillStyle = `rgba(255, 215, 0, ${alpha})`
-        ctx.shadowColor = '#FFD700'
-        ctx.shadowBlur = 10 * scrollFade
+        // Core
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
         ctx.beginPath()
-        ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2)
+        ctx.arc(nx, ny, n.radius * Math.min(zoom, 2), 0, Math.PI * 2)
         ctx.fill()
-        ctx.shadowBlur = 0
       }
     }
 
