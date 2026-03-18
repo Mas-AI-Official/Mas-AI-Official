@@ -92,12 +92,17 @@ export default function MetatronBackground() {
 
     const connSpeeds = connections.map(() => 0.008 + Math.random() * 0.015)
 
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+
     function resize() {
-      if (!canvas) return
+      if (!canvas || !ctx) return
       w = window.innerWidth
       h = window.innerHeight
-      canvas.width = w
-      canvas.height = h
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width = w + 'px'
+      canvas.style.height = h + 'px'
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
     resize()
     window.addEventListener('resize', resize)
@@ -163,7 +168,7 @@ export default function MetatronBackground() {
 
       // Fixed colors: lines = cyan, nodes = gold (no blending on scroll)
       // Global alpha: 20% visibility
-      const baseAlpha = Math.max(0.08, 0.2 - scrollPct * 0.06)
+      const baseAlpha = Math.max(0.04, 0.1 - scrollPct * 0.04)
 
       // Project all nodes
       const projected: ([number, number, number] | null)[] = nodes.map(n => {

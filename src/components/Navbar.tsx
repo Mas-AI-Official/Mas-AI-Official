@@ -29,7 +29,7 @@ export default function Navbar() {
       <nav
         className={`flex items-center justify-between gap-2 transition-all duration-500 ${
           scrolled
-            ? 'w-full max-w-6xl rounded-2xl bg-[var(--color-mas-bg)]/80 backdrop-blur-2xl border border-[var(--color-mas-border)] shadow-[0_8px_40px_rgba(0,0,0,0.5)] px-6 py-3'
+            ? 'w-full max-w-6xl rounded-2xl bg-[var(--color-mas-bg)]/80 backdrop-blur-2xl [-webkit-backdrop-filter:blur(40px)] border border-[var(--color-mas-border)] shadow-[0_8px_40px_rgba(0,0,0,0.5)] px-6 py-3'
             : 'w-full max-w-7xl rounded-none bg-transparent px-6 py-5'
         }`}
       >

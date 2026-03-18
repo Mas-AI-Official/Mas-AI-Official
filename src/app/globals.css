@@ -66,6 +66,7 @@ body {
 /* Glass card */
 .glass {
   background: rgba(15, 22, 41, 0.6);
+  -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   border: 1px solid var(--color-mas-border);
 }
