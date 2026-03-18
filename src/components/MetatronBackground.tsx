@@ -1,267 +1,317 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 
 /**
- * MetatronBackground: Sacred geometry hexagonal network with scroll-driven depth dive.
+ * MetatronBackground: TRUE 3D Metatron's Cube with perspective projection.
  *
- * As the user scrolls down, the hexagonal pattern zooms in, as if diving
- * deeper into the core of the Metatron's Cube. Each section boundary
- * corresponds to a deeper "layer." Gold particles flow along connections.
- * Cursor proximity amplifies node glow within 200px.
+ * 13 nodes arranged in Metatron's Cube pattern, rendered with 3D perspective.
+ * The camera moves forward on scroll, diving into the center of the cube.
+ * Mouse movement tilts the entire 3D structure.
+ * Golden flowing particles along connections with glow effects.
+ *
+ * 3D projection: each node has (x, y, z) coordinates projected to 2D via
+ * perspective division. Scroll moves the camera's Z position forward.
+ * Mouse tilts the structure around X and Y axes.
  */
 
-interface HexNode {
-  baseX: number
-  baseY: number
-  radius: number
-  layer: number
-}
-
-interface Connection {
-  from: number
-  to: number
-  progress: number
-  speed: number
-  baseGlow: number
+interface Node3D {
+  x: number; y: number; z: number
+  r: number; ring: number
 }
 
 export default function MetatronBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mouseRef = useRef({ x: -9999, y: -9999 })
+  const mouseRef = useRef({ x: 0, y: 0 })
   const scrollRef = useRef(0)
-  const scrollMaxRef = useRef(1)
   const animRef = useRef<number>(0)
-  const nodesRef = useRef<HexNode[]>([])
-  const connectionsRef = useRef<Connection[]>([])
-
-  const createHexNetwork = useCallback((w: number, h: number, isMobile: boolean) => {
-    const nodes: HexNode[] = []
-    const connections: Connection[] = []
-    const cx = w / 2
-    const cy = h / 2
-    const layers = isMobile ? 3 : 5
-    const baseRadius = Math.min(w, h) * 0.08
-    const hexSpacing = baseRadius * 1.6
-
-    // Central node
-    nodes.push({ baseX: cx, baseY: cy, radius: 5, layer: 0 })
-
-    // Hexagonal layers
-    for (let layer = 1; layer <= layers; layer++) {
-      const r = hexSpacing * layer
-      const count = 6 * layer
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 * i) / count - Math.PI / 2
-        nodes.push({
-          baseX: cx + r * Math.cos(angle),
-          baseY: cy + r * Math.sin(angle),
-          radius: Math.max(2, 5 - layer * 0.5),
-          layer,
-        })
-      }
-    }
-
-    // Connect each node to nearest 4-5
-    nodes.forEach((node, idx) => {
-      const distances = nodes
-        .map((other, oi) => ({
-          idx: oi,
-          dist: Math.hypot(node.baseX - other.baseX, node.baseY - other.baseY),
-        }))
-        .sort((a, b) => a.dist - b.dist)
-        .slice(1, 5)
-
-      distances.forEach((d) => {
-        const exists = connections.some(
-          (c) =>
-            (c.from === idx && c.to === d.idx) ||
-            (c.from === d.idx && c.to === idx)
-        )
-        if (!exists) {
-          connections.push({
-            from: idx,
-            to: d.idx,
-            progress: Math.random(),
-            speed: 0.004 + Math.random() * 0.008,
-            baseGlow: 0.2 + Math.random() * 0.3,
-          })
-        }
-      })
-    })
-
-    nodesRef.current = nodes
-    connectionsRef.current = connections
-  }, [])
+  const timeRef = useRef(0)
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let w = 0, h = 0
 
-    let w = 0
-    let h = 0
+    // Build Metatron's Cube in 3D space
+    // Centered at origin, radius ~300 units
+    const R1 = 180 // inner ring radius
+    const R2 = 360 // outer ring radius
+    const nodes: Node3D[] = []
 
-    const resize = () => {
+    // Center node
+    nodes.push({ x: 0, y: 0, z: 0, r: 10, ring: 0 })
+
+    // Inner ring: 6 nodes, flat on z=0
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2
+      nodes.push({ x: R1 * Math.cos(a), y: R1 * Math.sin(a), z: 0, r: 8, ring: 1 })
+    }
+
+    // Outer ring: 6 nodes at z=0, offset 30 degrees
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2 + Math.PI / 6
+      nodes.push({ x: R2 * Math.cos(a), y: R2 * Math.sin(a), z: 0, r: 7, ring: 2 })
+    }
+
+    // Add depth layers: duplicate the pattern at z=-200 and z=200
+    // This creates the 3D "cube" feel
+    const baseCount = nodes.length
+    for (let zOff of [-220, 220]) {
+      // Inner ring at depth
+      for (let i = 0; i < 6; i++) {
+        const a = (Math.PI * 2 * i) / 6 - Math.PI / 2 + (zOff > 0 ? Math.PI / 6 : 0)
+        const rr = zOff > 0 ? R1 * 0.7 : R1 * 1.2
+        nodes.push({ x: rr * Math.cos(a), y: rr * Math.sin(a), z: zOff, r: 6, ring: 3 })
+      }
+    }
+
+    // Connections: complete graph for the 13 core nodes + connections to depth layers
+    const connections: [number, number, number][] = [] // [from, to, particleProgress]
+    // Core 13 nodes: connect all
+    for (let i = 0; i < baseCount; i++) {
+      for (let j = i + 1; j < baseCount; j++) {
+        connections.push([i, j, Math.random()])
+      }
+    }
+    // Connect depth layers to core
+    for (let i = baseCount; i < nodes.length; i++) {
+      // Connect to center
+      connections.push([0, i, Math.random()])
+      // Connect to nearest 2 inner ring nodes
+      const dists = nodes.slice(1, 7).map((n, idx) => ({
+        idx: idx + 1,
+        d: Math.hypot(nodes[i].x - n.x, nodes[i].y - n.y)
+      })).sort((a, b) => a.d - b.d)
+      connections.push([dists[0].idx, i, Math.random()])
+      connections.push([dists[1].idx, i, Math.random()])
+    }
+
+    const connSpeeds = connections.map(() => 0.003 + Math.random() * 0.007)
+
+    function resize() {
+      if (!canvas) return
       w = window.innerWidth
       h = window.innerHeight
-      canvas.width = w * dpr
-      canvas.height = h * dpr
-      canvas.style.width = w + 'px'
-      canvas.style.height = h + 'px'
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - h)
-      createHexNetwork(w, h, w <= 768)
+      canvas.width = w
+      canvas.height = h
     }
     resize()
     window.addEventListener('resize', resize)
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
+    const onMouse = (e: MouseEvent) => {
+      // Normalize to -1..1
+      mouseRef.current = {
+        x: (e.clientX / window.innerWidth - 0.5) * 2,
+        y: (e.clientY / window.innerHeight - 0.5) * 2,
+      }
     }
-    const onScroll = () => {
-      scrollRef.current = window.scrollY
-      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
-    }
-    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    const onScroll = () => { scrollRef.current = window.scrollY }
+    window.addEventListener('mousemove', onMouse, { passive: true })
     window.addEventListener('scroll', onScroll, { passive: true })
 
-    let lastTime = 0
-    const fpsCap = 1000 / 30
+    // 3D projection function
+    function project(x: number, y: number, z: number, camZ: number): [number, number, number] | null {
+      const dz = z - camZ
+      if (dz >= -50) return null // behind camera
+      const fov = 600
+      const scale = fov / Math.abs(dz)
+      return [w / 2 + x * scale, h / 2 + y * scale, scale]
+    }
 
-    function drawFrame() {
+    // Rotate point around Y axis (mouse X) and X axis (mouse Y)
+    function rotatePoint(x: number, y: number, z: number, ax: number, ay: number): [number, number, number] {
+      // Rotate around Y axis
+      let cos = Math.cos(ay), sin = Math.sin(ay)
+      let x1 = x * cos - z * sin
+      let z1 = x * sin + z * cos
+      // Rotate around X axis
+      cos = Math.cos(ax); sin = Math.sin(ax)
+      let y1 = y * cos - z1 * sin
+      let z2 = y * sin + z1 * cos
+      return [x1, y1, z2]
+    }
+
+    let lastT = 0
+
+    function draw() {
       if (!ctx) return
-      const nodes = nodesRef.current
-      const connections = connectionsRef.current
-
       ctx.clearRect(0, 0, w, h)
+      timeRef.current += 0.016
 
-      // Scroll-driven depth: 0 = top of page, 1 = bottom
-      const depth = Math.min(1, scrollRef.current / scrollMaxRef.current)
+      const docH = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      const scrollPct = Math.min(1, scrollRef.current / docH)
 
-      // Zoom factor: starts at 1.0, goes to 3.5 at bottom
-      const zoom = 1 + depth * 2.5
+      // Camera Z: starts far back, moves forward as user scrolls
+      const camZ = -900 + scrollPct * 700 // -900 to -200
 
-      // Opacity: slightly fades at extreme depth but stays visible
-      const globalAlpha = Math.max(0.04, 0.12 - depth * 0.06)
+      // Mouse-driven rotation (subtle)
+      const rotY = mouseRef.current.x * 0.15
+      const rotX = mouseRef.current.y * 0.1
 
-      // Glow color shifts from cyan to gold as depth increases
-      const cyanWeight = 1 - depth
-      const goldWeight = depth
+      // Slow idle rotation
+      const idleRotY = timeRef.current * 0.05
+      const idleRotX = Math.sin(timeRef.current * 0.3) * 0.03
 
-      const cx = w / 2
-      const cy = h / 2
-      const mx = mouseRef.current.x
-      const my = mouseRef.current.y
+      const totalRotY = rotY + idleRotY
+      const totalRotX = rotX + idleRotX
+
+      // Color temperature: cyan at top, gold at bottom
+      const cw = 1 - scrollPct
+      const gw = scrollPct
+
+      // Global alpha: visible but not overwhelming
+      const baseAlpha = Math.max(0.08, 0.2 - scrollPct * 0.08)
+
+      // Project all nodes
+      const projected: ([number, number, number] | null)[] = nodes.map(n => {
+        const [rx, ry, rz] = rotatePoint(n.x, n.y, n.z, totalRotX, totalRotY)
+        return project(rx, ry, rz, camZ)
+      })
+
+      // Sort connections by average depth (draw far ones first)
+      const sortedConns = connections.map((c, i) => ({ c, i })).sort((a, b) => {
+        const pa = projected[a.c[0]], pb = projected[b.c[0]]
+        const sa = pa ? pa[2] : 0, sb = pb ? pb[2] : 0
+        return sa - sb // far (small scale) first
+      })
 
       // Draw connections
-      for (const conn of connections) {
-        const fromNode = nodes[conn.from]
-        const toNode = nodes[conn.to]
-        if (!fromNode || !toNode) continue
+      for (const { c, i } of sortedConns) {
+        const [fi, ti] = c
+        const fp = projected[fi], tp = projected[ti]
+        if (!fp || !tp) continue
 
-        // Apply zoom: scale positions from center
-        const fx = cx + (fromNode.baseX - cx) * zoom
-        const fy = cy + (fromNode.baseY - cy) * zoom
-        const tx = cx + (toNode.baseX - cx) * zoom
-        const ty = cy + (toNode.baseY - cy) * zoom
+        const [fx, fy, fs] = fp
+        const [tx, ty, ts] = tp
+        const avgScale = (fs + ts) / 2
+        const depthAlpha = Math.min(1, avgScale * 0.8) * baseAlpha
 
-        const px = fx + (tx - fx) * conn.progress
-        const py = fy + (ty - fy) * conn.progress
+        // Mouse proximity to midpoint
+        const mx = (fx + tx) / 2, my = (fy + ty) / 2
+        const mDist = Math.hypot(mouseRef.current.x * w / 2 + w / 2 - mx, mouseRef.current.y * h / 2 + h / 2 - my)
+        const mBoost = mDist < 200 ? (1 - mDist / 200) * 0.2 : 0
 
-        // Mouse proximity
-        const mdist = Math.hypot(mx - px, my - py)
-        const mouseBoost = mdist < 200 ? (1 - mdist / 200) * 0.3 : 0
-        const alpha = (conn.baseGlow + mouseBoost) * globalAlpha
+        const alpha = depthAlpha + mBoost
+        const r = Math.round(0 * cw + 255 * gw)
+        const g = Math.round(200 * cw + 215 * gw)
+        const b = Math.round(255 * cw + 0 * gw)
 
-        // Color blend: cyan to gold based on depth
-        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
-        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
-        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
-
-        // Line
-        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
-        ctx.lineWidth = 1
+        // Connection line
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha * 0.5})`
+        ctx.lineWidth = Math.max(0.3, avgScale * 1.5)
         ctx.beginPath()
         ctx.moveTo(fx, fy)
         ctx.lineTo(tx, ty)
         ctx.stroke()
 
-        // Particle
-        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 2})`
-        ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`
-        ctx.shadowBlur = 8
+        // Flowing particle
+        const progress = c[2]
+        const px = fx + (tx - fx) * progress
+        const py = fy + (ty - fy) * progress
+        const pSize = Math.max(1, avgScale * 2.5)
+
+        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 1.5})`
+        ctx.shadowColor = '#FFD700'
+        ctx.shadowBlur = Math.max(4, avgScale * 8)
         ctx.beginPath()
-        ctx.arc(px, py, 1.5, 0, Math.PI * 2)
+        ctx.arc(px, py, pSize, 0, Math.PI * 2)
         ctx.fill()
         ctx.shadowBlur = 0
 
-        if (!reducedMotion) {
-          conn.progress += conn.speed
-          if (conn.progress > 1) conn.progress = 0
+        if (!reduced) {
+          c[2] += connSpeeds[i]
+          if (c[2] > 1) c[2] = 0
         }
       }
 
-      // Draw nodes
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i]
-        const nx = cx + (n.baseX - cx) * zoom
-        const ny = cy + (n.baseY - cy) * zoom
+      // Draw nodes (sorted by depth, far first)
+      const sortedNodes = nodes.map((n, i) => ({ n, i, p: projected[i] }))
+        .filter(x => x.p !== null)
+        .sort((a, b) => a.p![2] - b.p![2])
 
-        // Only render if on screen (with margin)
-        if (nx < -50 || nx > w + 50 || ny < -50 || ny > h + 50) continue
+      for (const { n, i, p } of sortedNodes) {
+        if (!p) continue
+        const [nx, ny, ns] = p
 
-        const mdist = Math.hypot(mx - nx, my - ny)
-        const mouseGlow = mdist < 200 ? (1 - mdist / 200) * 0.4 : 0
-        const pulse = 0.5 + Math.sin(Date.now() * 0.002 + i * 0.7) * 0.3
-        const alpha = (pulse * 0.1 + mouseGlow) * (globalAlpha / 0.12)
+        // Skip off-screen
+        if (nx < -100 || nx > w + 100 || ny < -100 || ny > h + 100) continue
 
-        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
-        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
-        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
+        const depthAlpha = Math.min(1, ns * 0.8) * baseAlpha
+        const pulse = 0.6 + Math.sin(timeRef.current * 2 + i * 0.9) * 0.3
+        const nodeAlpha = depthAlpha * pulse
 
-        // Glow
-        const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, n.radius * zoom * 3)
-        rg.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha * 0.5})`)
-        rg.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        // Mouse proximity glow
+        const msx = mouseRef.current.x * w / 2 + w / 2
+        const msy = mouseRef.current.y * h / 2 + h / 2
+        const mDist = Math.hypot(msx - nx, msy - ny)
+        const mGlow = mDist < 200 ? (1 - mDist / 200) * 0.4 : 0
+
+        const totalAlpha = nodeAlpha + mGlow
+        const r = Math.round(0 * cw + 255 * gw)
+        const g = Math.round(200 * cw + 215 * gw)
+        const b = Math.round(255 * cw + 0 * gw)
+
+        const nodeSize = n.r * Math.min(ns, 2)
+
+        // Outer glow circle
+        const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, nodeSize * 4)
+        rg.addColorStop(0, `rgba(${r},${g},${b},${totalAlpha * 0.5})`)
+        rg.addColorStop(0.5, `rgba(${r},${g},${b},${totalAlpha * 0.15})`)
+        rg.addColorStop(1, 'rgba(0,0,0,0)')
         ctx.fillStyle = rg
         ctx.beginPath()
-        ctx.arc(nx, ny, n.radius * zoom * 3, 0, Math.PI * 2)
+        ctx.arc(nx, ny, nodeSize * 4, 0, Math.PI * 2)
         ctx.fill()
 
-        // Core
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+        // Circle outline (sacred geometry circles)
+        if (n.ring <= 2) {
+          ctx.strokeStyle = `rgba(${r},${g},${b},${totalAlpha * 0.3})`
+          ctx.lineWidth = Math.max(0.5, ns * 0.8)
+          ctx.beginPath()
+          ctx.arc(nx, ny, nodeSize * 2.5, 0, Math.PI * 2)
+          ctx.stroke()
+        }
+
+        // Core glowing dot
+        ctx.fillStyle = `rgba(${r},${g},${b},${totalAlpha})`
+        ctx.shadowColor = '#FFD700'
+        ctx.shadowBlur = Math.max(6, ns * 10)
         ctx.beginPath()
-        ctx.arc(nx, ny, n.radius * Math.min(zoom, 2), 0, Math.PI * 2)
+        ctx.arc(nx, ny, nodeSize, 0, Math.PI * 2)
         ctx.fill()
+
+        // Bright white center
+        if (n.ring === 0) {
+          ctx.fillStyle = `rgba(255,255,255,${totalAlpha * 0.8})`
+          ctx.beginPath()
+          ctx.arc(nx, ny, nodeSize * 0.3, 0, Math.PI * 2)
+          ctx.fill()
+        }
+
+        ctx.shadowBlur = 0
       }
     }
 
-    function loop(time: number) {
+    function loop(t: number) {
       animRef.current = requestAnimationFrame(loop)
-      if (time - lastTime < fpsCap) return
-      lastTime = time
-      drawFrame()
+      if (t - lastT < 33) return // ~30fps
+      lastT = t
+      draw()
     }
 
-    if (reducedMotion) {
-      drawFrame()
-    } else {
-      animRef.current = requestAnimationFrame(loop)
-    }
+    if (reduced) { draw() } else { animRef.current = requestAnimationFrame(loop) }
 
     return () => {
       cancelAnimationFrame(animRef.current)
       window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mousemove', onMouse)
       window.removeEventListener('scroll', onScroll)
     }
-  }, [createHexNetwork])
+  }, [])
 
   return (
     <canvas
