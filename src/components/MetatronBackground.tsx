@@ -115,10 +115,12 @@ export default function MetatronBackground() {
 
     // 3D projection function
     function project(x: number, y: number, z: number, camZ: number): [number, number, number] | null {
+      // dz = distance from camera to node along Z axis
+      // Camera looks toward +Z. Node must be in front of camera (z > camZ)
       const dz = z - camZ
-      if (dz >= -50) return null // behind camera
+      if (dz < 50) return null // too close or behind camera
       const fov = 800
-      const scale = fov / Math.abs(dz)
+      const scale = fov / dz
       return [w / 2 + x * scale, h / 2 + y * scale, scale]
     }
 
