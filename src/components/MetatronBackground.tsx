@@ -117,7 +117,7 @@ export default function MetatronBackground() {
     function project(x: number, y: number, z: number, camZ: number): [number, number, number] | null {
       const dz = z - camZ
       if (dz >= -50) return null // behind camera
-      const fov = 600
+      const fov = 800
       const scale = fov / Math.abs(dz)
       return [w / 2 + x * scale, h / 2 + y * scale, scale]
     }
@@ -145,8 +145,8 @@ export default function MetatronBackground() {
       const docH = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
       const scrollPct = Math.min(1, scrollRef.current / docH)
 
-      // Camera Z: starts far back, moves forward as user scrolls
-      const camZ = -900 + scrollPct * 700 // -900 to -200
+      // Camera Z: starts at distance where cube fills viewport, moves in
+      const camZ = -700 + scrollPct * 500 // -700 to -200
 
       // Mouse-driven rotation (subtle)
       const rotY = mouseRef.current.x * 0.15
@@ -163,8 +163,8 @@ export default function MetatronBackground() {
       const cw = 1 - scrollPct
       const gw = scrollPct
 
-      // Global alpha: visible but not overwhelming
-      const baseAlpha = Math.max(0.08, 0.2 - scrollPct * 0.08)
+      // Global alpha: clearly visible
+      const baseAlpha = Math.max(0.15, 0.4 - scrollPct * 0.15)
 
       // Project all nodes
       const projected: ([number, number, number] | null)[] = nodes.map(n => {
@@ -201,8 +201,8 @@ export default function MetatronBackground() {
         const b = Math.round(255 * cw + 0 * gw)
 
         // Connection line
-        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha * 0.5})`
-        ctx.lineWidth = Math.max(0.3, avgScale * 1.5)
+        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha * 0.8})`
+        ctx.lineWidth = Math.max(0.5, avgScale * 2)
         ctx.beginPath()
         ctx.moveTo(fx, fy)
         ctx.lineTo(tx, ty)
@@ -214,7 +214,7 @@ export default function MetatronBackground() {
         const py = fy + (ty - fy) * progress
         const pSize = Math.max(1, avgScale * 2.5)
 
-        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 1.5})`
+        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 2.5})`
         ctx.shadowColor = '#FFD700'
         ctx.shadowBlur = Math.max(4, avgScale * 8)
         ctx.beginPath()
