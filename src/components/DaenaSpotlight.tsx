@@ -72,7 +72,7 @@ export default function DaenaSpotlight() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 md:py-24">
       <div className="mx-auto max-w-5xl px-6">
         <motion.div
           ref={ref}
@@ -87,8 +87,8 @@ export default function DaenaSpotlight() {
           </span>
 
           {/* Heading */}
-          <h2 className="text-gradient mb-6 text-4xl font-bold font-[family-name:var(--font-display)] md:text-5xl">
-            Meet Daena
+          <h2 className="mb-6 text-4xl font-bold font-[family-name:var(--font-display)] md:text-5xl">
+            Meet <span className="text-shimmer">Daena</span>
           </h2>
 
           {/* Description */}

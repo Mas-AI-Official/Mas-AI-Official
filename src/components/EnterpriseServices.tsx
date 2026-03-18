@@ -67,7 +67,7 @@ export default function EnterpriseServices() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
         {/* Header */}
         <div className="mb-16 text-center">

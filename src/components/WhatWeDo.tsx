@@ -58,7 +58,7 @@ export default function WhatWeDo() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="py-24 md:py-32">
+    <section className="py-16 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
         {/* Eyebrow */}
         <p className="mb-10 text-sm uppercase tracking-widest font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">

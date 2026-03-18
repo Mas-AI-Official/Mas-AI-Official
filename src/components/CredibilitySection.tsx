@@ -11,6 +11,7 @@ import {
   Linkedin,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
+import Image from 'next/image'
 
 // --- Data -------------------------------------------------------------------
 
@@ -52,7 +53,7 @@ export default function CredibilitySection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="credibility" className="relative px-6 py-20 md:py-32">
+    <section id="credibility" className="relative px-6 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16 text-center">
@@ -94,9 +95,16 @@ export default function CredibilitySection() {
           transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] as [number, number, number, number] }}
           className="mx-auto max-w-2xl text-center"
         >
-          {/* Avatar */}
-          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-mas-bg-card)] ring-2 ring-[var(--color-mas-cyan)]">
-            <span className="text-lg font-bold text-[var(--color-mas-cyan)]">MM</span>
+          {/* Founder photo */}
+          <div className="relative mx-auto mb-6 h-20 w-20">
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-500/20 to-transparent blur-xl" />
+            <Image
+              src="/assets/img/masoud.jpg"
+              alt="Masoud Masoori, Founder and CEO of MAS-AI Technologies"
+              width={80}
+              height={80}
+              className="relative z-10 rounded-full border-2 border-amber-500/20 object-cover"
+            />
           </div>
 
           {/* Name & title */}
@@ -107,9 +115,9 @@ export default function CredibilitySection() {
 
           {/* Bio */}
           <p className="mt-4 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
-            Solo technical founder with background in AI/ML, deep learning, and robotics. Building
-            MAS-AI as a governance-first AI company with two patent-pending architectures. Based in
-            Ontario, Canada.
+            Solo technical founder and senior AI/ML architect with a background spanning deep learning,
+            robotics, and enterprise systems. Left home, rebuilt from zero, and built MAS-AI into a
+            governance-first AI company with two patent-pending architectures. Based in Ontario, Canada.
           </p>
 
           {/* Links */}

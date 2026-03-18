@@ -18,7 +18,7 @@ const fadeUp = {
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="relative px-6 py-20 md:py-32">
+    <section id="contact" className="relative px-6 py-16 md:py-24">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <div className="mb-16 text-center">

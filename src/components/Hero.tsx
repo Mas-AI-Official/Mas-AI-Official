@@ -107,7 +107,7 @@ export default function Hero() {
             <span
               key={i}
               ref={(el) => { wordsRef.current[i + 1] = el }}
-              className="inline-block mr-[0.3em] text-gradient"
+              className={`inline-block mr-[0.3em] ${word === 'Governed' ? 'text-shimmer' : 'text-gradient'}`}
               style={{ willChange: 'transform, opacity, filter' }}
             >
               {word}
@@ -130,12 +130,14 @@ export default function Hero() {
             href="https://daena.mas-ai.co"
             target="_blank"
             rel="noopener noreferrer"
+            data-cursor="cta"
             className="group relative inline-flex items-center justify-center rounded-full bg-[var(--color-mas-cyan)] px-10 py-4 text-base font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-mas-cyan-glow)]"
           >
             <span className="relative z-10">Explore Daena</span>
           </a>
           <a
             href="#portfolio"
+            data-cursor="cta"
             className="inline-flex items-center justify-center rounded-full border border-[var(--color-mas-border)] px-10 py-4 text-base font-semibold text-[var(--color-mas-text)] transition-all duration-300 hover:border-[var(--color-mas-cyan)] hover:text-[var(--color-mas-cyan)] hover:shadow-[0_0_20px_var(--color-mas-border-glow)]"
           >
             View Portfolio
@@ -151,7 +153,7 @@ export default function Hero() {
             { value: '6/6', label: 'E2E Tests' },
           ].map((s) => (
             <div key={s.label} className="text-center">
-              <div className="text-3xl font-bold text-gradient font-[family-name:var(--font-display)] md:text-4xl">
+              <div className="text-3xl font-bold text-neon font-[family-name:var(--font-display)] md:text-4xl">
                 {s.value}
               </div>
               <div className="mt-1 text-xs uppercase tracking-wider text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)]">
