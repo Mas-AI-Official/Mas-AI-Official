@@ -90,7 +90,7 @@ export default function MetatronBackground() {
       connections.push([dists[1].idx, i, Math.random()])
     }
 
-    const connSpeeds = connections.map(() => 0.003 + Math.random() * 0.007)
+    const connSpeeds = connections.map(() => 0.008 + Math.random() * 0.015)
 
     function resize() {
       if (!canvas) return
@@ -154,19 +154,16 @@ export default function MetatronBackground() {
       const rotY = mouseRef.current.x * 0.15
       const rotX = mouseRef.current.y * 0.1
 
-      // Slow idle rotation
-      const idleRotY = timeRef.current * 0.05
-      const idleRotX = Math.sin(timeRef.current * 0.3) * 0.03
+      // Faster idle rotation
+      const idleRotY = timeRef.current * 0.12
+      const idleRotX = Math.sin(timeRef.current * 0.5) * 0.06
 
       const totalRotY = rotY + idleRotY
       const totalRotX = rotX + idleRotX
 
-      // Color temperature: cyan at top, gold at bottom
-      const cw = 1 - scrollPct
-      const gw = scrollPct
-
-      // Global alpha: clearly visible
-      const baseAlpha = Math.max(0.15, 0.4 - scrollPct * 0.15)
+      // Fixed colors: lines = cyan, nodes = gold (no blending on scroll)
+      // Global alpha: 20% visibility
+      const baseAlpha = Math.max(0.08, 0.2 - scrollPct * 0.06)
 
       // Project all nodes
       const projected: ([number, number, number] | null)[] = nodes.map(n => {
@@ -198,27 +195,24 @@ export default function MetatronBackground() {
         const mBoost = mDist < 200 ? (1 - mDist / 200) * 0.2 : 0
 
         const alpha = depthAlpha + mBoost
-        const r = Math.round(0 * cw + 255 * gw)
-        const g = Math.round(200 * cw + 215 * gw)
-        const b = Math.round(255 * cw + 0 * gw)
 
-        // Connection line
-        ctx.strokeStyle = `rgba(${r},${g},${b},${alpha * 0.8})`
-        ctx.lineWidth = Math.max(0.5, avgScale * 2)
+        // Lines are ALWAYS cyan
+        ctx.strokeStyle = `rgba(0, 200, 255, ${alpha * 0.6})`
+        ctx.lineWidth = Math.max(0.5, avgScale * 1.5)
         ctx.beginPath()
         ctx.moveTo(fx, fy)
         ctx.lineTo(tx, ty)
         ctx.stroke()
 
-        // Flowing particle
+        // Flowing particle (gold)
         const progress = c[2]
         const px = fx + (tx - fx) * progress
         const py = fy + (ty - fy) * progress
-        const pSize = Math.max(1, avgScale * 2.5)
+        const pSize = Math.max(1, avgScale * 2)
 
-        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 2.5})`
+        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 2})`
         ctx.shadowColor = '#FFD700'
-        ctx.shadowBlur = Math.max(4, avgScale * 8)
+        ctx.shadowBlur = Math.max(3, avgScale * 6)
         ctx.beginPath()
         ctx.arc(px, py, pSize, 0, Math.PI * 2)
         ctx.fill()
@@ -253,33 +247,31 @@ export default function MetatronBackground() {
         const mGlow = mDist < 200 ? (1 - mDist / 200) * 0.4 : 0
 
         const totalAlpha = nodeAlpha + mGlow
-        const r = Math.round(0 * cw + 255 * gw)
-        const g = Math.round(200 * cw + 215 * gw)
-        const b = Math.round(255 * cw + 0 * gw)
 
+        // Nodes are ALWAYS gold
         const nodeSize = n.r * Math.min(ns, 2)
 
-        // Outer glow circle
+        // Outer glow circle (gold)
         const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, nodeSize * 4)
-        rg.addColorStop(0, `rgba(${r},${g},${b},${totalAlpha * 0.5})`)
-        rg.addColorStop(0.5, `rgba(${r},${g},${b},${totalAlpha * 0.15})`)
+        rg.addColorStop(0, `rgba(255,215,0,${totalAlpha * 0.4})`)
+        rg.addColorStop(0.5, `rgba(255,215,0,${totalAlpha * 0.1})`)
         rg.addColorStop(1, 'rgba(0,0,0,0)')
         ctx.fillStyle = rg
         ctx.beginPath()
         ctx.arc(nx, ny, nodeSize * 4, 0, Math.PI * 2)
         ctx.fill()
 
-        // Circle outline (sacred geometry circles)
+        // Circle outline (cyan ring around gold node)
         if (n.ring <= 2) {
-          ctx.strokeStyle = `rgba(${r},${g},${b},${totalAlpha * 0.3})`
-          ctx.lineWidth = Math.max(0.5, ns * 0.8)
+          ctx.strokeStyle = `rgba(0,200,255,${totalAlpha * 0.2})`
+          ctx.lineWidth = Math.max(0.5, ns * 0.6)
           ctx.beginPath()
           ctx.arc(nx, ny, nodeSize * 2.5, 0, Math.PI * 2)
           ctx.stroke()
         }
 
-        // Core glowing dot
-        ctx.fillStyle = `rgba(${r},${g},${b},${totalAlpha})`
+        // Core glowing dot (gold)
+        ctx.fillStyle = `rgba(255,215,0,${totalAlpha})`
         ctx.shadowColor = '#FFD700'
         ctx.shadowBlur = Math.max(6, ns * 10)
         ctx.beginPath()
