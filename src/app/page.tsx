@@ -34,7 +34,7 @@ export default function HomePage() {
       <CustomCursor />
       <DaenaPresence />
       <Navbar />
-      <main className="relative z-10">
+      <main className="relative z-[2]">
         <div id="hero">
           <Hero />
         </div>
@@ -58,7 +58,7 @@ export default function HomePage() {
 
         <SectionBg
           id="portfolio"
-          bg="linear-gradient(180deg, var(--color-mas-bg) 0%, #0a0e1a 50%, var(--color-mas-bg) 100%)"
+          bg="linear-gradient(180deg, rgba(8,11,20,0.7) 0%, rgba(10,14,26,0.8) 50%, rgba(8,11,20,0.7) 100%)"
         >
           <PortfolioSection />
         </SectionBg>
