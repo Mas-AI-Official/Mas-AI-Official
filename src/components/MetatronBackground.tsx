@@ -1,268 +1,259 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef } from 'react'
 
 /**
- * MetatronBackground: Sacred Metatron's Cube geometry with scroll-driven depth dive.
+ * MetatronBackground: Full-scale Metatron's Cube with SVG glow filters,
+ * large golden circles, flowing dash-animated connections, and scroll depth-dive.
  *
- * Metatron's Cube = 13 circles (1 center + 6 inner ring + 6 outer ring)
- * connected by lines forming the Platonic solids. As the user scrolls,
- * the camera zooms into the center, creating a "diving into the sacred core" effect.
+ * Based on the original metatron-viz.js SVG implementation but ported to
+ * React with scroll-driven zoom and cursor reactivity.
  *
- * NOT a random hexagonal grid. This is the real sacred geometry pattern.
+ * 13 circles: 1 center (radius 30) + 6 inner (radius 25) + 6 outer (radius 25)
+ * All connected with flowing golden light lines.
  */
 
-interface MetatronNode {
-  bx: number // base x (relative to center, -1 to 1)
-  by: number // base y
-  ring: number // 0=center, 1=inner, 2=outer
-  r: number // draw radius
-}
-
 export default function MetatronBackground() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mouseRef = useRef({ x: -9999, y: -9999 })
-  const scrollRef = useRef(0)
-  const scrollMaxRef = useRef(1)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const svgRef = useRef<SVGSVGElement | null>(null)
+  const timeRef = useRef(0)
   const animRef = useRef<number>(0)
-  const particlesRef = useRef<{ conn: number; progress: number; speed: number }[]>([])
-
-  // Build Metatron's Cube geometry (13 nodes + connecting lines)
-  const buildGeometry = useCallback(() => {
-    const nodes: MetatronNode[] = []
-
-    // Center node
-    nodes.push({ bx: 0, by: 0, ring: 0, r: 6 })
-
-    // Inner ring: 6 nodes at equal angles, radius ~0.18
-    const innerR = 0.18
-    for (let i = 0; i < 6; i++) {
-      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2
-      nodes.push({ bx: innerR * Math.cos(a), by: innerR * Math.sin(a), ring: 1, r: 5 })
-    }
-
-    // Outer ring: 6 nodes at offset angles, radius ~0.36
-    const outerR = 0.36
-    for (let i = 0; i < 6; i++) {
-      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2 + Math.PI / 6
-      nodes.push({ bx: outerR * Math.cos(a), by: outerR * Math.sin(a), ring: 2, r: 4 })
-    }
-
-    // Metatron's Cube connections: every node connects to every other node
-    // This creates the complete graph that reveals the Platonic solids
-    const connections: [number, number][] = []
-    for (let i = 0; i < nodes.length; i++) {
-      for (let j = i + 1; j < nodes.length; j++) {
-        connections.push([i, j])
-      }
-    }
-
-    // Create flowing particles along connections
-    const particles = connections.map((_, idx) => ({
-      conn: idx,
-      progress: Math.random(),
-      speed: 0.003 + Math.random() * 0.006,
-    }))
-    particlesRef.current = particles
-
-    return { nodes, connections }
-  }, [])
+  const scrollRef = useRef(0)
+  const mouseRef = useRef({ x: 500, y: 500 })
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
+    const container = containerRef.current
+    if (!container) return
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const dpr = Math.min(window.devicePixelRatio || 1, 2)
-    let w = 0, h = 0
 
-    const { nodes, connections } = buildGeometry()
+    // Build the SVG Metatron's Cube
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+    svg.setAttribute('viewBox', '0 0 1000 1000')
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet')
+    svg.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;overflow:visible;'
+    svgRef.current = svg
 
-    const resize = () => {
-      w = window.innerWidth
-      h = window.innerHeight
-      canvas.width = w * dpr
-      canvas.height = h * dpr
-      canvas.style.width = w + 'px'
-      canvas.style.height = h + 'px'
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - h)
+    // Defs: filters + gradients
+    const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs')
+
+    // Glow filter
+    const addFilter = (id: string, blur: number) => {
+      const f = document.createElementNS('http://www.w3.org/2000/svg', 'filter')
+      f.setAttribute('id', id)
+      f.setAttribute('x', '-100%'); f.setAttribute('y', '-100%')
+      f.setAttribute('width', '300%'); f.setAttribute('height', '300%')
+      const gb = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur')
+      gb.setAttribute('stdDeviation', String(blur))
+      gb.setAttribute('result', 'glow')
+      f.appendChild(gb)
+      const mg = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge')
+      const mn1 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode')
+      mn1.setAttribute('in', 'glow')
+      const mn2 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode')
+      mn2.setAttribute('in', 'SourceGraphic')
+      mg.appendChild(mn1); mg.appendChild(mn2)
+      f.appendChild(mg)
+      defs.appendChild(f)
     }
-    resize()
-    window.addEventListener('resize', resize)
+    addFilter('nodeGlow', 6)
+    addFilter('centerGlow', 12)
 
-    const onMouse = (e: MouseEvent) => { mouseRef.current = { x: e.clientX, y: e.clientY } }
+    // Radial gradient for nodes
+    const rg = document.createElementNS('http://www.w3.org/2000/svg', 'radialGradient')
+    rg.setAttribute('id', 'nodeGrad')
+    rg.setAttribute('cx', '50%'); rg.setAttribute('cy', '50%'); rg.setAttribute('r', '50%')
+    const stops = [
+      ['0%', '#ffffff', '1'], ['30%', '#ffed4e', '1'],
+      ['60%', '#ffd700', '0.8'], ['100%', '#ffa500', '0.3']
+    ]
+    stops.forEach(([off, col, op]) => {
+      const s = document.createElementNS('http://www.w3.org/2000/svg', 'stop')
+      s.setAttribute('offset', off); s.setAttribute('stop-color', col); s.setAttribute('stop-opacity', op)
+      rg.appendChild(s)
+    })
+    defs.appendChild(rg)
+    svg.appendChild(defs)
+
+    // Metatron nodes
+    const CX = 500, CY = 500, IR = 180, OR = 360
+    interface MNode { x: number; y: number; r: number; isCenter: boolean }
+    const nodes: MNode[] = []
+
+    nodes.push({ x: CX, y: CY, r: 30, isCenter: true })
+    for (let i = 0; i < 6; i++) {
+      const a = (i * Math.PI * 2) / 6 - Math.PI / 2
+      nodes.push({ x: CX + IR * Math.cos(a), y: CY + IR * Math.sin(a), r: 25, isCenter: false })
+    }
+    for (let i = 0; i < 6; i++) {
+      const a = (i * Math.PI * 2) / 6 - Math.PI / 2 + Math.PI / 6
+      nodes.push({ x: CX + OR * Math.cos(a), y: CY + OR * Math.sin(a), r: 25, isCenter: false })
+    }
+
+    // Connections (Metatron's Cube pattern)
+    const conns: [number, number, number][] = []
+    // Center to inner
+    for (let i = 1; i <= 6; i++) conns.push([0, i, 0.5 + Math.random() * 0.3])
+    // Inner hexagon
+    for (let i = 1; i <= 6; i++) conns.push([i, i === 6 ? 1 : i + 1, 0.4 + Math.random() * 0.2])
+    // Inner to outer
+    for (let i = 1; i <= 6; i++) {
+      conns.push([i, 7 + ((i - 1) % 6), 0.6 + Math.random() * 0.2])
+      conns.push([i, 7 + (i % 6), 0.6 + Math.random() * 0.2])
+    }
+    // Outer hexagon
+    for (let i = 7; i <= 12; i++) conns.push([i, i === 12 ? 7 : i + 1, 0.5 + Math.random() * 0.3])
+    // Cross connections (star pattern)
+    for (let i = 0; i < 6; i++) {
+      conns.push([1 + i, 1 + ((i + 2) % 6), 0.3 + Math.random() * 0.2])
+      conns.push([1 + i, 1 + ((i + 3) % 6), 0.3 + Math.random() * 0.2])
+    }
+    // Center to outer
+    for (let i = 7; i <= 12; i++) conns.push([0, i, 0.4 + Math.random() * 0.3])
+
+    // Draw connections
+    const connGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    connGroup.setAttribute('id', 'metatron-conns')
+    const pathEls: SVGPathElement[] = []
+
+    conns.forEach(([fi, ti, speed]) => {
+      const f = nodes[fi], t = nodes[ti]
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path')
+      const d = `M ${f.x} ${f.y} L ${t.x} ${t.y}`
+      path.setAttribute('d', d)
+      path.setAttribute('fill', 'none')
+      path.setAttribute('stroke', '#ffd700')
+      path.setAttribute('stroke-width', '2.5')
+      path.setAttribute('opacity', '0.5')
+      path.setAttribute('filter', 'url(#nodeGlow)')
+
+      const len = Math.hypot(t.x - f.x, t.y - f.y)
+      path.setAttribute('stroke-dasharray', `${len * 0.25} ${len * 0.75}`)
+      path.dataset.speed = String(speed)
+      path.dataset.len = String(len)
+
+      connGroup.appendChild(path)
+      pathEls.push(path)
+    })
+    svg.appendChild(connGroup)
+
+    // Draw nodes
+    const nodeGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    nodeGroup.setAttribute('id', 'metatron-nodes')
+
+    nodes.forEach((n) => {
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+      g.setAttribute('transform', `translate(${n.x}, ${n.y})`)
+
+      // Outer glow
+      const gc = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+      gc.setAttribute('r', String(n.r * 1.8))
+      gc.setAttribute('fill', 'url(#nodeGrad)')
+      gc.setAttribute('opacity', '0.35')
+      gc.setAttribute('filter', n.isCenter ? 'url(#centerGlow)' : 'url(#nodeGlow)')
+      g.appendChild(gc)
+
+      // Main circle
+      const mc = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+      mc.setAttribute('r', String(n.r))
+      mc.setAttribute('fill', 'url(#nodeGrad)')
+      mc.setAttribute('stroke', '#ffd700')
+      mc.setAttribute('stroke-width', '2')
+      mc.setAttribute('opacity', '0.8')
+      mc.setAttribute('filter', n.isCenter ? 'url(#centerGlow)' : 'url(#nodeGlow)')
+      g.appendChild(mc)
+
+      // Bright center
+      const ic = document.createElementNS('http://www.w3.org/2000/svg', 'circle')
+      ic.setAttribute('r', String(n.r * 0.25))
+      ic.setAttribute('fill', '#ffffff')
+      ic.setAttribute('opacity', '0.9')
+      g.appendChild(ic)
+
+      nodeGroup.appendChild(g)
+    })
+    svg.appendChild(nodeGroup)
+    container.appendChild(svg)
+
+    // Scroll + mouse
     const onScroll = () => {
       scrollRef.current = window.scrollY
-      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
     }
-    window.addEventListener('mousemove', onMouse, { passive: true })
+    const onMouse = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect()
+      mouseRef.current = {
+        x: ((e.clientX - rect.left) / rect.width) * 1000,
+        y: ((e.clientY - rect.top) / rect.height) * 1000,
+      }
+    }
     window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('mousemove', onMouse, { passive: true })
 
-    let lastT = 0
-    const fpsGap = 1000 / 30
+    // Animation loop
+    const animate = () => {
+      timeRef.current += 0.016
 
-    function draw() {
-      if (!ctx) return
-      ctx.clearRect(0, 0, w, h)
+      const docH = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      const depth = Math.min(1, scrollRef.current / docH)
+      const zoom = 1 + depth * 2.5
+      const baseOpacity = Math.max(0.15, 0.6 - depth * 0.3)
 
-      const depth = Math.min(1, scrollRef.current / scrollMaxRef.current)
-      // Zoom: 1x at top, 4x at bottom (diving into the cube's center)
-      const zoom = 1 + depth * 3
-      // Scale factor based on viewport
-      const scale = Math.min(w, h) * 0.9
+      // Apply zoom via SVG transform
+      const tx = 500 - 500 * zoom
+      const ty = 500 - 500 * zoom
+      svg.setAttribute('viewBox', `${tx} ${ty} ${1000 / zoom * zoom} ${1000 / zoom * zoom}`)
+      // Actually, let's use transform on the groups for proper zoom-into-center
+      const transformStr = `translate(${500}, ${500}) scale(${zoom}) translate(${-500}, ${-500})`
+      connGroup.setAttribute('transform', transformStr)
+      nodeGroup.setAttribute('transform', transformStr)
 
-      const cx = w / 2
-      const cy = h / 2
-      const mx = mouseRef.current.x
-      const my = mouseRef.current.y
+      // Animate flowing lines
+      pathEls.forEach((path, idx) => {
+        const speed = parseFloat(path.dataset.speed || '0.5')
+        const len = parseFloat(path.dataset.len || '100')
+        const offset = (timeRef.current * speed * 120) % (len * 2)
+        path.setAttribute('stroke-dashoffset', String(-offset))
+        const op = (0.3 + Math.sin(timeRef.current * 2 + idx * 0.7) * 0.25) * baseOpacity
+        path.setAttribute('opacity', String(Math.max(0.1, Math.min(0.8, op))))
+      })
 
-      // Global alpha fades slightly at extreme depth
-      const globalA = Math.max(0.03, 0.1 - depth * 0.04)
+      // Animate node pulse
+      const nodeEls = nodeGroup.querySelectorAll('g')
+      nodeEls.forEach((g, idx) => {
+        const pulse = 0.7 + Math.sin(timeRef.current * 2 + idx * 0.8) * 0.2
+        const circles = g.querySelectorAll('circle')
+        circles.forEach(c => {
+          const baseOp = parseFloat(c.getAttribute('opacity') || '0.5')
+          // Don't override the bright center dot
+          if (c.getAttribute('fill') === '#ffffff') return
+        })
+        g.style.opacity = String(pulse * baseOpacity * 1.5)
+      })
 
-      // Color temperature: cyan at top, gold at bottom
-      const cw = 1 - depth // cyan weight
-      const gw = depth // gold weight
-
-      // Draw connections (the sacred geometry lines)
-      for (let ci = 0; ci < connections.length; ci++) {
-        const [ai, bi] = connections[ci]
-        const a = nodes[ai]
-        const b = nodes[bi]
-
-        const ax = cx + a.bx * scale * zoom
-        const ay = cy + a.by * scale * zoom
-        const bx = cx + b.bx * scale * zoom
-        const by = cy + b.by * scale * zoom
-
-        // Skip if both endpoints off-screen
-        if ((ax < -100 && bx < -100) || (ax > w + 100 && bx > w + 100)) continue
-        if ((ay < -100 && by < -100) || (ay > h + 100 && by > h + 100)) continue
-
-        // Mouse proximity to midpoint
-        const midX = (ax + bx) / 2
-        const midY = (ay + by) / 2
-        const mDist = Math.hypot(mx - midX, my - midY)
-        const mBoost = mDist < 250 ? (1 - mDist / 250) * 0.15 : 0
-        const lineA = (globalA * 0.7 + mBoost)
-
-        const r = Math.round(0 * cw + 255 * gw)
-        const g = Math.round(212 * cw + 215 * gw)
-        const b2 = Math.round(255 * cw + 0 * gw)
-
-        ctx.strokeStyle = `rgba(${r},${g},${b2},${lineA})`
-        ctx.lineWidth = 0.8
-        ctx.beginPath()
-        ctx.moveTo(ax, ay)
-        ctx.lineTo(bx, by)
-        ctx.stroke()
-      }
-
-      // Draw particles flowing along connections
-      const particles = particlesRef.current
-      for (const p of particles) {
-        const [ai, bi] = connections[p.conn]
-        if (!ai && ai !== 0) continue
-        const a = nodes[ai]
-        const b = nodes[bi]
-
-        const ax = cx + a.bx * scale * zoom
-        const ay = cy + a.by * scale * zoom
-        const bx = cx + b.bx * scale * zoom
-        const by = cy + b.by * scale * zoom
-
-        const px = ax + (bx - ax) * p.progress
-        const py = ay + (by - ay) * p.progress
-
-        // Skip off-screen
-        if (px < -50 || px > w + 50 || py < -50 || py > h + 50) {
-          if (!reduced) { p.progress += p.speed; if (p.progress > 1) p.progress = 0 }
-          continue
-        }
-
-        const mDist = Math.hypot(mx - px, my - py)
-        const mGlow = mDist < 200 ? (1 - mDist / 200) * 0.4 : 0
-        const pA = (globalA * 1.5 + mGlow)
-
-        ctx.fillStyle = `rgba(255, 215, 0, ${pA})`
-        ctx.shadowColor = '#FFD700'
-        ctx.shadowBlur = 6
-        ctx.beginPath()
-        ctx.arc(px, py, 1.5, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.shadowBlur = 0
-
-        if (!reduced) {
-          p.progress += p.speed
-          if (p.progress > 1) p.progress = 0
-        }
-      }
-
-      // Draw nodes (the 13 circles of Metatron's Cube)
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i]
-        const nx = cx + n.bx * scale * zoom
-        const ny = cy + n.by * scale * zoom
-
-        if (nx < -80 || nx > w + 80 || ny < -80 || ny > h + 80) continue
-
-        const mDist = Math.hypot(mx - nx, my - ny)
-        const mGlow = mDist < 200 ? (1 - mDist / 200) * 0.5 : 0
-        const pulse = 0.5 + Math.sin(Date.now() * 0.002 + i * 1.3) * 0.3
-        const nA = (pulse * globalA + mGlow)
-
-        const r = Math.round(0 * cw + 255 * gw)
-        const g = Math.round(212 * cw + 215 * gw)
-        const b2 = Math.round(255 * cw + 0 * gw)
-
-        // Circle outline (Metatron's Cube uses circles, not dots)
-        const circR = n.r * Math.min(zoom, 2.5)
-        ctx.strokeStyle = `rgba(${r},${g},${b2},${nA * 0.6})`
-        ctx.lineWidth = 1.2
-        ctx.beginPath()
-        ctx.arc(nx, ny, circR * 3, 0, Math.PI * 2)
-        ctx.stroke()
-
-        // Glow center
-        const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, circR * 2)
-        rg.addColorStop(0, `rgba(${r},${g},${b2},${nA * 0.4})`)
-        rg.addColorStop(1, 'rgba(0,0,0,0)')
-        ctx.fillStyle = rg
-        ctx.beginPath()
-        ctx.arc(nx, ny, circR * 2, 0, Math.PI * 2)
-        ctx.fill()
-
-        // Core dot
-        ctx.fillStyle = `rgba(${r},${g},${b2},${nA})`
-        ctx.beginPath()
-        ctx.arc(nx, ny, circR * 0.6, 0, Math.PI * 2)
-        ctx.fill()
+      if (!reduced) {
+        animRef.current = requestAnimationFrame(animate)
       }
     }
 
-    function loop(t: number) {
-      animRef.current = requestAnimationFrame(loop)
-      if (t - lastT < fpsGap) return
-      lastT = t
-      draw()
+    if (reduced) {
+      // Static render
+      svg.style.opacity = '0.3'
+    } else {
+      animRef.current = requestAnimationFrame(animate)
     }
-
-    if (reduced) { draw() } else { animRef.current = requestAnimationFrame(loop) }
 
     return () => {
       cancelAnimationFrame(animRef.current)
-      window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', onMouse)
       window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('mousemove', onMouse)
+      if (svg.parentNode) svg.parentNode.removeChild(svg)
     }
-  }, [buildGeometry])
+  }, [])
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none"
+    <div
+      ref={containerRef}
+      className="fixed inset-0 pointer-events-none overflow-hidden"
       style={{ zIndex: 0 }}
       aria-hidden="true"
     />
