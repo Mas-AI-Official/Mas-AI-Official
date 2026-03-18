@@ -198,14 +198,13 @@ export default function MetatronBackground() {
       const zoom = 1 + depth * 2.5
       const baseOpacity = Math.max(0.15, 0.6 - depth * 0.3)
 
-      // Apply zoom via SVG transform
-      const tx = 500 - 500 * zoom
-      const ty = 500 - 500 * zoom
-      svg.setAttribute('viewBox', `${tx} ${ty} ${1000 / zoom * zoom} ${1000 / zoom * zoom}`)
-      // Actually, let's use transform on the groups for proper zoom-into-center
-      const transformStr = `translate(${500}, ${500}) scale(${zoom}) translate(${-500}, ${-500})`
-      connGroup.setAttribute('transform', transformStr)
-      nodeGroup.setAttribute('transform', transformStr)
+      // Zoom by shrinking the viewBox around center (500,500)
+      // At zoom=1: viewBox is "0 0 1000 1000" (full view)
+      // At zoom=3.5: viewBox is "357 357 286 286" (zoomed into center)
+      const vbSize = 1000 / zoom
+      const vbX = 500 - vbSize / 2
+      const vbY = 500 - vbSize / 2
+      svg.setAttribute('viewBox', `${vbX} ${vbY} ${vbSize} ${vbSize}`)
 
       // Animate flowing lines
       pathEls.forEach((path, idx) => {

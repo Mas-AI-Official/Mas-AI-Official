@@ -75,9 +75,9 @@ function PortraitPlane({ lightColor, lightIntensity }: { lightColor: string; lig
           // Subtle breathing
           pos.z += sin(uTime * 1.5) * 0.005;
 
-          // Mouse parallax: shift position slightly based on mouse
-          pos.x += uMouse.x * depth * 0.08;
-          pos.y += uMouse.y * depth * 0.05;
+          // Mouse parallax: very subtle shift based on depth
+          pos.x += uMouse.x * depth * 0.03;
+          pos.y += uMouse.y * depth * 0.02;
 
           gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
         }
@@ -129,9 +129,9 @@ function PortraitPlane({ lightColor, lightIntensity }: { lightColor: string; lig
     mat.uniforms.uLightColor.value.lerp(tc, 0.05)
     mat.uniforms.uLightIntensity.value += (lightIntensity - mat.uniforms.uLightIntensity.value) * 0.05
 
-    // Subtle mesh rotation following mouse
-    meshRef.current.rotation.y = mouse.x * 0.08
-    meshRef.current.rotation.x = -mouse.y * 0.05
+    // Subtle mesh rotation following mouse (reduced to prevent drift)
+    meshRef.current.rotation.y += (mouse.x * 0.04 - meshRef.current.rotation.y) * 0.05
+    meshRef.current.rotation.x += (-mouse.y * 0.03 - meshRef.current.rotation.x) * 0.05
   })
 
   return (
