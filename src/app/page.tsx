@@ -9,10 +9,11 @@ import ContactSection from '@/components/ContactSection'
 import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
 import MetatronBackground from '@/components/MetatronBackground'
+import SmoothScroll from '@/components/SmoothScroll'
 
 export default function HomePage() {
   return (
-    <>
+    <SmoothScroll>
       <MetatronBackground />
       <Navbar />
       <main className="relative z-10">
@@ -26,6 +27,6 @@ export default function HomePage() {
         <FAQ />
       </main>
       <Footer />
-    </>
+    </SmoothScroll>
   )
 }
