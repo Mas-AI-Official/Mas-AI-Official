@@ -3,27 +3,20 @@
 import { useEffect, useRef, useCallback } from 'react'
 
 /**
- * MetatronBackground: Sacred geometry hexagonal network with scroll-driven depth dive.
+ * MetatronBackground: Sacred Metatron's Cube geometry with scroll-driven depth dive.
  *
- * As the user scrolls down, the hexagonal pattern zooms in, as if diving
- * deeper into the core of the Metatron's Cube. Each section boundary
- * corresponds to a deeper "layer." Gold particles flow along connections.
- * Cursor proximity amplifies node glow within 200px.
+ * Metatron's Cube = 13 circles (1 center + 6 inner ring + 6 outer ring)
+ * connected by lines forming the Platonic solids. As the user scrolls,
+ * the camera zooms into the center, creating a "diving into the sacred core" effect.
+ *
+ * NOT a random hexagonal grid. This is the real sacred geometry pattern.
  */
 
-interface HexNode {
-  baseX: number
-  baseY: number
-  radius: number
-  layer: number
-}
-
-interface Connection {
-  from: number
-  to: number
-  progress: number
-  speed: number
-  baseGlow: number
+interface MetatronNode {
+  bx: number // base x (relative to center, -1 to 1)
+  by: number // base y
+  ring: number // 0=center, 1=inner, 2=outer
+  r: number // draw radius
 }
 
 export default function MetatronBackground() {
@@ -32,80 +25,60 @@ export default function MetatronBackground() {
   const scrollRef = useRef(0)
   const scrollMaxRef = useRef(1)
   const animRef = useRef<number>(0)
-  const nodesRef = useRef<HexNode[]>([])
-  const connectionsRef = useRef<Connection[]>([])
+  const particlesRef = useRef<{ conn: number; progress: number; speed: number }[]>([])
 
-  const createHexNetwork = useCallback((w: number, h: number, isMobile: boolean) => {
-    const nodes: HexNode[] = []
-    const connections: Connection[] = []
-    const cx = w / 2
-    const cy = h / 2
-    const layers = isMobile ? 3 : 5
-    const baseRadius = Math.min(w, h) * 0.08
-    const hexSpacing = baseRadius * 1.6
+  // Build Metatron's Cube geometry (13 nodes + connecting lines)
+  const buildGeometry = useCallback(() => {
+    const nodes: MetatronNode[] = []
 
-    // Central node
-    nodes.push({ baseX: cx, baseY: cy, radius: 5, layer: 0 })
+    // Center node
+    nodes.push({ bx: 0, by: 0, ring: 0, r: 6 })
 
-    // Hexagonal layers
-    for (let layer = 1; layer <= layers; layer++) {
-      const r = hexSpacing * layer
-      const count = 6 * layer
-      for (let i = 0; i < count; i++) {
-        const angle = (Math.PI * 2 * i) / count - Math.PI / 2
-        nodes.push({
-          baseX: cx + r * Math.cos(angle),
-          baseY: cy + r * Math.sin(angle),
-          radius: Math.max(2, 5 - layer * 0.5),
-          layer,
-        })
+    // Inner ring: 6 nodes at equal angles, radius ~0.18
+    const innerR = 0.18
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2
+      nodes.push({ bx: innerR * Math.cos(a), by: innerR * Math.sin(a), ring: 1, r: 5 })
+    }
+
+    // Outer ring: 6 nodes at offset angles, radius ~0.36
+    const outerR = 0.36
+    for (let i = 0; i < 6; i++) {
+      const a = (Math.PI * 2 * i) / 6 - Math.PI / 2 + Math.PI / 6
+      nodes.push({ bx: outerR * Math.cos(a), by: outerR * Math.sin(a), ring: 2, r: 4 })
+    }
+
+    // Metatron's Cube connections: every node connects to every other node
+    // This creates the complete graph that reveals the Platonic solids
+    const connections: [number, number][] = []
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        connections.push([i, j])
       }
     }
 
-    // Connect each node to nearest 4-5
-    nodes.forEach((node, idx) => {
-      const distances = nodes
-        .map((other, oi) => ({
-          idx: oi,
-          dist: Math.hypot(node.baseX - other.baseX, node.baseY - other.baseY),
-        }))
-        .sort((a, b) => a.dist - b.dist)
-        .slice(1, 5)
+    // Create flowing particles along connections
+    const particles = connections.map((_, idx) => ({
+      conn: idx,
+      progress: Math.random(),
+      speed: 0.003 + Math.random() * 0.006,
+    }))
+    particlesRef.current = particles
 
-      distances.forEach((d) => {
-        const exists = connections.some(
-          (c) =>
-            (c.from === idx && c.to === d.idx) ||
-            (c.from === d.idx && c.to === idx)
-        )
-        if (!exists) {
-          connections.push({
-            from: idx,
-            to: d.idx,
-            progress: Math.random(),
-            speed: 0.004 + Math.random() * 0.008,
-            baseGlow: 0.2 + Math.random() * 0.3,
-          })
-        }
-      })
-    })
-
-    nodesRef.current = nodes
-    connectionsRef.current = connections
+    return { nodes, connections }
   }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    let w = 0, h = 0
 
-    let w = 0
-    let h = 0
+    const { nodes, connections } = buildGeometry()
 
     const resize = () => {
       w = window.innerWidth
@@ -116,152 +89,175 @@ export default function MetatronBackground() {
       canvas.style.height = h + 'px'
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - h)
-      createHexNetwork(w, h, w <= 768)
     }
     resize()
     window.addEventListener('resize', resize)
 
-    const onMouseMove = (e: MouseEvent) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
-    }
+    const onMouse = (e: MouseEvent) => { mouseRef.current = { x: e.clientX, y: e.clientY } }
     const onScroll = () => {
       scrollRef.current = window.scrollY
       scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
     }
-    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    window.addEventListener('mousemove', onMouse, { passive: true })
     window.addEventListener('scroll', onScroll, { passive: true })
 
-    let lastTime = 0
-    const fpsCap = 1000 / 30
+    let lastT = 0
+    const fpsGap = 1000 / 30
 
-    function drawFrame() {
+    function draw() {
       if (!ctx) return
-      const nodes = nodesRef.current
-      const connections = connectionsRef.current
-
       ctx.clearRect(0, 0, w, h)
 
-      // Scroll-driven depth: 0 = top of page, 1 = bottom
       const depth = Math.min(1, scrollRef.current / scrollMaxRef.current)
-
-      // Zoom factor: starts at 1.0, goes to 3.5 at bottom
-      const zoom = 1 + depth * 2.5
-
-      // Opacity: slightly fades at extreme depth but stays visible
-      const globalAlpha = Math.max(0.04, 0.12 - depth * 0.06)
-
-      // Glow color shifts from cyan to gold as depth increases
-      const cyanWeight = 1 - depth
-      const goldWeight = depth
+      // Zoom: 1x at top, 4x at bottom (diving into the cube's center)
+      const zoom = 1 + depth * 3
+      // Scale factor based on viewport
+      const scale = Math.min(w, h) * 0.9
 
       const cx = w / 2
       const cy = h / 2
       const mx = mouseRef.current.x
       const my = mouseRef.current.y
 
-      // Draw connections
-      for (const conn of connections) {
-        const fromNode = nodes[conn.from]
-        const toNode = nodes[conn.to]
-        if (!fromNode || !toNode) continue
+      // Global alpha fades slightly at extreme depth
+      const globalA = Math.max(0.03, 0.1 - depth * 0.04)
 
-        // Apply zoom: scale positions from center
-        const fx = cx + (fromNode.baseX - cx) * zoom
-        const fy = cy + (fromNode.baseY - cy) * zoom
-        const tx = cx + (toNode.baseX - cx) * zoom
-        const ty = cy + (toNode.baseY - cy) * zoom
+      // Color temperature: cyan at top, gold at bottom
+      const cw = 1 - depth // cyan weight
+      const gw = depth // gold weight
 
-        const px = fx + (tx - fx) * conn.progress
-        const py = fy + (ty - fy) * conn.progress
+      // Draw connections (the sacred geometry lines)
+      for (let ci = 0; ci < connections.length; ci++) {
+        const [ai, bi] = connections[ci]
+        const a = nodes[ai]
+        const b = nodes[bi]
 
-        // Mouse proximity
-        const mdist = Math.hypot(mx - px, my - py)
-        const mouseBoost = mdist < 200 ? (1 - mdist / 200) * 0.3 : 0
-        const alpha = (conn.baseGlow + mouseBoost) * globalAlpha
+        const ax = cx + a.bx * scale * zoom
+        const ay = cy + a.by * scale * zoom
+        const bx = cx + b.bx * scale * zoom
+        const by = cy + b.by * scale * zoom
 
-        // Color blend: cyan to gold based on depth
-        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
-        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
-        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
+        // Skip if both endpoints off-screen
+        if ((ax < -100 && bx < -100) || (ax > w + 100 && bx > w + 100)) continue
+        if ((ay < -100 && by < -100) || (ay > h + 100 && by > h + 100)) continue
 
-        // Line
-        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
-        ctx.lineWidth = 1
+        // Mouse proximity to midpoint
+        const midX = (ax + bx) / 2
+        const midY = (ay + by) / 2
+        const mDist = Math.hypot(mx - midX, my - midY)
+        const mBoost = mDist < 250 ? (1 - mDist / 250) * 0.15 : 0
+        const lineA = (globalA * 0.7 + mBoost)
+
+        const r = Math.round(0 * cw + 255 * gw)
+        const g = Math.round(212 * cw + 215 * gw)
+        const b2 = Math.round(255 * cw + 0 * gw)
+
+        ctx.strokeStyle = `rgba(${r},${g},${b2},${lineA})`
+        ctx.lineWidth = 0.8
         ctx.beginPath()
-        ctx.moveTo(fx, fy)
-        ctx.lineTo(tx, ty)
+        ctx.moveTo(ax, ay)
+        ctx.lineTo(bx, by)
         ctx.stroke()
+      }
 
-        // Particle
-        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 2})`
-        ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`
-        ctx.shadowBlur = 8
+      // Draw particles flowing along connections
+      const particles = particlesRef.current
+      for (const p of particles) {
+        const [ai, bi] = connections[p.conn]
+        if (!ai && ai !== 0) continue
+        const a = nodes[ai]
+        const b = nodes[bi]
+
+        const ax = cx + a.bx * scale * zoom
+        const ay = cy + a.by * scale * zoom
+        const bx = cx + b.bx * scale * zoom
+        const by = cy + b.by * scale * zoom
+
+        const px = ax + (bx - ax) * p.progress
+        const py = ay + (by - ay) * p.progress
+
+        // Skip off-screen
+        if (px < -50 || px > w + 50 || py < -50 || py > h + 50) {
+          if (!reduced) { p.progress += p.speed; if (p.progress > 1) p.progress = 0 }
+          continue
+        }
+
+        const mDist = Math.hypot(mx - px, my - py)
+        const mGlow = mDist < 200 ? (1 - mDist / 200) * 0.4 : 0
+        const pA = (globalA * 1.5 + mGlow)
+
+        ctx.fillStyle = `rgba(255, 215, 0, ${pA})`
+        ctx.shadowColor = '#FFD700'
+        ctx.shadowBlur = 6
         ctx.beginPath()
         ctx.arc(px, py, 1.5, 0, Math.PI * 2)
         ctx.fill()
         ctx.shadowBlur = 0
 
-        if (!reducedMotion) {
-          conn.progress += conn.speed
-          if (conn.progress > 1) conn.progress = 0
+        if (!reduced) {
+          p.progress += p.speed
+          if (p.progress > 1) p.progress = 0
         }
       }
 
-      // Draw nodes
+      // Draw nodes (the 13 circles of Metatron's Cube)
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i]
-        const nx = cx + (n.baseX - cx) * zoom
-        const ny = cy + (n.baseY - cy) * zoom
+        const nx = cx + n.bx * scale * zoom
+        const ny = cy + n.by * scale * zoom
 
-        // Only render if on screen (with margin)
-        if (nx < -50 || nx > w + 50 || ny < -50 || ny > h + 50) continue
+        if (nx < -80 || nx > w + 80 || ny < -80 || ny > h + 80) continue
 
-        const mdist = Math.hypot(mx - nx, my - ny)
-        const mouseGlow = mdist < 200 ? (1 - mdist / 200) * 0.4 : 0
-        const pulse = 0.5 + Math.sin(Date.now() * 0.002 + i * 0.7) * 0.3
-        const alpha = (pulse * 0.1 + mouseGlow) * (globalAlpha / 0.12)
+        const mDist = Math.hypot(mx - nx, my - ny)
+        const mGlow = mDist < 200 ? (1 - mDist / 200) * 0.5 : 0
+        const pulse = 0.5 + Math.sin(Date.now() * 0.002 + i * 1.3) * 0.3
+        const nA = (pulse * globalA + mGlow)
 
-        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
-        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
-        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
+        const r = Math.round(0 * cw + 255 * gw)
+        const g = Math.round(212 * cw + 215 * gw)
+        const b2 = Math.round(255 * cw + 0 * gw)
 
-        // Glow
-        const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, n.radius * zoom * 3)
-        rg.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha * 0.5})`)
-        rg.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        // Circle outline (Metatron's Cube uses circles, not dots)
+        const circR = n.r * Math.min(zoom, 2.5)
+        ctx.strokeStyle = `rgba(${r},${g},${b2},${nA * 0.6})`
+        ctx.lineWidth = 1.2
+        ctx.beginPath()
+        ctx.arc(nx, ny, circR * 3, 0, Math.PI * 2)
+        ctx.stroke()
+
+        // Glow center
+        const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, circR * 2)
+        rg.addColorStop(0, `rgba(${r},${g},${b2},${nA * 0.4})`)
+        rg.addColorStop(1, 'rgba(0,0,0,0)')
         ctx.fillStyle = rg
         ctx.beginPath()
-        ctx.arc(nx, ny, n.radius * zoom * 3, 0, Math.PI * 2)
+        ctx.arc(nx, ny, circR * 2, 0, Math.PI * 2)
         ctx.fill()
 
-        // Core
-        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+        // Core dot
+        ctx.fillStyle = `rgba(${r},${g},${b2},${nA})`
         ctx.beginPath()
-        ctx.arc(nx, ny, n.radius * Math.min(zoom, 2), 0, Math.PI * 2)
+        ctx.arc(nx, ny, circR * 0.6, 0, Math.PI * 2)
         ctx.fill()
       }
     }
 
-    function loop(time: number) {
+    function loop(t: number) {
       animRef.current = requestAnimationFrame(loop)
-      if (time - lastTime < fpsCap) return
-      lastTime = time
-      drawFrame()
+      if (t - lastT < fpsGap) return
+      lastT = t
+      draw()
     }
 
-    if (reducedMotion) {
-      drawFrame()
-    } else {
-      animRef.current = requestAnimationFrame(loop)
-    }
+    if (reduced) { draw() } else { animRef.current = requestAnimationFrame(loop) }
 
     return () => {
       cancelAnimationFrame(animRef.current)
       window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mousemove', onMouse)
       window.removeEventListener('scroll', onScroll)
     }
-  }, [createHexNetwork])
+  }, [buildGeometry])
 
   return (
     <canvas
