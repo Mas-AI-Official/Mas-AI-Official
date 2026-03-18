@@ -108,7 +108,7 @@ export default function DaenaPresence() {
   }
 
   return (
-    <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3">
+    <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 flex flex-col items-center gap-3 w-28">
       {/* Thought bubble ABOVE */}
       <AnimatePresence mode="wait">
         {mood.caption && (
@@ -142,12 +142,10 @@ export default function DaenaPresence() {
       {/* Portrait with 3D tilt */}
       <div
         ref={portraitRef}
-        className="relative w-24 h-32 cursor-pointer rounded-2xl overflow-hidden transition-[filter,box-shadow,border-color] duration-500"
+        className="relative w-24 h-32 cursor-pointer overflow-visible transition-[filter,box-shadow] duration-500"
         onClick={() => setExpanded(!expanded)}
         style={{
-          filter: `brightness(${mood.brightness})`,
-          boxShadow: `0 0 40px ${mood.glowColor}25, 0 8px 32px rgba(0,0,0,0.5)`,
-          border: `2px solid ${mood.glowColor}30`,
+          filter: `brightness(${mood.brightness}) drop-shadow(0 0 15px ${mood.glowColor}30)`,
           willChange: 'transform',
         }}
       >

@@ -1,276 +1,267 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 
 /**
- * MetatronBackground: Direct port of the Daena website's metatron-hex-network.js
- * with added mouse cursor interaction and scroll depth-dive.
+ * MetatronBackground: Sacred geometry hexagonal network with scroll-driven depth dive.
  *
- * 3 hexagonal layers of nodes, 5 connections per node with flowing golden particles,
- * 13-circle Metatron's Cube pattern drawn in background, radial glow on nodes.
- * Mouse proximity brightens nearby nodes/connections. Scroll zooms into center.
+ * As the user scrolls down, the hexagonal pattern zooms in, as if diving
+ * deeper into the core of the Metatron's Cube. Each section boundary
+ * corresponds to a deeper "layer." Gold particles flow along connections.
+ * Cursor proximity amplifies node glow within 200px.
  */
 
-interface MNode {
-  x: number; y: number; radius: number; glow: number
-  layer: number; connections: number[]
+interface HexNode {
+  baseX: number
+  baseY: number
+  radius: number
+  layer: number
 }
-interface MConn {
-  from: number; to: number; progress: number; speed: number; glow: number
+
+interface Connection {
+  from: number
+  to: number
+  progress: number
+  speed: number
+  baseGlow: number
 }
 
 export default function MetatronBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const animRef = useRef<number>(0)
   const mouseRef = useRef({ x: -9999, y: -9999 })
   const scrollRef = useRef(0)
+  const scrollMaxRef = useRef(1)
+  const animRef = useRef<number>(0)
+  const nodesRef = useRef<HexNode[]>([])
+  const connectionsRef = useRef<Connection[]>([])
+
+  const createHexNetwork = useCallback((w: number, h: number, isMobile: boolean) => {
+    const nodes: HexNode[] = []
+    const connections: Connection[] = []
+    const cx = w / 2
+    const cy = h / 2
+    const layers = isMobile ? 3 : 5
+    const baseRadius = Math.min(w, h) * 0.08
+    const hexSpacing = baseRadius * 1.6
+
+    // Central node
+    nodes.push({ baseX: cx, baseY: cy, radius: 5, layer: 0 })
+
+    // Hexagonal layers
+    for (let layer = 1; layer <= layers; layer++) {
+      const r = hexSpacing * layer
+      const count = 6 * layer
+      for (let i = 0; i < count; i++) {
+        const angle = (Math.PI * 2 * i) / count - Math.PI / 2
+        nodes.push({
+          baseX: cx + r * Math.cos(angle),
+          baseY: cy + r * Math.sin(angle),
+          radius: Math.max(2, 5 - layer * 0.5),
+          layer,
+        })
+      }
+    }
+
+    // Connect each node to nearest 4-5
+    nodes.forEach((node, idx) => {
+      const distances = nodes
+        .map((other, oi) => ({
+          idx: oi,
+          dist: Math.hypot(node.baseX - other.baseX, node.baseY - other.baseY),
+        }))
+        .sort((a, b) => a.dist - b.dist)
+        .slice(1, 5)
+
+      distances.forEach((d) => {
+        const exists = connections.some(
+          (c) =>
+            (c.from === idx && c.to === d.idx) ||
+            (c.from === d.idx && c.to === idx)
+        )
+        if (!exists) {
+          connections.push({
+            from: idx,
+            to: d.idx,
+            progress: Math.random(),
+            speed: 0.004 + Math.random() * 0.008,
+            baseGlow: 0.2 + Math.random() * 0.3,
+          })
+        }
+      })
+    })
+
+    nodesRef.current = nodes
+    connectionsRef.current = connections
+  }, [])
 
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
+
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
-    let w = 0, h = 0, cx = 0, cy = 0
-    let nodes: MNode[] = []
-    let connections: MConn[] = []
+    let w = 0
+    let h = 0
 
-    function setup() {
-      if (!canvas) return
+    const resize = () => {
       w = window.innerWidth
       h = window.innerHeight
-      canvas.width = w
-      canvas.height = h
-      cx = w / 2
-      cy = h / 2
-      buildNetwork()
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width = w + 'px'
+      canvas.style.height = h + 'px'
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - h)
+      createHexNetwork(w, h, w <= 768)
     }
+    resize()
+    window.addEventListener('resize', resize)
 
-    function buildNetwork() {
-      nodes = []
-      connections = []
+    const onMouseMove = (e: MouseEvent) => {
+      mouseRef.current = { x: e.clientX, y: e.clientY }
+    }
+    const onScroll = () => {
+      scrollRef.current = window.scrollY
+      scrollMaxRef.current = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+    }
+    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    window.addEventListener('scroll', onScroll, { passive: true })
 
-      const layers = 3
-      const baseR = Math.min(w, h) * 0.12
-      const spacing = baseR * 1.8
+    let lastTime = 0
+    const fpsCap = 1000 / 30
 
-      // Center node
-      nodes.push({ x: cx, y: cy, radius: 8, glow: 1, layer: 0, connections: [] })
+    function drawFrame() {
+      if (!ctx) return
+      const nodes = nodesRef.current
+      const connections = connectionsRef.current
 
-      // Hexagonal layers
-      for (let layer = 1; layer <= layers; layer++) {
-        const r = spacing * layer
-        const count = 6 * layer
-        for (let i = 0; i < count; i++) {
-          const a = (Math.PI * 2 * i) / count - Math.PI / 2
-          nodes.push({
-            x: cx + r * Math.cos(a),
-            y: cy + r * Math.sin(a),
-            radius: 6, glow: 0.7, layer, connections: []
-          })
+      ctx.clearRect(0, 0, w, h)
+
+      // Scroll-driven depth: 0 = top of page, 1 = bottom
+      const depth = Math.min(1, scrollRef.current / scrollMaxRef.current)
+
+      // Zoom factor: starts at 1.0, goes to 3.5 at bottom
+      const zoom = 1 + depth * 2.5
+
+      // Opacity: slightly fades at extreme depth but stays visible
+      const globalAlpha = Math.max(0.04, 0.12 - depth * 0.06)
+
+      // Glow color shifts from cyan to gold as depth increases
+      const cyanWeight = 1 - depth
+      const goldWeight = depth
+
+      const cx = w / 2
+      const cy = h / 2
+      const mx = mouseRef.current.x
+      const my = mouseRef.current.y
+
+      // Draw connections
+      for (const conn of connections) {
+        const fromNode = nodes[conn.from]
+        const toNode = nodes[conn.to]
+        if (!fromNode || !toNode) continue
+
+        // Apply zoom: scale positions from center
+        const fx = cx + (fromNode.baseX - cx) * zoom
+        const fy = cy + (fromNode.baseY - cy) * zoom
+        const tx = cx + (toNode.baseX - cx) * zoom
+        const ty = cy + (toNode.baseY - cy) * zoom
+
+        const px = fx + (tx - fx) * conn.progress
+        const py = fy + (ty - fy) * conn.progress
+
+        // Mouse proximity
+        const mdist = Math.hypot(mx - px, my - py)
+        const mouseBoost = mdist < 200 ? (1 - mdist / 200) * 0.3 : 0
+        const alpha = (conn.baseGlow + mouseBoost) * globalAlpha
+
+        // Color blend: cyan to gold based on depth
+        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
+        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
+        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
+
+        // Line
+        ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        ctx.moveTo(fx, fy)
+        ctx.lineTo(tx, ty)
+        ctx.stroke()
+
+        // Particle
+        ctx.fillStyle = `rgba(255, 215, 0, ${alpha * 2})`
+        ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`
+        ctx.shadowBlur = 8
+        ctx.beginPath()
+        ctx.arc(px, py, 1.5, 0, Math.PI * 2)
+        ctx.fill()
+        ctx.shadowBlur = 0
+
+        if (!reducedMotion) {
+          conn.progress += conn.speed
+          if (conn.progress > 1) conn.progress = 0
         }
       }
 
-      // Connect each node to 5 nearest
-      nodes.forEach((node, idx) => {
-        const dists = nodes.map((o, oi) => ({
-          idx: oi,
-          dist: Math.hypot(node.x - o.x, node.y - o.y),
-        })).sort((a, b) => a.dist - b.dist).slice(1, 6)
+      // Draw nodes
+      for (let i = 0; i < nodes.length; i++) {
+        const n = nodes[i]
+        const nx = cx + (n.baseX - cx) * zoom
+        const ny = cy + (n.baseY - cy) * zoom
 
-        dists.forEach((d) => {
-          const exists = connections.some(
-            c => (c.from === idx && c.to === d.idx) || (c.from === d.idx && c.to === idx)
-          )
-          if (!exists) {
-            connections.push({
-              from: idx, to: d.idx,
-              progress: Math.random(),
-              speed: 0.008 + Math.random() * 0.015,
-              glow: 0.4 + Math.random() * 0.5,
-            })
-            node.connections.push(d.idx)
-          }
-        })
-      })
-    }
+        // Only render if on screen (with margin)
+        if (nx < -50 || nx > w + 50 || ny < -50 || ny > h + 50) continue
 
-    // Draw the 13-circle Metatron's Cube background pattern
-    function drawMetatronBg() {
-      if (!ctx) return
-      ctx.save()
-      ctx.globalAlpha = 0.1
+        const mdist = Math.hypot(mx - nx, my - ny)
+        const mouseGlow = mdist < 200 ? (1 - mdist / 200) * 0.4 : 0
+        const pulse = 0.5 + Math.sin(Date.now() * 0.002 + i * 0.7) * 0.3
+        const alpha = (pulse * 0.1 + mouseGlow) * (globalAlpha / 0.12)
 
-      const circles = [
-        { x: cx, y: cy, r: 40 },
-        ...Array.from({ length: 6 }, (_, i) => {
-          const a = (Math.PI * 2 * i) / 6 - Math.PI / 2
-          return { x: cx + 80 * Math.cos(a), y: cy + 80 * Math.sin(a), r: 30 }
-        }),
-        ...Array.from({ length: 6 }, (_, i) => {
-          const a = (Math.PI * 2 * i) / 6 - Math.PI / 2
-          return { x: cx + 140 * Math.cos(a), y: cy + 140 * Math.sin(a), r: 25 }
-        }),
-      ]
+        const r = Math.round(0 * cyanWeight + 255 * goldWeight)
+        const g = Math.round(200 * cyanWeight + 215 * goldWeight)
+        const b = Math.round(255 * cyanWeight + 0 * goldWeight)
 
-      // Draw circles with glow
-      circles.forEach(c => {
+        // Glow
+        const rg = ctx.createRadialGradient(nx, ny, 0, nx, ny, n.radius * zoom * 3)
+        rg.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${alpha * 0.5})`)
+        rg.addColorStop(1, 'rgba(0, 0, 0, 0)')
+        ctx.fillStyle = rg
         ctx.beginPath()
-        ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2)
-        ctx.strokeStyle = '#FFD700'
-        ctx.lineWidth = 1
-        ctx.shadowBlur = 20
-        ctx.shadowColor = '#FFD700'
-        ctx.stroke()
-        ctx.shadowBlur = 0
-      })
+        ctx.arc(nx, ny, n.radius * zoom * 3, 0, Math.PI * 2)
+        ctx.fill()
 
-      // Connect all circles
-      ctx.strokeStyle = '#FFD700'
-      ctx.lineWidth = 0.5
-      circles.forEach((c, i) => {
-        circles.slice(i + 1).forEach(o => {
-          ctx.beginPath()
-          ctx.moveTo(c.x, c.y)
-          ctx.lineTo(o.x, o.y)
-          ctx.stroke()
-        })
-      })
-
-      ctx.restore()
-    }
-
-    function drawConnection(conn: MConn) {
-      if (!ctx) return
-      const f = nodes[conn.from]
-      const t = nodes[conn.to]
-      if (!f || !t) return
-
-      const px = f.x + (t.x - f.x) * conn.progress
-      const py = f.y + (t.y - f.y) * conn.progress
-
-      // Mouse proximity boost
-      const mx = mouseRef.current.x, my = mouseRef.current.y
-      const mDist = Math.hypot(mx - px, my - py)
-      const mBoost = mDist < 200 ? (1 - mDist / 200) * 0.5 : 0
-      const glowVal = conn.glow + mBoost
-
-      // Flowing gradient line
-      const grad = ctx.createLinearGradient(f.x, f.y, t.x, t.y)
-      grad.addColorStop(0, 'rgba(255, 215, 0, 0)')
-      grad.addColorStop(Math.max(0, conn.progress - 0.2), 'rgba(255, 215, 0, 0)')
-      grad.addColorStop(conn.progress, `rgba(255, 215, 0, ${glowVal})`)
-      grad.addColorStop(Math.min(1, conn.progress + 0.2), `rgba(0, 188, 212, ${glowVal * 0.8})`)
-      grad.addColorStop(1, 'rgba(0, 188, 212, 0)')
-
-      ctx.strokeStyle = grad
-      ctx.lineWidth = 2
-      ctx.shadowBlur = 15
-      ctx.shadowColor = '#FFD700'
-      ctx.beginPath()
-      ctx.moveTo(f.x, f.y)
-      ctx.lineTo(t.x, t.y)
-      ctx.stroke()
-
-      // Flowing particle
-      ctx.fillStyle = `rgba(255, 215, 0, ${glowVal})`
-      ctx.shadowBlur = 20
-      ctx.shadowColor = '#FFD700'
-      ctx.beginPath()
-      ctx.arc(px, py, 3, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.shadowBlur = 0
-
-      if (!reduced) {
-        conn.progress += conn.speed
-        if (conn.progress > 1) conn.progress = 0
+        // Core
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${alpha})`
+        ctx.beginPath()
+        ctx.arc(nx, ny, n.radius * Math.min(zoom, 2), 0, Math.PI * 2)
+        ctx.fill()
       }
     }
 
-    function drawNode(node: MNode, idx: number) {
-      if (!ctx) return
-      // Mouse proximity boost
-      const mx = mouseRef.current.x, my = mouseRef.current.y
-      const mDist = Math.hypot(mx - node.x, my - node.y)
-      const mBoost = mDist < 200 ? (1 - mDist / 200) * 0.6 : 0
-      const glowVal = node.glow + mBoost
-
-      // Outer radial glow
-      const rg = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, node.radius * 3)
-      rg.addColorStop(0, `rgba(255, 215, 0, ${glowVal * 0.6})`)
-      rg.addColorStop(0.5, `rgba(0, 188, 212, ${glowVal * 0.3})`)
-      rg.addColorStop(1, 'rgba(255, 215, 0, 0)')
-
-      ctx.fillStyle = rg
-      ctx.beginPath()
-      ctx.arc(node.x, node.y, node.radius * 3, 0, Math.PI * 2)
-      ctx.fill()
-
-      // Node core
-      ctx.fillStyle = `rgba(255, 215, 0, ${glowVal})`
-      ctx.shadowBlur = 15
-      ctx.shadowColor = '#FFD700'
-      ctx.beginPath()
-      ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2)
-      ctx.fill()
-      ctx.shadowBlur = 0
-
-      // Pulse
-      if (!reduced) {
-        node.glow = 0.6 + Math.sin(Date.now() * 0.003 + idx) * 0.4
-      }
+    function loop(time: number) {
+      animRef.current = requestAnimationFrame(loop)
+      if (time - lastTime < fpsCap) return
+      lastTime = time
+      drawFrame()
     }
 
-    function animate() {
-      if (!ctx) return
-      ctx.clearRect(0, 0, w, h)
-
-      // Scroll depth: zoom into center
-      const docH = Math.max(1, document.documentElement.scrollHeight - h)
-      const depth = Math.min(1, scrollRef.current / docH)
-      const zoom = 1 + depth * 2
-
-      ctx.save()
-      ctx.translate(cx, cy)
-      ctx.scale(zoom, zoom)
-      ctx.translate(-cx, -cy)
-
-      // Fade slightly at depth
-      ctx.globalAlpha = Math.max(0.3, 1 - depth * 0.5)
-
-      drawMetatronBg()
-      connections.forEach(c => drawConnection(c))
-      nodes.forEach((n, i) => drawNode(n, i))
-
-      ctx.restore()
-
-      if (!reduced) {
-        animRef.current = requestAnimationFrame(animate)
-      }
-    }
-
-    setup()
-    window.addEventListener('resize', setup)
-    window.addEventListener('mousemove', (e) => {
-      mouseRef.current = { x: e.clientX, y: e.clientY }
-    }, { passive: true })
-    window.addEventListener('scroll', () => {
-      scrollRef.current = window.scrollY
-    }, { passive: true })
-
-    if (reduced) {
-      animate() // single frame
+    if (reducedMotion) {
+      drawFrame()
     } else {
-      animRef.current = requestAnimationFrame(animate)
+      animRef.current = requestAnimationFrame(loop)
     }
 
     return () => {
       cancelAnimationFrame(animRef.current)
-      window.removeEventListener('resize', setup)
+      window.removeEventListener('resize', resize)
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('scroll', onScroll)
     }
-  }, [])
+  }, [createHexNetwork])
 
   return (
     <canvas
