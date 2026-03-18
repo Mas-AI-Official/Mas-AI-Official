@@ -67,8 +67,9 @@ export default function EnterpriseServices() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section className="py-16 md:py-24">
-      <div className="mx-auto max-w-6xl px-6">
+    <section className="relative py-16 md:py-24">
+      <div className="enterprise-grid-bg absolute inset-0 pointer-events-none opacity-50" aria-hidden="true" />
+      <div className="relative mx-auto max-w-6xl px-6">
         {/* Header */}
         <div className="mb-16 text-center">
           <h2 className="text-gradient mb-4 text-3xl font-bold font-[family-name:var(--font-display)] tracking-tight sm:text-4xl md:text-5xl">

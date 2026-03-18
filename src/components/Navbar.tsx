@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Platform', href: '#daena' },
   { label: 'Portfolio', href: '#portfolio' },
   { label: 'Enterprise', href: '#enterprise' },
-  { label: 'Investors', href: '/investors.html' },
+  { label: 'Investors', href: '/investors' },
   { label: 'Contact', href: '#contact' },
 ]
 

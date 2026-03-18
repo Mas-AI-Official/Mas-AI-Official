@@ -17,7 +17,7 @@ const productLinks: FooterLink[] = [
 
 const companyLinks: FooterLink[] = [
   { label: 'Contact', href: '#contact' },
-  { label: 'Investors', href: '/investors.html' },
+  { label: 'Investors', href: '/investors' },
 ]
 
 const connectLinks: FooterLink[] = [
