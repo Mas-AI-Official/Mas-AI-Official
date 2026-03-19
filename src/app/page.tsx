@@ -39,7 +39,7 @@ export default function HomePage() {
 
         <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <section id="portfolio" className="relative" style={{ background: 'linear-gradient(180deg, rgba(15,22,41,0.5) 0%, rgba(10,14,26,0.8) 50%, rgba(15,22,41,0.5) 100%)' }}>
+        <section id="portfolio" className="relative" style={{ background: 'linear-gradient(180deg, rgba(15,22,41,0.15) 0%, rgba(10,14,26,0.2) 50%, rgba(15,22,41,0.15) 100%)' }}>
           <PortfolioSection />
         </section>
 
