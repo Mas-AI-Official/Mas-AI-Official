@@ -8,11 +8,12 @@ export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
   const labelRef = useRef<HTMLSpanElement>(null)
-  const posRef = useRef({ x: 0, y: 0 })
-  const ringPosRef = useRef({ x: 0, y: 0 })
+  const posRef = useRef({ x: -9999, y: -9999 })
+  const ringPosRef = useRef({ x: -9999, y: -9999 })
   const rafRef = useRef<number>(0)
   const modeRef = useRef<CursorMode>('default')
-  const [hidden, setHidden] = useState(false)
+  const hasEnteredRef = useRef(false)
+  const [hidden, setHidden] = useState(true)
   const [shouldRender, setShouldRender] = useState(true)
 
   // Check for touch device and reduced motion on mount
@@ -116,7 +117,12 @@ export default function CustomCursor() {
     const onMouseMove = (e: MouseEvent) => {
       posRef.current.x = e.clientX
       posRef.current.y = e.clientY
-      if (hidden) setHidden(false)
+      if (!hasEnteredRef.current) {
+        hasEnteredRef.current = true
+        ringPosRef.current.x = e.clientX
+        ringPosRef.current.y = e.clientY
+      }
+      setHidden(false)
     }
 
     const onMouseOver = (e: MouseEvent) => {
