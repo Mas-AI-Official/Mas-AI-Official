@@ -110,7 +110,7 @@ export default function PortfolioSection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="portfolio" className="relative px-6 py-16 md:py-24">
+    <section className="relative px-6 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16 text-center">
