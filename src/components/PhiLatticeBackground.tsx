@@ -99,8 +99,8 @@ export default function PhiLatticeBackground() {
 
       const nodes = nodesRef.current
       const mx = mouseRef.current.x, my = mouseRef.current.y
-      const scrollFade = Math.max(0, 1 - scrollRef.current / (h * 2))
-      if (scrollFade < 0.01) return
+      // Never fully disappear: minimum 30% visibility even at bottom of page
+      const scrollFade = Math.max(0.3, 1 - scrollRef.current / (h * 3))
 
       // Update positions (subtle drift) and brightness
       for (const n of nodes) {
@@ -110,7 +110,7 @@ export default function PhiLatticeBackground() {
 
         const dx = mx - n.x, dy = my - n.y
         const dist = Math.sqrt(dx * dx + dy * dy)
-        const target = dist < 200 ? (1 - dist / 200) * 0.7 : 0
+        const target = dist < 250 ? (1 - dist / 250) * 1.0 : 0
         n.bright += (target - n.bright) * 0.08
       }
 
@@ -121,7 +121,7 @@ export default function PhiLatticeBackground() {
           if (j <= i) continue
           const m = nodes[j]
           const avg = (n.bright + m.bright) / 2
-          const a = (0.04 + avg * 0.35) * scrollFade
+          const a = (0.10 + avg * 0.4) * scrollFade
 
           ctx.beginPath()
           ctx.moveTo(n.x, n.y)
@@ -134,13 +134,13 @@ export default function PhiLatticeBackground() {
 
       // Draw nodes
       for (const n of nodes) {
-        const a = (0.08 + n.bright * 0.5) * scrollFade
+        const a = (0.18 + n.bright * 0.6) * scrollFade
         const r = 1.5 + n.bright * 3
 
         if (n.bright > 0.05) {
           ctx.beginPath()
           ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(0, 200, 255, ${n.bright * 0.12 * scrollFade})`
+          ctx.fillStyle = `rgba(0, 200, 255, ${n.bright * 0.25 * scrollFade})`
           ctx.fill()
         }
 
