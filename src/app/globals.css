@@ -234,6 +234,19 @@ body {
   animation: float-up 4s ease-out infinite;
 }
 
+/* Section highlight flash (chat scroll-to) */
+.section-highlight {
+  outline: 1px solid rgba(0, 200, 255, 0.25);
+  outline-offset: -1px;
+  transition: outline-color 1s ease;
+}
+
+/* Typing dots pulse */
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .text-glitch { animation: none; }
   .particle { animation: none; display: none; }
