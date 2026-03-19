@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import { X } from 'lucide-react'
@@ -55,30 +55,6 @@ export default function DaenaGuide() {
     setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
     setIsReduced(window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   }, [])
-
-  // 3D mouse-follow tilt (desktop only)
-  useEffect(() => {
-    if (isMobile || isReduced) return
-
-    const onMouseMove = (e: MouseEvent) => {
-      if (!portraitRef.current) return
-      const rect = portraitRef.current.getBoundingClientRect()
-      const cx = rect.left + rect.width / 2
-      const cy = rect.top + rect.height / 2
-      const dx = (e.clientX - cx) / (window.innerWidth / 2)
-      const dy = (e.clientY - cy) / (window.innerHeight / 2)
-
-      // Tilt toward cursor, max 20 degrees
-      const rotY = dx * 20
-      const rotX = -dy * 15
-
-      portraitRef.current.style.transform =
-        `perspective(600px) rotateX(${rotX}deg) rotateY(${rotY}deg)`
-    }
-
-    window.addEventListener('mousemove', onMouseMove, { passive: true })
-    return () => window.removeEventListener('mousemove', onMouseMove)
-  }, [isMobile, isReduced])
 
   // Section tracking with IntersectionObserver
   useEffect(() => {
@@ -161,44 +137,22 @@ export default function DaenaGuide() {
         </AnimatePresence>
 
         {/* 3D Portrait */}
+        {/* Solid portrait: no frame, no tilt, no wobble */}
         <div
           ref={portraitRef}
           onClick={() => setExpanded(!expanded)}
-          className={`relative ${avatarSize} cursor-pointer overflow-visible`}
+          className={`${avatarSize} cursor-pointer`}
           style={{
-            filter: `brightness(${mood.brightness}) drop-shadow(0 0 18px ${mood.glow}40)`,
-            transition: 'filter 0.6s ease, box-shadow 0.6s ease',
-            willChange: 'transform',
+            filter: `brightness(${mood.brightness}) drop-shadow(0 0 12px ${mood.glow}30)`,
+            transition: 'filter 0.6s ease',
           }}
         >
-          {/* Mood glow ring */}
-          <div
-            className="absolute -inset-1 rounded-2xl transition-all duration-700"
-            style={{
-              background: `radial-gradient(ellipse at 50% 30%, ${mood.glow}20, transparent 70%)`,
-              boxShadow: `0 0 25px ${mood.glow}20`,
-            }}
-          />
-
-          {/* Breathing animation on the glow */}
-          {!isReduced && (
-            <motion.div
-              className="absolute -inset-2 rounded-2xl pointer-events-none"
-              style={{ boxShadow: `0 0 30px ${mood.glow}15` }}
-              animate={{
-                opacity: [0.4, 0.7, 0.4],
-                scale: [1, 1.04, 1],
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' as const }}
-            />
-          )}
-
           <Image
             src="/assets/img/daena-nobg.png"
             alt="Daena, AI VP of MAS-AI Technologies"
             width={200}
             height={280}
-            className="object-cover object-top w-full h-full relative z-10"
+            className="object-cover object-top w-full h-full"
             priority
           />
         </div>
