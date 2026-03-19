@@ -77,14 +77,6 @@ const projects: PortfolioItem[] = [
     badgeColor: '#6b7280',
   },
   {
-    title: 'Daena Live Demo',
-    description: 'Interactive live demonstration of Daena platform capabilities',
-    icon: Sparkles,
-    badge: 'Demo',
-    badgeColor: '#7c3aed',
-    href: 'https://github.com/Mas-AI-Official/Daena-live-demo',
-  },
-  {
     title: 'AI Autonomous Company OS',
     description: 'Core framework for building AI-native autonomous organizations',
     icon: GitMerge,

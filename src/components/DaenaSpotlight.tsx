@@ -79,7 +79,7 @@ export default function DaenaSpotlight() {
           variants={cardVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="glow-border rounded-2xl bg-[var(--color-mas-bg-card)] p-10 md:p-14"
+          className="glow-border rounded-2xl bg-[rgba(15,22,41,0.2)] backdrop-blur-[8px] p-10 md:p-14"
         >
           {/* Badge */}
           <span className="mb-6 inline-block rounded-full border border-[var(--color-mas-gold)]/20 bg-[var(--color-mas-gold)]/10 px-3 py-1 text-xs uppercase tracking-wider text-[var(--color-mas-gold)]">

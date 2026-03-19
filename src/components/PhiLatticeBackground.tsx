@@ -102,15 +102,28 @@ export default function PhiLatticeBackground() {
       // Never fully disappear: minimum 30% visibility even at bottom of page
       const scrollFade = Math.max(0.3, 1 - scrollRef.current / (h * 3))
 
+      // Periodic wave pulse: a bright front sweeps across the network
+      // every 5 seconds, making nodes visible even on mobile without mouse
+      const waveCycle = (time * 0.0002) % 1.0 // 0 to 1 every ~5s
+      const waveCenterX = w * waveCycle
+      const waveWidth = w * 0.25
+
       // Update positions (subtle drift) and brightness
       for (const n of nodes) {
         const drift = time * 0.00008 * (n.ring % 2 === 0 ? 1 : -1)
         n.x = n.bx + Math.sin(drift + n.by * 0.008) * 3
         n.y = n.by + Math.cos(drift + n.bx * 0.008) * 3
 
+        // Mouse proximity glow
         const dx = mx - n.x, dy = my - n.y
         const dist = Math.sqrt(dx * dx + dy * dy)
-        const target = dist < 250 ? (1 - dist / 250) * 1.0 : 0
+        const mouseTarget = dist < 250 ? (1 - dist / 250) * 1.0 : 0
+
+        // Wave pulse glow: brightens nodes as the wave passes over them
+        const waveDist = Math.abs(n.x - waveCenterX)
+        const waveTarget = waveDist < waveWidth ? (1 - waveDist / waveWidth) * 0.5 : 0
+
+        const target = Math.max(mouseTarget, waveTarget)
         n.bright += (target - n.bright) * 0.08
       }
 

@@ -79,7 +79,7 @@ export default function DaenaGuide() {
 
             // Show bubble for sections that have captions
             const mood = SECTION_MOODS[id]
-            if (mood?.caption && !isMobile) {
+            if (mood?.caption) {
               setShowBubble(true)
               if (bubbleTimer.current) clearTimeout(bubbleTimer.current)
               bubbleTimer.current = setTimeout(() => setShowBubble(false), 2500)
@@ -108,7 +108,7 @@ export default function DaenaGuide() {
       >
         {/* Speech bubble ABOVE avatar */}
         <AnimatePresence mode="wait">
-          {showBubble && mood.caption && !isMobile && (
+          {showBubble && mood.caption && (
             <motion.div
               key={mood.caption}
               initial={{ opacity: 0, y: 10, scale: 0.85 }}
