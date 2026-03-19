@@ -37,7 +37,7 @@ interface KnowledgeEntry {
 
 const knowledge: KnowledgeEntry[] = [
   {
-    keywords: ['what', 'mas-ai', 'company', 'who', 'about'],
+    keywords: ['what is mas-ai', 'mas-ai', 'company', 'who are you', 'about mas', 'tell me about'],
     answer: 'MAS-AI Technologies Inc. is a Canadian AI company building governed AI systems for enterprises. We develop platforms, products, and deployment services for organizations that need trustworthy, auditable AI agents.',
     section: 'hero',
   },
@@ -63,7 +63,7 @@ const knowledge: KnowledgeEntry[] = [
     section: 'credibility',
   },
   {
-    keywords: ['products', 'portfolio', 'build', 'what do you', 'projects'],
+    keywords: ['products', 'portfolio', 'build', 'built', 'what do you', 'what you built', 'what are you doing', 'projects', 'what have you', 'show me', 'your work'],
     answer: 'We build across multiple verticals: Daena (AI orchestration), ContentOPS (content automation), Med Smart (healthcare AI), Construction AI (building compliance), Daena Guard (AI security), and more.',
     section: 'portfolio',
   },
@@ -119,7 +119,27 @@ const knowledge: KnowledgeEntry[] = [
     link: 'https://daena.mas-ai.co',
   },
   {
-    keywords: ['hello', 'hi', 'hey', 'greet'],
+    keywords: ['who is daena', 'what are you', 'are you ai', 'are you real', 'your name'],
+    answer: "I'm Daena, the AI guide for MAS-AI Technologies. I can answer questions about our company, products, and services. I'm also the name of our flagship platform!",
+    section: 'daena',
+  },
+  {
+    keywords: ['how many', 'size', 'employees', 'people work'],
+    answer: 'MAS-AI is currently a solo-founder company. Masoud Masoori is the technical founder and CEO, building the entire platform and product suite.',
+    section: 'credibility',
+  },
+  {
+    keywords: ['where', 'location', 'based', 'canada', 'ontario', 'office'],
+    answer: 'MAS-AI Technologies Inc. is based in Ontario, Canada. We were incorporated in January 2026.',
+    section: 'credibility',
+  },
+  {
+    keywords: ['pricing', 'cost', 'price', 'how much', 'free'],
+    answer: 'Daena is currently in advanced development. For pricing and early access, please contact us at masoud.masoori@mas-ai.co.',
+    section: 'contact',
+  },
+  {
+    keywords: ['hello', 'hi', 'hey', 'greet', 'sup', 'yo', 'what up'],
     answer: "Hello! Welcome to MAS-AI. I'm Daena, the AI behind the brand. What would you like to know?",
     section: null,
   },
