@@ -102,8 +102,8 @@ export default function DaenaGuide() {
   return (
     <>
       <div
-        className={`fixed z-50 flex flex-col items-center gap-2 ${
-          isMobile ? 'bottom-4 right-3' : 'bottom-6 right-6'
+        className={`fixed z-50 flex flex-col items-end gap-2 ${
+          isMobile ? 'bottom-4 right-3 w-12' : 'bottom-6 right-6 w-20'
         }`}
       >
         {/* Speech bubble ABOVE avatar */}
