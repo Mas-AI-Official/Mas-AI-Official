@@ -38,11 +38,11 @@ const projects: PortfolioItem[] = [
     hero: true,
   },
   {
-    title: 'Deena GAO',
-    description: 'Web3 DeFi governance agent for decentralized autonomous organizations',
+    title: 'Daena Guard',
+    description: 'AI security and governance layer for enterprise agent deployments',
     icon: ShieldCheck,
-    badge: 'Hackathon',
-    badgeColor: '#7c3aed',
+    badge: 'In Development',
+    badgeColor: 'var(--color-mas-gold)',
     href: 'https://github.com/Mas-AI-Official/hackathon_demo',
   },
   {

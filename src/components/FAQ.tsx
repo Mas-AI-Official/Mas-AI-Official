@@ -79,7 +79,7 @@ export default function FAQ() {
   }
 
   return (
-    <section id="faq" className="relative px-6 py-16 md:py-24">
+    <section id="faq" className="relative px-6 py-12 md:py-16">
       {/* JSON-LD structured data */}
       <script
         type="application/ld+json"

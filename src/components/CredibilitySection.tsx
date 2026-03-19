@@ -53,7 +53,7 @@ export default function CredibilitySection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="credibility" className="relative px-6 py-16 md:py-24">
+    <section id="credibility" className="relative px-6 py-12 md:py-16">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16 text-center">

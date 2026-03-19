@@ -28,14 +28,14 @@ interface SectionMood {
 }
 
 const SECTION_MOODS: Record<string, SectionMood> = {
-  hero:         { glow: '#00c8ff', caption: '',                    brightness: 1.0 },
-  'what-we-do': { glow: '#7c3aed', caption: 'This is what we do.', brightness: 1.05 },
-  daena:        { glow: '#00c8ff', caption: "That's me!",          brightness: 1.1 },
-  portfolio:    { glow: '#d4a853', caption: 'We ship real products.', brightness: 1.05 },
-  enterprise:   { glow: '#d4a853', caption: 'Enterprise ready.',   brightness: 0.95 },
-  credibility:  { glow: '#00c8ff', caption: 'Real engineering.',   brightness: 0.9 },
-  contact:      { glow: '#7c3aed', caption: "Let's talk!",         brightness: 1.0 },
-  faq:          { glow: '#00c8ff', caption: '',                    brightness: 0.9 },
+  hero:         { glow: '#00c8ff', caption: 'Welcome to MAS-AI.',        brightness: 1.0 },
+  'what-we-do': { glow: '#00c8ff', caption: 'Three pillars. One mission.', brightness: 1.05 },
+  daena:        { glow: '#00d4ff', caption: "That's my section.",          brightness: 1.1 },
+  portfolio:    { glow: '#d4a853', caption: 'We ship real products.',     brightness: 1.05 },
+  enterprise:   { glow: '#d4a853', caption: 'Built for scale.',          brightness: 0.95 },
+  credibility:  { glow: '#c8956a', caption: 'Meet the founder.',         brightness: 0.9 },
+  contact:      { glow: '#7c3aed', caption: "Let's connect.",            brightness: 1.0 },
+  faq:          { glow: '#00c8ff', caption: 'Got questions?',            brightness: 0.9 },
 }
 
 const DEFAULT_MOOD: SectionMood = { glow: '#00c8ff', caption: '', brightness: 1.0 }
@@ -82,7 +82,7 @@ export default function DaenaGuide() {
             if (mood?.caption) {
               setShowBubble(true)
               if (bubbleTimer.current) clearTimeout(bubbleTimer.current)
-              bubbleTimer.current = setTimeout(() => setShowBubble(false), 2500)
+              bubbleTimer.current = setTimeout(() => setShowBubble(false), 3000)
             } else {
               setShowBubble(false)
             }
