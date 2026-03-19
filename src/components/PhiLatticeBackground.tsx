@@ -99,27 +99,46 @@ export default function PhiLatticeBackground() {
 
       const nodes = nodesRef.current
       const mx = mouseRef.current.x, my = mouseRef.current.y
-      // Never fully disappear: minimum 30% visibility even at bottom of page
-      const scrollFade = Math.max(0.3, 1 - scrollRef.current / (h * 3))
 
-      // Periodic wave pulse: a bright front sweeps across the network
-      // every 5 seconds, making nodes visible even on mobile without mouse
-      const waveCycle = (time * 0.0002) % 1.0 // 0 to 1 every ~5s
+      // Scroll progress: 0 at top, 1 at bottom of page
+      const docH = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
+      const scrollPct = Math.min(1, scrollRef.current / docH)
+
+      // DIVE-IN ZOOM: scale up from center as user scrolls deeper
+      // 1.0x at hero, grows to 3.5x at the bottom of the page
+      const zoom = 1 + scrollPct * 2.5
+
+      // Opacity: stay visible but fade slightly at extreme zoom
+      const scrollFade = Math.max(0.2, 1 - scrollPct * 0.6)
+
+      // Color temperature shift: cyan (top/cool) to gold (bottom/warm)
+      // This maps to trust psychology: cool = competence, warm = trust
+      const warmth = scrollPct
+
+      // Center point for zoom
+      const cx = w / 2, cy = h / 2
+
+      // Periodic wave pulse
+      const waveCycle = (time * 0.0002) % 1.0
       const waveCenterX = w * waveCycle
       const waveWidth = w * 0.25
 
-      // Update positions (subtle drift) and brightness
+      // Update positions (drift + zoom from center)
       for (const n of nodes) {
         const drift = time * 0.00008 * (n.ring % 2 === 0 ? 1 : -1)
-        n.x = n.bx + Math.sin(drift + n.by * 0.008) * 3
-        n.y = n.by + Math.cos(drift + n.bx * 0.008) * 3
+        const driftX = n.bx + Math.sin(drift + n.by * 0.008) * 3
+        const driftY = n.by + Math.cos(drift + n.bx * 0.008) * 3
 
-        // Mouse proximity glow
+        // Apply zoom: scale distance from center
+        n.x = cx + (driftX - cx) * zoom
+        n.y = cy + (driftY - cy) * zoom
+
+        // Mouse proximity glow (use zoomed positions)
         const dx = mx - n.x, dy = my - n.y
         const dist = Math.sqrt(dx * dx + dy * dy)
         const mouseTarget = dist < 250 ? (1 - dist / 250) * 1.0 : 0
 
-        // Wave pulse glow: brightens nodes as the wave passes over them
+        // Wave pulse glow
         const waveDist = Math.abs(n.x - waveCenterX)
         const waveTarget = waveDist < waveWidth ? (1 - waveDist / waveWidth) * 0.5 : 0
 
@@ -127,39 +146,54 @@ export default function PhiLatticeBackground() {
         n.bright += (target - n.bright) * 0.08
       }
 
-      // Draw connections
+      // Interpolated color: cyan at top, gold at bottom
+      const lineR = Math.round(0 + warmth * 212)
+      const lineG = Math.round(200 - warmth * 32)
+      const lineB = Math.round(255 - warmth * 192)
+      const nodeR = Math.round(0 + warmth * 255)
+      const nodeG = Math.round(200 + warmth * 15)
+      const nodeB = Math.round(255 - warmth * 255)
+
+      // Draw connections (cull off-screen for performance at high zoom)
       for (let i = 0; i < nodes.length; i++) {
         const n = nodes[i]
         for (const j of n.conns) {
           if (j <= i) continue
           const m = nodes[j]
+
+          // Off-screen culling: skip if both endpoints are far off viewport
+          if ((n.x < -50 && m.x < -50) || (n.x > w + 50 && m.x > w + 50)) continue
+          if ((n.y < -50 && m.y < -50) || (n.y > w + 50 && m.y > w + 50)) continue
+
           const avg = (n.bright + m.bright) / 2
           const a = (0.10 + avg * 0.4) * scrollFade
 
           ctx.beginPath()
           ctx.moveTo(n.x, n.y)
           ctx.lineTo(m.x, m.y)
-          ctx.strokeStyle = `rgba(0, 200, 255, ${a})`
+          ctx.strokeStyle = `rgba(${lineR}, ${lineG}, ${lineB}, ${a})`
           ctx.lineWidth = 0.5 + avg * 1.5
           ctx.stroke()
         }
       }
 
-      // Draw nodes
+      // Draw nodes (cull off-screen)
       for (const n of nodes) {
+        if (n.x < -60 || n.x > w + 60 || n.y < -60 || n.y > h + 60) continue
+
         const a = (0.18 + n.bright * 0.6) * scrollFade
         const r = 1.5 + n.bright * 3
 
         if (n.bright > 0.05) {
           ctx.beginPath()
           ctx.arc(n.x, n.y, r * 4, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(0, 200, 255, ${n.bright * 0.25 * scrollFade})`
+          ctx.fillStyle = `rgba(${nodeR}, ${nodeG}, ${nodeB}, ${n.bright * 0.25 * scrollFade})`
           ctx.fill()
         }
 
         ctx.beginPath()
         ctx.arc(n.x, n.y, r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(0, 200, 255, ${a})`
+        ctx.fillStyle = `rgba(${nodeR}, ${nodeG}, ${nodeB}, ${a})`
         ctx.fill()
       }
     }
