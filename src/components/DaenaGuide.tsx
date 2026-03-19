@@ -190,19 +190,33 @@ export default function DaenaGuide() {
   const [typing, setTyping] = useState(false)
 
   const bubbleTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const prevSection = useRef('hero')
+  const hasGreeted = useRef(false)
   const chatEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
+
+    // Show welcome greeting on first page load (after 1.5s)
+    if (!hasGreeted.current) {
+      hasGreeted.current = true
+      const greetTimer = setTimeout(() => {
+        setShowBubble(true)
+        if (bubbleTimer.current) clearTimeout(bubbleTimer.current)
+        bubbleTimer.current = setTimeout(() => setShowBubble(false), 3500)
+      }, 1500)
+      return () => clearTimeout(greetTimer)
+    }
   }, [])
 
-  // Section tracking
+  // Section tracking (single threshold, debounced to prevent duplicates)
   useEffect(() => {
     const sections = document.querySelectorAll('section[id], div[id="hero"]')
     const observer = new IntersectionObserver(
       (entries) => {
+        // Only consider the entry with highest ratio
         let best: IntersectionObserverEntry | null = null
         for (const entry of entries) {
           if (entry.isIntersecting && (!best || entry.intersectionRatio > best.intersectionRatio)) {
@@ -212,23 +226,30 @@ export default function DaenaGuide() {
         if (best) {
           const id = best.target.id
           if (id && id !== prevSection.current) {
-            prevSection.current = id
-            setActiveSection(id)
-            const mood = SECTION_MOODS[id]
-            if (mood?.caption) {
-              setShowBubble(true)
-              if (bubbleTimer.current) clearTimeout(bubbleTimer.current)
-              bubbleTimer.current = setTimeout(() => setShowBubble(false), 3000)
-            } else {
-              setShowBubble(false)
-            }
+            // Debounce: wait 200ms before changing section to prevent rapid switching
+            if (debounceTimer.current) clearTimeout(debounceTimer.current)
+            debounceTimer.current = setTimeout(() => {
+              prevSection.current = id
+              setActiveSection(id)
+              const mood = SECTION_MOODS[id]
+              if (mood?.caption) {
+                setShowBubble(true)
+                if (bubbleTimer.current) clearTimeout(bubbleTimer.current)
+                bubbleTimer.current = setTimeout(() => setShowBubble(false), 3000)
+              } else {
+                setShowBubble(false)
+              }
+            }, 200)
           }
         }
       },
-      { threshold: [0.2, 0.5, 0.8] }
+      { threshold: 0.4 } // Single threshold to prevent multiple fires
     )
     sections.forEach((s) => observer.observe(s))
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      if (debounceTimer.current) clearTimeout(debounceTimer.current)
+    }
   }, [])
 
   useEffect(() => {
