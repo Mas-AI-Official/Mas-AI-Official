@@ -138,14 +138,122 @@ const knowledge: KnowledgeEntry[] = [
     answer: 'Daena is currently in advanced development. For pricing and early access, please contact us at masoud.masoori@mas-ai.co.',
     section: 'contact',
   },
+  // TECHNOLOGY / INNOVATION
   {
-    keywords: ['hello', 'hi', 'hey', 'greet', 'sup', 'yo', 'what up'],
+    keywords: ['innovation', 'innovative', 'new', 'different', 'unique', 'special'],
+    answer: 'Our key innovations are two patent-pending architectures: PhiLattice (Fibonacci-based agent topology for scalable orchestration) and NBMF (Neural-Backed Memory Fabric for persistent, auditable agent memory). No other platform has governance built directly into the execution layer.',
+    section: 'credibility',
+  },
+  {
+    keywords: ['how it works', 'explain', 'how does it', 'tell me more', 'details'],
+    answer: 'At a high level: Daena coordinates AI agents through a 10-stage governed pipeline. Every agent action passes through SecurityGate, GovernanceEngine, ReasoningCore, and AuditLog before reaching output. For the full technical deep-dive, visit daena.mas-ai.co.',
+    section: 'daena',
+    link: 'https://daena.mas-ai.co',
+  },
+  {
+    keywords: ['security', 'safe', 'secure', 'protect', 'risk'],
+    answer: 'Security is the first stage of our pipeline (SecurityGate). Every input is screened before processing. Combined with policy enforcement at the GovernanceEngine stage and full audit logging, Daena provides enterprise-grade security for AI operations.',
+    section: 'daena',
+  },
+  {
+    keywords: ['agent', 'agents', 'multi-agent', 'autonomous', 'orchestrat'],
+    answer: 'Daena orchestrates multiple AI agents as governed departments. Each agent operates within policy boundaries, shares auditable memory via NBMF, and coordinates through the PhiLattice topology. Think of it as a governed operating system for AI workforces.',
+    section: 'daena',
+  },
+  {
+    keywords: ['10-stage', 'pipeline', 'stages', 'securitygate', 'auditlog'],
+    answer: 'The 10-stage pipeline: SecurityGate, InputValidator, GovernanceEngine, ContextBuilder, ReasoningCore, ActionPlanner, OutputValidator, ResponseFormatter, FeedbackLoop, AuditLog. Every agent action passes through all 10 stages.',
+    section: null,
+    link: 'https://daena.mas-ai.co',
+  },
+
+  // COMPETITION / COMPARISON
+  {
+    keywords: ['competitor', 'competition', 'compare', 'vs', 'alternative', 'similar', 'other'],
+    answer: 'Most AI governance tools (Holistic AI, Cranium, Credo AI) monitor existing AI systems from the outside. Daena is fundamentally different: governance is inside the execution layer. We are not monitoring AI, we are running governed AI natively.',
+    section: 'enterprise',
+  },
+  {
+    keywords: ['why', 'why mas-ai', 'why daena', 'why choose', 'advantage', 'benefit'],
+    answer: 'Three reasons: (1) Governance built into the execution layer, not bolted on. (2) Persistent auditable memory via NBMF, so every decision is traceable. (3) PhiLattice topology for scalable multi-agent coordination. Two patent-pending architectures protect this moat.',
+    section: 'daena',
+  },
+
+  // HIRING / CAREERS
+  {
+    keywords: ['hiring', 'job', 'career', 'work for', 'join', 'open position', 'role'],
+    answer: 'We are always looking for exceptional engineers and AI researchers. Reach out to masoud.masoori@mas-ai.co with your background and what excites you about governed AI.',
+    section: 'contact',
+  },
+
+  // OPEN SOURCE
+  {
+    keywords: ['open source', 'github', 'code', 'repo', 'repository', 'source code'],
+    answer: 'Some of our projects are open source on GitHub. Check out github.com/Mas-AI-Official for our public repositories including ContentOPS and other tools.',
+    section: 'portfolio',
+    link: 'https://github.com/Mas-AI-Official',
+  },
+
+  // TIMELINE / AVAILABILITY
+  {
+    keywords: ['when', 'launch', 'release', 'timeline', 'available', 'waitlist', 'early access'],
+    answer: 'Daena is in advanced development with 300+ tests passing and a working demo. We are onboarding early access partners now. Contact us to discuss pilot opportunities.',
+    section: 'contact',
+  },
+
+  // PARTNERSHIPS
+  {
+    keywords: ['partner', 'partnership', 'collaborate', 'integration', 'integrate'],
+    answer: 'We welcome partnerships with enterprises, system integrators, and technology providers. Reach out at masoud.masoori@mas-ai.co to explore collaboration opportunities.',
+    section: 'contact',
+  },
+
+  // COMPLIANCE / REGULATION
+  {
+    keywords: ['compliance', 'regulation', 'regulatory', 'gdpr', 'hipaa', 'sox', 'legal'],
+    answer: 'Daena is designed for regulated industries. The 10-stage pipeline enforces policies at execution time, NBMF provides complete audit trails, and every decision is traceable. This is built for finance, healthcare, legal, and other compliance-heavy sectors.',
+    section: 'enterprise',
+  },
+
+  // DEMO / TRY
+  {
+    keywords: ['try', 'see', 'demo', 'video', 'watch', 'preview', 'look'],
+    answer: 'You can explore our working demo and video walkthrough on the Daena product page. We also offer live technical walkthroughs for qualified prospects.',
+    section: 'daena',
+    link: 'https://daena.mas-ai.co',
+  },
+
+  // DAENA GUARD
+  {
+    keywords: ['guard', 'daena guard', 'security layer', 'protection'],
+    answer: 'Daena Guard is our AI security and governance layer for enterprise agent deployments. It is currently in development as part of the MAS-AI product suite.',
+    section: 'portfolio',
+  },
+
+  // GENERAL / CONVERSATIONAL
+  {
+    keywords: ['hello', 'hi', 'hey', 'greet', 'sup', 'yo', 'what up', 'good morning', 'good evening'],
     answer: "Hello! Welcome to MAS-AI. I'm Daena, the AI behind the brand. What would you like to know?",
     section: null,
   },
   {
-    keywords: ['thank', 'thanks', 'awesome', 'cool', 'great'],
+    keywords: ['thank', 'thanks', 'awesome', 'cool', 'great', 'nice', 'good job', 'impressive'],
     answer: 'Happy to help! Feel free to ask anything else about MAS-AI or our products.',
+    section: null,
+  },
+  {
+    keywords: ['bye', 'goodbye', 'see you', 'later', 'take care'],
+    answer: "Thanks for visiting! If you need anything, I'm always here. Come back anytime.",
+    section: null,
+  },
+  {
+    keywords: ['help', 'what can you', 'options', 'menu', 'guide'],
+    answer: "I can tell you about: our company, Daena platform, portfolio of products, enterprise services, patents, founder, pricing, careers, and more. Just ask!",
+    section: null,
+  },
+  {
+    keywords: ['funny', 'joke', 'laugh', 'humor'],
+    answer: "I'm better at explaining governed AI than telling jokes. But here's a thought: an AI without governance is like a car without brakes. Fast, but you won't like the destination.",
     section: null,
   },
 ]
