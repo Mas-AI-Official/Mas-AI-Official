@@ -8,90 +8,64 @@ import CredibilitySection from '@/components/CredibilitySection'
 import ContactSection from '@/components/ContactSection'
 import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
-import MetatronBackground from '@/components/MetatronBackground'
+import PhiLatticeBackground from '@/components/PhiLatticeBackground'
 import SmoothScroll from '@/components/SmoothScroll'
 import CustomCursor from '@/components/CustomCursor'
-import DaenaPresence from '@/components/DaenaPresence'
-
-// Section background wrappers
-function SectionBg({ children, bg, id, className = '' }: {
-  children: React.ReactNode
-  bg?: string
-  id?: string
-  className?: string
-}) {
-  return (
-    <section id={id} className={`relative ${className}`} style={bg ? { background: bg } : undefined}>
-      {children}
-    </section>
-  )
-}
+import DaenaGuide from '@/components/DaenaGuide'
 
 export default function HomePage() {
   return (
     <SmoothScroll>
-      <MetatronBackground />
+      <PhiLatticeBackground />
       <CustomCursor />
-      <DaenaPresence />
+      <DaenaGuide />
       <Navbar />
       <main className="relative z-[2]" style={{ background: 'transparent' }}>
         <div id="hero">
           <Hero />
         </div>
 
-        <div className="section-divider" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <SectionBg id="what-we-do">
+        <section id="what-we-do" className="relative" style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(124,58,237,0.04) 0%, transparent 50%)' }}>
           <WhatWeDo />
-        </SectionBg>
+        </section>
 
-        <div className="section-divider" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <SectionBg
-          id="daena"
-          bg="radial-gradient(ellipse at 50% 30%, rgba(0,200,255,0.06) 0%, transparent 60%)"
-        >
+        <section id="daena" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(0,200,255,0.07) 0%, transparent 55%)' }}>
           <DaenaSpotlight />
-        </SectionBg>
+        </section>
 
-        <div className="section-divider" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <SectionBg
-          id="portfolio"
-          bg="linear-gradient(180deg, rgba(8,11,20,0.7) 0%, rgba(10,14,26,0.8) 50%, rgba(8,11,20,0.7) 100%)"
-        >
+        <section id="portfolio" className="relative" style={{ background: 'linear-gradient(180deg, rgba(15,22,41,0.5) 0%, rgba(10,14,26,0.8) 50%, rgba(15,22,41,0.5) 100%)' }}>
           <PortfolioSection />
-        </SectionBg>
+        </section>
 
-        <div className="section-divider" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <SectionBg
-          id="enterprise"
-          bg="radial-gradient(ellipse at 50% 50%, rgba(212,168,83,0.04) 0%, transparent 60%)"
-        >
+        <section id="enterprise" className="relative enterprise-grid-bg" style={{ background: 'radial-gradient(ellipse at 70% 50%, rgba(212,168,83,0.05) 0%, transparent 55%)' }}>
           <EnterpriseServices />
-        </SectionBg>
+        </section>
 
-        <div className="section-divider" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <SectionBg id="credibility">
+        <section id="credibility" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(0,200,255,0.03) 0%, transparent 50%)' }}>
           <CredibilitySection />
-        </SectionBg>
+        </section>
 
-        <div className="section-divider" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <SectionBg
-          id="contact"
-          bg="radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 60%)"
-        >
+        <section id="contact" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.05) 0%, transparent 60%)' }}>
           <ContactSection />
-        </SectionBg>
+        </section>
 
-        <div className="section-divider" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <SectionBg id="faq">
+        <section id="faq" className="relative">
           <FAQ />
-        </SectionBg>
+        </section>
       </main>
       <Footer />
     </SmoothScroll>

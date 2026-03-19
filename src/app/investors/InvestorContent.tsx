@@ -272,7 +272,7 @@ export default function InvestorContent() {
                     <div className="mx-auto mb-4 inline-flex rounded-xl bg-[var(--color-mas-cyan)]/10 p-3">
                       <Icon className="h-6 w-6 text-[var(--color-mas-cyan)]" />
                     </div>
-                    <div className="text-3xl font-bold text-neon font-[family-name:var(--font-display)] mb-1">
+                    <div className="text-3xl font-bold text-neon font-[family-name:var(--font-jetbrains)] mb-1">
                       {card.value}
                     </div>
                     <div className="text-xs uppercase tracking-wider text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)]">
@@ -394,13 +394,13 @@ export default function InvestorContent() {
             <motion.div variants={fadeUp}>
               {/* Founder photo */}
               <div className="relative mx-auto mb-6 h-24 w-24">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-500/30 to-transparent blur-xl" />
+                <div className="absolute inset-[-8px] rounded-full bg-amber-500/20 blur-xl" />
                 <Image
-                  src="/assets/img/masoud.jpg"
+                  src="/assets/masoud-photo.jpg"
                   alt="Masoud Masoori, Founder and CEO of MAS-AI Technologies"
                   width={96}
                   height={96}
-                  className="relative z-10 h-24 w-24 rounded-full border-2 border-[var(--color-mas-gold)]/30 object-cover shadow-[0_0_20px_var(--color-mas-gold-glow)]"
+                  className="rounded-full border-2 border-amber-500/20 object-cover w-24 h-24"
                 />
               </div>
 
@@ -414,9 +414,10 @@ export default function InvestorContent() {
 
               {/* Bio */}
               <p className="mt-5 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
-                Solo technical founder and senior AI/ML architect. Immigrated to Canada, rebuilt from
-                zero, and built MAS-AI into a governance-first AI company with two patent-pending
-                architectures. Based in Ontario, Canada.
+                Solo technical founder and senior AI/ML architect. Background spanning deep learning,
+                robotics, and enterprise systems. Immigrated to Canada and built MAS-AI from zero into
+                a governance-first AI company with two patent-pending architectures and a working demo
+                with 300+ automated tests.
               </p>
             </motion.div>
           </div>
