@@ -17,9 +17,10 @@ interface CounterProps {
   suffix?: string
   label: string
   duration?: number
+  accentColor?: string
 }
 
-function AnimatedCounter({ target, suffix = '', label, duration = 2 }: CounterProps) {
+function AnimatedCounter({ target, suffix = '', label, duration = 2, accentColor = 'var(--color-mas-cyan)' }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const motionVal = useMotionValue(0)
   const rounded = useTransform(motionVal, (v) => Math.round(v))
@@ -42,15 +43,19 @@ function AnimatedCounter({ target, suffix = '', label, duration = 2 }: CounterPr
   }, [rounded, suffix])
 
   return (
-    <div className="flex flex-col items-center gap-1">
+    <motion.div
+      className="flex flex-col items-center gap-1 group/stat cursor-default"
+      whileHover={{ scale: 1.08, transition: { type: 'spring', stiffness: 400, damping: 15 } }}
+    >
       <span
         ref={ref}
-        className="text-3xl font-bold text-[var(--color-mas-cyan)] font-[family-name:var(--font-display)]"
+        className="text-3xl font-bold font-[family-name:var(--font-display)] transition-all duration-300 group-hover/stat:drop-shadow-[0_0_12px_var(--color-mas-cyan-glow)]"
+        style={{ color: accentColor }}
       >
         0{suffix}
       </span>
       <span className="text-sm text-[var(--color-mas-text-muted)]">{label}</span>
-    </div>
+    </motion.div>
   )
 }
 
@@ -61,7 +66,7 @@ const cardVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: [0, 0, 0.2, 1] as [number, number, number, number] },
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   },
 }
 
@@ -79,10 +84,14 @@ export default function DaenaSpotlight() {
           variants={cardVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="glow-border rounded-2xl bg-[rgba(15,22,41,0.2)] backdrop-blur-[8px] p-10 md:p-14"
+          className="animated-border breathe-glow rounded-2xl bg-[rgba(15,22,41,0.2)] backdrop-blur-[8px] p-10 md:p-14 relative overflow-hidden"
         >
+          {/* Ambient background glow */}
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[var(--color-mas-cyan)]/[0.03] rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-60 h-60 bg-[var(--color-mas-gold)]/[0.03] rounded-full blur-3xl pointer-events-none" />
+
           {/* Badge */}
-          <span className="mb-6 inline-block rounded-full border border-[var(--color-mas-gold)]/20 bg-[var(--color-mas-gold)]/10 px-3 py-1 text-xs uppercase tracking-wider text-[var(--color-mas-gold)]">
+          <span className="badge-shimmer relative mb-6 inline-block rounded-full border border-[var(--color-mas-gold)]/20 bg-[var(--color-mas-gold)]/10 px-3 py-1 text-xs uppercase tracking-wider text-[var(--color-mas-gold)]">
             FLAGSHIP PLATFORM
           </span>
 
@@ -103,7 +112,7 @@ export default function DaenaSpotlight() {
           <div className="mb-10 flex items-center justify-start gap-8 md:gap-12">
             <AnimatedCounter target={300} suffix="+" label="Tests" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={2} label="Patents Pending" />
+            <AnimatedCounter target={2} label="Patents Pending" accentColor="var(--color-mas-gold)" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
             <AnimatedCounter target={10} label="Stage Pipeline" />
           </div>
@@ -113,10 +122,12 @@ export default function DaenaSpotlight() {
             href="https://daena.mas-ai.co"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--color-mas-cyan)] px-8 py-3 text-sm font-semibold text-[var(--color-mas-bg)] transition-shadow hover:shadow-[0_0_24px_var(--color-mas-cyan-glow)]"
+            className="btn-ripple group/cta inline-flex items-center gap-2 rounded-full bg-[var(--color-mas-cyan)] px-8 py-3 text-sm font-semibold text-[var(--color-mas-bg)] transition-all duration-300 hover:shadow-[0_0_24px_var(--color-mas-cyan-glow)] hover:scale-105"
           >
-            Explore Daena
-            <ArrowRight className="h-4 w-4" />
+            <span className="relative z-10 flex items-center gap-2">
+              Explore Daena
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1" />
+            </span>
           </a>
         </motion.div>
       </div>

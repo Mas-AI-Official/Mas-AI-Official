@@ -1,8 +1,8 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { ChevronDown, MessageCircleQuestion } from 'lucide-react'
 
 // --- Data -------------------------------------------------------------------
 
@@ -56,16 +56,33 @@ const faqJsonLd = {
 
 // --- Variants ---------------------------------------------------------------
 
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.08 },
+  },
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+  },
+}
+
 const answerVariants = {
   collapsed: {
     height: 0,
     opacity: 0,
-    transition: { duration: 0.3 },
+    transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   },
   expanded: {
     height: 'auto' as const,
     opacity: 1,
-    transition: { duration: 0.3 },
+    transition: { duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   },
 }
 
@@ -73,13 +90,15 @@ const answerVariants = {
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   function toggle(index: number) {
     setOpenIndex((prev) => (prev === index ? null : index))
   }
 
   return (
-    <section id="faq" className="relative px-6 py-12 md:py-16">
+    <section id="faq" className="relative px-6 py-16 md:py-24">
       {/* JSON-LD structured data */}
       <script
         type="application/ld+json"
@@ -88,37 +107,69 @@ export default function FAQ() {
 
       <div className="mx-auto max-w-3xl">
         {/* Header */}
-        <div className="mb-16 text-center">
+        <motion.div
+          className="mb-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="mb-4 text-sm uppercase tracking-widest font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">
+            FAQ
+          </p>
           <h2 className="text-gradient font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
             Frequently Asked Questions
           </h2>
-        </div>
+          <p className="mx-auto mt-4 max-w-xl text-base text-[var(--color-mas-text-secondary)]">
+            Common questions about MAS-AI Technologies and our platform.
+          </p>
+        </motion.div>
 
         {/* Accordion */}
-        <div className="flex flex-col gap-4">
+        <motion.div
+          ref={ref}
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          className="flex flex-col gap-4"
+        >
           {faqs.map((faq, index) => {
             const isOpen = openIndex === index
 
             return (
-              <div
+              <motion.div
                 key={index}
-                className={`glass overflow-hidden rounded-xl transition-colors ${
-                  isOpen ? 'border-l-2 border-l-[var(--color-mas-cyan)]' : ''
+                variants={itemVariants}
+                className={`glass overflow-hidden rounded-xl transition-all duration-300 group ${
+                  isOpen
+                    ? 'border-l-2 border-l-[var(--color-mas-cyan)] shadow-[0_0_20px_rgba(0,200,255,0.06)]'
+                    : 'hover:border-[var(--color-mas-cyan)]/20'
                 }`}
               >
                 {/* Question row */}
                 <button
                   onClick={() => toggle(index)}
-                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left"
+                  className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left transition-colors duration-200"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-display text-base font-semibold text-[var(--color-mas-text)] sm:text-lg">
-                    {faq.question}
-                  </span>
+                  <div className="flex items-center gap-4">
+                    <span
+                      className="flex items-center justify-center w-8 h-8 rounded-lg text-xs font-bold font-[family-name:var(--font-mono)] shrink-0 transition-all duration-300"
+                      style={{
+                        backgroundColor: isOpen ? 'rgba(0,200,255,0.12)' : 'rgba(255,255,255,0.03)',
+                        color: isOpen ? 'var(--color-mas-cyan)' : 'var(--color-mas-text-muted)',
+                      }}
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <span className={`font-display text-base font-semibold sm:text-lg transition-colors duration-200 ${isOpen ? 'text-white' : 'text-[var(--color-mas-text)]'}`}>
+                      {faq.question}
+                    </span>
+                  </div>
                   <motion.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={{ duration: 0.25 }}
-                    className="shrink-0 text-[var(--color-mas-text-muted)]"
+                    className="shrink-0 transition-colors duration-200"
+                    style={{ color: isOpen ? 'var(--color-mas-cyan)' : 'var(--color-mas-text-muted)' }}
                   >
                     <ChevronDown className="h-5 w-5" />
                   </motion.span>
@@ -135,16 +186,35 @@ export default function FAQ() {
                       exit="collapsed"
                       className="overflow-hidden"
                     >
-                      <div className="px-6 pb-5 text-sm leading-relaxed text-[var(--color-mas-text-secondary)] sm:text-base">
+                      <div className="px-6 pb-6 pl-[4.5rem] text-sm leading-relaxed text-[var(--color-mas-text-secondary)] sm:text-base">
                         {faq.answer}
                       </div>
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+              </motion.div>
             )
           })}
-        </div>
+        </motion.div>
+
+        {/* Bottom CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-sm text-[var(--color-mas-text-muted)] mb-4">
+            Still have questions?
+          </p>
+          <a
+            href="#contact"
+            className="btn-ripple inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-cyan)]/30 px-6 py-2.5 text-sm font-semibold text-[var(--color-mas-cyan)] transition-all hover:bg-[var(--color-mas-cyan)]/10 hover:shadow-[0_0_20px_var(--color-mas-cyan-glow)]"
+          >
+            <MessageCircleQuestion className="h-4 w-4" />
+            <span className="relative z-10">Contact Us</span>
+          </a>
+        </motion.div>
       </div>
     </section>
   )
