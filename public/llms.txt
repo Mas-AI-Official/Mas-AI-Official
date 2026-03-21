@@ -1,0 +1,65 @@
+# MAS-AI Technologies Inc.
+
+> MAS-AI Technologies Inc. is a Canadian AI company building Daena, a governance-first AI agent orchestration platform.
+
+## Company Overview
+
+MAS-AI Technologies Inc. builds enterprise AI systems where governance is built into the architecture, not bolted on afterward. The company's flagship product, Daena, is an AI-native company operating system that coordinates 48 specialized AI agents with full auditability and decision traceability.
+
+## Product: Daena
+
+Daena is a governance-first AI agent orchestration platform with two patent-pending architectures:
+
+### PhiLattice Architecture (Patent Pending)
+Fibonacci spiral scaling combined with honeycomb departmental structure for governed multi-agent collaboration. Agents are organized into 8 departments with 6 agents each, following a Fibonacci growth pattern for scalability.
+
+### Neural-Backed Memory Fabric / NBMF (Patent Pending)
+5-tier memory system where hallucinations auto-expire and only verified knowledge persists. Tiers range from ephemeral working memory to founder-private encrypted storage.
+
+### 10-Stage Execution Pipeline
+Every agent action passes through: SecurityGate, InputValidator, GovernanceEngine, ContextBuilder, ReasoningCore, ActionPlanner, OutputValidator, ResponseFormatter, FeedbackLoop, AuditLog.
+
+## Company Information
+
+- Legal Name: MAS-AI Technologies Inc.
+- Corporation Number: 1764728-0
+- BN: 708042767RC0001
+- Founded: January 25, 2026
+- Jurisdiction: Ontario, Canada
+- Founder: Masoud Masoori (CEO)
+- Location: 30 Normandy Crescent, Richmond Hill, Ontario, L4C 8L8, Canada
+- Email: masoud.masoori@mas-ai.co
+- Phone: 647-677-1444
+- Website: https://mas-ai.co
+- Product: https://daena.mas-ai.co
+
+## Recognition
+
+- Google for Startups Cloud Program: Accepted
+- Perplexity for Startups: Approved (Enterprise Pro + API credits)
+- 2 USPTO Provisional Patents: PhiLattice Architecture, Neural-Backed Memory Fabric
+
+## Portfolio
+
+- Daena: AI-native company OS with governed multi-agent orchestration
+- Construction AI: AI solutions for construction industry optimization
+- MedSmart: Healthcare AI for diagnostics and patient care
+- NatureNLP: Environmental monitoring and analysis through NLP
+
+## Technical Capabilities
+
+- Multi-agent orchestration with governance
+- 48 agents across 8 departments
+- 300+ automated tests
+- Multi-model support (routes to optimal LLM per task)
+- Self-hosted and cloud deployment options
+- Enterprise-DNA layer: Genome, Epigenome, Lineage, Immune system
+
+## Links
+
+- Company site: https://mas-ai.co
+- Product deep-dive: https://daena.mas-ai.co
+- Pitch deck: https://daena.mas-ai.co/pitch-deck.html
+- Investor page: https://mas-ai.co/investors.html
+- GitHub: https://github.com/Mas-AI-Official
+- LinkedIn: https://www.linkedin.com/in/masoud-masoori/

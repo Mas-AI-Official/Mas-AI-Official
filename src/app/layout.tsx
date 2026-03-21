@@ -58,27 +58,51 @@ const jsonLd = {
       url: 'https://mas-ai.co',
       logo: 'https://mas-ai.co/Mas-ai Logo.png',
       description: 'MAS-AI Technologies Inc. builds Daena, a governance-first AI agent orchestration platform with a 10-stage governed execution pipeline, patent-pending PhiLattice Architecture, and Neural-Backed Memory Fabric.',
-      foundingDate: '2026-01',
-      foundingLocation: { '@type': 'Place', name: 'Ontario, Canada' },
-      address: { '@type': 'PostalAddress', addressLocality: 'Richmond Hill', addressRegion: 'Ontario', addressCountry: 'CA' },
-      founders: [{ '@type': 'Person', name: 'Masoud Masoori', jobTitle: 'Founder & CEO' }],
-      sameAs: ['https://github.com/Mas-AI-Official', 'https://www.linkedin.com/in/masoud-masoori'],
-      contactPoint: { '@type': 'ContactPoint', contactType: 'Sales', email: 'masoud.masoori@mas-ai.co', availableLanguage: 'English' },
+      foundingDate: '2026-01-25',
+      foundingLocation: { '@type': 'Place', name: 'Richmond Hill, Ontario, Canada', address: { '@type': 'PostalAddress', addressLocality: 'Richmond Hill', addressRegion: 'Ontario', addressCountry: 'CA' } },
+      address: { '@type': 'PostalAddress', streetAddress: '30 Normandy Crescent', addressLocality: 'Richmond Hill', addressRegion: 'Ontario', addressCountry: 'CA', postalCode: 'L4C 8L8' },
+      founders: [{ '@type': 'Person', name: 'Masoud Masoori', jobTitle: 'Founder & CEO', url: 'https://www.linkedin.com/in/masoud-masoori/', sameAs: ['https://www.linkedin.com/in/masoud-masoori/', 'https://github.com/Mas-AI-Official'] }],
+      sameAs: ['https://github.com/Mas-AI-Official', 'https://www.linkedin.com/in/masoud-masoori', 'https://daena.mas-ai.co'],
+      contactPoint: [{ '@type': 'ContactPoint', contactType: 'Sales', email: 'masoud.masoori@mas-ai.co', availableLanguage: ['English', 'Persian'] }],
       memberOf: { '@type': 'Organization', name: 'Google for Startups Cloud Program' },
+      numberOfEmployees: { '@type': 'QuantitativeValue', value: 1 },
+      knowsAbout: ['Artificial Intelligence', 'AI Governance', 'Multi-Agent Systems', 'Natural Language Processing', 'Enterprise AI', 'PhiLattice Architecture', 'Neural-Backed Memory Fabric'],
     },
     {
       '@type': 'SoftwareApplication',
       name: 'Daena by MAS-AI',
       applicationCategory: 'BusinessApplication',
-      operatingSystem: 'Web',
-      description: 'Governance-first AI agent orchestration platform. AI-autonomous company OS with 10-stage governed pipeline, PhiLattice architecture, and NBMF auditable memory.',
-      offers: { '@type': 'Offer', availability: 'https://schema.org/PreOrder', description: 'Early access and pilot programs available' },
+      operatingSystem: 'Cloud, Self-hosted',
+      description: 'Governance-first AI agent orchestration platform. AI-autonomous company OS with 10-stage governed pipeline, patent-pending PhiLattice Architecture, and Neural-Backed Memory Fabric for auditable memory. 48 agents across 8 departments.',
+      url: 'https://daena.mas-ai.co',
+      featureList: 'Multi-agent orchestration, AI governance, Auditable memory, PhiLattice topology, Neural-Backed Memory Fabric, 10-stage pipeline, Expert council synthesis',
+      offers: { '@type': 'Offer', availability: 'https://schema.org/PreOrder', price: '0', priceCurrency: 'USD', description: 'Early access and pilot programs available' },
       creator: { '@type': 'Organization', name: 'MAS-AI Technologies Inc.' },
     },
     {
       '@type': 'WebSite',
-      name: 'MAS-AI',
+      name: 'MAS-AI Technologies',
       url: 'https://mas-ai.co',
+      description: 'Official website of MAS-AI Technologies Inc., builders of the Daena governance-first AI platform.',
+      inLanguage: 'en-US',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'MAS-AI', item: 'https://mas-ai.co/' },
+        { '@type': 'ListItem', position: 2, name: 'Daena Platform', item: 'https://daena.mas-ai.co/' },
+      ],
+    },
+    {
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'What is MAS-AI?', acceptedAnswer: { '@type': 'Answer', text: 'MAS-AI Technologies Inc. is a Canadian AI company building Daena, a governance-first multi-agent AI orchestration platform with two patent-pending architectures (PhiLattice and NBMF). Founded January 2026 in Ontario, Canada.' } },
+        { '@type': 'Question', name: 'What is Daena?', acceptedAnswer: { '@type': 'Answer', text: 'Daena is a governance-first AI agent orchestration platform that coordinates 48 AI agents across 8 departments. Every action passes through a 10-stage governed execution pipeline ensuring full auditability and decision traceability.' } },
+        { '@type': 'Question', name: 'What is PhiLattice Architecture?', acceptedAnswer: { '@type': 'Answer', text: 'PhiLattice is a patent-pending architecture combining Fibonacci spiral scaling for optimal agent placement with honeycomb departmental structure for governed multi-agent collaboration.' } },
+        { '@type': 'Question', name: 'What is NBMF?', acceptedAnswer: { '@type': 'Answer', text: 'Neural-Backed Memory Fabric (NBMF) is a patent-pending 5-tier memory system. Hallucinations auto-expire and only verified knowledge persists across tiers from ephemeral working memory to founder-private encrypted storage.' } },
+        { '@type': 'Question', name: 'How is Daena different from other AI platforms?', acceptedAnswer: { '@type': 'Answer', text: 'Daena is governance-first, not governance-bolted-on. Unlike platforms that add security as a wrapper, Daena builds governance into every layer. Every agent action is auditable, every decision is traceable, and users have a visible governance control spectrum.' } },
+        { '@type': 'Question', name: 'Where is MAS-AI located?', acceptedAnswer: { '@type': 'Answer', text: 'MAS-AI Technologies Inc. is incorporated in Ontario, Canada (January 25, 2026), headquartered in Richmond Hill, Ontario. Founded by Masoud Masoori.' } },
+      ],
     },
   ],
 }
@@ -87,8 +111,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/Mas-ai Logo.png" />
-        <link rel="apple-touch-icon" href="/Mas-ai Logo.png" />
+        <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48 64x64" />
+        <link rel="icon" type="image/png" href="/Mas-ai Logo.png" sizes="1024x1024" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#0b0b14" />
+        <meta name="geo.region" content="CA-ON" />
+        <meta name="geo.placename" content="Richmond Hill" />
+        <meta name="geo.position" content="43.8828;-79.4403" />
+        <meta name="ICBM" content="43.8828, -79.4403" />
+        <link rel="manifest" href="/manifest.json" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
