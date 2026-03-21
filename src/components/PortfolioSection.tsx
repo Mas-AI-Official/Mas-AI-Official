@@ -9,13 +9,10 @@ import {
   Heart,
   HardHat,
   ShieldCheck,
-  Sparkles,
   Film,
   ArrowUpRight,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
-
-// --- Data -------------------------------------------------------------------
 
 interface PortfolioItem {
   title: string
@@ -85,25 +82,22 @@ const projects: PortfolioItem[] = [
   },
 ]
 
-// --- Variants ---------------------------------------------------------------
-
 const sectionVariants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.08 },
+    transition: { staggerChildren: 0.1 },
   },
 }
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 32, scale: 0.96 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0, 0, 0.2, 1] as [number, number, number, number] },
+    scale: 1,
+    transition: { duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   },
 }
-
-// --- Component --------------------------------------------------------------
 
 export default function PortfolioSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -112,17 +106,23 @@ export default function PortfolioSection() {
   return (
     <section className="relative px-6 py-16 md:py-24">
       <div className="mx-auto max-w-6xl">
-        {/* Header */}
-        <div className="mb-16 text-center">
+        <motion.div
+          className="mb-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.5 }}
+        >
+          <p className="mb-4 text-sm uppercase tracking-widest font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">
+            PORTFOLIO
+          </p>
           <h2 className="text-gradient font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
             What We Build
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-[var(--color-mas-text-secondary)]">
             Products and projects built under MAS-AI Technologies Inc.
           </p>
-        </div>
+        </motion.div>
 
-        {/* Grid */}
         <motion.div
           ref={ref}
           variants={sectionVariants}
@@ -137,13 +137,20 @@ export default function PortfolioSection() {
 
             const cardContent = (
               <>
-                {/* Top row: icon + badge */}
                 <div className="flex items-start justify-between">
-                  <Icon className="h-6 w-6 text-[var(--color-mas-text-muted)]" />
-                  <span
-                    className="rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                  <div
+                    className="inline-flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
                     style={{
-                      backgroundColor: `color-mix(in srgb, ${project.badgeColor} 20%, transparent)`,
+                      background: `linear-gradient(135deg, color-mix(in srgb, ${project.badgeColor} 15%, transparent), transparent)`,
+                      boxShadow: `0 0 0 1px color-mix(in srgb, ${project.badgeColor} 20%, transparent)`,
+                    }}
+                  >
+                    <Icon className="h-5 w-5 transition-colors duration-300" style={{ color: project.badgeColor }} />
+                  </div>
+                  <span
+                    className="badge-shimmer rounded-full px-2.5 py-0.5 text-xs font-semibold"
+                    style={{
+                      backgroundColor: `color-mix(in srgb, ${project.badgeColor} 15%, transparent)`,
                       color: project.badgeColor,
                     }}
                   >
@@ -151,21 +158,18 @@ export default function PortfolioSection() {
                   </span>
                 </div>
 
-                {/* Title */}
-                <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-[var(--color-mas-text)]">
+                <h3 className="mt-4 font-display text-lg font-bold tracking-tight text-[var(--color-mas-text)] transition-colors duration-300 group-hover:text-white">
                   {project.title}
                 </h3>
 
-                {/* Description */}
                 <p className="mt-2 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
                   {project.description}
                 </p>
 
-                {/* Link indicator */}
                 {hasLink && (
-                  <div className="mt-4 flex items-center gap-1 text-sm font-medium text-[var(--color-mas-cyan)] transition-colors group-hover:text-[var(--color-mas-text)]">
+                  <div className="mt-4 flex items-center gap-1.5 text-sm font-medium transition-all duration-300 opacity-60 group-hover:opacity-100" style={{ color: project.badgeColor }}>
                     <span>Explore</span>
-                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </div>
                 )}
               </>
@@ -182,16 +186,17 @@ export default function PortfolioSection() {
                     href={project.href}
                     target={isExternal ? '_blank' : undefined}
                     rel={isExternal ? 'noopener noreferrer' : undefined}
-                    className={`glass group flex h-full flex-col rounded-xl p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--color-mas-cyan)]/30 ${
-                      project.hero ? 'glow-border' : ''
+                    data-cursor="explore"
+                    className={`card-gradient-hover glass group flex h-full flex-col rounded-xl p-6 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)] ${
+                      project.hero ? 'animated-border breathe-glow' : 'hover:border-[var(--color-mas-cyan)]/30'
                     }`}
                   >
                     {cardContent}
                   </a>
                 ) : (
                   <div
-                    className={`glass flex h-full cursor-default flex-col rounded-xl p-6 ${
-                      project.hero ? 'glow-border' : ''
+                    className={`card-gradient-hover glass flex h-full cursor-default flex-col rounded-xl p-6 group transition-all duration-400 hover:-translate-y-1 ${
+                      project.hero ? 'animated-border breathe-glow' : ''
                     }`}
                   >
                     {cardContent}

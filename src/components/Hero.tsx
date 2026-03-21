@@ -1,10 +1,37 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 
 gsap.registerPlugin(ScrollTrigger)
+
+function AnimatedCounter({ target, suffix = '', duration = 2 }: { target: number; suffix?: string; duration?: number }) {
+  const count = useMotionValue(0)
+  const rounded = useTransform(count, (v) => Math.round(v))
+  const [display, setDisplay] = useState('0')
+  const ref = useRef<HTMLSpanElement>(null)
+  const hasAnimated = useRef(false)
+
+  useEffect(() => {
+    if (!ref.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated.current) {
+          hasAnimated.current = true
+          animate(count, target, { duration, ease: [0.25, 0.46, 0.45, 0.94] })
+        }
+      },
+      { threshold: 0.5 }
+    )
+    observer.observe(ref.current)
+    const unsub = rounded.on('change', (v) => setDisplay(String(v)))
+    return () => { observer.disconnect(); unsub() }
+  }, [count, rounded, target, duration])
+
+  return <span ref={ref}>{display}{suffix}</span>
+}
 
 export default function Hero() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -20,7 +47,6 @@ export default function Hero() {
     if (!section || !content) return
 
     const ctx = gsap.context(() => {
-      // Entrance: staggered word reveal with blur
       const words = wordsRef.current.filter(Boolean)
       gsap.set(words, { opacity: 0, y: 30, filter: 'blur(12px)' })
 
@@ -34,7 +60,6 @@ export default function Hero() {
         delay: 0.3,
       })
 
-      // CTA and stats fade in after text
       gsap.from('.hero-cta', {
         opacity: 0,
         y: 20,
@@ -50,7 +75,6 @@ export default function Hero() {
         delay: 0.3 + words.length * 0.2 + 0.4,
       })
 
-      // Pin hero and blur/scale on exit
       ScrollTrigger.create({
         trigger: section,
         start: 'top top',
@@ -131,46 +155,58 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="cta"
-            className="group relative inline-flex items-center justify-center rounded-full bg-[var(--color-mas-cyan)] px-10 py-4 text-base font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-mas-cyan-glow)]"
+            className="btn-ripple group relative inline-flex items-center justify-center rounded-full bg-[var(--color-mas-cyan)] px-10 py-4 text-base font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-mas-cyan-glow)]"
           >
-            <span className="relative z-10">Explore Daena</span>
+            <span className="relative z-10 flex items-center gap-2">
+              Explore Daena
+              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+            </span>
           </a>
           <a
             href="#portfolio"
             data-cursor="cta"
-            className="inline-flex items-center justify-center rounded-full border border-[var(--color-mas-border)] px-10 py-4 text-base font-semibold text-[var(--color-mas-text)] transition-all duration-300 hover:border-[var(--color-mas-cyan)] hover:text-[var(--color-mas-cyan)] hover:shadow-[0_0_20px_var(--color-mas-border-glow)]"
+            className="btn-ripple inline-flex items-center justify-center rounded-full border border-[var(--color-mas-border)] px-10 py-4 text-base font-semibold text-[var(--color-mas-text)] transition-all duration-300 hover:border-[var(--color-mas-cyan)] hover:text-[var(--color-mas-cyan)] hover:shadow-[0_0_20px_var(--color-mas-border-glow)]"
           >
             View Portfolio
           </a>
         </div>
 
-        {/* Stats strip */}
+        {/* Stats strip with animated counters */}
         <div className="hero-stats flex flex-wrap justify-center gap-8 md:gap-16">
           {[
-            { value: '300+', label: 'Tests Passing' },
-            { value: '10', label: 'Pipeline Stages' },
-            { value: '2', label: 'Patents Pending' },
-            { value: '6/6', label: 'E2E Tests' },
+            { target: 300, suffix: '+', label: 'Tests Passing' },
+            { target: 10, suffix: '', label: 'Pipeline Stages' },
+            { target: 2, suffix: '', label: 'Patents Pending' },
+            { display: '6/6', label: 'E2E Tests' },
           ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="text-3xl font-bold text-neon font-[family-name:var(--font-display)] md:text-4xl">
-                {s.value}
+            <motion.div
+              key={s.label}
+              className="text-center group cursor-default"
+              whileHover={{ scale: 1.08, y: -2 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+            >
+              <div className="text-3xl font-bold text-neon font-[family-name:var(--font-display)] md:text-4xl transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(0,200,255,0.6)]">
+                {'display' in s ? s.display : <AnimatedCounter target={s.target} suffix={s.suffix} />}
               </div>
-              <div className="mt-1 text-xs uppercase tracking-wider text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)]">
+              <div className="mt-1 text-xs uppercase tracking-wider text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)] transition-colors duration-300 group-hover:text-[var(--color-mas-cyan)]">
                 {s.label}
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+      {/* Scroll indicator with pulse */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        animate={{ opacity: [0.3, 0.6, 0.3] }}
+        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+      >
         <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-mas-text-muted)]">
           Scroll
         </span>
         <div className="h-8 w-px bg-gradient-to-b from-[var(--color-mas-cyan)] to-transparent" />
-      </div>
+      </motion.div>
     </section>
   )
 }
