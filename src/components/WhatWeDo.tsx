@@ -62,7 +62,7 @@ const cardVariants = {
 
 export default function WhatWeDo() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const isInView = useInView(ref, { once: false, margin: '-60px' })
 
   return (
     <section className="py-16 md:py-24">

@@ -27,7 +27,7 @@ const cardVariants = {
 
 export default function ContactSection() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const isInView = useInView(ref, { once: false, margin: '-60px' })
 
   return (
     <section id="contact" className="relative px-6 py-16 md:py-24">

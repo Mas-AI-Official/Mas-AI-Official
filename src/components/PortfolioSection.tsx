@@ -27,7 +27,7 @@ interface PortfolioItem {
 const projects: PortfolioItem[] = [
   {
     title: 'Daena',
-    description: 'Governance-first AI agent orchestration platform with 10-stage pipeline, PhiLattice Architecture, and NBMF auditable memory',
+    description: 'Governance-first AI agent orchestration platform with 10-stage pipeline, PhiLattice Architecture, NBMF auditable memory, and runtime adapters for Claude Code, Codex, Gemini, Grok, and Ollama',
     icon: Cpu,
     badge: 'Flagship',
     badgeColor: 'var(--color-mas-cyan)',
@@ -101,7 +101,7 @@ const cardVariants = {
 
 export default function PortfolioSection() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const isInView = useInView(ref, { once: false, margin: '-60px' })
 
   return (
     <section className="relative px-6 py-16 md:py-24">

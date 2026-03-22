@@ -24,7 +24,7 @@ function AnimatedCounter({ target, suffix = '', label, duration = 2, accentColor
   const ref = useRef<HTMLSpanElement>(null)
   const motionVal = useMotionValue(0)
   const rounded = useTransform(motionVal, (v) => Math.round(v))
-  const isInView = useInView(ref, { once: true, margin: '-40px' })
+  const isInView = useInView(ref, { once: false, margin: '-40px' })
 
   useEffect(() => {
     if (!isInView) return
@@ -74,7 +74,7 @@ const cardVariants = {
 
 export default function DaenaSpotlight() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const isInView = useInView(ref, { once: false, margin: '-60px' })
 
   return (
     <section className="py-16 md:py-24">
@@ -102,19 +102,23 @@ export default function DaenaSpotlight() {
 
           {/* Description */}
           <p className="mb-10 max-w-3xl text-base leading-relaxed text-[var(--color-mas-text-secondary)] md:text-lg">
-            Daena is our governance-first AI agent orchestration platform. It coordinates
-            multiple AI agents with built-in policy enforcement, auditable memory, and
-            traceable decisions across every step. Two patent-pending architectures.
-            300+ automated tests passing.
+            Daena is our governance-first AI agent orchestration platform.
+            It coordinates multiple AI agents with built-in policy enforcement,
+            auditable memory, and traceable decisions across every step.
+            Two patent-pending architectures. 816+ automated tests passing.
+            V3 rebuild: governed swarm with runtime adapters,
+            10-stage pipeline, and DaenaBot autonomous agents.
           </p>
 
           {/* Stats */}
-          <div className="mb-10 flex items-center justify-start gap-8 md:gap-12">
-            <AnimatedCounter target={300} suffix="+" label="Tests" />
+          <div className="mb-10 flex flex-wrap items-center justify-start gap-8 md:gap-12">
+            <AnimatedCounter target={816} suffix="+" label="Tests" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
             <AnimatedCounter target={2} label="Patents Pending" accentColor="var(--color-mas-gold)" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={10} label="Stage Pipeline" />
+            <AnimatedCounter target={10} label="Pipeline Stages" />
+            <div className="h-10 w-px bg-[var(--color-mas-border)]" />
+            <AnimatedCounter target={6} suffix="/6" label="E2E Tests" />
           </div>
 
           {/* CTA */}

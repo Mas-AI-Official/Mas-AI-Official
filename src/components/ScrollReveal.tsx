@@ -33,24 +33,24 @@ export default function ScrollReveal({
     const targets = el.querySelectorAll(':scope > *')
     if (targets.length === 0) return
 
-    gsap.set(targets, { opacity: 0, y })
-
     const ctx = gsap.context(() => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: 'top 85%',
-        once: true,
-        onEnter: () => {
-          gsap.to(targets, {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: staggerChildren,
-            ease: 'power3.out',
-            delay,
-          })
-        },
-      })
+      gsap.fromTo(
+        targets,
+        { opacity: 0, y },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: staggerChildren,
+          ease: 'power3.out',
+          delay,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      )
     }, el)
 
     return () => ctx.revert()

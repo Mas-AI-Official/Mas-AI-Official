@@ -99,7 +99,7 @@ const knowledge: KnowledgeEntry[] = [
   },
   {
     keywords: ['test', 'demo', 'proof', 'working', 'ready'],
-    answer: 'Daena has 300+ automated tests passing, 6/6 end-to-end Playwright tests, and a working demo. We are in the commercialization phase.',
+    answer: 'Daena has 816+ automated tests passing, 6/6 end-to-end Playwright tests, and a working demo. V3 rebuild includes governed swarm with runtime adapters.',
     section: 'daena',
   },
   {
@@ -197,7 +197,7 @@ const knowledge: KnowledgeEntry[] = [
   // TIMELINE / AVAILABILITY
   {
     keywords: ['when', 'launch', 'release', 'timeline', 'available', 'waitlist', 'early access'],
-    answer: 'Daena is in advanced development with 300+ tests passing and a working demo. We are onboarding early access partners now. Contact us to discuss pilot opportunities.',
+    answer: 'Daena V3 is live with 816+ tests passing, governed swarm, and runtime adapters. We are onboarding early access partners now. Contact us to discuss pilot opportunities.',
     section: 'contact',
   },
 

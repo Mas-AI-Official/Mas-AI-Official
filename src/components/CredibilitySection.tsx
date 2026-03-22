@@ -62,7 +62,7 @@ const founderVariants = {
 
 export default function CredibilitySection() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const isInView = useInView(ref, { once: false, margin: '-60px' })
 
   return (
     <section id="credibility" className="relative px-6 py-16 md:py-24">
@@ -124,7 +124,7 @@ export default function CredibilitySection() {
           variants={founderVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-60px' }}
+          viewport={{ once: false, margin: '-60px' }}
           className="mx-auto max-w-2xl"
         >
           <div className="glass card-gradient-hover rounded-2xl p-10 text-center group">

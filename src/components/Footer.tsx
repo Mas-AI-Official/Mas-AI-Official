@@ -64,7 +64,7 @@ function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) 
 
 export default function Footer() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-40px' })
+  const isInView = useInView(ref, { once: false, margin: '-40px' })
 
   return (
     <footer className="border-t border-[var(--color-mas-border)] px-6 py-16 relative">

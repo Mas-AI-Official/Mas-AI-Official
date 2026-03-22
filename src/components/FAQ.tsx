@@ -91,7 +91,7 @@ const answerVariants = {
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const isInView = useInView(ref, { once: false, margin: '-60px' })
 
   function toggle(index: number) {
     setOpenIndex((prev) => (prev === index ? null : index))
