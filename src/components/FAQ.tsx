@@ -20,7 +20,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What is Daena?',
     answer:
-      'Daena is our flagship platform: a governance-first AI agent orchestration system with auditable memory and traceable decisions. Explore it at daena.mas-ai.co.',
+      'Daena is our flagship platform: a governance-first AI agent orchestration system. V3 features multi-runtime governed swarm with runtime adapters for Claude Code, Codex, Gemini CLI, Grok, and Ollama. 816+ automated tests passing, two patent-pending architectures, and a 10-stage auditable execution pipeline. Explore it at daena.mas-ai.co.',
   },
   {
     question: 'Does MAS-AI work with enterprises?',
@@ -33,9 +33,14 @@ const faqs: FAQItem[] = [
       'We build AI products across enterprise operations, healthcare, construction, content operations, and security. Our focus is regulated industries where governance and auditability are essential.',
   },
   {
-    question: 'Is Daena available for deployment?',
+    question: 'How can I get early access to Daena?',
     answer:
-      'Daena is currently in advanced development with 300+ automated tests passing and a working demo. Contact us to discuss early access and pilot opportunities.',
+      'Daena is now in early access with 816+ automated tests passing, 6/6 E2E tests, and working demos. Fill out the early access form on this page and we\'ll reach out within 24 hours with onboarding details. Enterprise pilot programs are also available.',
+  },
+  {
+    question: 'What makes Daena different from other AI platforms?',
+    answer:
+      'Daena is governance-first, not governance-bolted-on. Every action passes through a 10-stage pipeline with mandatory security, governance, and audit checkpoints. Two patent-pending architectures (PhiLattice + NBMF) ensure auditable memory and traceable decisions at every level. Plus, multi-runtime support lets you bring your own AI runtime.',
   },
 ]
 
@@ -205,14 +210,14 @@ export default function FAQ() {
           className="mt-12 text-center"
         >
           <p className="text-sm text-[var(--color-mas-text-muted)] mb-4">
-            Still have questions?
+            Ready to try governed AI?
           </p>
           <a
-            href="#contact"
+            href="#early-access"
             className="btn-ripple inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-cyan)]/30 px-6 py-2.5 text-sm font-semibold text-[var(--color-mas-cyan)] transition-all hover:bg-[var(--color-mas-cyan)]/10 hover:shadow-[0_0_20px_var(--color-mas-cyan-glow)]"
           >
             <MessageCircleQuestion className="h-4 w-4" />
-            <span className="relative z-10">Contact Us</span>
+            <span className="relative z-10">Request Early Access</span>
           </a>
         </motion.div>
       </div>

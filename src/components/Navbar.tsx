@@ -9,7 +9,7 @@ const navLinks = [
   { label: 'Platform', href: '#daena' },
   { label: 'Portfolio', href: '#portfolio' },
   { label: 'Enterprise', href: '#enterprise' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '#credibility' },
 ]
 
 const mobileItemVariants = {
@@ -65,12 +65,10 @@ export default function Navbar() {
 
         {/* CTA */}
         <a
-          href="https://daena.mas-ai.co"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="#early-access"
           className="hidden md:inline-flex items-center gap-2 rounded-full bg-[var(--color-mas-cyan)] px-6 py-2 text-sm font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:shadow-[0_0_24px_var(--color-mas-cyan-glow)] hover:scale-105 btn-ripple"
         >
-          <span className="relative z-10">Explore Daena</span>
+          <span className="relative z-10">Get Early Access</span>
         </a>
 
         {/* Mobile toggle with animated icon */}
@@ -123,9 +121,8 @@ export default function Navbar() {
                 </motion.a>
               ))}
               <motion.a
-                href="https://daena.mas-ai.co"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#early-access"
+                onClick={() => setMobileOpen(false)}
                 custom={navLinks.length}
                 variants={mobileItemVariants}
                 initial="hidden"
@@ -133,7 +130,7 @@ export default function Navbar() {
                 exit="exit"
                 className="mt-3 rounded-full bg-[var(--color-mas-cyan)] px-5 py-3 text-center text-sm font-bold text-[var(--color-mas-bg)] transition-shadow hover:shadow-[0_0_20px_var(--color-mas-cyan-glow)]"
               >
-                Explore Daena
+                Get Early Access
               </motion.a>
             </div>
           </motion.div>

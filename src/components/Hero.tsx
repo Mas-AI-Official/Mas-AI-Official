@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
+import { ArrowRight, Sparkles } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -98,7 +99,7 @@ export default function Hero() {
     return () => ctx.revert()
   }, [])
 
-  const headline = 'Building the Infrastructure for Governed AI'
+  const headline = 'Governed AI Agents for the Enterprise'
   const headlineWords = headline.split(' ')
 
   return (
@@ -117,6 +118,22 @@ export default function Hero() {
       />
 
       <div ref={contentRef} className="relative mx-auto max-w-5xl text-center">
+        {/* Pre-launch badge */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+          className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-gold)]/30 bg-[var(--color-mas-gold)]/10 px-4 py-1.5"
+        >
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-mas-gold)] opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-mas-gold)]" />
+          </span>
+          <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-mas-gold)] font-[family-name:var(--font-mono)]">
+            Early Access Now Open
+          </span>
+        </motion.div>
+
         {/* Company tag */}
         <p
           ref={(el) => { wordsRef.current[0] = el }}
@@ -144,37 +161,38 @@ export default function Hero() {
           ref={(el) => { wordsRef.current[headlineWords.length + 1] = el }}
           className="mx-auto mb-10 max-w-3xl text-lg text-[var(--color-mas-text-secondary)] sm:text-xl md:text-2xl leading-relaxed"
         >
-          We build AI systems that enterprises can actually trust. Governed
-          agents, auditable decisions, and scalable intelligence.
+          Daena orchestrates AI agents with built-in governance, auditable memory,
+          and traceable decisions. Two patent-pending architectures. 816+ tests passing.
         </p>
 
         {/* CTAs */}
         <div className="hero-cta flex flex-col items-center justify-center gap-4 sm:flex-row mb-16">
           <a
-            href="https://daena.mas-ai.co"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#early-access"
             data-cursor="cta"
             className="btn-ripple group relative inline-flex items-center justify-center rounded-full bg-[var(--color-mas-cyan)] px-10 py-4 text-base font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-mas-cyan-glow)]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              Explore Daena
-              <svg className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+              <Sparkles className="h-4 w-4" />
+              Request Early Access
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </a>
           <a
-            href="#portfolio"
+            href="https://daena.mas-ai.co"
+            target="_blank"
+            rel="noopener noreferrer"
             data-cursor="cta"
             className="btn-ripple inline-flex items-center justify-center rounded-full border border-[var(--color-mas-border)] px-10 py-4 text-base font-semibold text-[var(--color-mas-text)] transition-all duration-300 hover:border-[var(--color-mas-cyan)] hover:text-[var(--color-mas-cyan)] hover:shadow-[0_0_20px_var(--color-mas-border-glow)]"
           >
-            View Portfolio
+            Explore Platform
           </a>
         </div>
 
         {/* Stats strip with animated counters */}
         <div className="hero-stats flex flex-wrap justify-center gap-8 md:gap-16">
           {[
-            { target: 300, suffix: '+', label: 'Tests Passing' },
+            { target: 816, suffix: '+', label: 'Tests Passing' },
             { target: 10, suffix: '', label: 'Pipeline Stages' },
             { target: 2, suffix: '', label: 'Patents Pending' },
             { display: '6/6', label: 'E2E Tests' },

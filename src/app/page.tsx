@@ -49,15 +49,15 @@ export default function HomePage() {
           <EnterpriseServices />
         </section>
 
-        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-[var(--color-mas-gold)]/15 to-transparent" />
 
-        <section id="credibility" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(0,200,255,0.03) 0%, transparent 50%)' }}>
+        <section id="credibility" className="relative">
           <CredibilitySection />
         </section>
 
         <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <section id="contact" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.05) 0%, transparent 60%)' }}>
+        <section id="contact" className="relative">
           <ContactSection />
         </section>
 

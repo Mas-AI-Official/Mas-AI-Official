@@ -135,7 +135,7 @@ export default function EnterpriseServices() {
           className="mt-14 text-center"
         >
           <a
-            href="#contact"
+            href="#early-access"
             className="btn-ripple group inline-flex items-center gap-2 justify-center rounded-full border border-[var(--color-mas-gold)] px-8 py-3 text-sm font-semibold text-[var(--color-mas-gold)] transition-all hover:bg-[var(--color-mas-gold)]/10 hover:shadow-[0_0_24px_var(--color-mas-gold-glow)]"
           >
             <span className="relative z-10">Discuss Your Project</span>

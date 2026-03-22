@@ -19,8 +19,9 @@ const productLinks: FooterLink[] = [
 ]
 
 const companyLinks: FooterLink[] = [
+  { label: 'Early Access', href: '#early-access' },
   { label: 'Investors', href: '/investors.html' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '#credibility' },
 ]
 
 const connectLinks: FooterLink[] = [

@@ -20,7 +20,7 @@ const SECTION_MOODS: Record<string, SectionMood> = {
   portfolio:    { glow: '#d4a853', caption: 'We ship real products.',     brightness: 1.05 },
   enterprise:   { glow: '#d4a853', caption: 'Built for scale.',          brightness: 0.95 },
   credibility:  { glow: '#c8956a', caption: 'Meet the founder.',         brightness: 0.9 },
-  contact:      { glow: '#7c3aed', caption: "Let's connect.",            brightness: 1.0 },
+  contact:      { glow: '#00c8ff', caption: 'Join early access.',         brightness: 1.0 },
   faq:          { glow: '#00c8ff', caption: 'Got questions?',            brightness: 0.9 },
 }
 
