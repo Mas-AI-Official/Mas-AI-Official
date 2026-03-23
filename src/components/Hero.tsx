@@ -168,24 +168,26 @@ export default function Hero() {
         {/* CTAs */}
         <div className="hero-cta flex flex-col items-center justify-center gap-4 sm:flex-row mb-16">
           <a
-            href="#early-access"
-            data-cursor="cta"
-            className="btn-ripple group relative inline-flex items-center justify-center rounded-full bg-[var(--color-mas-cyan)] px-10 py-4 text-base font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-mas-cyan-glow)]"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              <Sparkles className="h-4 w-4" />
-              Request Early Access
-              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </span>
-          </a>
-          <a
             href="https://daena.mas-ai.co"
             target="_blank"
             rel="noopener noreferrer"
             data-cursor="cta"
-            className="btn-ripple inline-flex items-center justify-center rounded-full border border-[var(--color-mas-border)] px-10 py-4 text-base font-semibold text-[var(--color-mas-text)] transition-all duration-300 hover:border-[var(--color-mas-cyan)] hover:text-[var(--color-mas-cyan)] hover:shadow-[0_0_20px_var(--color-mas-border-glow)]"
+            className="btn-ripple group relative inline-flex items-center justify-center rounded-full bg-[var(--color-mas-cyan)] px-10 py-4 text-base font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-mas-cyan-glow)]"
           >
-            Explore Platform
+            <span className="relative z-10 flex items-center gap-2">
+              Explore Daena
+              <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+          </a>
+          <a
+            href="#early-access"
+            data-cursor="cta"
+            className="btn-ripple group inline-flex items-center justify-center rounded-full border border-[var(--color-mas-gold)]/30 bg-[var(--color-mas-gold)]/5 px-10 py-4 text-base font-semibold text-[var(--color-mas-gold)] transition-all duration-300 hover:border-[var(--color-mas-gold)]/50 hover:bg-[var(--color-mas-gold)]/10 hover:shadow-[0_0_20px_var(--color-mas-gold-glow)]"
+          >
+            <span className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4" />
+              Request Early Access
+            </span>
           </a>
         </div>
 
