@@ -91,8 +91,9 @@ export default function DaenaSpotlight() {
           <div className="absolute bottom-0 left-0 w-60 h-60 bg-[var(--color-mas-gold)]/[0.03] rounded-full blur-3xl pointer-events-none" />
 
           {/* Badge */}
-          <span className="badge-shimmer relative mb-6 inline-block rounded-full border border-[var(--color-mas-gold)]/20 bg-[var(--color-mas-gold)]/10 px-3 py-1 text-xs uppercase tracking-wider text-[var(--color-mas-gold)]">
-            FLAGSHIP PLATFORM
+          <span className="badge-shimmer relative mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-gold)]/20 bg-[var(--color-mas-gold)]/10 px-3 py-1 text-xs uppercase tracking-wider text-[var(--color-mas-gold)]">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2DD4BF] animate-pulse" />
+            FLAGSHIP PLATFORM &mdash; NOW AVAILABLE
           </span>
 
           {/* Heading */}
@@ -103,36 +104,38 @@ export default function DaenaSpotlight() {
           {/* Description */}
           <p className="mb-10 max-w-3xl text-base leading-relaxed text-[var(--color-mas-text-secondary)] md:text-lg">
             Daena is our governance-first AI agent orchestration platform.
-            It coordinates multiple AI agents with built-in policy enforcement,
-            auditable memory, and traceable decisions across every step.
-            Two patent-pending architectures. 816+ automated tests passing.
-            V3 rebuild: governed swarm with runtime adapters,
-            10-stage pipeline, and DaenaBot autonomous agents.
+            10 departments, 60 agents, 9 AI providers, all governed by a
+            10-stage auditable pipeline. Two patent-pending architectures.
+            1,328 automated tests passing. Free to run locally with Ollama.
+            Bring your own runtimes: Claude, GPT, Gemini, Codex, or Grok.
           </p>
 
           {/* Stats */}
           <div className="mb-10 flex flex-wrap items-center justify-start gap-8 md:gap-12">
-            <AnimatedCounter target={816} suffix="+" label="Tests" />
+            <AnimatedCounter target={1328} suffix="" label="Tests Passing" />
+            <div className="h-10 w-px bg-[var(--color-mas-border)]" />
+            <AnimatedCounter target={60} label="AI Agents" />
+            <div className="h-10 w-px bg-[var(--color-mas-border)]" />
+            <AnimatedCounter target={9} label="AI Providers" accentColor="var(--color-mas-gold)" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
             <AnimatedCounter target={2} label="Patents Pending" accentColor="var(--color-mas-gold)" />
-            <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={10} label="Pipeline Stages" />
-            <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={6} suffix="/6" label="E2E Tests" />
           </div>
 
           {/* CTA */}
-          <a
-            href="https://daena.mas-ai.co"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-ripple group/cta inline-flex items-center gap-2 rounded-full bg-[var(--color-mas-cyan)] px-8 py-3 text-sm font-semibold text-[var(--color-mas-bg)] transition-all duration-300 hover:shadow-[0_0_24px_var(--color-mas-cyan-glow)] hover:scale-105"
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              Explore Daena
-              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1" />
-            </span>
-          </a>
+          <div className="flex flex-wrap items-center gap-4">
+            <a
+              href="https://daena.mas-ai.co"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-ripple group/cta inline-flex items-center gap-2 rounded-full bg-[var(--color-mas-cyan)] px-8 py-3 text-sm font-semibold text-[var(--color-mas-bg)] transition-all duration-300 hover:shadow-[0_0_24px_var(--color-mas-cyan-glow)] hover:scale-105"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Get Started Free
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover/cta:translate-x-1" />
+              </span>
+            </a>
+            <span className="text-xs text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)]">Free with Ollama &bull; No API keys needed</span>
+          </div>
         </motion.div>
       </div>
     </section>
