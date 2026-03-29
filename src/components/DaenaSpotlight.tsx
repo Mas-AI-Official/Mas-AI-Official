@@ -101,24 +101,56 @@ export default function DaenaSpotlight() {
             Meet <span className="text-shimmer">Daena</span>
           </h2>
 
-          {/* Description */}
-          <p className="mb-10 max-w-3xl text-base leading-relaxed text-[var(--color-mas-text-secondary)] md:text-lg">
-            Daena is our governance-first AI agent orchestration platform.
-            10 departments, 60 agents, 9 AI providers, all governed by a
-            10-stage auditable pipeline. Two patent-pending architectures.
-            1,328 automated tests passing. Free to run locally with Ollama.
-            Bring your own runtimes: Claude, GPT, Gemini, Codex, or Grok.
+          {/* Quote */}
+          <p className="mb-8 text-shimmer text-lg md:text-xl font-semibold font-[family-name:var(--font-display)] italic leading-relaxed">
+            &ldquo;Intelligence without governance is just a faster way to make mistakes.&rdquo;
           </p>
 
+          {/* Description */}
+          <p className="mb-6 max-w-3xl text-base leading-relaxed text-[var(--color-mas-text-secondary)] md:text-lg">
+            Daena is the governed AI operating system. 10 departments, 60 agents,
+            9 AI providers, all governed by a 10-stage auditable pipeline with
+            9 immutable hard laws that cannot be disabled.
+            Free to run locally with Ollama. Bring your own runtimes.
+          </p>
+
+          {/* Technology cards */}
+          <div className="mb-8 grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="rounded-lg border border-[var(--color-mas-border)] bg-[rgba(0,0,0,0.2)] p-3">
+              <p className="text-xs font-semibold text-[var(--color-mas-gold)] font-[family-name:var(--font-mono)] mb-1">PhiLattice</p>
+              <p className="text-xs text-[var(--color-mas-text-muted)] leading-relaxed">Fibonacci-based agent topology</p>
+            </div>
+            <div className="rounded-lg border border-[var(--color-mas-border)] bg-[rgba(0,0,0,0.2)] p-3">
+              <p className="text-xs font-semibold text-[var(--color-mas-cyan)] font-[family-name:var(--font-mono)] mb-1">NBMF Memory</p>
+              <p className="text-xs text-[var(--color-mas-text-muted)] leading-relaxed">5-tier, hallucinations auto-expire</p>
+            </div>
+            <div className="rounded-lg border border-[var(--color-mas-border)] bg-[rgba(0,0,0,0.2)] p-3">
+              <p className="text-xs font-semibold text-[#2DD4BF] font-[family-name:var(--font-mono)] mb-1">TLM</p>
+              <p className="text-xs text-[var(--color-mas-text-muted)] leading-relaxed">87.5% token savings per session</p>
+            </div>
+            <div className="rounded-lg border border-[var(--color-mas-border)] bg-[rgba(0,0,0,0.2)] p-3">
+              <p className="text-xs font-semibold text-[#a78bfa] font-[family-name:var(--font-mono)] mb-1">eDNA</p>
+              <p className="text-xs text-[var(--color-mas-text-muted)] leading-relaxed">Merkle-notarized agent learning</p>
+            </div>
+            <div className="rounded-lg border border-[var(--color-mas-border)] bg-[rgba(0,0,0,0.2)] p-3">
+              <p className="text-xs font-semibold text-[#f59e0b] font-[family-name:var(--font-mono)] mb-1">Dream Engine</p>
+              <p className="text-xs text-[var(--color-mas-text-muted)] leading-relaxed">Autonomous memory consolidation</p>
+            </div>
+            <div className="rounded-lg border border-[var(--color-mas-border)] bg-[rgba(0,0,0,0.2)] p-3">
+              <p className="text-xs font-semibold text-[var(--color-mas-text)] font-[family-name:var(--font-mono)] mb-1">Smart Routing</p>
+              <p className="text-xs text-[var(--color-mas-text-muted)] leading-relaxed">50-95% cost savings vs single model</p>
+            </div>
+          </div>
+
           {/* Stats */}
-          <div className="mb-10 flex flex-wrap items-center justify-start gap-8 md:gap-12">
+          <div className="mb-8 flex flex-wrap items-center justify-start gap-8 md:gap-12">
             <AnimatedCounter target={1328} suffix="" label="Tests Passing" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
             <AnimatedCounter target={60} label="AI Agents" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
             <AnimatedCounter target={9} label="AI Providers" accentColor="var(--color-mas-gold)" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={2} label="Patents Pending" accentColor="var(--color-mas-gold)" />
+            <AnimatedCounter target={2} label="USPTO Patents Filed" accentColor="var(--color-mas-gold)" />
           </div>
 
           {/* CTA */}
