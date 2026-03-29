@@ -99,7 +99,7 @@ const knowledge: KnowledgeEntry[] = [
   },
   {
     keywords: ['test', 'demo', 'proof', 'working', 'ready'],
-    answer: 'Daena has 816+ automated tests passing, 6/6 end-to-end Playwright tests, and a working demo. V3 rebuild includes governed swarm with runtime adapters.',
+    answer: 'Daena has 1,424 automated tests passing and is available now. It includes governed swarm with runtime adapters for 9 AI providers, six patent-pending subsystems, and is free to run locally with Ollama.',
     section: 'daena',
   },
   {
@@ -197,7 +197,7 @@ const knowledge: KnowledgeEntry[] = [
   // TIMELINE / AVAILABILITY
   {
     keywords: ['when', 'launch', 'release', 'timeline', 'available', 'waitlist', 'early access'],
-    answer: 'Daena V3 is live with 816+ tests passing, governed swarm, and runtime adapters. We are onboarding early access partners now. Contact us to discuss pilot opportunities.',
+    answer: 'Daena is available now. Free tier runs locally with Ollama at zero cost. PRO ($29/mo) adds cloud runtimes. 1,424 tests passing, 60 agents, 10 departments. Get started at daena.mas-ai.co.',
     section: 'contact',
   },
 

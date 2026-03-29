@@ -161,8 +161,8 @@ export default function Hero() {
           ref={(el) => { wordsRef.current[headlineWords.length + 1] = el }}
           className="mx-auto mb-10 max-w-3xl text-lg text-[var(--color-mas-text-secondary)] sm:text-xl md:text-2xl leading-relaxed"
         >
-          Daena orchestrates AI agents with built-in governance, auditable memory,
-          and traceable decisions. Two patent-pending architectures. 816+ tests passing.
+          Daena orchestrates 60 AI agents across 10 departments with built-in governance,
+          auditable memory, and traceable decisions. Two USPTO patents filed. 1,424 tests passing. Free to start.
         </p>
 
         {/* CTAs */}
@@ -175,7 +175,7 @@ export default function Hero() {
             className="btn-ripple group relative inline-flex items-center justify-center rounded-full bg-[var(--color-mas-cyan)] px-10 py-4 text-base font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-mas-cyan-glow)]"
           >
             <span className="relative z-10 flex items-center gap-2">
-              Explore Daena
+              Get Started Free
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
             </span>
           </a>
@@ -186,7 +186,7 @@ export default function Hero() {
           >
             <span className="flex items-center gap-2">
               <Sparkles className="h-4 w-4" />
-              Request Early Access
+              Talk to Us
             </span>
           </a>
         </div>
@@ -194,10 +194,10 @@ export default function Hero() {
         {/* Stats strip with animated counters */}
         <div className="hero-stats flex flex-wrap justify-center gap-8 md:gap-16">
           {[
-            { target: 816, suffix: '+', label: 'Tests Passing' },
-            { target: 10, suffix: '', label: 'Pipeline Stages' },
-            { target: 2, suffix: '', label: 'Patents Pending' },
-            { display: '6/6', label: 'E2E Tests' },
+            { target: 1424, suffix: '', label: 'Tests Passing' },
+            { target: 60, suffix: '', label: 'AI Agents' },
+            { target: 2, suffix: '', label: 'USPTO Patents Filed' },
+            { target: 9, suffix: '', label: 'AI Providers' },
           ].map((s) => (
             <motion.div
               key={s.label}
@@ -206,7 +206,7 @@ export default function Hero() {
               transition={{ type: 'spring', stiffness: 400, damping: 15 }}
             >
               <div className="text-3xl font-bold text-neon font-[family-name:var(--font-display)] md:text-4xl transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(0,200,255,0.6)]">
-                {'display' in s ? s.display : <AnimatedCounter target={s.target} suffix={s.suffix} />}
+                <AnimatedCounter target={s.target} suffix={s.suffix} />
               </div>
               <div className="mt-1 text-xs uppercase tracking-wider text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)] transition-colors duration-300 group-hover:text-[var(--color-mas-cyan)]">
                 {s.label}

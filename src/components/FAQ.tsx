@@ -20,7 +20,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What is Daena?',
     answer:
-      'Daena is our flagship platform: a governance-first AI agent orchestration system. V3 features multi-runtime governed swarm with runtime adapters for Claude Code, Codex, Gemini CLI, Grok, and Ollama. 816+ automated tests passing, two patent-pending architectures, and a 10-stage auditable execution pipeline. Explore it at daena.mas-ai.co.',
+      'Daena is our flagship platform: a governance-first AI agent orchestration system with 60 agents across 10 departments. 9 AI providers integrated (Claude, GPT, Gemini, Ollama, and more), 1,424 automated tests passing, two USPTO patents filed, and a 10-stage auditable execution pipeline. Free to run locally with Ollama. Try it at daena.mas-ai.co.',
   },
   {
     question: 'Does MAS-AI work with enterprises?',
@@ -33,14 +33,14 @@ const faqs: FAQItem[] = [
       'We build AI products across enterprise operations, healthcare, construction, content operations, and security. Our focus is regulated industries where governance and auditability are essential.',
   },
   {
-    question: 'How can I get early access to Daena?',
+    question: 'How can I try Daena?',
     answer:
-      'Daena is now in early access with 816+ automated tests passing, 6/6 E2E tests, and working demos. Fill out the early access form on this page and we\'ll reach out within 24 hours with onboarding details. Enterprise pilot programs are also available.',
+      'Daena is available now. The FREE tier runs entirely on your machine using Ollama with zero API costs. Clone the repo from GitHub, run the start script, and you\'re up in under 5 minutes. PRO ($29/mo) adds cloud runtimes like Claude and GPT. Enterprise deployments with SSO and custom departments are also available.',
   },
   {
     question: 'What makes Daena different from other AI platforms?',
     answer:
-      'Daena is governance-first, not governance-bolted-on. Every action passes through a 10-stage pipeline with mandatory security, governance, and audit checkpoints. Two patent-pending architectures (PhiLattice + NBMF) ensure auditable memory and traceable decisions at every level. Plus, multi-runtime support lets you bring your own AI runtime.',
+      'Daena is governance-first, not governance-bolted-on. Every action passes through a 10-stage pipeline with 9 immutable hard laws that cannot be disabled. Six patent-pending systems (PhiLattice, NBMF, TLM, eDNA, Dream Engine, Smart Routing) ensure auditable memory, 87.5% token savings, and traceable decisions. Plus, bring-your-own-runtime support across 9 AI providers.',
   },
 ]
 

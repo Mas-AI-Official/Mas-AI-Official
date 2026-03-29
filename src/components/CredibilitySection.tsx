@@ -25,7 +25,7 @@ interface TrustBadge {
 
 const trustBadges: TrustBadge[] = [
   { icon: CheckCircle, label: 'Google for Startups Cloud Program', accentColor: '#22c55e' },
-  { icon: Shield, label: '2 USPTO Patents Pending', accentColor: 'var(--color-mas-gold)' },
+  { icon: Shield, label: '2 USPTO Patents Filed', accentColor: 'var(--color-mas-gold)' },
   { icon: Cloud, label: 'Azure for Startups', accentColor: '#0ea5e9' },
   { icon: Cloud, label: 'GCP Credits Secured', accentColor: '#facc15' },
   { icon: Sparkles, label: 'Perplexity for Startups', accentColor: '#a78bfa' },
@@ -181,8 +181,8 @@ export default function CredibilitySection() {
             <p className="mt-5 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
               Solo technical founder and senior AI/ML architect. Background spanning deep learning,
               robotics, and enterprise systems. Built MAS-AI from zero into a governance-first AI
-              company with two patent-pending architectures, 816+ passing tests, and multi-runtime
-              agent orchestration.
+              company with two USPTO patents filed, 1,424 passing tests, six proprietary subsystems,
+              and multi-runtime agent orchestration across 9 AI providers.
             </p>
 
             {/* Links */}
