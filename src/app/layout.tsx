@@ -73,10 +73,10 @@ const jsonLd = {
       name: 'Daena by MAS-AI',
       applicationCategory: 'BusinessApplication',
       operatingSystem: 'Cloud, Self-hosted',
-      description: 'Governance-first AI agent orchestration platform. AI-autonomous company OS with 10-stage governed pipeline, patent-pending PhiLattice Architecture, and Neural-Backed Memory Fabric for auditable memory. 48 agents across 8 departments.',
+      description: 'Governance-first AI agent orchestration platform. 60 agents across 10 departments, 9 AI providers, 1,328 tests passing. Free to run locally with Ollama. Patent-pending PhiLattice Architecture and NBMF.',
       url: 'https://daena.mas-ai.co',
       featureList: 'Multi-agent orchestration, AI governance, Auditable memory, PhiLattice topology, Neural-Backed Memory Fabric, 10-stage pipeline, Expert council synthesis',
-      offers: { '@type': 'Offer', availability: 'https://schema.org/PreOrder', price: '0', priceCurrency: 'USD', description: 'Early access and pilot programs available' },
+      offers: { '@type': 'Offer', availability: 'https://schema.org/InStock', price: '0', priceCurrency: 'USD', description: 'Free tier available now. Run locally with Ollama at zero cost.' },
       creator: { '@type': 'Organization', name: 'MAS-AI Technologies Inc.' },
     },
     {
@@ -97,7 +97,7 @@ const jsonLd = {
       '@type': 'FAQPage',
       mainEntity: [
         { '@type': 'Question', name: 'What is MAS-AI?', acceptedAnswer: { '@type': 'Answer', text: 'MAS-AI Technologies Inc. is a Canadian AI company building Daena, a governance-first multi-agent AI orchestration platform with two patent-pending architectures (PhiLattice and NBMF). Founded January 2026 in Ontario, Canada.' } },
-        { '@type': 'Question', name: 'What is Daena?', acceptedAnswer: { '@type': 'Answer', text: 'Daena is a governance-first AI agent orchestration platform that coordinates 48 AI agents across 8 departments. Every action passes through a 10-stage governed execution pipeline ensuring full auditability and decision traceability.' } },
+        { '@type': 'Question', name: 'What is Daena?', acceptedAnswer: { '@type': 'Answer', text: 'Daena is a governance-first AI agent orchestration platform that coordinates 60 AI agents across 10 departments with 9 AI providers. Free to run locally with Ollama. Every action passes through a 10-stage governed execution pipeline. 1,328 tests passing.' } },
         { '@type': 'Question', name: 'What is PhiLattice Architecture?', acceptedAnswer: { '@type': 'Answer', text: 'PhiLattice is a patent-pending architecture combining Fibonacci spiral scaling for optimal agent placement with honeycomb departmental structure for governed multi-agent collaboration.' } },
         { '@type': 'Question', name: 'What is NBMF?', acceptedAnswer: { '@type': 'Answer', text: 'Neural-Backed Memory Fabric (NBMF) is a patent-pending 5-tier memory system. Hallucinations auto-expire and only verified knowledge persists across tiers from ephemeral working memory to founder-private encrypted storage.' } },
         { '@type': 'Question', name: 'How is Daena different from other AI platforms?', acceptedAnswer: { '@type': 'Answer', text: 'Daena is governance-first, not governance-bolted-on. Unlike platforms that add security as a wrapper, Daena builds governance into every layer. Every agent action is auditable, every decision is traceable, and users have a visible governance control spectrum.' } },
@@ -127,6 +127,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="antialiased font-[family-name:var(--font-dm-sans)]">
         {children}
+        {/* Google Analytics 4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX" />
+        <script dangerouslySetInnerHTML={{ __html: "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');" }} />
+        {/* Microsoft Clarity (heatmaps + session recordings) */}
+        <script dangerouslySetInnerHTML={{ __html: "(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src='https://www.clarity.ms/tag/'+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y)})(window,document,'clarity','script','CLARITY_ID');" }} />
       </body>
     </html>
   )
