@@ -8,6 +8,7 @@ import {
   useInView,
   animate,
 } from 'framer-motion'
+import { DAENA_STATS } from '@/constants/daena-stats'
 import { ArrowRight } from 'lucide-react'
 
 // --- Animated counter -------------------------------------------------------
@@ -144,13 +145,13 @@ export default function DaenaSpotlight() {
 
           {/* Stats */}
           <div className="mb-8 flex flex-wrap items-center justify-start gap-8 md:gap-12">
-            <AnimatedCounter target={1424} suffix="" label="Tests Passing" />
+            <AnimatedCounter target={DAENA_STATS.testsPassing} suffix="" label="Tests Passing" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={60} label="AI Agents" />
+            <AnimatedCounter target={DAENA_STATS.agentCapabilities} label="AI Agents" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={9} label="AI Providers" accentColor="var(--color-mas-gold)" />
+            <AnimatedCounter target={DAENA_STATS.aiProviders} label="AI Providers" accentColor="var(--color-mas-gold)" />
             <div className="h-10 w-px bg-[var(--color-mas-border)]" />
-            <AnimatedCounter target={2} label="USPTO Patents Filed" accentColor="var(--color-mas-gold)" />
+            <AnimatedCounter target={DAENA_STATS.patentsFiled} label="USPTO Patents Filed" accentColor="var(--color-mas-gold)" />
           </div>
 
           {/* CTA */}

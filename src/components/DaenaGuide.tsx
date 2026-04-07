@@ -99,7 +99,7 @@ const knowledge: KnowledgeEntry[] = [
   },
   {
     keywords: ['test', 'demo', 'proof', 'working', 'ready'],
-    answer: 'Daena has 1,424 automated tests passing and is available now. It includes governed swarm with runtime adapters for 9 AI providers, six patent-pending subsystems, and is free to run locally with Ollama.',
+    answer: 'Daena has 1,764 automated tests passing and is available now. It includes governed swarm with runtime adapters for 9 AI providers, six patent-pending subsystems, and is free to run locally with Ollama.',
     section: 'daena',
   },
   {
@@ -197,7 +197,7 @@ const knowledge: KnowledgeEntry[] = [
   // TIMELINE / AVAILABILITY
   {
     keywords: ['when', 'launch', 'release', 'timeline', 'available', 'waitlist', 'early access'],
-    answer: 'Daena is available now. Free tier runs locally with Ollama at zero cost. PRO ($29/mo) adds cloud runtimes. 1,424 tests passing, 60 agents, 10 departments. Get started at daena.mas-ai.co.',
+    answer: 'Daena is available now. Free tier runs locally with Ollama at zero cost. PRO ($29/mo) adds cloud runtimes. 1,764 tests passing, 60 agent capabilities, 10 departments. Get started at daena.mas-ai.co.',
     section: 'contact',
   },
 

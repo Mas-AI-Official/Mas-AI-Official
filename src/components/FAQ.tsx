@@ -20,7 +20,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What is Daena?',
     answer:
-      'Daena is our flagship platform: a governance-first AI agent orchestration system with 60 agents across 10 departments. 9 AI providers integrated (Claude, GPT, Gemini, Ollama, and more), 1,424 automated tests passing, two USPTO patents filed, and a 10-stage auditable execution pipeline. Free to run locally with Ollama. Try it at daena.mas-ai.co.',
+      'Daena is our flagship platform: a governance-first AI agent orchestration system with 60 agent capabilities across 10 departments. 9 AI providers integrated (Claude, GPT, Gemini, Ollama, and more), 1,764 automated tests passing, two USPTO patents filed, and a 10-stage auditable execution pipeline. Free to run locally with Ollama. Try it at daena.mas-ai.co.',
   },
   {
     question: 'Does MAS-AI work with enterprises?',

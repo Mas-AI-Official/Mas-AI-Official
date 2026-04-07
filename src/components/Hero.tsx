@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import { DAENA_STATS } from '@/constants/daena-stats'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -161,8 +162,8 @@ export default function Hero() {
           ref={(el) => { wordsRef.current[headlineWords.length + 1] = el }}
           className="mx-auto mb-10 max-w-3xl text-lg text-[var(--color-mas-text-secondary)] sm:text-xl md:text-2xl leading-relaxed"
         >
-          Daena orchestrates 60 AI agents across 10 departments with built-in governance,
-          auditable memory, and traceable decisions. Two USPTO patents filed. 1,424 tests passing. Free to start.
+          Daena orchestrates {DAENA_STATS.agentCapabilities} AI agents across {DAENA_STATS.departments} departments with built-in governance,
+          auditable memory, and traceable decisions. {DAENA_STATS.patentsFiled} USPTO patents filed. {DAENA_STATS.testsPassing.toLocaleString()} tests passing. Free to start.
         </p>
 
         {/* CTAs */}
@@ -194,10 +195,10 @@ export default function Hero() {
         {/* Stats strip with animated counters */}
         <div className="hero-stats flex flex-wrap justify-center gap-8 md:gap-16">
           {[
-            { target: 1424, suffix: '', label: 'Tests Passing' },
-            { target: 60, suffix: '', label: 'AI Agents' },
-            { target: 2, suffix: '', label: 'USPTO Patents Filed' },
-            { target: 9, suffix: '', label: 'AI Providers' },
+            { target: DAENA_STATS.testsPassing, suffix: '', label: 'Tests Passing' },
+            { target: DAENA_STATS.agentCapabilities, suffix: '', label: 'AI Agents' },
+            { target: DAENA_STATS.patentsFiled, suffix: '', label: 'USPTO Patents Filed' },
+            { target: DAENA_STATS.aiProviders, suffix: '', label: 'AI Providers' },
           ].map((s) => (
             <motion.div
               key={s.label}

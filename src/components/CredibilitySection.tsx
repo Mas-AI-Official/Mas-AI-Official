@@ -181,7 +181,7 @@ export default function CredibilitySection() {
             <p className="mt-5 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
               Solo technical founder and senior AI/ML architect. Background spanning deep learning,
               robotics, and enterprise systems. Built MAS-AI from zero into a governance-first AI
-              company with two USPTO patents filed, 1,424 passing tests, six proprietary subsystems,
+              company with two USPTO patents filed, 1,764 passing tests, six proprietary subsystems,
               and multi-runtime agent orchestration across 9 AI providers.
             </p>
 
