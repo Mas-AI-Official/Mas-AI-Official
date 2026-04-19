@@ -36,9 +36,56 @@ interface KnowledgeEntry {
 }
 
 const knowledge: KnowledgeEntry[] = [
+  // --- TWO PATHS (primary navigation intent)
+  {
+    keywords: ['two paths', 'paths', 'which path', 'what do you do', 'services', 'what can you', 'offerings', 'what do you offer'],
+    answer: 'Two paths. (1) Build: I install governed AI agents for your business, custom ones or off-the-shelf like Claude Code or OpenClaw, all wrapped in my governance stack. (2) Secure: I scan your existing websites, apps, code, and cloud for vulnerabilities using Klyntar with frontier-level discovery. Pick one, or book a free 30-min call and we decide together.',
+    section: 'paths',
+  },
+  {
+    keywords: ['build path', 'automation', 'install', 'installation', 'deploy ai', 'need an agent', 'build for me', 'custom agent'],
+    answer: 'Path 1, Build. I install custom AI agents, voice assistants, Claude Code, OpenClaw, or whatever fits. Everything ships wrapped in Daena governance (audit trail, approval queues, Shield always on). 21-day build, fixed price, source code yours.',
+    section: 'paths',
+    link: '/automation',
+  },
+  {
+    keywords: ['secure path', 'scan', 'vulnerability', 'audit my', 'pen test', 'hack my', 'find holes', 'exposed', 'security audit'],
+    answer: 'Path 2, Secure. I scan your website, API, mobile app, or cloud using Klyntar. Zero-FP gate means no false alarms, every operator-tier finding comes with a working exploit. Free 2-hour recon first, then paid audits from $12.5k.',
+    section: 'paths',
+    link: '/security',
+  },
+  {
+    keywords: ['book call', 'book consultation', 'schedule call', 'appointment', 'meeting', 'free call', 'book meeting'],
+    answer: 'Three booking options. (1) Free 30-min consultation where we map your options and pick a path. (2) Free security scan, send a URL and get 3 findings in 48h. (3) Free automation audit, 45 min to scope the agent you need.',
+    section: null,
+    link: '/book',
+  },
+  {
+    keywords: ['not sure', 'help me decide', 'which one', 'dont know', "don't know", 'recommend', 'suggest'],
+    answer: 'Book the free 30-min call. I listen, map the gaps, and tell you which path fits. If neither fits, I tell you that too. No pitch deck, no commitment.',
+    section: null,
+    link: '/book',
+  },
+  {
+    keywords: ['klyntar', 'klynter', 'security platform', 'red team', 'offensive security'],
+    answer: 'Klyntar is my security platform. 25+ exploit signatures, 45+ scanners detected by behavior. Zero-FP gate drops findings without a working exploit. Asset Shield vault, BeyondMythos enrichment. Frontier-level vulnerability discovery, tuned for AI-era stacks.',
+    section: 'products',
+    link: '/security',
+  },
+  {
+    keywords: ['mythos', 'frontier', 'anthropic security'],
+    answer: 'My scan depth is comparable to frontier-AI vulnerability discovery (the public benchmark here is the Project Mythos level from Anthropic). I tune the discovery for your specific stack rather than a generic crawl.',
+    section: 'products',
+  },
+  {
+    keywords: ['ai act', 'eu ai act', 'eu regulation', 'compliance deadline'],
+    answer: 'August 2, 2026 is the EU AI Act enforcement deadline. Up to €35M or 7% of global turnover in penalties. I run a fixed 2-week readiness sprint: classification, Article 9/11/12/14 documentation, Daena-wired audit trail. $18k.',
+    section: null,
+    link: '/ai-act-readiness',
+  },
   {
     keywords: ['what is mas-ai', 'mas-ai', 'company', 'who are you', 'about mas', 'tell me about'],
-    answer: 'MAS-AI Technologies Inc. is a Canadian AI company building governed AI systems for enterprises. We develop platforms, products, and deployment services for organizations that need trustworthy, auditable AI agents.',
+    answer: 'MAS-AI Technologies Inc. is my company. Canadian, federally incorporated. I build governed AI platforms (Daena) and security tools (Klyntar), and I run services: installing AI agents or auditing the AI and stack you already have. Two USPTO patents filed. One solo founder.',
     section: 'hero',
   },
   {
@@ -49,13 +96,13 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['daena', 'product', 'platform', 'flagship', 'what is daena'],
     answer: 'Daena is our flagship platform: a governance-first AI agent orchestration system. It coordinates multiple AI agents with built-in policy enforcement, auditable memory, and a 10-stage execution pipeline. Want the full details?',
-    section: 'daena',
+    section: 'products',
     link: 'https://daena.mas-ai.co',
   },
   {
     keywords: ['governance', 'governed', 'policy', 'audit', 'trust'],
     answer: 'Governance is at the core of everything we build. Our AI agents operate within policy-enforced pipelines where every decision is traced and auditable. No black boxes.',
-    section: 'daena',
+    section: 'products',
   },
   {
     keywords: ['patent', 'ip', 'philattice', 'nbmf', 'architecture', 'memory'],
@@ -100,7 +147,7 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['test', 'demo', 'proof', 'working', 'ready'],
     answer: 'Daena has 300+ automated tests passing, 6/6 end-to-end Playwright tests, and a working demo. We are in the commercialization phase.',
-    section: 'daena',
+    section: 'products',
   },
   {
     keywords: ['contact', 'email', 'call', 'reach', 'book', 'talk', 'meet', 'schedule'],
@@ -121,7 +168,7 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['who is daena', 'what are you', 'are you ai', 'are you real', 'your name'],
     answer: "I'm Daena, the AI guide for MAS-AI Technologies. I can answer questions about our company, products, and services. I'm also the name of our flagship platform!",
-    section: 'daena',
+    section: 'products',
   },
   {
     keywords: ['how many', 'size', 'employees', 'people work'],
@@ -147,18 +194,18 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['how it works', 'explain', 'how does it', 'tell me more', 'details'],
     answer: 'At a high level: Daena coordinates AI agents through a 10-stage governed pipeline. Every agent action passes through SecurityGate, GovernanceEngine, ReasoningCore, and AuditLog before reaching output. For the full technical deep-dive, visit daena.mas-ai.co.',
-    section: 'daena',
+    section: 'products',
     link: 'https://daena.mas-ai.co',
   },
   {
     keywords: ['security', 'safe', 'secure', 'protect', 'risk'],
     answer: 'Security is the first stage of our pipeline (SecurityGate). Every input is screened before processing. Combined with policy enforcement at the GovernanceEngine stage and full audit logging, Daena provides enterprise-grade security for AI operations.',
-    section: 'daena',
+    section: 'products',
   },
   {
     keywords: ['agent', 'agents', 'multi-agent', 'autonomous', 'orchestrat'],
     answer: 'Daena orchestrates multiple AI agents as governed departments. Each agent operates within policy boundaries, shares auditable memory via NBMF, and coordinates through the PhiLattice topology. Think of it as a governed operating system for AI workforces.',
-    section: 'daena',
+    section: 'products',
   },
   {
     keywords: ['10-stage', 'pipeline', 'stages', 'securitygate', 'auditlog'],
@@ -176,7 +223,7 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['why', 'why mas-ai', 'why daena', 'why choose', 'advantage', 'benefit'],
     answer: 'Three reasons: (1) Governance built into the execution layer, not bolted on. (2) Persistent auditable memory via NBMF, so every decision is traceable. (3) PhiLattice topology for scalable multi-agent coordination. Two patent-pending architectures protect this moat.',
-    section: 'daena',
+    section: 'products',
   },
 
   // HIRING / CAREERS
@@ -219,7 +266,7 @@ const knowledge: KnowledgeEntry[] = [
   {
     keywords: ['try', 'see', 'demo', 'video', 'watch', 'preview', 'look'],
     answer: 'You can explore our working demo and video walkthrough on the Daena product page. We also offer live technical walkthroughs for qualified prospects.',
-    section: 'daena',
+    section: 'products',
     link: 'https://daena.mas-ai.co',
   },
 

@@ -6,10 +6,11 @@ import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 
 const navLinks = [
-  { label: 'Platform', href: '#daena' },
-  { label: 'Portfolio', href: '#portfolio' },
-  { label: 'Enterprise', href: '#enterprise' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Security', href: '/security' },
+  { label: 'Automation', href: '/automation' },
+  { label: 'How I Work', href: '/#products' },
+  { label: 'Proof', href: '/#proof' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
 export default function Navbar() {
@@ -53,14 +54,16 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* CTA */}
+        {/* CTA, primary path: free audit */}
         <a
-          href="https://daena.mas-ai.co"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden md:inline-flex rounded-full bg-[var(--color-mas-cyan)] px-6 py-2 text-sm font-bold text-[var(--color-mas-bg)] transition-all duration-300 hover:shadow-[0_0_24px_var(--color-mas-cyan-glow)] hover:scale-105"
+          href="/security#contact-consulting"
+          className="hidden md:inline-flex rounded-full px-6 py-2 text-sm font-bold text-white transition-all duration-300 hover:scale-105"
+          style={{
+            background: 'var(--color-klyntar-red)',
+            boxShadow: '0 0 24px var(--color-klyntar-red-glow)',
+          }}
         >
-          Explore Daena
+          Book Free Audit
         </a>
 
         {/* Mobile toggle */}
@@ -96,12 +99,11 @@ export default function Navbar() {
                 </a>
               ))}
               <a
-                href="https://daena.mas-ai.co"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-3 rounded-full bg-[var(--color-mas-cyan)] px-5 py-3 text-center text-sm font-bold text-[var(--color-mas-bg)]"
+                href="/security#contact-consulting"
+                className="mt-3 rounded-full px-5 py-3 text-center text-sm font-bold text-white"
+                style={{ background: 'var(--color-klyntar-red)' }}
               >
-                Explore Daena
+                Book Free Audit
               </a>
             </div>
           </motion.div>

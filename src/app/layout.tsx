@@ -57,7 +57,7 @@ const jsonLd = {
       legalName: 'MAS-AI Technologies Inc.',
       url: 'https://mas-ai.co',
       logo: 'https://mas-ai.co/Mas-ai Logo.png',
-      description: 'MAS-AI Technologies Inc. builds Daena, a governance-first AI agent orchestration platform with a 10-stage governed execution pipeline, patent-pending PhiLattice Architecture, and Neural-Backed Memory Fabric.',
+      description: 'MAS-AI Technologies Inc, builds Daena, a governance-first AI agent orchestration platform with a 10-stage governed execution pipeline, patent-pending PhiLattice Architecture, and Neural-Backed Memory Fabric.',
       foundingDate: '2026-01',
       foundingLocation: { '@type': 'Place', name: 'Ontario, Canada' },
       address: { '@type': 'PostalAddress', addressLocality: 'Richmond Hill', addressRegion: 'Ontario', addressCountry: 'CA' },

@@ -8,6 +8,9 @@
   --color-mas-cyan-glow: #00c8ff40;
   --color-mas-gold: #d4a853;
   --color-mas-gold-glow: #d4a85340;
+  --color-klyntar-red: #ff4060;
+  --color-klyntar-red-glow: #ff406040;
+  --color-klyntar-crimson: #b91c3c;
   --color-mas-text: #e8eaf0;
   --color-mas-text-secondary: #94a3b8;
   --color-mas-text-muted: #6b7280;
@@ -204,6 +207,34 @@ body {
     linear-gradient(rgba(212,168,83,0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(212,168,83,0.05) 1px, transparent 1px);
   background-size: 40px 40px;
+}
+
+/* Klyntar fortress grid (tighter, red, defense signal) */
+.klyntar-grid-bg {
+  background-image:
+    linear-gradient(rgba(255,64,96,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,64,96,0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Klyntar red text gradient */
+.text-gradient-red {
+  background: linear-gradient(135deg, #ff4060 0%, #b91c3c 50%, #ff4060 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Klyntar neon red (for counters, emphasis) */
+.text-neon-red {
+  color: #ff4060;
+  text-shadow: 0 0 10px rgba(255, 64, 96, 0.55), 0 0 40px rgba(255, 64, 96, 0.2);
+}
+
+/* Vertical divider between product sectors */
+.product-divider-vert {
+  background: linear-gradient(180deg, transparent 0%, rgba(0,200,255,0.25) 30%, rgba(255,64,96,0.25) 70%, transparent 100%);
+  width: 1px;
 }
 
 /* Glitch effect for "without" */

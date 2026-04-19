@@ -15,7 +15,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What is MAS-AI Technologies?',
     answer:
-      'MAS-AI Technologies Inc. is a Canadian AI company building governed AI systems for enterprises. We develop platforms, products, and deployment services for organizations that need trustworthy, auditable AI agent systems.',
+      'MAS-AI Technologies Inc, is a Canadian AI company building governed AI systems for enterprises. We develop platforms, products, and deployment services for organizations that need trustworthy, auditable AI agent systems.',
   },
   {
     question: 'What is Daena?',
