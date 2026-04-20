@@ -94,7 +94,7 @@ export default function DaenaSpotlight() {
           {/* Badge */}
           <span className="badge-shimmer relative mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-gold)]/20 bg-[var(--color-mas-gold)]/10 px-3 py-1 text-xs uppercase tracking-wider text-[var(--color-mas-gold)]">
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-[#2DD4BF] animate-pulse" />
-            FLAGSHIP PLATFORM &mdash; NOW AVAILABLE
+            FLAGSHIP PLATFORM. NOW AVAILABLE
           </span>
 
           {/* Heading */}

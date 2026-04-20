@@ -38,12 +38,12 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Anthropic (Claude) — 2025 spec.
+# Anthropic (Claude). 2025 spec.
 # Legacy anthropic-ai and Claude-Web were deprecated in 2025.
 # Current triad:
-#   Claude-User      — live user fetch (the one that CITES us in answers)
-#   Claude-SearchBot — search index
-#   ClaudeBot        — training
+#   Claude-User     . live user fetch (the one that CITES us in answers)
+#   Claude-SearchBot. search index
+#   ClaudeBot       . training
 User-agent: Claude-User
 Allow: /
 

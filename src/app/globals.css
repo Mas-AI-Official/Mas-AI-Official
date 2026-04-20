@@ -29,12 +29,12 @@ html {
   overflow-x: hidden;
 }
 
-/* ═══ MOBILE-HARDENING — prevents horizontal scroll on phones ═══
+/* ═══ MOBILE-HARDENING. prevents horizontal scroll on phones ═══
  * Minimal, surgical. The earlier version applied word-break to
  * every <a> globally, which broke nav links into single-letter
  * vertical stacks ("S/e/c/u/r/i/t/y"). That's now scoped to long-
  * paragraph contexts only. Images are left alone (Next/Image
- * handles its own sizing) — only the overflow containers and wrap
+ * handles its own sizing). only the overflow containers and wrap
  * behavior matter for the mobile scroll problem.
  */
 body {
@@ -44,7 +44,7 @@ body {
  * constraints, cap it at parent width. Leave height free so
  * intrinsic aspect ratio is preserved. This rule must NOT apply
  * to Next/Image output because Next renders explicit width/height
- * attributes that should win over max-width: 100% — and they do,
+ * attributes that should win over max-width: 100%. And they do,
  * because max-width only kicks in when computed width exceeds
  * parent. Verified on Navbar h-9 logo. */
 img:not([width]):not([style*="width"]),
@@ -52,7 +52,7 @@ video:not([width]),
 iframe:not([width]) {
   max-width: 100%;
 }
-/* Long-prose contexts only — paragraphs, list items, code blocks.
+/* Long-prose contexts only. paragraphs, list items, code blocks.
  * Does NOT apply to <a>, <h1-5>, <li> elements in nav contexts,
  * which need their text intact. */
 p, code, pre, blockquote {
@@ -61,7 +61,7 @@ p, code, pre, blockquote {
 pre, code {
   white-space: pre-wrap;
 }
-/* Grid children can shrink below content width. Flex removed —
+/* Grid children can shrink below content width. Flex removed .
  * it was too aggressive for flex-row nav bars and button rows. */
 .grid > * {
   min-width: 0;

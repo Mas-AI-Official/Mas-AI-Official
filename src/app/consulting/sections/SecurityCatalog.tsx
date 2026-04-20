@@ -52,7 +52,7 @@ const services: Service[] = [
       'Secrets + credential audit',
       'App-store compliance checklist',
     ],
-    timeframe: '~1–2 weeks',
+    timeframe: '~1-2 weeks',
   },
   {
     icon: Brain,
@@ -78,7 +78,7 @@ const services: Service[] = [
       'DNS + subdomain hygiene audit',
       'SaaS + vendor exposure review',
     ],
-    timeframe: '~1–2 weeks',
+    timeframe: '~1-2 weeks',
   },
   {
     icon: Database,

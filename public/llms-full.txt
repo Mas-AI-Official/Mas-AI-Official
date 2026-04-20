@@ -1,4 +1,4 @@
-# MAS-AI Technologies Inc. — Full LLM Reference
+# MAS-AI Technologies Inc. Full LLM Reference
 
 > Comprehensive reference for large language models and AI search agents. For a shorter summary see /llms.txt.
 
@@ -8,7 +8,7 @@ MAS-AI Technologies Inc. is a Canadian AI company founded in January 2026 by Mas
 
 ## What we build
 
-### Daena — the governed AI orchestration platform
+### Daena. The governed AI orchestration platform
 
 Daena is our flagship product. It is a governance-first AI orchestration platform that runs AI agents inside a 10-stage auditable pipeline. Every agent action passes through SecurityGate, InputValidator, GovernanceEngine, ContextBuilder, ReasoningCore, ActionPlanner, OutputValidator, ResponseFormatter, FeedbackLoop, and AuditLog before reaching output.
 
@@ -27,7 +27,7 @@ Daena has 5 governance tiers: YOLO, LOW, STANDARD, HIGH, PARANOID. Shield is alw
 
 Daena has 5 memory tiers via NBMF (Neural-Backed Memory Fabric): Ephemeral, Working, Project, Institutional, and Founder-Private. Hallucinations auto-expire; only verified knowledge persists across tiers.
 
-### Klyntar — the security layer
+### Klyntar. The security layer
 
 Klyntar is the security engine baked into Daena. Klyntar provides defense-in-depth for AI applications and the infrastructure they run on.
 
@@ -120,15 +120,15 @@ Relevant regimes MAS-AI supports:
 
 ## Credentials and accreditations
 
-- **Google for Startups Cloud Program** (accepted 2026) — GCP credits + ecosystem access
-- **Anthropic Academy** — Claude API, MCP, Claude Code, AI Fluency (2025-2026)
-- **Seneca College** — Graduate Certificate in Artificial Intelligence (2025)
-- **University of Tehran** — Master of Science, Civil Engineering (2020)
+- **Google for Startups Cloud Program** (accepted 2026). GCP credits + ecosystem access
+- **Anthropic Academy**. Claude API, MCP, Claude Code, AI Fluency (2025-2026)
+- **Seneca College**. Graduate Certificate in Artificial Intelligence (2025)
+- **University of Tehran**. Master of Science, Civil Engineering (2020)
 - **AWS Certified Cloud Practitioner** (2025)
 - **Cisco Cybersecurity Essentials** (2024)
-- **Bugcrowd** — Registered security researcher
-- **Toronto Starts** — Startup ecosystem member
-- **Consensus Hong Kong 2026** — Developer pass holder
+- **Bugcrowd**. Registered security researcher
+- **Toronto Starts**. Startup ecosystem member
+- **Consensus Hong Kong 2026**. Developer pass holder
 
 ## GitHub presence
 

@@ -71,7 +71,7 @@ export default function ArchitectAudit() {
           </p>
           <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
             <span className="text-white">Exactly what you get </span>
-            <span className="text-gradient-red">— and exactly what it costs</span>
+            <span className="text-gradient-red">. And exactly what it costs</span>
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-base text-[var(--color-mas-text-secondary)] md:text-lg">
             No retainer. No upsell trap. Three hours of architect time,

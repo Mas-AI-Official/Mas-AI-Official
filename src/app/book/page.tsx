@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 }
 
 // FAQPage schema drives Google AI Overviews + Perplexity citation. Must match
-// the visible FAQ text on BookingFaq.tsx — Google flags mismatch as spam.
+// the visible FAQ text on BookingFaq.tsx. Google flags mismatch as spam.
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -71,7 +71,7 @@ const faqSchema = {
       name: 'What happens if attackers still get through after you finish?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Every engagement is scoped to specific targets and a specific window. We find and fix what we can find inside that window. We do not promise 100% security — nobody can, and anyone who claims they can is lying. Our contract caps liability at the engagement value, carves out third-party breaches and zero-day CVEs discovered after delivery, and sets clear scope boundaries.',
+        text: 'Every engagement is scoped to specific targets and a specific window. We find and fix what we can find inside that window. We do not promise 100% security. nobody can, and anyone who claims they can is lying. Our contract caps liability at the engagement value, carves out third-party breaches and zero-day CVEs discovered after delivery, and sets clear scope boundaries.',
       },
     },
     {

@@ -15,7 +15,7 @@ const tiers = [
       'Proof-of-exploit bundle',
       'Remediation guide',
       'One round of re-test after fixes',
-      'Delivered in 5–10 business days',
+      'Delivered in 5-10 business days',
     ],
     cta: 'Get a quote',
   },

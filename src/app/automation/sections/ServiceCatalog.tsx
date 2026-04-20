@@ -53,7 +53,7 @@ const services: Service[] = [
       'Audit log forwarding to your SIEM',
       'Team onboarding + best-practice guide',
     ],
-    timeframe: '~1–2 weeks',
+    timeframe: '~1-2 weeks',
   },
   {
     icon: Mic,
@@ -92,7 +92,7 @@ const services: Service[] = [
       'Integration with your existing tools',
       '4-week iteration window',
     ],
-    timeframe: '~3–4 weeks',
+    timeframe: '~3-4 weeks',
   },
   {
     icon: Plug,
@@ -105,7 +105,7 @@ const services: Service[] = [
       'Works with Claude, Codex, Daena, Klyntar',
       'Full source + docs delivered',
     ],
-    timeframe: '~2–3 weeks',
+    timeframe: '~2-3 weeks',
   },
 ]
 

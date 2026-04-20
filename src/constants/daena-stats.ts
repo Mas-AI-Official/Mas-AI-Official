@@ -1,5 +1,5 @@
 /**
- * Daena Platform Stats — Single source of truth
+ * Daena Platform Stats. Single source of truth
  * Update here and all pages/components reflect automatically.
  * Keep in sync with daena.mas-ai.co (D:\Ideas\daena-website\index.html)
  */

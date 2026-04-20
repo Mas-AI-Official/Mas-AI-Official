@@ -30,7 +30,7 @@ const tiers = [
       'Custom agent, fully integrated',
       'Shield + Security always on',
       'MCP connectors for your stack',
-      '3–4 week build window',
+      '3-4 week build window',
       '30-day hypercare + iteration',
       'Full source code + ownership',
     ],

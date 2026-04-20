@@ -181,7 +181,7 @@ function FacePanel({ face }: { face: Face }) {
     >
       <div className={`${gridClass} absolute inset-0 pointer-events-none opacity-40`} aria-hidden />
 
-      {/* Circular avatar — smaller icon style, accent ring */}
+      {/* Circular avatar. smaller icon style, accent ring */}
       <div className="relative mb-6 flex justify-center">
         {/* Ambient glow behind portrait */}
         <div

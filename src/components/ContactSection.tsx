@@ -51,7 +51,7 @@ export default function ContactSection() {
     setFormState('loading')
 
     try {
-      // FormSubmit.co — free, no signup needed, emails go directly to founder
+      // FormSubmit.co. free, no signup needed, emails go directly to founder
       const res = await fetch('https://formsubmit.co/ajax/masoud.masoori@mas-ai.co', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -256,7 +256,7 @@ export default function ContactSection() {
                   { icon: Zap, text: 'Full platform access with governed agent orchestration', color: 'var(--color-mas-cyan)' },
                   { icon: Shield, text: '10-stage pipeline with audit trail and policy enforcement', color: 'var(--color-mas-gold)' },
                   { icon: Users, text: 'Direct line to the founder for onboarding support', color: '#a78bfa' },
-                  { icon: Sparkles, text: 'Shape the roadmap — your feedback drives development', color: '#22c55e' },
+                  { icon: Sparkles, text: 'Shape the roadmap. Your feedback drives development', color: '#22c55e' },
                 ].map((item, i) => {
                   const Icon = item.icon
                   return (

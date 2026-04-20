@@ -3,9 +3,16 @@
   "configurations": [
     {
       "name": "mas-ai-next",
-      "runtimeExecutable": "npm",
+      "runtimeExecutable": "npm.cmd",
       "runtimeArgs": ["run", "dev"],
+      "cwd": "D:/Ideas/mas-ai",
       "port": 3000
+    },
+    {
+      "name": "mas-ai-out",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3344", "--directory", "D:/Ideas/mas-ai/out"],
+      "port": 3344
     }
   ]
 }

@@ -119,7 +119,7 @@ export default function BookingOptions() {
           All three responded to within 48 business hours · No credit card required · All three can become paid engagements later but never automatically
         </p>
 
-        {/* Pricing reassurance — scope matches the business */}
+        {/* Pricing reassurance. scope matches the business */}
         <div className="mt-8 mx-auto max-w-3xl rounded-2xl border border-[var(--color-mas-gold)]/30 bg-[rgba(212,168,83,0.05)] p-6 text-center">
           <p className="text-sm text-[var(--color-mas-text-secondary)]">
             <strong className="text-[var(--color-mas-gold)]">Worried about price?</strong>
