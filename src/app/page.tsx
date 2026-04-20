@@ -46,7 +46,7 @@ export default function HomePage() {
 
         <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <section id="portfolio" className="relative" style={{ background: 'linear-gradient(180deg, rgba(15,22,41,0.15) 0%, rgba(10,14,26,0.2) 50%, rgba(15,22,41,0.15) 100%)' }}>
+        <section id="portfolio" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(0,200,255,0.04) 0%, transparent 55%)' }}>
           <PortfolioSection />
         </section>
 
@@ -56,15 +56,15 @@ export default function HomePage() {
           <EnterpriseServices />
         </section>
 
-        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
+        <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-[var(--color-mas-gold)]/15 to-transparent" />
 
-        <section id="credibility" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 60%, rgba(0,200,255,0.03) 0%, transparent 50%)' }}>
+        <section id="credibility" className="relative">
           <CredibilitySection />
         </section>
 
         <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <section id="contact" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(124,58,237,0.05) 0%, transparent 60%)' }}>
+        <section id="contact" className="relative">
           <ContactSection />
         </section>
 

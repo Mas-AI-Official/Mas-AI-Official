@@ -1,0 +1,21 @@
+{
+  "name": "MAS-AI Technologies",
+  "short_name": "MAS-AI",
+  "description": "Governance-first AI agent platform. Building Daena, the AI-native company OS.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0b14",
+  "theme_color": "#0b0b14",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48 64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

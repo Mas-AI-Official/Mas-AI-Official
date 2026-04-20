@@ -9,6 +9,8 @@ import {
   Sparkles,
   Mail,
   Linkedin,
+  ArrowUpRight,
+  Award,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 import Image from 'next/image'
@@ -18,14 +20,15 @@ import Image from 'next/image'
 interface TrustBadge {
   icon: LucideIcon
   label: string
+  accentColor: string
 }
 
 const trustBadges: TrustBadge[] = [
-  { icon: CheckCircle, label: 'Google for Startups Cloud Program' },
-  { icon: Shield, label: '2 USPTO Patents Pending' },
-  { icon: Cloud, label: 'Azure for Startups' },
-  { icon: Cloud, label: 'GCP Credits Secured' },
-  { icon: Sparkles, label: 'Perplexity for Startups' },
+  { icon: CheckCircle, label: 'Google for Startups Cloud Program', accentColor: '#22c55e' },
+  { icon: Shield, label: '2 USPTO Patents Filed', accentColor: 'var(--color-mas-gold)' },
+  { icon: Cloud, label: 'Azure for Startups', accentColor: '#0ea5e9' },
+  { icon: Cloud, label: 'GCP Credits Secured', accentColor: '#facc15' },
+  { icon: Sparkles, label: 'Perplexity for Startups', accentColor: '#a78bfa' },
 ]
 
 // --- Variants ---------------------------------------------------------------
@@ -38,11 +41,21 @@ const sectionVariants = {
 }
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 24, scale: 0.95 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0, 0, 0.2, 1] as [number, number, number, number] },
+    scale: 1,
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
+  },
+}
+
+const founderVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as [number, number, number, number] },
   },
 }
 
@@ -50,17 +63,40 @@ const itemVariants = {
 
 export default function CredibilitySection() {
   const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: '-60px' })
+  const isInView = useInView(ref, { once: false, margin: '-60px' })
 
   return (
-    <section id="credibility" className="relative px-6 py-12 md:py-16">
-      <div className="mx-auto max-w-6xl">
+    <section id="credibility" className="relative px-6 py-20 md:py-28">
+      {/* Visible section background gradient for contrast */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        aria-hidden
+        style={{
+          background: 'linear-gradient(180deg, rgba(0,200,255,0.03) 0%, rgba(15,22,41,0.4) 30%, rgba(15,22,41,0.4) 70%, rgba(0,200,255,0.03) 100%)',
+        }}
+      />
+
+      <div className="relative mx-auto max-w-6xl">
         {/* Header */}
-        <div className="mb-16 text-center">
+        <motion.div
+          className="mb-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-gold)]/20 bg-[var(--color-mas-gold)]/8 px-3 py-1">
+            <Award className="h-3.5 w-3.5 text-[var(--color-mas-gold)]" />
+            <span className="text-xs font-semibold uppercase tracking-wider text-[var(--color-mas-gold)] font-[family-name:var(--font-mono)]">
+              Credibility
+            </span>
+          </div>
           <h2 className="text-gradient font-display text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
             Backed by Real Engineering
           </h2>
-        </div>
+          <p className="mx-auto mt-4 max-w-xl text-base text-[var(--color-mas-text-secondary)]">
+            Recognized by industry leaders. Patent-pending technology. Production-grade engineering.
+          </p>
+        </motion.div>
 
         {/* Trust badges */}
         <motion.div
@@ -68,7 +104,7 @@ export default function CredibilitySection() {
           variants={sectionVariants}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
-          className="mb-20 flex gap-6 overflow-x-auto pb-2 md:flex-wrap md:justify-center md:overflow-x-visible"
+          className="mb-16 flex gap-4 overflow-x-auto pb-2 md:flex-wrap md:justify-center md:overflow-x-visible"
         >
           {trustBadges.map((badge) => {
             const Icon = badge.icon
@@ -76,10 +112,24 @@ export default function CredibilitySection() {
               <motion.div
                 key={badge.label}
                 variants={itemVariants}
-                className="glass flex shrink-0 items-center gap-3 whitespace-nowrap rounded-xl px-5 py-4"
+                whileHover={{ y: -4, transition: { type: 'spring', stiffness: 400, damping: 15 } }}
+                className="group flex shrink-0 items-center gap-3 whitespace-nowrap rounded-xl px-5 py-4 cursor-default transition-all duration-300 hover:shadow-[0_8px_24px_rgba(0,0,0,0.3)]"
+                style={{
+                  background: 'rgba(15, 22, 41, 0.5)',
+                  border: '1px solid rgba(30, 41, 59, 0.5)',
+                  backdropFilter: 'blur(8px)',
+                }}
               >
-                <Icon className="h-5 w-5 text-[var(--color-mas-cyan)]" />
-                <span className="text-sm font-medium text-[var(--color-mas-text)]">
+                <div
+                  className="flex items-center justify-center w-9 h-9 rounded-lg transition-all duration-300 group-hover:scale-110"
+                  style={{
+                    background: `linear-gradient(135deg, color-mix(in srgb, ${badge.accentColor} 20%, transparent), transparent)`,
+                    boxShadow: `0 0 0 1px color-mix(in srgb, ${badge.accentColor} 25%, transparent)`,
+                  }}
+                >
+                  <Icon className="h-4 w-4 transition-colors duration-300" style={{ color: badge.accentColor }} />
+                </div>
+                <span className="text-sm font-medium text-[var(--color-mas-text)] transition-colors duration-200 group-hover:text-white">
                   {badge.label}
                 </span>
               </motion.div>
@@ -89,55 +139,73 @@ export default function CredibilitySection() {
 
         {/* Founder section */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.5, ease: [0, 0, 0.2, 1] as [number, number, number, number] }}
-          className="mx-auto max-w-2xl text-center"
+          variants={founderVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: false, margin: '-60px' }}
+          className="mx-auto max-w-2xl"
         >
-          {/* Founder photo */}
-          <div className="relative mx-auto mb-6 h-24 w-24">
-            <div className="absolute inset-[-8px] rounded-full bg-amber-500/20 blur-xl" />
-            <Image
-              src="/assets/masoud-photo.jpg"
-              alt="Masoud Masoori, Founder and CEO of MAS-AI Technologies"
-              width={96}
-              height={96}
-              className="rounded-full border-2 border-amber-500/20 object-cover w-24 h-24"
-            />
-          </div>
+          <div
+            className="rounded-2xl p-10 text-center group relative overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, rgba(15, 22, 41, 0.7) 0%, rgba(20, 28, 50, 0.6) 100%)',
+              border: '1px solid rgba(212, 168, 83, 0.15)',
+              backdropFilter: 'blur(12px)',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.03)',
+            }}
+          >
+            {/* Subtle gold glow in corner */}
+            <div className="absolute top-0 right-0 w-40 h-40 bg-[var(--color-mas-gold)]/[0.04] rounded-full blur-3xl pointer-events-none" />
 
-          {/* Name & title */}
-          <h3 className="text-xl font-bold text-[var(--color-mas-text)]">Masoud Masoori</h3>
-          <p className="mt-1 text-sm font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">
-            Founder &amp; CEO
-          </p>
+            {/* Founder photo with ambient glow */}
+            <div className="relative mx-auto mb-6 h-28 w-28">
+              <div className="absolute inset-[-16px] rounded-full bg-amber-500/20 blur-2xl transition-all duration-500 group-hover:bg-amber-500/30 group-hover:blur-3xl" />
+              <Image
+                src="/assets/masoud-photo.jpg"
+                alt="Masoud Masoori, Founder and CEO of MAS-AI Technologies"
+                width={112}
+                height={112}
+                className="relative rounded-full border-2 border-amber-500/30 object-cover w-28 h-28 transition-all duration-300 group-hover:border-amber-500/50 group-hover:shadow-[0_0_40px_rgba(212,168,83,0.2)]"
+              />
+            </div>
 
-          {/* Bio */}
-          <p className="mt-4 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
-            Solo technical founder and senior AI/ML architect. Background spanning deep learning,
-            robotics, and enterprise systems. Built MAS-AI from zero into a governance-first AI
-            company with two patent-pending architectures.
-          </p>
+            {/* Name & title */}
+            <h3 className="text-xl font-bold text-white font-[family-name:var(--font-display)]">
+              Masoud Masoori
+            </h3>
+            <p className="mt-1 text-sm font-[family-name:var(--font-mono)] text-[var(--color-mas-gold)]">
+              Founder &amp; CEO
+            </p>
 
-          {/* Links */}
-          <div className="mt-6 flex items-center justify-center gap-6">
-            <a
-              href="mailto:masoud.masoori@mas-ai.co"
-              className="flex items-center gap-2 text-sm text-[var(--color-mas-text-secondary)] transition-colors hover:text-[var(--color-mas-cyan)]"
-            >
-              <Mail className="h-4 w-4" />
-              masoud.masoori@mas-ai.co
-            </a>
-            <a
-              href="https://www.linkedin.com/in/masoud-masoori"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-[var(--color-mas-text-secondary)] transition-colors hover:text-[var(--color-mas-cyan)]"
-            >
-              <Linkedin className="h-4 w-4" />
-              LinkedIn
-            </a>
+            {/* Bio */}
+            <p className="mt-5 text-sm leading-relaxed text-[var(--color-mas-text-secondary)]">
+              Solo technical founder and senior AI/ML architect. Background spanning deep learning,
+              robotics, and enterprise systems. Built MAS-AI from zero into a governance-first AI
+              company with two USPTO patents filed, 1,764 passing tests, six proprietary subsystems,
+              and multi-runtime agent orchestration across 9 AI providers.
+            </p>
+
+            {/* Links */}
+            <div className="mt-8 flex items-center justify-center gap-4">
+              <a
+                href="mailto:masoud.masoori@mas-ai.co"
+                className="group/link inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-border)] bg-white/[0.03] px-4 py-2 text-sm text-[var(--color-mas-text-secondary)] transition-all duration-300 hover:border-[var(--color-mas-cyan)]/30 hover:text-[var(--color-mas-cyan)] hover:bg-[var(--color-mas-cyan)]/5 hover:shadow-[0_0_16px_rgba(0,200,255,0.08)]"
+              >
+                <Mail className="h-4 w-4" />
+                Email
+                <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-60 group-hover/link:translate-x-0" />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/masoud-masoori"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group/link inline-flex items-center gap-2 rounded-full border border-[var(--color-mas-border)] bg-white/[0.03] px-4 py-2 text-sm text-[var(--color-mas-text-secondary)] transition-all duration-300 hover:border-[#0a66c2]/30 hover:text-[#0a66c2] hover:bg-[#0a66c2]/5 hover:shadow-[0_0_16px_rgba(10,102,194,0.1)]"
+              >
+                <Linkedin className="h-4 w-4" />
+                LinkedIn
+                <ArrowUpRight className="h-3 w-3 opacity-0 -translate-x-1 transition-all duration-200 group-hover/link:opacity-60 group-hover/link:translate-x-0" />
+              </a>
+            </div>
           </div>
         </motion.div>
       </div>
