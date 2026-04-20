@@ -465,6 +465,39 @@ export default function DaenaGuide() {
   const mood = SECTION_MOODS[activeSection] || DEFAULT_MOOD
   const avatarSize = isMobile ? 'w-12 h-16' : 'w-20 h-28'
 
+  // Klyntar mode activates when the user is on a security-adjacent surface:
+  // the /security route, the AI Act page (security-adjacent), or when the
+  // chat is discussing security/Klyntar (mood glow flips red). Same character,
+  // security mode on.
+  const [pathname, setPathname] = useState('/')
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+    const update = () => setPathname(window.location.pathname)
+    update()
+    // Pick up client-side navigations
+    window.addEventListener('popstate', update)
+    // Next.js App Router: listen for click on any <a> that changes the path
+    const onClick = () => setTimeout(update, 50)
+    document.addEventListener('click', onClick)
+    return () => {
+      window.removeEventListener('popstate', update)
+      document.removeEventListener('click', onClick)
+    }
+  }, [])
+
+  const onSecurityRoute =
+    pathname.startsWith('/security') || pathname.startsWith('/ai-act-readiness')
+  // Red-tinted section moods signal security context even on the homepage
+  const redMood = mood.glow === '#ff4060' || mood.glow.toLowerCase().startsWith('#ff4')
+  const klyntarMode = onSecurityRoute || redMood
+  // Chatbot uses the full-body Daena avatar (looks right at small size).
+  // Swap to the half-face Klyntar portrait when on security surfaces.
+  // Framing mismatch is intentional: full body = calm, close-up = intensity.
+  const avatarSrc = klyntarMode
+    ? '/assets/img/klyntar-avatar.png'
+    : '/assets/img/daena-nobg.png'
+  const avatarLabel = klyntarMode ? 'Klyntar, security mode' : 'Daena, AI guide'
+
   return (
     <>
       {/* Avatar + speech bubble */}
@@ -502,23 +535,41 @@ export default function DaenaGuide() {
           )}
         </AnimatePresence>
 
-        {/* Avatar */}
+        {/* Avatar. swaps between Daena and Klyntar based on context. */}
         <div
           onClick={() => setChatOpen(!chatOpen)}
-          className={`${avatarSize} cursor-pointer`}
+          className={`${avatarSize} cursor-pointer relative`}
           style={{
             filter: `brightness(${mood.brightness}) drop-shadow(0 0 12px ${mood.glow}30)`,
             transition: 'filter 0.6s ease',
           }}
         >
-          <Image
-            src="/assets/img/daena-nobg.png"
-            alt="Daena, AI VP of MAS-AI Technologies"
-            width={200}
-            height={280}
-            className="object-cover object-top w-full h-full"
-            priority
-          />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={avatarSrc}
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.85 }}
+              transition={{ duration: 0.35, ease: EASE }}
+              className="absolute inset-0"
+            >
+              <Image
+                src={avatarSrc}
+                alt={avatarLabel}
+                width={200}
+                height={280}
+                className="object-cover object-top w-full h-full"
+                priority
+                onError={(e) => {
+                  // Fallback to Daena if Klyntar image is not saved yet
+                  const target = e.currentTarget as HTMLImageElement
+                  if (target.src.includes('klyntar-avatar')) {
+                    target.src = '/assets/img/daena-avatar-new.png'
+                  }
+                }}
+              />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
 
@@ -545,7 +596,7 @@ export default function DaenaGuide() {
               WebkitBackdropFilter: 'blur(20px)',
             }}
           >
-            {/* Header */}
+            {/* Header. avatar mirrors the floating one (Daena / Klyntar). */}
             <div
               className="flex items-center gap-3 px-4 py-3 shrink-0"
               style={{ borderBottom: `1px solid ${mood.glow}15` }}
@@ -554,11 +605,27 @@ export default function DaenaGuide() {
                 className="w-8 h-8 rounded-full overflow-hidden border shrink-0"
                 style={{ borderColor: `${mood.glow}30` }}
               >
-                <Image src="/assets/img/daena-nobg.png" alt="Daena" width={32} height={32} className="object-cover object-top" />
+                <Image
+                  src={avatarSrc}
+                  alt={avatarLabel}
+                  width={32}
+                  height={32}
+                  className="object-cover object-top"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement
+                    if (target.src.includes('klyntar-avatar')) {
+                      target.src = '/assets/img/daena-avatar-new.png'
+                    }
+                  }}
+                />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-white font-[family-name:var(--font-syne)]">Daena</p>
-                <p className="text-[10px] font-[family-name:var(--font-jetbrains)]" style={{ color: mood.glow }}>AI Guide</p>
+                <p className="text-sm font-semibold text-white font-[family-name:var(--font-syne)]">
+                  {klyntarMode ? 'Klyntar' : 'Daena'}
+                </p>
+                <p className="text-[10px] font-[family-name:var(--font-jetbrains)]" style={{ color: mood.glow }}>
+                  {klyntarMode ? 'Security Mode' : 'AI Guide'}
+                </p>
               </div>
               <button onClick={() => setChatOpen(false)} className="text-[var(--color-mas-text-muted)] hover:text-white p-1" aria-label="Close chat">
                 <X size={16} />

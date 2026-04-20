@@ -1,33 +1,97 @@
-# MAS-AI Technologies Inc. - robots.txt
-User-agent: *
-Allow: /
-Sitemap: https://mas-ai.co/sitemap.xml
+# robots.txt for MAS-AI Technologies Inc. (mas-ai.co)
+# Explicit allow for traditional search + AI search + AI training crawlers.
+# Rationale: discovery beats defense for a pre-revenue services firm.
+# We WANT LLMs to train on our content so they cite us in answers.
 
+# Traditional search engines
 User-agent: Googlebot
 Allow: /
 
 User-agent: Bingbot
 Allow: /
 
-# AI search crawlers - ALLOWED
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# AI search and training crawlers (explicit allow for discoverability)
+
+# OpenAI (ChatGPT Search + training)
+User-agent: OAI-SearchBot
+Allow: /
+
 User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# Google (Gemini AI Overviews + SGE + training)
+User-agent: Google-Extended
+Allow: /
+
+# Anthropic (Claude web search + training)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
 Allow: /
 
 User-agent: Claude-Web
 Allow: /
 
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
 
-# AI training crawlers - BLOCKED
-User-agent: GPTBot
-Disallow: /
-
-User-agent: Google-Extended
-Disallow: /
-
+# Common Crawl (used by many LLM training pipelines)
 User-agent: CCBot
-Disallow: /
+Allow: /
 
-User-agent: anthropic-ai
-Disallow: /
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Apple Intelligence / Siri
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Mistral AI
+User-agent: MistralAI-User
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# ByteDance (Doubao)
+User-agent: Bytespider
+Allow: /
+
+# Amazonbot (Alexa / Amazon AI)
+User-agent: Amazonbot
+Allow: /
+
+# Default: allow everything else
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://mas-ai.co/sitemap.xml
+
+# LLM-specific indexes (becoming standard)
+# Reference: https://llmstxt.org

@@ -1,12 +1,17 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
 import { Network, ShieldAlert, ArrowRight } from 'lucide-react'
 
-// Daena is the PLATFORM. Klyntar is Daena's SECURITY LAYER.
-// This section shows the two capabilities side-by-side, but the framing is:
-// "one platform (Daena), with security baked in (Klyntar)."
+// Two portraits, same face, two modes.
+// Daena = clean governance portrait. Klyntar = symbiote security mode.
+// Visual storytelling: one product, two capabilities, one character.
+//
+// Image paths (both backgrounds-removed via rembg, saved 2026-04-19):
+//   /assets/img/daena-avatar-new.png  (clean portrait, Daena side)
+//   /assets/img/klyntar-avatar.png    (half-symbiote, Klyntar security mode)
 
 interface Pillar {
   label: string
@@ -14,7 +19,7 @@ interface Pillar {
 }
 
 interface Face {
-  id: 'core' | 'security'
+  id: 'daena' | 'klyntar'
   eyebrow: string
   name: string
   tagline: string
@@ -23,16 +28,18 @@ interface Face {
   cta: { label: string; href: string }
   icon: typeof Network
   accent: 'cyan' | 'red'
+  avatarSrc: string
+  avatarAlt: string
 }
 
 const faces: Face[] = [
   {
-    id: 'core',
+    id: 'daena',
     eyebrow: 'The Platform',
     name: 'Daena',
     tagline: 'Governed AI. Any runtime.',
     description:
-      '10 departments, 60 agent capabilities, a 10-stage auditable pipeline. Runs Claude, Codex, Gemini, Grok, or Ollama, governed end-to-end with patent-pending PhiLattice topology and Neural-Backed Memory Fabric.',
+      '10 departments. 60 agent capabilities. A 10-stage auditable pipeline that runs Claude, Codex, Gemini, Grok, or Ollama, governed end-to-end. Patent-pending PhiLattice topology. Neural-Backed Memory Fabric.',
     pillars: [
       { label: 'Departments', value: '10' },
       { label: 'Agent Capabilities', value: '60' },
@@ -42,14 +49,16 @@ const faces: Face[] = [
     cta: { label: 'Explore Daena', href: 'https://daena.mas-ai.co' },
     icon: Network,
     accent: 'cyan',
+    avatarSrc: '/assets/img/daena-avatar-new.png',
+    avatarAlt: 'Daena, the governed AI platform',
   },
   {
-    id: 'security',
-    eyebrow: "Daena's Security Layer",
+    id: 'klyntar',
+    eyebrow: 'Security Mode',
     name: 'Klyntar',
-    tagline: 'Every deployment, defended.',
+    tagline: 'When Daena defends.',
     description:
-      'Klyntar is the security engine baked into Daena. Honeypot traps, 25+ exploit signatures, anti-scanner detection for 45+ hacking tools. Zero-FP gate drops any finding without a working exploit. The same layer that protects our own production ships to every engagement.',
+      'Klyntar is Daena in security mode. Honeypot traps. 25+ exploit signatures. Anti-scanner detection for 45+ hacking tools. Zero-FP gate drops findings without a working exploit. The same defense layer that protects our own production ships on every engagement.',
     pillars: [
       { label: 'Exploit Signatures', value: '25+' },
       { label: 'Scanners Detected', value: '45+' },
@@ -59,12 +68,14 @@ const faces: Face[] = [
     cta: { label: 'See Security Services', href: '/security' },
     icon: ShieldAlert,
     accent: 'red',
+    avatarSrc: '/assets/img/klyntar-avatar.png',
+    avatarAlt: 'Klyntar, Daena in security mode',
   },
 ]
 
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.18 } },
+  visible: { transition: { staggerChildren: 0.2 } },
 }
 
 const panelVariants = {
@@ -87,24 +98,24 @@ export default function ProductsSection() {
         {/* Header */}
         <div className="mb-14 text-center">
           <p className="mb-4 text-xs uppercase tracking-[0.3em] font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">
-            How We Work
+            One Character. Two Modes.
           </p>
           <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-            <span className="text-white">One platform. </span>
-            <span className="text-gradient">Governance</span>
-            <span className="text-white"> and </span>
-            <span className="text-gradient-red">security</span>
-            <span className="text-white"> built in.</span>
+            <span className="text-white">Meet </span>
+            <span className="text-gradient">Daena</span>
+            <span className="text-white">. Meet </span>
+            <span className="text-gradient-red">Klyntar</span>
+            <span className="text-white">.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base text-[var(--color-mas-text-secondary)] md:text-lg">
-            We built <strong className="text-white">Daena</strong> to run our own AI safely.
-            {' '}<strong className="text-white">Klyntar</strong> is the security layer inside it.
-            We install this same stack at your company, or we use it to audit
-            the stack <strong className="text-white">you already run</strong>.
+            <strong className="text-white">Same platform. Same character.</strong>
+            {' '}Daena handles governance and orchestration.
+            Klyntar is the <strong className="text-[var(--color-klyntar-red)]">security mode</strong>
+            {' '}that activates when there is something to defend.
           </p>
         </div>
 
-        {/* Side-by-side panels */}
+        {/* Twin portraits side by side */}
         <motion.div
           ref={ref}
           variants={containerVariants}
@@ -120,19 +131,15 @@ export default function ProductsSection() {
           <FacePanel face={faces[1]} />
         </motion.div>
 
-        {/* Unifying bottom strip */}
+        {/* Unifying kernel strip */}
         <div className="mt-12 rounded-2xl border border-[var(--color-mas-border)] bg-[rgba(15,22,41,0.3)] backdrop-blur-md px-6 py-5 text-center">
           <p className="text-sm text-[var(--color-mas-text-secondary)]">
-            <span className="font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">Shared kernel:</span>{' '}
-            <strong className="text-white">Shield always on</strong>
-            {' · '}
-            <strong className="text-white">SecurityGate</strong>
-            {' · '}
-            audit trail that never blocks execution
-            {' · '}
-            bring-your-own runtime
-            {' · '}
-            <strong className="text-white">zero telemetry by default</strong>
+            <span className="font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">Shared kernel:</span>
+            {' '}<strong className="text-white">Shield always on</strong>
+            {' · '}<strong className="text-white">SecurityGate</strong>
+            {' · '}audit trail that never blocks execution
+            {' · '}bring-your-own runtime
+            {' · '}<strong className="text-white">zero telemetry by default</strong>
           </p>
         </div>
       </div>
@@ -140,10 +147,13 @@ export default function ProductsSection() {
   )
 }
 
-// --- Panel ---
+// --- Panel with portrait ---
 
 function FacePanel({ face }: { face: Face }) {
   const Icon = face.icon
+  const [hovered, setHovered] = useState(false)
+  const [imgFailed, setImgFailed] = useState(false)
+
   const isCyan = face.accent === 'cyan'
   const accentVar = isCyan ? 'var(--color-mas-cyan)' : 'var(--color-klyntar-red)'
   const accentGlow = isCyan ? 'var(--color-mas-cyan-glow)' : 'var(--color-klyntar-red-glow)'
@@ -154,31 +164,82 @@ function FacePanel({ face }: { face: Face }) {
   return (
     <motion.div
       variants={panelVariants}
-      className="group relative overflow-hidden rounded-2xl border border-[var(--color-mas-border)] bg-[rgba(15,22,41,0.35)] backdrop-blur-md p-8 md:p-10 transition-all duration-500 hover:-translate-y-1"
+      className="group relative overflow-hidden rounded-2xl border border-[var(--color-mas-border)] bg-[rgba(15,22,41,0.35)] backdrop-blur-md p-6 md:p-8 transition-all duration-500 hover:-translate-y-1"
       style={{
         boxShadow: `0 0 0 1px transparent, 0 20px 60px rgba(0,0,0,0.5)`,
       }}
       onMouseEnter={(e) => {
+        setHovered(true)
         e.currentTarget.style.borderColor = accentVar
         e.currentTarget.style.boxShadow = `0 0 0 1px ${accentVar}, 0 20px 60px ${accentGlow}`
       }}
       onMouseLeave={(e) => {
+        setHovered(false)
         e.currentTarget.style.borderColor = 'var(--color-mas-border)'
         e.currentTarget.style.boxShadow = `0 0 0 1px transparent, 0 20px 60px rgba(0,0,0,0.5)`
       }}
     >
       <div className={`${gridClass} absolute inset-0 pointer-events-none opacity-40`} aria-hidden />
 
+      {/* Circular avatar — smaller icon style, accent ring */}
+      <div className="relative mb-6 flex justify-center">
+        {/* Ambient glow behind portrait */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 mx-auto h-56 w-56 md:h-64 md:w-64 rounded-full blur-[40px] transition-opacity duration-700"
+          style={{
+            background: `radial-gradient(circle, ${accentVar}, transparent 65%)`,
+            opacity: hovered ? 0.65 : 0.32,
+          }}
+        />
+
+        {/* Circular avatar with accent ring + drop shadow */}
+        <div
+          className="relative h-40 w-40 md:h-48 md:w-48 rounded-full overflow-hidden transition-transform duration-700 group-hover:scale-[1.06]"
+          style={{
+            border: `2px solid ${accentVar}`,
+            background: 'rgba(10,14,26,0.65)',
+            boxShadow: `0 0 0 4px ${accentGlow}, 0 8px 32px ${accentGlow}, inset 0 0 32px rgba(0,0,0,0.3)`,
+          }}
+        >
+          {!imgFailed ? (
+            <Image
+              src={face.avatarSrc}
+              alt={face.avatarAlt}
+              fill
+              sizes="(min-width: 768px) 192px, 160px"
+              className="object-cover object-center"
+              onError={() => setImgFailed(true)}
+              priority={isCyan}
+            />
+          ) : (
+            <AvatarPlaceholder accent={face.accent} label={face.name} />
+          )}
+        </div>
+
+        {/* Orbiting accent pulse on hover */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 mx-auto h-44 w-44 md:h-52 md:w-52 rounded-full border transition-all duration-700"
+          style={{
+            borderColor: accentVar,
+            opacity: hovered ? 0.25 : 0,
+            transform: hovered ? 'scale(1.25)' : 'scale(1)',
+          }}
+        />
+      </div>
+
       <div className="relative">
-        <div className="flex items-center gap-3 mb-6">
+        {/* Eyebrow + icon */}
+        <div className="flex items-center gap-3 mb-5">
           <div
-            className="flex h-10 w-10 items-center justify-center rounded-xl"
+            className="flex h-9 w-9 items-center justify-center rounded-lg"
             style={{
               background: `linear-gradient(135deg, ${accentGlow}, transparent)`,
               border: `1px solid ${accentVar}`,
             }}
           >
-            <Icon size={20} style={{ color: accentVar }} />
+            <Icon size={18} style={{ color: accentVar }} />
           </div>
           <p className="text-[11px] uppercase tracking-[0.25em] font-[family-name:var(--font-mono)]"
              style={{ color: accentVar }}>
@@ -186,19 +247,23 @@ function FacePanel({ face }: { face: Face }) {
           </p>
         </div>
 
+        {/* Name */}
         <h3 className={`${gradientClass} mb-3 font-[family-name:var(--font-display)] text-4xl md:text-5xl font-bold tracking-tight`}>
           {face.name}
         </h3>
 
+        {/* Tagline */}
         <p className="mb-5 text-lg md:text-xl text-[var(--color-mas-text)] font-medium">
           {face.tagline}
         </p>
 
-        <p className="mb-8 text-sm md:text-base leading-relaxed text-[var(--color-mas-text-secondary)]">
+        {/* Description */}
+        <p className="mb-7 text-sm md:text-base leading-relaxed text-[var(--color-mas-text-secondary)]">
           {face.description}
         </p>
 
-        <div className="mb-8 grid grid-cols-2 gap-4 md:gap-6">
+        {/* Pillars */}
+        <div className="mb-7 grid grid-cols-2 gap-4">
           {face.pillars.map((pill) => (
             <div key={pill.label}>
               <div className={`${neonClass} font-[family-name:var(--font-display)] text-2xl md:text-3xl font-bold`}>
@@ -211,6 +276,7 @@ function FacePanel({ face }: { face: Face }) {
           ))}
         </div>
 
+        {/* CTA */}
         <a
           href={face.cta.href}
           target={face.cta.href.startsWith('http') ? '_blank' : undefined}
@@ -228,5 +294,44 @@ function FacePanel({ face }: { face: Face }) {
         </a>
       </div>
     </motion.div>
+  )
+}
+
+// --- Fallback placeholder shown if the avatar image is missing ---
+// Renders a tasteful SVG silhouette with the name, so layout is never broken
+// by a missing PNG. Auto-swaps to the real image the moment it exists.
+
+function AvatarPlaceholder({ accent, label }: { accent: 'cyan' | 'red'; label: string }) {
+  const color = accent === 'cyan' ? '#00c8ff' : '#ff4060'
+  return (
+    <svg viewBox="0 0 256 256" className="h-full w-full" aria-hidden>
+      <defs>
+        <radialGradient id={`g-${label}`} cx="50%" cy="40%" r="55%">
+          <stop offset="0%" stopColor={color} stopOpacity="0.45" />
+          <stop offset="70%" stopColor={color} stopOpacity="0.08" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <rect width="256" height="256" fill={`url(#g-${label})`} />
+      {/* Abstract head silhouette */}
+      <circle cx="128" cy="100" r="44" fill={color} fillOpacity="0.3" />
+      <path
+        d="M48 240 Q 48 160 128 160 Q 208 160 208 240 Z"
+        fill={color}
+        fillOpacity="0.3"
+      />
+      <text
+        x="128"
+        y="210"
+        textAnchor="middle"
+        fill="#fff"
+        fontSize="14"
+        fontFamily="monospace"
+        fontWeight="700"
+        letterSpacing="2"
+      >
+        {label.toUpperCase()}
+      </text>
+    </svg>
   )
 }

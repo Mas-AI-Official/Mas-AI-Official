@@ -152,7 +152,7 @@ export default function DaenaPresence() {
           }}
         />
         <Image
-          src="/assets/img/daena-nobg.png"
+          src="/assets/img/daena-avatar-new.png"
           alt="Daena, AI VP of MAS-AI Technologies"
           width={200}
           height={280}
@@ -192,7 +192,7 @@ export default function DaenaPresence() {
             </button>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl overflow-hidden border" style={{ borderColor: mood.glowColor + '30' }}>
-                <Image src="/assets/img/daena-nobg.png" alt="Daena" width={40} height={40} className="object-cover object-top" />
+                <Image src="/assets/img/daena-avatar-new.png" alt="Daena" width={40} height={40} className="object-cover object-top" />
               </div>
               <div>
                 <p className="text-sm font-bold text-white font-[family-name:var(--font-display)]">Daena</p>
