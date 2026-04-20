@@ -13,15 +13,19 @@ interface SectionMood {
   brightness: number
 }
 
+// Section moods: each section on mas-ai.co triggers a different speech
+// bubble as the user scrolls. Each caption introduces what the section is
+// and hints at the next action. Glow color signals Daena/Klyntar mode.
 const SECTION_MOODS: Record<string, SectionMood> = {
-  hero:         { glow: '#00c8ff', caption: 'Welcome to MAS-AI.',        brightness: 1.0 },
-  'what-we-do': { glow: '#00c8ff', caption: 'Three pillars. One mission.', brightness: 1.05 },
-  daena:        { glow: '#00d4ff', caption: "That's my section.",          brightness: 1.1 },
-  portfolio:    { glow: '#d4a853', caption: 'We ship real products.',     brightness: 1.05 },
-  enterprise:   { glow: '#d4a853', caption: 'Built for scale.',          brightness: 0.95 },
-  credibility:  { glow: '#c8956a', caption: 'Meet the founder.',         brightness: 0.9 },
-  contact:      { glow: '#7c3aed', caption: "Let's connect.",            brightness: 1.0 },
-  faq:          { glow: '#00c8ff', caption: 'Got questions?',            brightness: 0.9 },
+  hero:         { glow: '#00c8ff', caption: 'We build AI. We secure it.',     brightness: 1.0 },
+  paths:        { glow: '#d4a853', caption: 'Pick your path.',                brightness: 1.05 },
+  proof:        { glow: '#00c8ff', caption: 'Every claim, verifiable.',       brightness: 1.05 },
+  products:     { glow: '#00d4ff', caption: 'Daena + Klyntar. Same OS.',      brightness: 1.1 },
+  portfolio:    { glow: '#d4a853', caption: 'Real products. Shipped.',        brightness: 1.05 },
+  enterprise:   { glow: '#d4a853', caption: 'Built for enterprise.',          brightness: 0.95 },
+  credibility:  { glow: '#c8956a', caption: 'Meet the founder.',              brightness: 0.9 },
+  contact:      { glow: '#7c3aed', caption: "Let's talk. Free call.",         brightness: 1.0 },
+  faq:          { glow: '#00c8ff', caption: 'Got questions?',                 brightness: 0.9 },
 }
 
 const DEFAULT_MOOD: SectionMood = { glow: '#00c8ff', caption: '', brightness: 1.0 }
@@ -145,8 +149,24 @@ const knowledge: KnowledgeEntry[] = [
     section: 'credibility',
   },
   {
-    keywords: ['test', 'demo', 'proof', 'working', 'ready'],
-    answer: 'Daena has 300+ automated tests passing, 6/6 end-to-end Playwright tests, and a working demo. We are in the commercialization phase.',
+    keywords: ['test', 'demo', 'proof', 'working', 'ready', 'how many tests'],
+    answer: 'Daena v3.7 ships with 2,956 automated tests passing, zero regressions at last delivery. Two USPTO patents filed. Production-deployed on GCP. Not a roadmap, real software.',
+    section: 'proof',
+  },
+  {
+    keywords: ['exploit', 'signatures', 'zero-fp', 'zero fp', 'false positive', 'scanner'],
+    answer: 'Klyntar ships 25+ exploit signatures (SQLi, XSS, CMDi, SSRF, XXE, Log4Shell, and more), detects 45+ hacking tools by behavioral fingerprint (nuclei, sqlmap, burp, nmap, hydra). The Zero-FP gate drops any operator-tier finding we cannot reproduce with a working exploit, so we never ship noise.',
+    section: 'products',
+    link: '/security',
+  },
+  {
+    keywords: ['asset shield', 'vault', 'consent token', 'egress'],
+    answer: 'Asset Shield is the data-safety sub-system inside Klyntar. Vault + egress filter + consent tokens. Any sensitive material pulled into Klyntar during a scan is destroyed within 24 hours of delivery. Audit trail signed end-to-end.',
+    section: 'products',
+  },
+  {
+    keywords: ['beyondmythos', 'beyond mythos', 'enrichment'],
+    answer: 'BeyondMythos runs every Klyntar finding through three AI checks: ErrorOracle verifies the reasoning, AdversarialSimulator stress-tests the claim, CompositionalPlanner attaches remediation. Hallucinated vulnerabilities get killed at the gate.',
     section: 'products',
   },
   {
@@ -358,7 +378,7 @@ export default function DaenaGuide() {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'daena',
-      text: "Hi! I'm Daena. I can tell you about MAS-AI, our products, and how we help enterprises deploy governed AI. What would you like to know?",
+      text: "Hi. I'm Daena \u2014 the governance side of MAS-AI. My security mode is called Klyntar, you'll meet her below. Two paths here: (1) we build governed AI agents for your business, or (2) we scan and secure what you already run. Ask about either, the patents, Klyntar's 25+ exploit signatures, or just type \u201Cnot sure\u201D and I'll help you pick.",
     },
   ])
   const [input, setInput] = useState('')
