@@ -507,7 +507,9 @@ export default function DaenaGuide() {
 
   const onSecurityRoute =
     pathname.startsWith('/security') || pathname.startsWith('/ai-act-readiness')
-  // Red-tinted section moods signal security context even on the homepage
+  // Red-tinted section moods signal security context even on the homepage.
+  // Use the raw mood here, not effectiveMood. effectiveMood is derived from
+  // klyntarMode below, and this check feeds klyntarMode. Circular otherwise.
   const redMood = mood.glow === '#ff4060' || mood.glow.toLowerCase().startsWith('#ff4')
   const klyntarMode = onSecurityRoute || redMood
   // Chatbot uses the full-body Daena avatar (looks right at small size).
@@ -517,6 +519,13 @@ export default function DaenaGuide() {
     ? '/assets/img/klyntar-avatar.png'
     : '/assets/img/daena-nobg.png'
   const avatarLabel = klyntarMode ? 'Klyntar, security mode' : 'Daena, AI guide'
+
+  // When Klyntar is active, override the ambient mood color so the avatar's
+  // drop-shadow, chat border, and speech pill all glow red. drop-shadow on
+  // the transparent PNG follows the character silhouette, NOT a rectangle.
+  const effectiveMood: SectionMood = klyntarMode
+    ? { glow: '#ff4060', caption: mood.caption, brightness: Math.max(mood.brightness, 1.08) }
+    : mood
 
   return (
     <>
@@ -540,16 +549,16 @@ export default function DaenaGuide() {
                 className="rounded-xl px-4 py-2 text-xs font-medium text-center leading-snug max-w-[140px]"
                 style={{
                   background: 'rgba(8,11,20,0.92)',
-                  border: `1px solid ${mood.glow}30`,
-                  color: mood.glow,
-                  boxShadow: `0 0 20px ${mood.glow}15`,
+                  border: `1px solid ${effectiveMood.glow}30`,
+                  color: effectiveMood.glow,
+                  boxShadow: `0 0 20px ${effectiveMood.glow}15`,
                 }}
               >
                 {mood.caption}
               </div>
               <div className="flex flex-col items-center gap-1 mt-1">
-                <div className="w-2 h-2 rounded-full" style={{ background: mood.glow + '40' }} />
-                <div className="w-1.5 h-1.5 rounded-full" style={{ background: mood.glow + '25' }} />
+                <div className="w-2 h-2 rounded-full" style={{ background: effectiveMood.glow + '40' }} />
+                <div className="w-1.5 h-1.5 rounded-full" style={{ background: effectiveMood.glow + '25' }} />
               </div>
             </motion.div>
           )}
@@ -560,7 +569,7 @@ export default function DaenaGuide() {
           onClick={() => setChatOpen(!chatOpen)}
           className={`${avatarSize} cursor-pointer relative`}
           style={{
-            filter: `brightness(${mood.brightness}) drop-shadow(0 0 12px ${mood.glow}30)`,
+            filter: `brightness(${effectiveMood.brightness}) drop-shadow(0 0 12px ${effectiveMood.glow}30)`,
             transition: 'filter 0.6s ease',
           }}
         >
@@ -610,8 +619,8 @@ export default function DaenaGuide() {
             }`}
             style={{
               background: '#0a0e1a',
-              borderColor: `${mood.glow}20`,
-              boxShadow: `0 0 40px ${mood.glow}08, 0 20px 60px rgba(0,0,0,0.5)`,
+              borderColor: `${effectiveMood.glow}20`,
+              boxShadow: `0 0 40px ${effectiveMood.glow}08, 0 20px 60px rgba(0,0,0,0.5)`,
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
             }}
@@ -619,11 +628,11 @@ export default function DaenaGuide() {
             {/* Header. avatar mirrors the floating one (Daena / Klyntar). */}
             <div
               className="flex items-center gap-3 px-4 py-3 shrink-0"
-              style={{ borderBottom: `1px solid ${mood.glow}15` }}
+              style={{ borderBottom: `1px solid ${effectiveMood.glow}15` }}
             >
               <div
                 className="w-8 h-8 rounded-full overflow-hidden border shrink-0"
-                style={{ borderColor: `${mood.glow}30` }}
+                style={{ borderColor: `${effectiveMood.glow}30` }}
               >
                 <Image
                   src={avatarSrc}
@@ -643,7 +652,7 @@ export default function DaenaGuide() {
                 <p className="text-sm font-semibold text-white font-[family-name:var(--font-syne)]">
                   {klyntarMode ? 'Klyntar' : 'Daena'}
                 </p>
-                <p className="text-[10px] font-[family-name:var(--font-jetbrains)]" style={{ color: mood.glow }}>
+                <p className="text-[10px] font-[family-name:var(--font-jetbrains)]" style={{ color: effectiveMood.glow }}>
                   {klyntarMode ? 'Security Mode' : 'AI Guide'}
                 </p>
               </div>
@@ -666,7 +675,7 @@ export default function DaenaGuide() {
                   >
                     {msg.text}
                     {msg.link && (
-                      <a href={msg.link} target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center gap-1 text-xs font-semibold" style={{ color: mood.glow }}>
+                      <a href={msg.link} target="_blank" rel="noopener noreferrer" className="mt-2 flex items-center gap-1 text-xs font-semibold" style={{ color: effectiveMood.glow }}>
                         Visit <ArrowUpRight size={12} />
                       </a>
                     )}
@@ -686,7 +695,7 @@ export default function DaenaGuide() {
             </div>
 
             {/* Input */}
-            <div className="shrink-0 px-3 py-3 flex items-center gap-2" style={{ borderTop: `1px solid ${mood.glow}10` }}>
+            <div className="shrink-0 px-3 py-3 flex items-center gap-2" style={{ borderTop: `1px solid ${effectiveMood.glow}10` }}>
               <input
                 ref={inputRef}
                 value={input}
@@ -701,7 +710,7 @@ export default function DaenaGuide() {
                 disabled={!input.trim()}
                 aria-label="Send message"
                 className="shrink-0 w-9 h-9 flex items-center justify-center rounded-lg transition-all disabled:opacity-30"
-                style={{ backgroundColor: mood.glow + '20', color: mood.glow }}
+                style={{ backgroundColor: effectiveMood.glow + '20', color: effectiveMood.glow }}
               >
                 <Send size={16} />
               </button>
