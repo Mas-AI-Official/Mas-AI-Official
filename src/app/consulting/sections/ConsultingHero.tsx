@@ -5,10 +5,10 @@ import { ShieldAlert } from 'lucide-react'
 
 export default function ConsultingHero() {
   return (
-    <section className="relative flex min-h-[85vh] items-center justify-center px-6 pt-32 pb-20">
+    <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden px-6 pt-32 pb-20">
       <div
         aria-hidden
-        className="pointer-events-none absolute top-20 left-1/2 -translate-x-1/2 h-[600px] w-[800px] rounded-full opacity-20 blur-[120px]"
+        className="pointer-events-none absolute top-20 left-1/2 -translate-x-1/2 h-[600px] w-[800px] max-w-[120vw] rounded-full opacity-20 blur-[120px]"
         style={{
           background:
             'radial-gradient(circle, var(--color-klyntar-red) 0%, transparent 70%)',

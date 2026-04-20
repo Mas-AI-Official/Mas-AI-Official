@@ -5,16 +5,16 @@ import { Calendar } from 'lucide-react'
 
 export default function BookingHero() {
   return (
-    <section className="relative flex min-h-[60vh] items-center justify-center px-6 pt-32 pb-10">
+    <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden px-6 pt-32 pb-10">
       {/* Dual glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-20 left-1/4 h-[500px] w-[500px] rounded-full opacity-15 blur-[120px]"
+        className="pointer-events-none absolute top-20 left-1/4 h-[500px] w-[500px] max-w-[80vw] rounded-full opacity-15 blur-[120px]"
         style={{ background: 'var(--color-mas-cyan)' }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute top-20 right-1/4 h-[500px] w-[500px] rounded-full opacity-15 blur-[120px]"
+        className="pointer-events-none absolute top-20 right-1/4 h-[500px] w-[500px] max-w-[80vw] rounded-full opacity-15 blur-[120px]"
         style={{ background: 'var(--color-klyntar-red)' }}
       />
 

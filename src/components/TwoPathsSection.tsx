@@ -88,16 +88,16 @@ export default function TwoPathsSection() {
   const inView = useInView(ref, { once: true, margin: '-100px' })
 
   return (
-    <section id="paths" className="relative py-20 md:py-28">
+    <section id="paths" className="relative overflow-hidden py-20 md:py-28">
       {/* Ambient dual glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/2 left-1/4 h-[500px] w-[500px] rounded-full opacity-10 blur-[150px]"
+        className="pointer-events-none absolute top-1/2 left-1/4 h-[500px] w-[500px] max-w-[80vw] rounded-full opacity-10 blur-[150px]"
         style={{ background: 'var(--color-mas-cyan)' }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute top-1/2 right-1/4 h-[500px] w-[500px] rounded-full opacity-10 blur-[150px]"
+        className="pointer-events-none absolute top-1/2 right-1/4 h-[500px] w-[500px] max-w-[80vw] rounded-full opacity-10 blur-[150px]"
         style={{ background: 'var(--color-klyntar-red)' }}
       />
 
