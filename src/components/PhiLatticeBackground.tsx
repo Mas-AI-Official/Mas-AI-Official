@@ -98,7 +98,7 @@ export default function PhiLatticeBackground() {
       ctx.clearRect(0, 0, w, h)
 
       const nodes = nodesRef.current
-      const mx = mouseRef.current.x, our = mouseRef.current.y
+      const mx = mouseRef.current.x, my = mouseRef.current.y
 
       // Scroll progress: 0 at top, 1 at bottom of page
       const docH = Math.max(1, document.documentElement.scrollHeight - window.innerHeight)
@@ -134,7 +134,7 @@ export default function PhiLatticeBackground() {
         n.y = cy + (driftY - cy) * zoom
 
         // Mouse proximity glow (use zoomed positions)
-        const dx = mx - n.x, dy = our - n.y
+        const dx = mx - n.x, dy = my - n.y
         const dist = Math.sqrt(dx * dx + dy * dy)
         const mouseTarget = dist < 250 ? (1 - dist / 250) * 1.0 : 0
 

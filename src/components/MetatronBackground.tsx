@@ -196,7 +196,7 @@ export default function MetatronBackground() {
         const depthAlpha = Math.min(1, avgScale * 0.8) * baseAlpha
 
         // Mouse proximity to midpoint
-        const mx = (fx + tx) / 2, our = (fy + ty) / 2
+        const mx = (fx + tx) / 2, my = (fy + ty) / 2
         const mDist = Math.hypot(mouseRef.current.x * w / 2 + w / 2 - mx, mouseRef.current.y * h / 2 + h / 2 - my)
         const mBoost = mDist < 200 ? (1 - mDist / 200) * 0.2 : 0
 
