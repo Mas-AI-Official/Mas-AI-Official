@@ -38,18 +38,37 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-# Anthropic (Claude web search + training)
+# Anthropic (Claude) — 2025 spec.
+# Legacy anthropic-ai and Claude-Web were deprecated in 2025.
+# Current triad:
+#   Claude-User      — live user fetch (the one that CITES us in answers)
+#   Claude-SearchBot — search index
+#   ClaudeBot        — training
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
 User-agent: ClaudeBot
 Allow: /
 
+# Legacy Anthropic strings (kept for belt-and-suspenders)
 User-agent: anthropic-ai
 Allow: /
 
 User-agent: Claude-Web
 Allow: /
 
+# Google auxiliary crawlers
+User-agent: GoogleOther
+Allow: /
+
 # Perplexity
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
 Allow: /
 
 # Common Crawl (used by many LLM training pipelines)
@@ -58,6 +77,10 @@ Allow: /
 
 # You.com
 User-agent: YouBot
+Allow: /
+
+# DuckDuckGo AI assist
+User-agent: DuckAssistBot
 Allow: /
 
 # Apple Intelligence / Siri
@@ -71,6 +94,10 @@ Allow: /
 User-agent: MistralAI-User
 Allow: /
 
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
 # Meta AI
 User-agent: FacebookBot
 Allow: /
@@ -78,7 +105,10 @@ Allow: /
 User-agent: Meta-ExternalAgent
 Allow: /
 
-# ByteDance (Doubao)
+User-agent: Meta-ExternalFetcher
+Allow: /
+
+# ByteDance (Doubao, TikTok search)
 User-agent: Bytespider
 Allow: /
 
