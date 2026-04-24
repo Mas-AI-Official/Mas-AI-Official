@@ -54,46 +54,54 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Cross-site pill: Explore Daena. Mirrors the "mas-ai.co" gold
-            pill on the daena site. Cyan-tinted secondary CTA that
-            signals "visit our flagship product site" without competing
-            with the red primary CTA. */}
-        <a
-          href="https://daena.mas-ai.co"
-          target="_blank"
-          rel="noopener"
-          className="hidden md:inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold font-[family-name:var(--font-mono)] tracking-wider transition-all duration-300 hover:scale-105"
-          style={{
-            color: 'var(--color-mas-cyan)',
-            borderColor: 'color-mix(in srgb, var(--color-mas-cyan) 30%, transparent)',
-            background: 'color-mix(in srgb, var(--color-mas-cyan) 6%, transparent)',
-          }}
-        >
-          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-mas-cyan)]" style={{ boxShadow: '0 0 8px var(--color-mas-cyan)' }} />
-          Explore Daena
-        </a>
+        {/* Right-side CTA cluster.
+            Grouping these in one flex container means justify-between on
+            the parent <nav> only distributes THREE chunks (Logo / Nav
+            links / CTA cluster) instead of five. Inside the cluster,
+            gap-2 (8px) keeps Explore Daena and Book Free Audit tight,
+            signaling they're paired options. */}
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Cross-site pill: Explore Daena. Mirrors the "mas-ai.co" gold
+              pill on the daena site. Cyan-tinted secondary CTA that
+              signals "visit our flagship product site" without competing
+              with the red primary CTA. */}
+          <a
+            href="https://daena.mas-ai.co"
+            target="_blank"
+            rel="noopener"
+            className="hidden md:inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold font-[family-name:var(--font-mono)] tracking-wider transition-all duration-300 hover:scale-105"
+            style={{
+              color: 'var(--color-mas-cyan)',
+              borderColor: 'color-mix(in srgb, var(--color-mas-cyan) 30%, transparent)',
+              background: 'color-mix(in srgb, var(--color-mas-cyan) 6%, transparent)',
+            }}
+          >
+            <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-mas-cyan)]" style={{ boxShadow: '0 0 8px var(--color-mas-cyan)' }} />
+            Explore Daena
+          </a>
 
-        {/* CTA, primary path: free audit */}
-        <a
-          href="/security#contact-consulting"
-          className="hidden md:inline-flex rounded-full px-6 py-2 text-sm font-bold text-white transition-all duration-300 hover:scale-105"
-          style={{
-            background: 'var(--color-klyntar-red)',
-            boxShadow: '0 0 24px var(--color-klyntar-red-glow)',
-          }}
-        >
-          Book Free Audit
-        </a>
+          {/* CTA, primary path: free audit */}
+          <a
+            href="/security#contact-consulting"
+            className="hidden md:inline-flex rounded-full px-6 py-2 text-sm font-bold text-white transition-all duration-300 hover:scale-105"
+            style={{
+              background: 'var(--color-klyntar-red)',
+              boxShadow: '0 0 24px var(--color-klyntar-red-glow)',
+            }}
+          >
+            Book Free Audit
+          </a>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden p-2 text-[var(--color-mas-text)]"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden p-2 text-[var(--color-mas-text)]"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}
