@@ -10,6 +10,7 @@ import {
   HardHat,
   ShieldCheck,
   Film,
+  Code2,
   ArrowUpRight,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -33,6 +34,14 @@ const projects: PortfolioItem[] = [
     badgeColor: 'var(--color-mas-cyan)',
     href: 'https://daena.mas-ai.co',
     hero: true,
+  },
+  {
+    title: 'Daena Coder',
+    description: 'Open-source AI coding agent. Daena\u2019s 10-stage governance pipeline applied to code execution. Audit log on every edit, file/terminal/browser/MCP capabilities, bring-your-own runtime (Claude, GPT, Gemini, Grok, Ollama).',
+    icon: Code2,
+    badge: 'Open Source',
+    badgeColor: '#2DD4BF',
+    href: 'https://github.com/Mas-AI-Official/Daena-Coder',
   },
   {
     title: 'Daena Guard',

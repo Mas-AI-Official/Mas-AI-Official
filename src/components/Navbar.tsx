@@ -54,6 +54,25 @@ export default function Navbar() {
           ))}
         </div>
 
+        {/* Cross-site pill: Explore Daena. Mirrors the "mas-ai.co" gold
+            pill on the daena site. Cyan-tinted secondary CTA that
+            signals "visit our flagship product site" without competing
+            with the red primary CTA. */}
+        <a
+          href="https://daena.mas-ai.co"
+          target="_blank"
+          rel="noopener"
+          className="hidden md:inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold font-[family-name:var(--font-mono)] tracking-wider transition-all duration-300 hover:scale-105"
+          style={{
+            color: 'var(--color-mas-cyan)',
+            borderColor: 'color-mix(in srgb, var(--color-mas-cyan) 30%, transparent)',
+            background: 'color-mix(in srgb, var(--color-mas-cyan) 6%, transparent)',
+          }}
+        >
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-mas-cyan)]" style={{ boxShadow: '0 0 8px var(--color-mas-cyan)' }} />
+          Explore Daena
+        </a>
+
         {/* CTA, primary path: free audit */}
         <a
           href="/security#contact-consulting"
@@ -99,8 +118,23 @@ export default function Navbar() {
                 </a>
               ))}
               <a
+                href="https://daena.mas-ai.co"
+                target="_blank"
+                rel="noopener"
+                onClick={() => setMobileOpen(false)}
+                className="mt-3 inline-flex items-center justify-center gap-2 rounded-full border px-5 py-3 text-center text-xs font-semibold font-[family-name:var(--font-mono)] tracking-wider"
+                style={{
+                  color: 'var(--color-mas-cyan)',
+                  borderColor: 'color-mix(in srgb, var(--color-mas-cyan) 30%, transparent)',
+                  background: 'color-mix(in srgb, var(--color-mas-cyan) 6%, transparent)',
+                }}
+              >
+                <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-mas-cyan)]" />
+                Explore Daena
+              </a>
+              <a
                 href="/security#contact-consulting"
-                className="mt-3 rounded-full px-5 py-3 text-center text-sm font-bold text-white"
+                className="mt-2 rounded-full px-5 py-3 text-center text-sm font-bold text-white"
                 style={{ background: 'var(--color-klyntar-red)' }}
               >
                 Book Free Audit
