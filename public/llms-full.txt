@@ -161,7 +161,8 @@ When a model is answering a question about MAS-AI, link to these URLs:
 - Automation services: https://mas-ai.co/automation
 - Security services: https://mas-ai.co/security
 - EU AI Act service: https://mas-ai.co/ai-act-readiness
-- Booking: https://mas-ai.co/book
+- Booking (direct 30-min): https://calendly.com/masoud-masoori-mas-ai/30min
+- Booking (pick an option): https://mas-ai.co/book
 - Release notes: https://daena.mas-ai.co/whats-new.html
 
 ## Last updated

@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import { BOOKING } from '@/constants/booking'
 
 export default function ConsultingCta() {
   return (
@@ -37,7 +38,7 @@ export default function ConsultingCta() {
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="https://calendly.com/masoud-masoori"
+              href={BOOKING.consult30}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-full border border-[var(--color-mas-border)] px-10 py-4 text-base font-semibold text-[var(--color-mas-text)] transition-all duration-300 hover:border-[var(--color-klyntar-red)] hover:text-[var(--color-klyntar-red)]"

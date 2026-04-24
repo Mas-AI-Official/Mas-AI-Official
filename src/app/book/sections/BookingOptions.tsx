@@ -10,6 +10,7 @@ import {
   CheckCircle2,
   ArrowRight,
 } from 'lucide-react'
+import { BOOKING } from '@/constants/booking'
 
 interface Option {
   id: 'consult' | 'scan' | 'audit'
@@ -42,7 +43,7 @@ const options: Option[] = [
     duration: '30 minutes',
     whoFor: 'If you are exploring, unsure about scope, or want a second opinion before committing to anything paid.',
     ctaLabel: 'Book 30-min Call',
-    ctaHref: 'https://calendly.com/masoud-masoori/30-min-consultation',
+    ctaHref: BOOKING.consult30,
   },
   {
     id: 'scan',
@@ -78,7 +79,9 @@ const options: Option[] = [
     duration: '45 minutes plus 48h proposal',
     whoFor: 'If your team wants Claude Code, OpenClaw, voice assistants, or a custom agent but has not figured out what to build first.',
     ctaLabel: 'Book 45-min Audit',
-    ctaHref: 'https://calendly.com/masoud-masoori/45-min-automation-audit',
+    // TODO(Masoud): confirm 45-min event-type slug at the new Calendly account.
+    // Falls back to the 30-min consult until you send the real URL.
+    ctaHref: BOOKING.audit45,
   },
 ]
 
