@@ -5,12 +5,17 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 
-const navLinks = [
-  { label: 'Security', href: '/security' },
+// Portfolio replaces the older "How I Work" label — same /#products
+// destination, but matches the actual section heading on the page and
+// the cross-site nav on daena.mas-ai.co. Predictor is an external link
+// to the Daena product subsite's predictor tool.
+const navLinks: { label: string; href: string; external?: boolean }[] = [
+  { label: 'Security',   href: '/security' },
   { label: 'Automation', href: '/automation' },
-  { label: 'How I Work', href: '/#products' },
-  { label: 'Proof', href: '/#proof' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Portfolio',  href: '/#products' },
+  { label: 'Predictor',  href: 'https://daena.mas-ai.co/predictor.html', external: true },
+  { label: 'Proof',      href: '/#proof' },
+  { label: 'Contact',    href: '/#contact' },
 ]
 
 export default function Navbar() {
@@ -48,7 +53,7 @@ export default function Navbar() {
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
-            <MagneticLink key={link.label} href={link.href}>
+            <MagneticLink key={link.label} href={link.href} external={link.external}>
               {link.label}
             </MagneticLink>
           ))}
@@ -119,10 +124,13 @@ export default function Navbar() {
                 <a
                   key={link.label}
                   href={link.href}
+                  target={link.external ? '_blank' : undefined}
+                  rel={link.external ? 'noopener' : undefined}
                   onClick={() => setMobileOpen(false)}
                   className="text-[var(--color-mas-text-secondary)] hover:text-[var(--color-mas-text)] transition-colors py-3 text-base border-b border-[var(--color-mas-border)]/30 last:border-0"
                 >
                   {link.label}
+                  {link.external && <span className="ml-1.5 text-xs opacity-50" aria-hidden>↗</span>}
                 </a>
               ))}
               <a
@@ -158,9 +166,11 @@ export default function Navbar() {
 function MagneticLink({
   href,
   children,
+  external,
 }: {
   href: string
   children: React.ReactNode
+  external?: boolean
 }) {
   const ref = useRef<HTMLAnchorElement>(null)
   const [isTouch, setIsTouch] = useState(false)
@@ -198,12 +208,15 @@ function MagneticLink({
     <a
       ref={ref}
       href={href}
+      target={external ? '_blank' : undefined}
+      rel={external ? 'noopener' : undefined}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={handleMouseEnter}
       className="relative px-4 py-2 text-sm text-[var(--color-mas-text-secondary)] hover:text-[var(--color-mas-text)] transition-colors will-change-transform rounded-lg hover:bg-white/[0.03]"
     >
       {children}
+      {external && <span className="ml-1 text-[0.65rem] opacity-50" aria-hidden>↗</span>}
     </a>
   )
 }
