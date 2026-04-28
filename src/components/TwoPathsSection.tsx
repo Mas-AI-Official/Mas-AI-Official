@@ -73,12 +73,17 @@ const containerV = {
   visible: { transition: { staggerChildren: 0.15 } },
 }
 
+// pointerEvents is included so that until the tiles are visible they
+// don't accept clicks. Without it, links inside an opacity-0 motion.div
+// stay clickable — the user reported a phantom /book click target in
+// the empty space below the navbar.
 const tileV = {
-  hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
+  hidden: { opacity: 0, y: 30, filter: 'blur(8px)', pointerEvents: 'none' as const },
   visible: {
     opacity: 1,
     y: 0,
     filter: 'blur(0px)',
+    pointerEvents: 'auto' as const,
     transition: { duration: 0.7, ease: [0, 0, 0.2, 1] as [number, number, number, number] },
   },
 }
@@ -131,10 +136,14 @@ export default function TwoPathsSection() {
           ))}
         </motion.div>
 
-        {/* Third option: Not sure, book free call */}
+        {/* Third option: Not sure, book free call.
+            pointerEvents is animated so the wrapper isn't clickable until
+            it's visible — prevents the inner /book link from being a
+            phantom click target while the user is still above this
+            section. */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20, pointerEvents: 'none' }}
+          whileInView={{ opacity: 1, y: 0, pointerEvents: 'auto' }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.6, delay: 0.4 }}
           className="mt-12 rounded-2xl border border-[var(--color-mas-border)] bg-[rgba(15,22,41,0.4)] backdrop-blur-md p-8 text-center"

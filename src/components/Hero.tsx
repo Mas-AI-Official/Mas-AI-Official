@@ -55,16 +55,24 @@ export default function Hero() {
         ease: 'power3.out',
         delay: 0.25,
       })
-      gsap.from('.hero-cta', {
-        opacity: 0,
-        y: 20,
+      // Use gsap.set + gsap.to (not gsap.from) so we can also flip
+      // pointerEvents — gsap.from doesn't accept arbitrary "from" overrides
+      // for non-numeric properties cleanly. While the CTAs are fading in,
+      // they're invisible-but-clickable; pointer-events:none prevents
+      // accidental clicks during the entry animation.
+      gsap.set('.hero-cta', { opacity: 0, y: 20, pointerEvents: 'none' })
+      gsap.to('.hero-cta', {
+        opacity: 1,
+        y: 0,
+        pointerEvents: 'auto',
         duration: 0.6,
         ease: 'power2.out',
         delay: 0.25 + words.length * 0.14 + 0.15,
       })
-      gsap.from('.hero-stats', {
-        opacity: 0,
-        y: 20,
+      gsap.set('.hero-stats', { opacity: 0, y: 20 })
+      gsap.to('.hero-stats', {
+        opacity: 1,
+        y: 0,
         duration: 0.6,
         ease: 'power2.out',
         delay: 0.25 + words.length * 0.14 + 0.35,
@@ -84,6 +92,10 @@ export default function Hero() {
             scale: 1 - p * 0.15,
             filter: `blur(${p * 20}px)`,
             opacity: Math.max(0, 1 - p * 1.2),
+            // Disable clicks once content is meaningfully faded (>40% blurred).
+            // Without this, the CTAs stay invisible-but-clickable while pinned,
+            // creating phantom click targets in the empty area below the navbar.
+            pointerEvents: p > 0.4 ? 'none' : 'auto',
           })
         },
       })
