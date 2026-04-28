@@ -5,15 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import Image from 'next/image'
 
-// Portfolio replaces the older "How I Work" label — same /#products
-// destination, but matches the actual section heading on the page and
-// the cross-site nav on daena.mas-ai.co. Predictor is an external link
-// to the Daena product subsite's predictor tool.
+// Portfolio is the "What We Build" section (PortfolioSection at #portfolio).
+// Earlier draft mistakenly pointed to #products, which is the Daena/Klyntar
+// twin-portrait section ("Meet Daena. Meet Klyntar."). Predictor and the
+// rest of the products live as cards inside #portfolio.
 const navLinks: { label: string; href: string; external?: boolean }[] = [
   { label: 'Security',   href: '/security' },
   { label: 'Automation', href: '/automation' },
-  { label: 'Portfolio',  href: '/#products' },
-  { label: 'Predictor',  href: 'https://daena.mas-ai.co/predictor.html', external: true },
+  { label: 'Portfolio',  href: '/#portfolio' },
   { label: 'Proof',      href: '/#proof' },
   { label: 'Contact',    href: '/#contact' },
 ]

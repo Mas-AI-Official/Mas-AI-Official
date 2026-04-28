@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Film,
   Code2,
+  Sparkles,
   ArrowUpRight,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
@@ -50,6 +51,15 @@ const projects: PortfolioItem[] = [
     badge: 'In Development',
     badgeColor: 'var(--color-mas-gold)',
     href: 'https://github.com/Mas-AI-Official/hackathon_demo',
+  },
+  {
+    title: 'Predictor',
+    description:
+      'GPT, but with simulation on it. A local-first decision-simulation backend: drop in a question or a set of options, and it gathers evidence, simulates outcomes (persona reactions + scenario distribution), and returns ranked results with probability and an evidence trail. Universal Console (2–3 min calibrated forecast) or Deep Simulation (5–15 min multi-agent). HTTP + MCP service, Qwen3-8B local, AGPL v3.',
+    icon: Sparkles,
+    badge: 'Alpha v0.1',
+    badgeColor: '#a78bfa',
+    href: 'https://github.com/Mas-AI-Official/Predictor',
   },
   {
     title: 'ContentOPS',
