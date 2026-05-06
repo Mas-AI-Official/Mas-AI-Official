@@ -51,13 +51,15 @@ const projects: PortfolioItem[] = [
   },
   {
     title: 'KYA Mission Control',
-    description: 'The trust and execution layer for AI agent missions. Cryptographic passports, scoped child delegation, signed mission receipts, and a live border-checkpoint demo with 9 interactive scenarios \u2014 admit / block / checkpoint / verify, all on real RFC 9421 signed requests.',
+    description:
+      'Trust infrastructure for autonomous AI agents. Cryptographic passports, scoped child delegation, multi-dimensional budget hard-stops, and Ed25519-signed mission receipts \u2014 verifiable offline, optionally anchored on Base. Live border-checkpoint console with 9 interactive scenarios on real RFC 9421 signed requests.',
     icon: BadgeCheck,
     badge: 'Live Demo',
     badgeColor: '#D4A843',
     href: 'https://kya-mission-lab-szw3mq5rma-nn.a.run.app/console/',
     logoSrc: '/kya-logo.png',
     logoAlt: 'KYA Mission Control \u2014 Identity \u00b7 Governance \u00b7 Access',
+    hero: true,
   },
   {
     title: 'Daena Guard',
