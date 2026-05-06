@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import {
@@ -13,6 +14,7 @@ import {
   Code2,
   Sparkles,
   ArrowUpRight,
+  BadgeCheck,
 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
@@ -24,6 +26,9 @@ interface PortfolioItem {
   badgeColor: string
   href?: string
   hero?: boolean
+  /** Optional brand image used instead of the lucide icon. Square works best. */
+  logoSrc?: string
+  logoAlt?: string
 }
 
 const projects: PortfolioItem[] = [
@@ -43,6 +48,16 @@ const projects: PortfolioItem[] = [
     badge: 'Open Source',
     badgeColor: '#2DD4BF',
     href: 'https://github.com/Mas-AI-Official/Daena-Coder',
+  },
+  {
+    title: 'KYA Mission Control',
+    description: 'The trust and execution layer for AI agent missions. Cryptographic passports, scoped child delegation, signed mission receipts, and a live border-checkpoint demo with 9 interactive scenarios \u2014 admit / block / checkpoint / verify, all on real RFC 9421 signed requests.',
+    icon: BadgeCheck,
+    badge: 'Live Demo',
+    badgeColor: '#D4A843',
+    href: 'https://kya-mission-lab-szw3mq5rma-nn.a.run.app/console/',
+    logoSrc: '/kya-logo.png',
+    logoAlt: 'KYA Mission Control \u2014 Identity \u00b7 Governance \u00b7 Access',
   },
   {
     title: 'Daena Guard',
@@ -157,15 +172,32 @@ export default function PortfolioSection() {
             const cardContent = (
               <>
                 <div className="flex items-start justify-between">
-                  <div
-                    className="inline-flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
-                    style={{
-                      background: `linear-gradient(135deg, color-mix(in srgb, ${project.badgeColor} 15%, transparent), transparent)`,
-                      boxShadow: `0 0 0 1px color-mix(in srgb, ${project.badgeColor} 20%, transparent)`,
-                    }}
-                  >
-                    <Icon className="h-5 w-5 transition-colors duration-300" style={{ color: project.badgeColor }} />
-                  </div>
+                  {project.logoSrc ? (
+                    <div
+                      className="relative w-12 h-12 rounded-xl overflow-hidden transition-all duration-300 group-hover:scale-110 bg-black"
+                      style={{
+                        boxShadow: `0 0 0 1px color-mix(in srgb, ${project.badgeColor} 30%, transparent)`,
+                      }}
+                    >
+                      <Image
+                        src={project.logoSrc}
+                        alt={project.logoAlt || project.title}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div
+                      className="inline-flex items-center justify-center w-12 h-12 rounded-xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-3"
+                      style={{
+                        background: `linear-gradient(135deg, color-mix(in srgb, ${project.badgeColor} 15%, transparent), transparent)`,
+                        boxShadow: `0 0 0 1px color-mix(in srgb, ${project.badgeColor} 20%, transparent)`,
+                      }}
+                    >
+                      <Icon className="h-5 w-5 transition-colors duration-300" style={{ color: project.badgeColor }} />
+                    </div>
+                  )}
                   <span
                     className="badge-shimmer rounded-full px-2.5 py-0.5 text-xs font-semibold"
                     style={{
