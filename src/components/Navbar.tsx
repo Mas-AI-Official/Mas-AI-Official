@@ -31,10 +31,10 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
       <nav
-        className={`flex items-center justify-between gap-2 transition-all duration-500 ${
+        className={`flex items-center justify-between gap-2 transition-all duration-500 rounded-2xl border ${
           scrolled
-            ? 'w-full max-w-6xl rounded-2xl bg-[var(--color-mas-bg)]/80 backdrop-blur-2xl [-webkit-backdrop-filter:blur(40px)] border border-[var(--color-mas-border)] shadow-[0_8px_40px_rgba(0,0,0,0.5)] px-6 py-3'
-            : 'w-full max-w-7xl rounded-none bg-transparent px-6 py-5'
+            ? 'w-full max-w-6xl bg-[var(--color-mas-bg)]/80 backdrop-blur-2xl [-webkit-backdrop-filter:blur(40px)] border-[var(--color-mas-border)] shadow-[0_8px_40px_rgba(0,0,0,0.5)] px-6 py-3'
+            : 'w-full max-w-7xl bg-[var(--color-mas-bg)]/40 backdrop-blur-md [-webkit-backdrop-filter:blur(20px)] border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.28)] px-6 py-4'
         }`}
       >
         {/* Logo */}

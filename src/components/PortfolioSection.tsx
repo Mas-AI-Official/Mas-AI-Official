@@ -24,11 +24,17 @@ interface PortfolioItem {
   icon: LucideIcon
   badge: string
   badgeColor: string
+  /** Primary destination — the whole card click target. */
   href?: string
   hero?: boolean
   /** Optional brand image used instead of the lucide icon. Square works best. */
   logoSrc?: string
   logoAlt?: string
+  /** Optional secondary CTA pill inside the card. Stops propagation so it
+   *  doesn't trigger the whole-card link. Useful when a project has both
+   *  a marketing site (primary) and a live demo (secondary explore path). */
+  secondaryHref?: string
+  secondaryLabel?: string
 }
 
 const projects: PortfolioItem[] = [
@@ -52,13 +58,17 @@ const projects: PortfolioItem[] = [
   {
     title: 'KYA Mission Control',
     description:
-      'Trust infrastructure for autonomous AI agents. Cryptographic passports, scoped child delegation, multi-dimensional budget hard-stops, and Ed25519-signed mission receipts \u2014 verifiable offline, optionally anchored on Base. Live border-checkpoint console with 9 interactive scenarios on real RFC 9421 signed requests.',
+      'Trust infrastructure for autonomous AI agents. Cryptographic passports, scoped child delegation, multi-dimensional budget hard-stops, and Ed25519-signed mission receipts that are verifiable offline and optionally anchored on Base. Live border-checkpoint console with 9 interactive scenarios on real RFC 9421 signed requests.',
     icon: BadgeCheck,
-    badge: 'Live Demo',
+    badge: 'Live',
     badgeColor: '#D4A843',
-    href: 'https://kya-mission-lab-szw3mq5rma-nn.a.run.app/console/',
+    // Primary (whole-card click): the marketing site \u2014 full story.
+    href: 'https://kya.mas-ai.co',
+    // Secondary pill: the live border-checkpoint demo.
+    secondaryHref: 'https://kya-mission-lab-szw3mq5rma-nn.a.run.app/console/',
+    secondaryLabel: 'Live demo',
     logoSrc: '/kya-logo.png',
-    logoAlt: 'KYA Mission Control \u2014 Identity \u00b7 Governance \u00b7 Access',
+    logoAlt: 'KYA Mission Control \u00b7 Identity \u00b7 Governance \u00b7 Access',
     hero: true,
   },
   {
@@ -170,6 +180,7 @@ export default function PortfolioSection() {
             const Icon = project.icon
             const isExternal = project.href?.startsWith('http')
             const hasLink = Boolean(project.href)
+            const hasSecondary = Boolean(project.secondaryHref)
 
             const cardContent = (
               <>
@@ -220,9 +231,56 @@ export default function PortfolioSection() {
                 </p>
 
                 {hasLink && (
-                  <div className="mt-4 flex items-center gap-1.5 text-sm font-medium transition-all duration-300 opacity-60 group-hover:opacity-100" style={{ color: project.badgeColor }}>
-                    <span>Explore</span>
-                    <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <div className="mt-4 flex flex-wrap items-center gap-3">
+                    {/* Primary explore — when there's NO secondary, a plain
+                        span is enough (the whole card is already an anchor).
+                        When there IS a secondary, we make THIS the stretched
+                        anchor (inset-0 ::after) so card-area clicks still go
+                        to the primary URL — and the outer wrapper switches
+                        to a <div> to avoid <a>-in-<a> nesting. */}
+                    {hasSecondary ? (
+                      // Stretched-link: ::after covers the whole card area
+                      // (positioned against the card's `relative` outer div).
+                      // Sits at z-[1] so it's above text content (z:auto)
+                      // but BELOW the secondary pill (z-10).
+                      <a
+                        href={project.href}
+                        target={isExternal ? '_blank' : undefined}
+                        rel={isExternal ? 'noopener noreferrer' : undefined}
+                        className="inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-300 opacity-60 group-hover:opacity-100 after:absolute after:inset-0 after:content-[''] after:z-[1] after:rounded-xl"
+                        style={{ color: project.badgeColor }}
+                      >
+                        <span>Website</span>
+                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </a>
+                    ) : (
+                      <span
+                        className="inline-flex items-center gap-1.5 text-sm font-medium transition-all duration-300 opacity-60 group-hover:opacity-100"
+                        style={{ color: project.badgeColor }}
+                      >
+                        <span>Explore</span>
+                        <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      </span>
+                    )}
+
+                    {/* Secondary CTA pill — sits above the stretched anchor's
+                        ::after via z-10 + relative positioning. */}
+                    {project.secondaryHref && (
+                      <a
+                        href={project.secondaryHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative z-10 inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 text-xs font-medium transition-all duration-300 hover:-translate-y-0.5"
+                        style={{
+                          borderColor: `color-mix(in srgb, ${project.badgeColor} 35%, transparent)`,
+                          color: project.badgeColor,
+                          backgroundColor: `color-mix(in srgb, ${project.badgeColor} 8%, transparent)`,
+                        }}
+                      >
+                        <span>{project.secondaryLabel || 'Open'}</span>
+                        <ArrowUpRight className="h-3 w-3" />
+                      </a>
+                    )}
                   </div>
                 )}
               </>
@@ -234,7 +292,8 @@ export default function PortfolioSection() {
                 variants={cardVariants}
                 className={project.hero ? 'md:col-span-2' : ''}
               >
-                {hasLink ? (
+                {hasLink && !hasSecondary ? (
+                  // Single-link card: whole card is one anchor (simple case).
                   <a
                     href={project.href}
                     target={isExternal ? '_blank' : undefined}
@@ -246,6 +305,19 @@ export default function PortfolioSection() {
                   >
                     {cardContent}
                   </a>
+                ) : hasLink && hasSecondary ? (
+                  // Two-link card: outer is a <div> (no nested anchors).
+                  // The primary "Website" link inside stretches via ::after
+                  // to cover the whole card; the secondary pill sits on z-10
+                  // so card-area clicks go to primary, pill clicks go to demo.
+                  <div
+                    data-cursor="explore"
+                    className={`card-gradient-hover glass group relative flex h-full flex-col rounded-xl p-6 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-[0_20px_40px_-12px_rgba(0,0,0,0.3)] ${
+                      project.hero ? 'animated-border breathe-glow' : 'hover:border-[var(--color-mas-cyan)]/30'
+                    }`}
+                  >
+                    {cardContent}
+                  </div>
                 ) : (
                   <div
                     className={`card-gradient-hover glass flex h-full cursor-default flex-col rounded-xl p-6 group transition-all duration-400 hover:-translate-y-1 ${
