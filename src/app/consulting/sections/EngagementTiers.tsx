@@ -98,7 +98,7 @@ export default function EngagementTiers() {
               }
             >
               {t.highlight && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-[var(--color-klyntar-red)] px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
+                <div className="cta-klyntar absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-[10px] font-bold uppercase tracking-widest text-white">
                   Most Popular
                 </div>
               )}
@@ -126,7 +126,7 @@ export default function EngagementTiers() {
                 href="#contact-consulting"
                 className={`block w-full rounded-full py-3 text-center text-sm font-bold transition-all ${
                   t.highlight
-                    ? 'bg-[var(--color-klyntar-red)] text-white hover:shadow-[0_0_24px_var(--color-klyntar-red-glow)]'
+                    ? 'cta-klyntar text-white hover:shadow-[0_0_24px_var(--color-klyntar-red-glow)]'
                     : 'border border-[var(--color-mas-border)] text-[var(--color-mas-text)] hover:border-[var(--color-klyntar-red)] hover:text-[var(--color-klyntar-red)]'
                 }`}
               >

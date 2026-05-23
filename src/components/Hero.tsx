@@ -37,7 +37,18 @@ export default function Hero() {
   // Entry animation
   useEffect(() => {
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (prefersReduced) return
+    // On mobile the GSAP entry tween causes a visible flash-of-invisible-
+    // headline on slow phones (SSG paints words visible → useEffect hides
+    // them → tween fades them in). We skip the entry choreography below md
+    // and on coarse pointers so the static HTML is what the user sees.
+    // The pin + blur-on-exit ScrollTrigger is also disabled — pin-spacing
+    // on touch breaks native momentum scroll. Mouse-reactive glow is
+    // separately gated below.
+    const isMobile = window.matchMedia('(max-width: 767px), (pointer: coarse)').matches
+    if (prefersReduced || isMobile) {
+      setCounterVisible(true)
+      return
+    }
 
     const section = sectionRef.current
     const content = contentRef.current
@@ -106,7 +117,11 @@ export default function Hero() {
 
   // Mouse-reactive glow: a soft radial light that follows the cursor
   // inside the hero area. Turns the whole section into a "lit scene."
+  // Touch devices have no cursor, so the effect is pure dead weight there.
   useEffect(() => {
+    const isMobile = window.matchMedia('(max-width: 767px), (pointer: coarse)').matches
+    if (isMobile) return
+
     const section = sectionRef.current
     const light = mouseLightRef.current
     if (!section || !light) return
@@ -245,8 +260,14 @@ export default function Hero() {
             data-cursor="cta"
             className="group relative inline-flex items-center justify-center rounded-full px-8 py-4 text-sm font-bold text-white transition-all duration-300 hover:scale-105"
             style={{
-              background: 'var(--color-klyntar-red)',
+              // Subtle gradient (lighter top-left to darker bottom-right)
+              // pushes the effective bg luminance under the text down enough
+              // for white-on-red to satisfy AA contrast, while keeping the
+              // brand red as the dominant impression.
+              background:
+                'linear-gradient(135deg, var(--color-klyntar-red) 0%, #c61b3a 100%)',
               boxShadow: '0 0 20px var(--color-klyntar-red-glow)',
+              textShadow: '0 1px 1px rgba(0,0,0,0.35)',
             }}
           >
             <span className="relative z-10">Scan Us, Free</span>
@@ -291,12 +312,15 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
-        <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-mas-text-muted)]">
+      {/* Scroll indicator. Previously had opacity-40 on the wrapper, which
+       * dropped the muted-grey text's contrast to 1.58 (Lighthouse fail).
+       * Now the muted color itself carries the dimness (~6:1) and we only
+       * dim the gradient line. */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+        <span className="text-[10px] uppercase tracking-[0.2em] text-[var(--color-mas-text-secondary)]">
           Scroll
         </span>
-        <div className="h-8 w-px bg-gradient-to-b from-[var(--color-mas-cyan)] to-transparent" />
+        <div className="h-8 w-px bg-gradient-to-b from-[var(--color-mas-cyan)]/60 to-transparent" />
       </div>
     </section>
   )

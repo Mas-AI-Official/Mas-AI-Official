@@ -14,6 +14,14 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (prefersReduced) return
 
+    // Lenis fights native momentum scroll on touch devices: with
+    // touchMultiplier > 1 it captures touch events and re-emits them
+    // through its own easing, which feels rubbery on iOS and laggy on
+    // Android. Native mobile scroll is already smooth — opt out below md
+    // and on coarse pointers.
+    const isMobile = window.matchMedia('(max-width: 767px), (pointer: coarse)').matches
+    if (isMobile) return
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

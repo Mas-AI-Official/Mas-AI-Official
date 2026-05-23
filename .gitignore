@@ -29,3 +29,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local audit artifacts (lighthouse, screenshots, perf traces)
+# Produced by ad-hoc QA runs — never commit.
+/report.html
+/report.json
+/audit-*.png
+/mobile-*.png
+/mobile-*.json
+/verify-*.png
+/desktop-*.png
+
+# Local image backups from the 2026-05 mobile pass — large originals
+# kept on disk in case any orphan ref surfaces. Not for the public repo.
+/public/_originals/

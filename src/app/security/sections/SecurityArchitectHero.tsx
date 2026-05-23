@@ -65,7 +65,7 @@ export default function SecurityArchitectHero() {
         >
           <a
             href="#contact-consulting"
-            className="group inline-flex items-center justify-center rounded-full bg-[var(--color-klyntar-red)] px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-klyntar-red-glow)]"
+            className="cta-klyntar group inline-flex items-center justify-center rounded-full px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-klyntar-red-glow)]"
           >
             Scan Us, Free
           </a>

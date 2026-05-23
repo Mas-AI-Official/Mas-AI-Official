@@ -32,7 +32,7 @@ export default function ConsultingCta() {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href="mailto:masoud.masoori@mas-ai.co?subject=Free%20security%20recon%20request"
-              className="group inline-flex items-center gap-2 rounded-full bg-[var(--color-klyntar-red)] px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-klyntar-red-glow)]"
+              className="cta-klyntar group inline-flex items-center gap-2 rounded-full px-10 py-4 text-base font-bold text-white transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_var(--color-klyntar-red-glow)]"
             >
               Request Free Recon
               <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

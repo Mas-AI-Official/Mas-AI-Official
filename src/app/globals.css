@@ -13,7 +13,10 @@
   --color-klyntar-crimson: #b91c3c;
   --color-mas-text: #e8eaf0;
   --color-mas-text-secondary: #94a3b8;
-  --color-mas-text-muted: #6b7280;
+  /* Muted text bumped from #6b7280 (4.06 contrast vs bg #080b14 — fails AA)
+   * to #8a93a3 (~6.0 contrast — passes AA at 4.5:1). Used in counter labels,
+   * micro-copy, footer fine print. */
+  --color-mas-text-muted: #8a93a3;
   --color-mas-border: #1e293b;
   --color-mas-border-glow: #00c8ff20;
 
@@ -89,6 +92,22 @@ body {
 ::selection {
   background-color: var(--color-mas-cyan);
   color: var(--color-mas-bg);
+}
+
+/* AA-contrast version of the brand-red CTA background. The plain
+ * #ff4060 gives white-bold text a 3.41 contrast ratio against itself
+ * (fails WCAG AA 4.5:1). The 135° gradient darkens the bottom-right
+ * enough to land at ~4.6:1 where the text body sits, while keeping the
+ * upper-left as the recognisable brand red. The text-shadow squeezes
+ * out another fraction of contrast and crispens the lettering.
+ *
+ * Use this on any white-on-red CTA across the site instead of the
+ * bare bg-[var(--color-klyntar-red)] arbitrary value. Accent dots,
+ * pills, and small visual markers can keep the bare brand red since
+ * they don't carry text. */
+.cta-klyntar {
+  background: linear-gradient(135deg, var(--color-klyntar-red) 0%, #c61b3a 100%);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
 }
 
 /* Gradient text utility */

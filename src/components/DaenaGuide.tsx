@@ -374,6 +374,13 @@ export default function DaenaGuide() {
   const [chatOpen, setChatOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [showBubble, setShowBubble] = useState(false)
+  // Defer-mount: on mobile we don't render the floating avatar (~framer-motion
+  // tree + image fetch + IntersectionObserver setup) until first paint has
+  // already happened. Two beats: (a) wait for the browser to be idle so the
+  // hero is interactive first, (b) keep the welcome-bubble suppressed during
+  // initial load so the user isn't greeted by a popup before they've read
+  // the headline.
+  const [ready, setReady] = useState(false)
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -392,10 +399,28 @@ export default function DaenaGuide() {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window)
+    const mobile = window.innerWidth < 768 || 'ontouchstart' in window
+    setIsMobile(mobile)
 
-    // Show welcome greeting on first page load (after 1.5s)
-    if (!hasGreeted.current) {
+    // Mobile: defer the entire widget tree until first paint + idle so the
+    // page becomes interactive without the floating UI competing for the
+    // main thread. Desktop: render immediately.
+    if (mobile) {
+      type IdleRequester = (cb: () => void, opts?: { timeout: number }) => number
+      const ric = (window as unknown as { requestIdleCallback?: IdleRequester }).requestIdleCallback
+      const handle = ric
+        ? ric(() => setReady(true), { timeout: 2000 })
+        : window.setTimeout(() => setReady(true), 1500)
+      // We don't try to cancel here — both paths fire-and-forget within 2s
+      // and the component lives for the full session anyway.
+      void handle
+    } else {
+      setReady(true)
+    }
+
+    // Welcome bubble: desktop-only. On mobile the bubble would pop over the
+    // hero CTAs during initial scroll and feel like an interruption.
+    if (!hasGreeted.current && !mobile) {
       hasGreeted.current = true
       const greetTimer = setTimeout(() => {
         setShowBubble(true)
@@ -406,8 +431,11 @@ export default function DaenaGuide() {
     }
   }, [])
 
-  // Section tracking (single threshold, debounced to prevent duplicates)
+  // Section tracking (single threshold, debounced to prevent duplicates).
+  // Skipped until `ready` so the mobile deferred-mount path doesn't pay for
+  // it during initial load.
   useEffect(() => {
+    if (!ready) return
     const sections = document.querySelectorAll('section[id], div[id="hero"]')
     const observer = new IntersectionObserver(
       (entries) => {
@@ -445,7 +473,7 @@ export default function DaenaGuide() {
       observer.disconnect()
       if (debounceTimer.current) clearTimeout(debounceTimer.current)
     }
-  }, [])
+  }, [ready])
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -526,6 +554,11 @@ export default function DaenaGuide() {
   const effectiveMood: SectionMood = klyntarMode
     ? { glow: '#ff4060', caption: mood.caption, brightness: Math.max(mood.brightness, 1.08) }
     : mood
+
+  // Deferred-mount gate: mobile renders nothing until idle so the hero
+  // becomes interactive first. Desktop sets `ready` synchronously in the
+  // first effect, so this is effectively a no-op there.
+  if (!ready) return null
 
   return (
     <>

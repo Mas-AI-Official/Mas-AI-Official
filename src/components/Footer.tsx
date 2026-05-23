@@ -33,9 +33,11 @@ const connectLinks: FooterLink[] = [
 function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
-      <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-mas-text)]">
+      {/* h3, not h4, so heading order on the home page is sequential —
+       * sections above use h2/h3 and Lighthouse flagged the jump to h4. */}
+      <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-mas-text)]">
         {title}
-      </h4>
+      </h3>
       <ul className="flex flex-col gap-3">
         {links.map((link) => (
           <li key={link.label}>

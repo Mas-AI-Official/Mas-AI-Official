@@ -28,6 +28,35 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  // Body scroll-lock while the mobile menu is open. Without this, swiping
+  // inside the menu drags the page behind it on iOS, which feels broken.
+  useEffect(() => {
+    if (!mobileOpen) return
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = prev
+    }
+  }, [mobileOpen])
+
+  // Close the menu when the route hash changes (e.g. user taps "#contact")
+  // or when Escape is pressed. The link-level onClick already handles taps
+  // on the menu items themselves, but hash navigation can come from other
+  // places (back/forward buttons).
+  useEffect(() => {
+    if (!mobileOpen) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMobileOpen(false)
+    }
+    const onHash = () => setMobileOpen(false)
+    window.addEventListener('keydown', onKey)
+    window.addEventListener('hashchange', onHash)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('hashchange', onHash)
+    }
+  }, [mobileOpen])
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 pt-4">
       <nav
@@ -49,8 +78,10 @@ export default function Navbar() {
           />
         </a>
 
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center gap-1">
+        {/* Desktop links — shown at lg (≥1024px) so tablet portrait uses the
+            hamburger. At md (768-1023px) the logo + 5 links + Explore Daena
+            + Book Free Audit don't fit without truncation. */}
+        <div className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => (
             <MagneticLink key={link.label} href={link.href} external={link.external}>
               {link.label}
@@ -73,7 +104,7 @@ export default function Navbar() {
             href="https://daena.mas-ai.co"
             target="_blank"
             rel="noopener"
-            className="hidden md:inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold font-[family-name:var(--font-mono)] tracking-wider transition-all duration-300 hover:scale-105"
+            className="hidden lg:inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold font-[family-name:var(--font-mono)] tracking-wider transition-all duration-300 hover:scale-105"
             style={{
               color: 'var(--color-mas-cyan)',
               borderColor: 'color-mix(in srgb, var(--color-mas-cyan) 30%, transparent)',
@@ -87,18 +118,22 @@ export default function Navbar() {
           {/* CTA, primary path: free audit */}
           <a
             href="/security#contact-consulting"
-            className="hidden md:inline-flex rounded-full px-6 py-2 text-sm font-bold text-white transition-all duration-300 hover:scale-105"
+            className="hidden lg:inline-flex rounded-full px-6 py-2 text-sm font-bold text-white transition-all duration-300 hover:scale-105"
             style={{
-              background: 'var(--color-klyntar-red)',
+              // Same brand-red AA-contrast trick as Hero: gradient darkens
+              // enough to push white-on-red text past 4.5:1.
+              background:
+                'linear-gradient(135deg, var(--color-klyntar-red) 0%, #c61b3a 100%)',
               boxShadow: '0 0 24px var(--color-klyntar-red-glow)',
+              textShadow: '0 1px 1px rgba(0,0,0,0.35)',
             }}
           >
             Book Free Audit
           </a>
 
-          {/* Mobile toggle */}
+          {/* Mobile toggle (also shown at md / tablet portrait) */}
           <button
-            className="md:hidden p-2 text-[var(--color-mas-text)]"
+            className="lg:hidden p-2 text-[var(--color-mas-text)]"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
             aria-expanded={mobileOpen}
@@ -116,7 +151,7 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-4 right-4 mt-2 rounded-2xl bg-[var(--color-mas-bg)]/95 backdrop-blur-2xl border border-[var(--color-mas-border)] shadow-[0_20px_60px_rgba(0,0,0,0.6)] md:hidden"
+            className="absolute top-full left-4 right-4 mt-2 rounded-2xl bg-[var(--color-mas-bg)]/95 backdrop-blur-2xl border border-[var(--color-mas-border)] shadow-[0_20px_60px_rgba(0,0,0,0.6)] lg:hidden"
           >
             <div className="px-6 py-5 flex flex-col gap-1">
               {navLinks.map((link) => (
@@ -150,7 +185,11 @@ export default function Navbar() {
               <a
                 href="/security#contact-consulting"
                 className="mt-2 rounded-full px-5 py-3 text-center text-sm font-bold text-white"
-                style={{ background: 'var(--color-klyntar-red)' }}
+                style={{
+                  background:
+                    'linear-gradient(135deg, var(--color-klyntar-red) 0%, #c61b3a 100%)',
+                  textShadow: '0 1px 1px rgba(0,0,0,0.35)',
+                }}
               >
                 Book Free Audit
               </a>

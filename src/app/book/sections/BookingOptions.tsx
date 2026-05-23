@@ -194,9 +194,13 @@ function OptionTile({ option }: { option: Option }) {
           </span>
         </div>
 
-        <h3 className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold text-white md:text-3xl">
+        {/* h2, not h3 — each booking option is a top-level peer to the
+         * BookingHero h1 ("Three ways to start. All free."). Using h3
+         * here would skip h2 entirely and Lighthouse rightly flags the
+         * jump. */}
+        <h2 className="mb-2 font-[family-name:var(--font-display)] text-2xl font-bold text-white md:text-3xl">
           {option.title}
-        </h3>
+        </h2>
         <p className="mb-6 text-sm italic text-[var(--color-mas-text-secondary)]">
           {option.subtitle}
         </p>
@@ -224,9 +228,15 @@ function OptionTile({ option }: { option: Option }) {
           href={option.ctaHref}
           target={option.ctaHref.startsWith('http') ? '_blank' : undefined}
           rel={option.ctaHref.startsWith('http') ? 'noopener noreferrer' : undefined}
-          className="group/cta inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold transition-all duration-300 hover:scale-[1.02]"
+          // For the red option we layer the AA-contrast .cta-klyntar
+          // gradient on top so white-on-red passes 4.5:1. The other two
+          // accents (gold, cyan) keep dark text on the brand colour,
+          // which already passes.
+          className={`group/cta inline-flex w-full items-center justify-center gap-2 rounded-full px-6 py-3.5 text-sm font-bold transition-all duration-300 hover:scale-[1.02] ${
+            option.accent === 'red' ? 'cta-klyntar' : ''
+          }`}
           style={{
-            background: accent,
+            background: option.accent === 'red' ? undefined : accent,
             color: option.accent === 'red' ? 'white' : 'var(--color-mas-bg)',
             boxShadow: `0 0 24px ${glow}`,
           }}

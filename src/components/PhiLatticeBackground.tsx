@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useCallback } from 'react'
+import { useEffect, useRef, useCallback, useState } from 'react'
 
 /**
  * PhiLatticeBackground: Fibonacci spiral + honeycomb connections.
@@ -29,6 +29,10 @@ export default function PhiLatticeBackground() {
   const scrollRef = useRef(0)
   const rafRef = useRef<number>(0)
   const nodesRef = useRef<PLNode[]>([])
+  // On mobile we swap the 180-node RAF canvas for a CSS poster — same
+  // brand language (cyan dots + ambient gold/cyan glows) but ~0 CPU,
+  // no battery drain, no mouse handler running uselessly on touch.
+  const [mode, setMode] = useState<'canvas' | 'poster'>('canvas')
 
   const buildNetwork = useCallback((w: number, h: number) => {
     const nodes: PLNode[] = []
@@ -64,6 +68,15 @@ export default function PhiLatticeBackground() {
   }, [])
 
   useEffect(() => {
+    // Mobile / coarse-pointer fast path: skip all canvas work and let the
+    // component re-render as a static CSS poster. We probe here (inside
+    // the effect) rather than at module scope so SSG is unaffected.
+    const isMobile = window.matchMedia('(max-width: 767px), (pointer: coarse)').matches
+    if (isMobile) {
+      setMode('poster')
+      return
+    }
+
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext('2d')
@@ -218,6 +231,31 @@ export default function PhiLatticeBackground() {
       window.removeEventListener('scroll', onScroll)
     }
   }, [buildNetwork])
+
+  if (mode === 'poster') {
+    // CSS-only PhiLattice poster: a hex-ish dot grid layered over the two
+    // ambient color washes (cyan top-left, gold lower-right) that the
+    // canvas version draws dynamically. Pure paint — no JS, no RAF, no
+    // listeners. Matches the canvas vibe well enough that mobile users
+    // never notice the swap.
+    return (
+      <div
+        aria-hidden="true"
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          zIndex: 0,
+          backgroundColor: 'transparent',
+          backgroundImage: [
+            'radial-gradient(circle at center, rgba(0,200,255,0.18) 0.7px, transparent 1.4px)',
+            'radial-gradient(ellipse at 30% 15%, rgba(0,200,255,0.10) 0%, transparent 45%)',
+            'radial-gradient(ellipse at 75% 70%, rgba(212,168,83,0.06) 0%, transparent 50%)',
+          ].join(', '),
+          backgroundSize: '28px 28px, 100% 100%, 100% 100%',
+          backgroundPosition: '0 0, 0 0, 0 0',
+        }}
+      />
+    )
+  }
 
   return (
     <canvas
