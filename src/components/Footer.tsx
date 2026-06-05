@@ -30,6 +30,19 @@ const connectLinks: FooterLink[] = [
   { label: 'Email', href: 'mailto:masoud.masoori@mas-ai.co' },
 ]
 
+// GEO "answer pages" — linked sitewide so they are not orphans and crawlers
+// reach them from every page.
+const learnLinks: FooterLink[] = [
+  { label: 'What is Daena?', href: '/what-is-daena' },
+  { label: 'AI Governance Platform', href: '/ai-governance-platform' },
+  { label: 'Multi-Agent AI Company OS', href: '/multi-agent-ai-company-os' },
+  { label: 'AI Control Plane for Business', href: '/ai-control-plane-for-business' },
+  { label: 'Daena vs LangChain', href: '/compare/daena-vs-langchain' },
+  { label: 'Daena vs AutoGen', href: '/compare/daena-vs-autogen' },
+  { label: 'AI Agent Governance', href: '/use-cases/ai-agent-governance' },
+  { label: 'Multi-LLM Routing', href: '/use-cases/multi-llm-routing' },
+]
+
 function FooterColumn({ title, links }: { title: string; links: FooterLink[] }) {
   return (
     <div>
@@ -99,6 +112,25 @@ export default function Footer() {
           <FooterColumn title="Products" links={productLinks} />
           <FooterColumn title="Company" links={companyLinks} />
           <FooterColumn title="Connect" links={connectLinks} />
+        </div>
+
+        {/* Learn — answer-page link hub for SEO / AI search discovery */}
+        <div className="mt-10">
+          <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--color-mas-text)]">
+            Learn
+          </h3>
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-2 sm:grid-cols-3 md:grid-cols-4">
+            {learnLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="link-underline text-sm text-[var(--color-mas-text-muted)] transition-colors hover:text-[var(--color-mas-cyan)]"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Divider */}
