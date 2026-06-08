@@ -43,3 +43,4 @@ next-env.d.ts
 # Local image backups from the 2026-05 mobile pass — large originals
 # kept on disk in case any orphan ref surfaces. Not for the public repo.
 /public/_originals/
+_orig_backup/
