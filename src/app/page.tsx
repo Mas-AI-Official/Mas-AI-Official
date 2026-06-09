@@ -9,17 +9,13 @@ import CredibilitySection from '@/components/CredibilitySection'
 import ContactSection from '@/components/ContactSection'
 import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
-import PhiLatticeBackground from '@/components/PhiLatticeBackground'
 import SmoothScroll from '@/components/SmoothScroll'
-import CustomCursor from '@/components/CustomCursor'
-import DaenaGuide from '@/components/DaenaGuide'
+import ClientOverlays from '@/components/ClientOverlays'
 
 export default function HomePage() {
   return (
     <SmoothScroll>
-      <PhiLatticeBackground />
-      <CustomCursor />
-      <DaenaGuide />
+      <ClientOverlays />
       <Navbar />
       <main className="relative z-[2]" style={{ background: 'transparent' }}>
         <div id="hero">
