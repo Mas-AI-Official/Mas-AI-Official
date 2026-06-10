@@ -86,7 +86,7 @@ const credentials: Credential[] = [
   {
     icon: TestTube,
     label: 'Daena v3.7',
-    title: '2,956 tests passing',
+    title: '3,086 tests passing',
     detail: '10-stage governed pipeline, 60 agent capabilities across 10 departments, 0 regressions at delivery.',
     verifiable: 'Verifiable via release notes at daena.mas-ai.co/whats-new',
     accent: 'cyan',

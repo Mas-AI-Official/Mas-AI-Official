@@ -26,7 +26,7 @@ Daena is a governed multi-runtime AI orchestration platform. It coordinates mult
 - 5-tier Neural-Backed Memory Fabric (NBMF). patent-pending
 - Patent-pending PhiLattice Architecture for Fibonacci-hexagonal agent topology
 - Runs on Claude, Codex, Gemini CLI, Grok, Groq, Ollama, vLLM
-- 2,956+ automated tests passing
+- 3,086+ automated tests passing
 - Free tier runs fully local on Ollama
 
 ### Klyntar. [Security layer inside Daena](https://mas-ai.co/security)

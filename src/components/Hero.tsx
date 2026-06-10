@@ -22,17 +22,17 @@ export default function Hero() {
   const [counterVisible, setCounterVisible] = useState(false)
 
   // Kinetic-typography headline tokens
-  const headlineWords = [
-    { text: 'We', tone: 'white' },
-    { text: 'build', tone: 'gradient' },
-    { text: 'AI.', tone: 'white' },
-    { text: 'We', tone: 'white' },
-    { text: 'govern', tone: 'cyan' },
-    { text: 'it.', tone: 'white' },
-    { text: 'We', tone: 'white' },
-    { text: 'secure', tone: 'red' },
-    { text: 'everything.', tone: 'gradient-red' },
-  ] as const
+  const headlineWords: { text: string; tone: 'white' | 'gradient' | 'cyan' | 'red' | 'gradient-red' }[] = [
+    { text: 'Your', tone: 'white' },
+    { text: 'AI', tone: 'gradient' },
+    { text: 'moves', tone: 'white' },
+    { text: 'fast.', tone: 'gradient' },
+    { text: 'Can', tone: 'white' },
+    { text: 'you', tone: 'white' },
+    { text: 'prove', tone: 'cyan' },
+    { text: "it's", tone: 'white' },
+    { text: 'safe?', tone: 'gradient-red' },
+  ]
 
   // Entry animation
   useEffect(() => {
@@ -213,9 +213,10 @@ export default function Hero() {
           }}
           className="mx-auto mb-8 max-w-3xl text-lg text-[var(--color-mas-text-secondary)] sm:text-xl md:text-2xl leading-relaxed"
         >
-          We <strong className="text-[var(--color-mas-cyan)]">automate your business</strong> with governed AI agents.
-          We <strong className="text-[var(--color-klyntar-red)]">find the holes</strong> before attackers do.
-          We move fast, we fix what matters, and <strong className="text-white">we start free</strong>.
+          We install <strong className="text-[var(--color-mas-cyan)]">governed AI agents</strong> that automate your business —
+          every action logged, every decision auditable,
+          every <strong className="text-[var(--color-klyntar-red)]">hole found before attackers do</strong>.
+          Live in 21 days. Source code yours. <strong className="text-white">First call free</strong>.
         </p>
 
         {/* Trust ribbon */}
@@ -281,19 +282,25 @@ export default function Hero() {
           </a>
         </div>
 
+        {/* Named guarantee — the risk reversal, in writing */}
+        <p className="mx-auto mb-4 max-w-2xl text-sm text-[var(--color-mas-text-secondary)]">
+          If our free 2-hour scan finds nothing worth fixing, we tell you that in writing —
+          and <strong className="text-white">you owe us nothing, ever</strong>.
+        </p>
+
         {/* Micro-trust */}
         <p className="mb-14 text-xs text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)]">
-          30 minute call · 48-hour scan turnaround · no credit card · no retainer trap
+          30 minute call · 48-hour scan turnaround · no credit card · fixed price, in writing
         </p>
 
         {/* Animated counter strip */}
         <div className="hero-stats flex flex-wrap justify-center gap-8 md:gap-12">
           {[
             { value: 2, suffix: '', label: 'USPTO Patents', tone: 'cyan' },
-            { value: 25, suffix: '+', label: 'Exploit Signatures', tone: 'red' },
-            { value: 45, suffix: '+', label: 'Scanners Detected', tone: 'red' },
-            { value: 2956, suffix: '', label: 'Tests Passing', tone: 'cyan' },
-            { value: 60, suffix: '', label: 'Agent Capabilities', tone: 'cyan' },
+            { value: 21, suffix: '', label: 'Days to Live Agents', tone: 'cyan' },
+            { value: 48, suffix: 'h', label: 'Scan Turnaround', tone: 'red' },
+            { value: 3086, suffix: '', label: 'Tests Passing', tone: 'cyan' },
+            { value: 100, suffix: '%', label: 'Source Ownership', tone: 'cyan' },
           ].map((s) => (
             <div key={s.label} className="text-center">
               <div

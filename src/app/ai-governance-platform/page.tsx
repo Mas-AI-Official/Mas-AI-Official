@@ -61,7 +61,7 @@ const faq: FaqItem[] = [
   },
   {
     q: 'Is Daena a real product or a concept?',
-    a: 'Daena v3.7 runs in production on Google Cloud Run with 2,956+ tests passing, and its architecture is covered by two USPTO provisional patents — PhiLattice (#63/877,082) for agent topology and NBMF (#64/020,421) for memory. MAS-AI Technologies Inc. is federally incorporated in Ontario, Canada.',
+    a: 'Daena v3.7 runs in production on Google Cloud Run with 3,086+ tests passing, and its architecture is covered by two USPTO provisional patents — PhiLattice (#63/877,082) for agent topology and NBMF (#64/020,421) for memory. MAS-AI Technologies Inc. is federally incorporated in Ontario, Canada.',
   },
 ]
 
@@ -79,7 +79,7 @@ export default function Page() {
       tldr={tldr}
       proof={[
         'Daena v3.7 in production',
-        '2,956+ tests passing',
+        '3,086+ tests passing',
         '2 USPTO provisional patents',
         'Runs on Google Cloud Run',
       ]}

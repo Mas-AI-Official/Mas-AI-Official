@@ -150,7 +150,7 @@ const knowledge: KnowledgeEntry[] = [
   },
   {
     keywords: ['test', 'demo', 'proof', 'working', 'ready', 'how many tests'],
-    answer: 'Daena v3.7 ships with 2,956 automated tests passing, zero regressions at last delivery. Two USPTO patents filed. Production-deployed on GCP. Not a roadmap, real software.',
+    answer: 'Daena v3.7 ships with 3,086 automated tests passing, zero regressions at last delivery. Two USPTO patents filed. Production-deployed on GCP. Not a roadmap, real software.',
     section: 'proof',
   },
   {
@@ -264,7 +264,7 @@ const knowledge: KnowledgeEntry[] = [
   // TIMELINE / AVAILABILITY
   {
     keywords: ['when', 'launch', 'release', 'timeline', 'available', 'waitlist', 'early access'],
-    answer: 'Daena is in advanced development with 300+ tests passing and a working demo. We are onboarding early access partners now. Contact us to discuss pilot opportunities.',
+    answer: 'Daena is in production (v3.7) with 3,086 tests passing and a working demo. We are onboarding early access partners now. Contact us to discuss pilot opportunities.',
     section: 'contact',
   },
 

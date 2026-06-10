@@ -54,7 +54,7 @@ export default function Page() {
       eyebrow="Daena"
       h1={h1}
       tldr={tldr}
-      proof={['Daena v3.7 in production', '2,956+ tests passing', '2 USPTO provisional patents', 'Federally incorporated, Ontario CA']}
+      proof={['Daena v3.7 in production', '3,086+ tests passing', '2 USPTO provisional patents', 'Federally incorporated, Ontario CA']}
       jsonLd={jsonLd}
       related={[
         { href: '/ai-governance-platform', label: 'What is an AI governance platform?' },

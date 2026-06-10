@@ -39,7 +39,7 @@ const faq: FaqItem[] = [
   },
   {
     q: 'Is Daena production-ready?',
-    a: 'Daena v3.7 runs in production on Google Cloud Run with 2,956+ tests passing, and its architecture is covered by two USPTO provisional patents.',
+    a: 'Daena v3.7 runs in production on Google Cloud Run with 3,086+ tests passing, and its architecture is covered by two USPTO provisional patents.',
   },
 ]
 
@@ -54,7 +54,7 @@ export default function Page() {
       eyebrow="AI Control Plane"
       h1={h1}
       tldr={tldr}
-      proof={['Daena v3.7 in production', '9 LLM runtimes, hot-swap', '2,956+ tests passing', 'Runs on Google Cloud Run']}
+      proof={['Daena v3.7 in production', '9 LLM runtimes, hot-swap', '3,086+ tests passing', 'Runs on Google Cloud Run']}
       jsonLd={jsonLd}
       related={[
         { href: '/what-is-daena', label: 'What is Daena?' },

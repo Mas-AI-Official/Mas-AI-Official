@@ -24,14 +24,14 @@ export default function HomePage() {
 
         <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <section id="paths" className="relative" style={{ background: 'radial-gradient(ellipse at 20% 30%, rgba(0,200,255,0.05) 0%, transparent 45%), radial-gradient(ellipse at 80% 70%, rgba(255,64,96,0.05) 0%, transparent 45%)' }}>
-          <TwoPathsSection />
+        <section id="proof" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(0,200,255,0.04) 0%, transparent 50%)' }}>
+          <CredentialsSection />
         </section>
 
         <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
 
-        <section id="proof" className="relative" style={{ background: 'radial-gradient(ellipse at 50% 30%, rgba(0,200,255,0.04) 0%, transparent 50%)' }}>
-          <CredentialsSection />
+        <section id="paths" className="relative" style={{ background: 'radial-gradient(ellipse at 20% 30%, rgba(0,200,255,0.05) 0%, transparent 45%), radial-gradient(ellipse at 80% 70%, rgba(255,64,96,0.05) 0%, transparent 45%)' }}>
+          <TwoPathsSection />
         </section>
 
         <div className="w-[60%] mx-auto h-px bg-gradient-to-r from-transparent via-cyan-500/15 to-transparent" />
