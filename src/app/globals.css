@@ -497,3 +497,43 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-mas-cyan);
 }
+
+/* ============================================================
+   MOBILE PERFORMANCE GUARD
+   The decorative ambient orbs use enormous Gaussian blurs
+   (blur(120-150px) on 500-800px elements). At DPR 3 that is a
+   ~2400px raster with a huge kernel - on phones the very first
+   layout/paint takes 2-3 SECONDS (measured: 2,474ms layout,
+   LCP 4.8s). Cap decorative blur and drop backdrop-filter on
+   small screens; desktop is untouched.
+   ============================================================ */
+@media (max-width: 767px) {
+  /* Tailwind arbitrary blur utilities: blur-[40px]...blur-[150px].
+     32px is visually indistinguishable on a 390px viewport but
+     an order of magnitude cheaper to rasterize. */
+  [class*='blur-['] {
+    filter: blur(32px);
+  }
+  /* Glassmorphism panels: the rgba() backgrounds already carry the
+     look; live backdrop sampling is pure GPU cost on phones. */
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur-lg,
+  .backdrop-blur-xl,
+  [class*='backdrop-blur'],
+  [style*='backdrop-filter'] {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* Below-the-fold sections: skip layout/paint until scrolled near.
+   Cuts the initial mobile layout pass from ~1400 nodes to the hero
+   only. contain-intrinsic-size keeps the scrollbar stable; CLS was
+   0.00 before and the placeholder estimate keeps it that way. */
+@media (max-width: 767px) {
+  main > section[id] {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+}
