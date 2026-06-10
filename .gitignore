@@ -44,3 +44,4 @@ next-env.d.ts
 # kept on disk in case any orphan ref surfaces. Not for the public repo.
 /public/_originals/
 _orig_backup/
+lh_*.json
