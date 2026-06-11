@@ -213,10 +213,10 @@ export default function Hero() {
           }}
           className="mx-auto mb-8 max-w-3xl text-lg text-[var(--color-mas-text-secondary)] sm:text-xl md:text-2xl leading-relaxed"
         >
-          We install <strong className="text-[var(--color-mas-cyan)]">governed AI agents</strong> that automate your business —
-          every action logged, every decision auditable,
-          every <strong className="text-[var(--color-klyntar-red)]">hole found before attackers do</strong>.
-          Live in 21 days. Source code yours. <strong className="text-white">First call free</strong>.
+          We install <strong className="text-[var(--color-mas-cyan)]">AI agents that run your business on autopilot</strong>.
+          Every action logged. Every decision auditable.
+          Every <strong className="text-[var(--color-klyntar-red)]">hole found before attackers find it</strong>.
+          Live in 21 days, and <strong className="text-white">the source code is yours</strong>.
         </p>
 
         {/* Trust ribbon */}
@@ -233,12 +233,12 @@ export default function Hero() {
           <span className="text-[var(--color-mas-text-muted)]/50">·</span>
           <span className="inline-flex items-center gap-2">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-mas-gold)]" />
-            <strong className="text-[var(--color-mas-text-secondary)]">Free first call</strong>
+            <strong className="text-[var(--color-mas-text-secondary)]">Live in 21 days</strong>
           </span>
           <span className="text-[var(--color-mas-text-muted)]/50">·</span>
           <span className="inline-flex items-center gap-2">
             <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--color-mas-cyan)]" />
-            <strong className="text-[var(--color-mas-text-secondary)]">Your source, yours forever</strong>
+            <strong className="text-[var(--color-mas-text-secondary)]">You own the source code</strong>
           </span>
         </div>
 
@@ -254,7 +254,7 @@ export default function Hero() {
               boxShadow: '0 0 32px var(--color-mas-gold-glow)',
             }}
           >
-            <span className="relative z-10">Talk to Us, Free</span>
+            <span className="relative z-10">Book a Free Call</span>
           </a>
           <a
             href="/security#contact-consulting"
@@ -271,26 +271,26 @@ export default function Hero() {
               textShadow: '0 1px 1px rgba(0,0,0,0.35)',
             }}
           >
-            <span className="relative z-10">Scan Us, Free</span>
+            <span className="relative z-10">Get a Free Scan</span>
           </a>
           <a
             href="#paths"
             data-cursor="cta"
             className="inline-flex items-center justify-center rounded-full border border-[var(--color-mas-border)] px-8 py-4 text-sm font-semibold text-[var(--color-mas-text-secondary)] transition-all duration-300 hover:border-[var(--color-mas-text)] hover:text-[var(--color-mas-text)]"
           >
-            See Both Paths
+            Compare Both Paths
           </a>
         </div>
 
         {/* Named guarantee — the risk reversal, in writing */}
         <p className="mx-auto mb-4 max-w-2xl text-sm text-[var(--color-mas-text-secondary)]">
-          If our free 2-hour scan finds nothing worth fixing, we tell you that in writing —
-          and <strong className="text-white">you owe us nothing, ever</strong>.
+          If our free 2-hour scan finds nothing worth fixing, we put that in writing
+          and <strong className="text-white">you owe us nothing</strong>.
         </p>
 
         {/* Micro-trust */}
         <p className="mb-14 text-xs text-[var(--color-mas-text-muted)] font-[family-name:var(--font-mono)]">
-          30 minute call · 48-hour scan turnaround · no credit card · fixed price, in writing
+          30-minute call · Scan results in 48 hours · No credit card · Fixed price, in writing
         </p>
 
         {/* Animated counter strip */}
