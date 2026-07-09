@@ -64,7 +64,7 @@ const jsonLd = {
       url: 'https://mas-ai.co',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://mas-ai.co/Mas-ai Logo.png',
+        url: 'https://mas-ai.co/mas-ai-logo.png',
         width: 512,
         height: 512,
       },
@@ -72,7 +72,7 @@ const jsonLd = {
       description:
         'MAS-AI Technologies Inc. builds governed AI platforms (Daena) and security tools (Klyntar), and runs founder-led services: installing AI agents or auditing AI and infrastructure already in production. Two USPTO patents filed.',
       slogan: 'We build AI. We govern it. We secure everything.',
-      foundingDate: '2026-01',
+      foundingDate: '2026-01-25',
       foundingLocation: {
         '@type': 'Place',
         name: 'Ontario, Canada',
@@ -201,6 +201,7 @@ const jsonLd = {
       creator: { '@id': 'https://mas-ai.co/#organization' },
       publisher: { '@id': 'https://mas-ai.co/#organization' },
       datePublished: '2026-01-01',
+      dateModified: '2026-07-08',
       softwareVersion: '3.7.0',
       featureList: [
         'Multi-runtime AI orchestration',
@@ -219,14 +220,6 @@ const jsonLd = {
         { '@type': 'Offer', name: 'Pro', price: '29-99', priceCurrency: 'USD', availability: 'https://schema.org/InStock', description: 'Multi-runtime routing, Council reasoning, EXE mode' },
         { '@type': 'Offer', name: 'Enterprise', price: '500+', priceCurrency: 'USD', availability: 'https://schema.org/InStock', description: 'Custom departments, SSO, SLA, on-prem deployment' },
       ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '5',
-        ratingCount: '1',
-        reviewCount: '0',
-        worstRating: '1',
-        bestRating: '5',
-      },
     },
 
     // --- Klyntar (Product / Security Layer) --------------------------------
@@ -244,6 +237,7 @@ const jsonLd = {
       creator: { '@id': 'https://mas-ai.co/#organization' },
       publisher: { '@id': 'https://mas-ai.co/#organization' },
       isPartOf: { '@id': 'https://mas-ai.co/#daena' },
+      dateModified: '2026-07-08',
       featureList: [
         '25+ exploit signatures',
         '45+ scanners detected by behavior',
@@ -343,11 +337,6 @@ const jsonLd = {
       name: 'MAS-AI',
       url: 'https://mas-ai.co',
       publisher: { '@id': 'https://mas-ai.co/#organization' },
-      potentialAction: {
-        '@type': 'SearchAction',
-        target: 'https://mas-ai.co/search?q={search_term_string}',
-        'query-input': 'required name=search_term_string',
-      },
       inLanguage: 'en-US',
     },
   ],
@@ -357,8 +346,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable} ${jetbrains.variable}`} suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/Mas-ai Logo.png" />
-        <link rel="apple-touch-icon" href="/Mas-ai Logo.png" />
+        <link rel="icon" href="/mas-ai-logo.png" />
+        <link rel="apple-touch-icon" href="/mas-ai-logo.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -30,7 +30,7 @@ const patents: Patent[] = [
     appNumber: 'USPTO #63/877,082',
     filedDate: 'Filed September 2025',
     description:
-      'Fibonacci-hexagonal agent topology for governed multi-agent orchestration. Sunflower-honeycomb structure codebase-internal; PhiLattice is the external brand.',
+      'Fibonacci-hexagonal agent topology for governed multi-agent orchestration — golden-angle placement with six-neighbor mesh connectivity.',
   },
   {
     title: 'Neural-Backed Memory Fabric (NBMF)',

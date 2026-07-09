@@ -20,7 +20,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What is Daena?',
     answer:
-      'Daena is our flagship platform: a governance-first AI agent orchestration system with 60 agent capabilities across 10 departments. 9 AI providers integrated (Claude, GPT, Gemini, Ollama, and more), 1,764 automated tests passing, two USPTO patents filed, and a 10-stage auditable execution pipeline. Free to run locally with Ollama. Try it at daena.mas-ai.co.',
+      'Daena is our flagship platform: a governance-first AI agent orchestration system with 60 agent capabilities across 10 departments. 9 AI providers integrated (Claude, GPT, Gemini, Ollama, and more), 3,086 automated tests passing, two USPTO patents filed, and a 10-stage auditable execution pipeline. Free to run locally with Ollama. Try it at daena.mas-ai.co.',
   },
   {
     question: 'Does MAS-AI work with enterprises?',
@@ -40,7 +40,7 @@ const faqs: FAQItem[] = [
   {
     question: 'What makes Daena different from other AI platforms?',
     answer:
-      'Daena is governance-first, not governance-bolted-on. Every action passes through a 10-stage pipeline with 9 immutable hard laws that cannot be disabled. Six patent-pending systems (PhiLattice, NBMF, TLM, eDNA, Dream Engine, Smart Routing) ensure auditable memory, 87.5% token savings, and traceable decisions. Plus, bring-your-own-runtime support across 9 AI providers.',
+      'Daena is governance-first, not governance-bolted-on. Every action passes through a 10-stage pipeline with 9 immutable hard laws that cannot be disabled. Two USPTO patent applications (PhiLattice, NBMF) plus proprietary systems — TLM, eDNA, Dream Engine, Smart Routing — deliver auditable memory, measured token savings of up to 87.5%, and traceable decisions. Plus, bring-your-own-runtime support across 9 AI providers.',
   },
 ]
 
