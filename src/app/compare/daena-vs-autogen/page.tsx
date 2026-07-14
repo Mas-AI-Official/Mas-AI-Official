@@ -5,7 +5,7 @@ import Faq from '@/components/answer/Faq'
 import CompareTable from '@/components/answer/CompareTable'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/compare/daena-vs-autogen'
+const slug = '/compare/daena-vs-autogen/'
 const title = 'Daena vs AutoGen — Governed Control Plane vs Agent Framework'
 const description =
   'AutoGen is a Microsoft framework for multi-agent conversation patterns; Daena is a governed control plane that adds approval gates, audit logging, multi-LLM routing, and a memory fabric for production.'
@@ -18,7 +18,13 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: slug },
   keywords: ['Daena vs AutoGen', 'AutoGen alternative', 'AutoGen governance', 'AutoGen audit logs', 'enterprise multi-agent governance', 'Microsoft AutoGen alternative'],
-  openGraph: { title, description, url: 'https://mas-ai.co/compare/daena-vs-autogen', type: 'article' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://mas-ai.co/compare/daena-vs-autogen/',
+    type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
 }
 
 const faq: FaqItem[] = [

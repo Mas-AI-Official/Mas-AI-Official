@@ -4,7 +4,7 @@ import { Section } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/multi-agent-ai-company-os'
+const slug = '/multi-agent-ai-company-os/'
 const title = 'Multi-Agent AI Company OS — Daena by MAS-AI'
 const description =
   'A multi-agent AI company OS organizes specialized agents by department, capability, memory, and approval level. Daena maps 10 departments into 60 governed agent slots with three reasoning modes.'
@@ -13,11 +13,17 @@ const tldr =
   'Daena is a multi-agent AI company OS that organizes 60 governed agent slots across 10 departments and 6 capability types (MIND, EYES, HANDS, VOICE, SHIELD, MEMORY), with three reasoning modes and a shared, auditable 5-tier memory fabric.'
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: slug },
   keywords: ['AI company OS', 'multi-agent AI company OS', 'multi-agent orchestration', 'AI departments', 'agent capabilities', 'governed multi-agent platform'],
-  openGraph: { title, description, url: 'https://mas-ai.co/multi-agent-ai-company-os', type: 'article' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://mas-ai.co/multi-agent-ai-company-os/',
+    type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
 }
 
 const faq: FaqItem[] = [

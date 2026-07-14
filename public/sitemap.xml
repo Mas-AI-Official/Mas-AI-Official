@@ -55,31 +55,31 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://mas-ai.co/security</loc>
+    <loc>https://mas-ai.co/security/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mas-ai.co/automation</loc>
+    <loc>https://mas-ai.co/automation/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://mas-ai.co/book</loc>
+    <loc>https://mas-ai.co/book/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
   <url>
-    <loc>https://mas-ai.co/ai-act-readiness</loc>
+    <loc>https://mas-ai.co/ai-act-readiness/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://mas-ai.co/consulting</loc>
+    <loc>https://mas-ai.co/consulting/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -89,11 +89,5 @@
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://daena.mas-ai.co/</loc>
-    <lastmod>2026-07-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
   </url>
 </urlset>

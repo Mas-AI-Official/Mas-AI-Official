@@ -8,9 +8,10 @@ import BookingOptions from './sections/BookingOptions'
 import BookingFaq from './sections/BookingFaq'
 
 export const metadata: Metadata = {
-  title: 'Book a Call | MAS-AI Technologies',
+  title: { absolute: 'Book a Call | MAS-AI Technologies' },
   description:
     'Three ways to start. Free 30-min consultation, free security scan, or free automation audit. All free. All under 48-hour response.',
+  alternates: { canonical: '/book/' },
   keywords: [
     'book free consultation',
     'AI security audit',
@@ -22,8 +23,9 @@ export const metadata: Metadata = {
     title: 'Book a Free Call | MAS-AI Technologies',
     description:
       'Three options. All free. All 48-hour turnaround. Consultation, security scan, or automation audit.',
-    url: 'https://mas-ai.co/book',
+    url: 'https://mas-ai.co/book/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 
@@ -32,7 +34,7 @@ export const metadata: Metadata = {
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  '@id': 'https://mas-ai.co/book#faq',
+  '@id': 'https://mas-ai.co/book/#faq',
   mainEntity: [
     {
       '@type': 'Question',
@@ -47,7 +49,15 @@ const faqSchema = {
       name: 'Can Ontario businesses actually afford your paid engagements?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. Scope matches the client. A local SMB that needs one agent or a single website scan gets a smaller fixed-scope engagement (typically $3,000 to $8,000). Enterprise engagements with multi-system scope run $12,000 to $45,000. The free consultation is where we figure out which bucket fits.',
+        text: 'Yes, and the free tier is where we prove it. Scope matches the client. A local SMB that needs one agent or a single website scan gets a smaller fixed-scope engagement (typically $3k to $8k). Enterprise engagements with multi-system scope run $12k to $45k. We size the work to the business. The free consultation is where we figure out which bucket you fit.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What if we want all three options?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Book the 30-minute consultation first. We figure out which combination makes sense. Often we run the security scan or the automation audit as part of a paid engagement once both are in scope.',
       },
     },
     {
@@ -63,15 +73,15 @@ const faqSchema = {
       name: 'What counts as a valid target for the free security scan?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'A public URL, a GitHub repo, a mobile app store link, or an API endpoint we can reach. Anything outside your firewall. For internal-only systems we arrange scope during a paid engagement with an NDA in place.',
+        text: 'A public URL. A GitHub repo. A mobile app store link. An API endpoint we can reach. Anything outside your firewall, essentially. For internal-only systems we arrange scope during a paid engagement with an NDA in place.',
       },
     },
     {
       '@type': 'Question',
-      name: 'What happens if attackers still get through after you finish?',
+      name: 'We are in the EU. Is the AI Act offer separate?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Every engagement is scoped to specific targets and a specific window. We find and fix what we can find inside that window. We do not promise 100% security. nobody can, and anyone who claims they can is lying. Our contract caps liability at the engagement value, carves out third-party breaches and zero-day CVEs discovered after delivery, and sets clear scope boundaries.',
+        text: 'Yes, that is a separate time-boxed offer. Book the 30-min call and we decide whether your AI features put you in scope for the Aug 2, 2026 deadline. If they do, we switch to the readiness sprint track and deliver regulator-ready artifacts in 10 business days.',
       },
     },
     {
@@ -80,6 +90,22 @@ const faqSchema = {
       acceptedAnswer: {
         '@type': 'Answer',
         text: 'Only us. Nothing goes to third parties. Vault material (anything sensitive pulled into Klyntar during a recon) is destroyed within 24 hours of delivering the PDF. If you want an NDA in place first, we sign yours or send you ours before we touch anything.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What happens if attackers still get through after we finish?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Every engagement is scoped to specific targets and a specific window. We find and fix what we can find inside that window. We do not promise 100% security (nobody can, and anyone who claims they can is lying). Our contract caps liability at the engagement value, carves out third-party breaches and zero-day CVEs discovered after delivery, and sets clear scope boundaries. We are careful. We are governed. We are not insurance.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can we see case studies first?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'We are in early engagement phase so case studies are limited and anonymized. What we can show you: the patents (USPTO #63/877,082 and #64/020,421), the GitHub commits, the Daena product at daena.mas-ai.co, and the Klyntar capability list. Ask us on the call.',
       },
     },
   ],
@@ -92,7 +118,7 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'MAS-AI Technologies', item: 'https://mas-ai.co' },
-    { '@type': 'ListItem', position: 2, name: 'Book a Call', item: 'https://mas-ai.co/book' },
+    { '@type': 'ListItem', position: 2, name: 'Book a Call', item: 'https://mas-ai.co/book/' },
   ],
 }
 

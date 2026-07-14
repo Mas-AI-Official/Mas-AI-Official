@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import TwoPathsSection from '@/components/TwoPathsSection'
@@ -11,6 +12,10 @@ import FAQ from '@/components/FAQ'
 import Footer from '@/components/Footer'
 import SmoothScroll from '@/components/SmoothScroll'
 import ClientOverlays from '@/components/ClientOverlays'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 export default function HomePage() {
   return (

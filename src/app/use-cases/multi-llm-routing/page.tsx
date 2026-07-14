@@ -4,7 +4,7 @@ import { Section } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/use-cases/multi-llm-routing'
+const slug = '/use-cases/multi-llm-routing/'
 const title = 'Multi-LLM Routing Without Vendor Lock-In — Daena'
 const description =
   'Route AI workloads across 9 LLM runtimes with hot-swap that needs no restart, while every call still passes the full governance pipeline. Daena’s model-agnostic routing.'
@@ -17,7 +17,13 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: slug },
   keywords: ['multi-LLM routing', 'multi-LLM router', 'LLM routing platform', 'hot-swap LLM', 'avoid LLM vendor lock-in', 'route Claude GPT Gemini', 'multi-model routing'],
-  openGraph: { title, description, url: 'https://mas-ai.co/use-cases/multi-llm-routing', type: 'article' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://mas-ai.co/use-cases/multi-llm-routing/',
+    type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
 }
 
 const faq: FaqItem[] = [

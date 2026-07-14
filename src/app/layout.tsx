@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     default: 'MAS-AI Technologies | Governed AI Systems & Enterprise Deployment',
     template: '%s | MAS-AI',
   },
-  description: 'MAS-AI Technologies builds governed AI systems for enterprises. Our flagship platform Daena provides multi-agent orchestration with auditable memory and traceable decisions. Two patent-pending architectures.',
+  description: 'MAS-AI Technologies builds governed AI systems for enterprises: Daena orchestrates multi-agent AI with auditable memory and traceable decisions.',
   keywords: ['MAS-AI', 'governed AI', 'AI governance platform', 'enterprise AI deployment', 'AI agent governance', 'auditable AI agents', 'Daena', 'multi-agent orchestration', 'AI company OS', 'PhiLattice Architecture', 'NBMF', 'enterprise AI consulting'],
   authors: [{ name: 'MAS-AI Technologies Inc.' }],
   creator: 'MAS-AI Technologies Inc.',
@@ -40,8 +40,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MAS-AI | Governance-First AI Agent Platform',
-    description: 'Governed multi-agent AI orchestration with auditable memory and traceable decisions.',
     images: ['/og-image.png'],
   },
   robots: { index: true, follow: true },
@@ -217,8 +215,8 @@ const jsonLd = {
       ],
       offers: [
         { '@type': 'Offer', name: 'Free', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock', description: 'Fully local on Ollama with governance included' },
-        { '@type': 'Offer', name: 'Pro', price: '29-99', priceCurrency: 'USD', availability: 'https://schema.org/InStock', description: 'Multi-runtime routing, Council reasoning, EXE mode' },
-        { '@type': 'Offer', name: 'Enterprise', price: '500+', priceCurrency: 'USD', availability: 'https://schema.org/InStock', description: 'Custom departments, SSO, SLA, on-prem deployment' },
+        { '@type': 'Offer', name: 'Pro', priceCurrency: 'USD', priceSpecification: { '@type': 'PriceSpecification', minPrice: '29', maxPrice: '99', priceCurrency: 'USD' }, availability: 'https://schema.org/InStock', description: 'Multi-runtime routing, Council reasoning, EXE mode' },
+        { '@type': 'Offer', name: 'Enterprise', priceCurrency: 'USD', priceSpecification: { '@type': 'PriceSpecification', minPrice: '500', priceCurrency: 'USD' }, availability: 'https://schema.org/InStock', description: 'Custom departments, SSO, SLA, on-prem deployment' },
       ],
     },
 
@@ -233,7 +231,7 @@ const jsonLd = {
       operatingSystem: 'Embedded in Daena',
       description:
         'Klyntar is the security layer embedded in Daena. 25+ exploit signatures (SQLi, XSS, CMDi, SSRF, XXE, Log4Shell), 45+ hacking tools detected by behavior, Zero-FP gate that drops findings without a working exploit, Asset Shield vault + egress filter + consent tokens, BeyondMythos enrichment with ErrorOracle + AdversarialSimulator + CompositionalPlanner.',
-      url: 'https://mas-ai.co/security',
+      url: 'https://mas-ai.co/security/',
       creator: { '@id': 'https://mas-ai.co/#organization' },
       publisher: { '@id': 'https://mas-ai.co/#organization' },
       isPartOf: { '@id': 'https://mas-ai.co/#daena' },
@@ -258,7 +256,7 @@ const jsonLd = {
       description:
         'We install custom AI agents, voice assistants, Claude Code, OpenClaw, or custom workflow automation in your business, wrapped in Daena governance. 21-day build, fixed price, source code yours. Free 45-min install audit first.',
       provider: { '@id': 'https://mas-ai.co/#organization' },
-      url: 'https://mas-ai.co/automation',
+      url: 'https://mas-ai.co/automation/',
       areaServed: 'Worldwide',
       serviceType: 'AI Agent Installation and Integration',
       offers: {
@@ -276,7 +274,7 @@ const jsonLd = {
       description:
         'Klyntar-powered security audits for AI systems, websites, APIs, mobile apps, and cloud infrastructure. Proof-of-exploit on every operator-tier finding. Free 2-hour recon returns top 3 highest-impact exposures in 48 hours. Paid audits from $12,500.',
       provider: { '@id': 'https://mas-ai.co/#organization' },
-      url: 'https://mas-ai.co/security',
+      url: 'https://mas-ai.co/security/',
       areaServed: 'Worldwide',
       serviceType: 'Cybersecurity Audit and Penetration Testing',
       offers: {
@@ -294,7 +292,7 @@ const jsonLd = {
       description:
         'Fixed 2-week sprint to regulator-ready artifacts for the August 2, 2026 EU AI Act enforcement deadline. Delivers Article 9 risk management, Article 11 technical documentation, Article 12 audit trail (Daena-wired), Article 14 human oversight. $18,000 fixed scope.',
       provider: { '@id': 'https://mas-ai.co/#organization' },
-      url: 'https://mas-ai.co/ai-act-readiness',
+      url: 'https://mas-ai.co/ai-act-readiness/',
       areaServed: 'European Union',
       serviceType: 'AI Compliance and Regulatory Consulting',
       offers: {

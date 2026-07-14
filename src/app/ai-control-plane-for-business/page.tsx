@@ -4,7 +4,7 @@ import { Section } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/ai-control-plane-for-business'
+const slug = '/ai-control-plane-for-business/'
 const title = 'AI Control Plane for Business — Daena by MAS-AI'
 const description =
   'An AI control plane centralizes LLM routing, governance, memory, and audit logging across a business’s AI agents. Daena lets companies deploy agents without losing oversight or reproducibility.'
@@ -13,11 +13,17 @@ const tldr =
   'Daena is an AI control plane for business that centralizes LLM routing, governance enforcement, memory, and audit logging — so a company can deploy AI agents across teams without losing oversight or reproducibility.'
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: slug },
   keywords: ['AI control plane', 'AI control plane for business', 'enterprise AI orchestration', 'AI governance', 'multi-LLM control plane', 'AI agent oversight'],
-  openGraph: { title, description, url: 'https://mas-ai.co/ai-control-plane-for-business', type: 'article' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://mas-ai.co/ai-control-plane-for-business/',
+    type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
 }
 
 const faq: FaqItem[] = [

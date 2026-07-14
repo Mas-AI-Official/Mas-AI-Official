@@ -11,9 +11,10 @@ import EngagementTiers from './sections/EngagementTiers'
 import ConsultingCta from './sections/ConsultingCta'
 
 export const metadata: Metadata = {
-  title: 'Security & AI Consulting | MAS-AI Technologies',
+  title: { absolute: 'Security & AI Consulting | MAS-AI Technologies' },
   description:
     'Security scans, vulnerability audits, and AI governance reviews for your apps, website, and business, powered by Klyntar\'s defense-in-depth and Daena\'s governance pipeline.',
+  alternates: { canonical: '/consulting/' },
   keywords: [
     'security scan services',
     'vulnerability assessment',
@@ -27,8 +28,9 @@ export const metadata: Metadata = {
     title: 'Security & AI Consulting | MAS-AI Technologies',
     description:
       'Find what\'s exposed before attackers do. Klyntar-powered security scans with Zero-FP gating, no false-alarm noise.',
-    url: 'https://mas-ai.co/consulting',
+    url: 'https://mas-ai.co/consulting/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 

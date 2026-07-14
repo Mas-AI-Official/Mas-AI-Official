@@ -11,9 +11,10 @@ import Pricing from './sections/Pricing'
 import CtaBlock from './sections/CtaBlock'
 
 export const metadata: Metadata = {
-  title: 'AI Automation Services | MAS-AI Technologies',
+  title: { absolute: 'AI Automation Services | MAS-AI Technologies' },
   description:
     'We install the AI tools your team already loves, safely. OpenClaw, Claude Code, voice booking assistants, and custom agent integrations with governance and audit trails included.',
+  alternates: { canonical: '/automation/' },
   keywords: [
     'AI automation services',
     'OpenClaw installation',
@@ -27,8 +28,9 @@ export const metadata: Metadata = {
     title: 'AI Automation Services | MAS-AI Technologies',
     description:
       'Safe installation of OpenClaw, voice assistants, and custom AI agents, governed by Daena, protected by Klyntar.',
-    url: 'https://mas-ai.co/automation',
+    url: 'https://mas-ai.co/automation/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 

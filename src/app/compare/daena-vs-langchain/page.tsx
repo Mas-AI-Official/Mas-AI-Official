@@ -5,7 +5,7 @@ import Faq from '@/components/answer/Faq'
 import CompareTable from '@/components/answer/CompareTable'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/compare/daena-vs-langchain'
+const slug = '/compare/daena-vs-langchain/'
 const title = 'Daena vs LangChain — Governed Control Plane vs Framework'
 const description =
   'LangChain is a developer framework for building LLM applications; Daena is a governed control plane for running AI agents in production. An honest, factual comparison.'
@@ -18,7 +18,13 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: slug },
   keywords: ['Daena vs LangChain', 'LangChain alternative', 'LangChain governance', 'AI governance platform vs LangChain', 'enterprise LangChain alternative'],
-  openGraph: { title, description, url: 'https://mas-ai.co/compare/daena-vs-langchain', type: 'article' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://mas-ai.co/compare/daena-vs-langchain/',
+    type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
 }
 
 const faq: FaqItem[] = [

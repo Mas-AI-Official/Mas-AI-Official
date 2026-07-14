@@ -4,7 +4,7 @@ import { Section } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/use-cases/ai-agent-governance'
+const slug = '/use-cases/ai-agent-governance/'
 const title = 'How to Govern AI Agents in Production — Daena'
 const description =
   'Enforce governance on AI agents by routing every action through policy before execution. Daena uses a 10-stage pipeline and four-tier risk policy with an immutable audit trail.'
@@ -17,7 +17,13 @@ export const metadata: Metadata = {
   description,
   alternates: { canonical: slug },
   keywords: ['AI agent governance', 'govern AI agents in production', 'human approval gates for AI agents', 'AI agent audit trail', 'AI agent oversight', 'govern agents before tool execution'],
-  openGraph: { title, description, url: 'https://mas-ai.co/use-cases/ai-agent-governance', type: 'article' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://mas-ai.co/use-cases/ai-agent-governance/',
+    type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
 }
 
 const faq: FaqItem[] = [

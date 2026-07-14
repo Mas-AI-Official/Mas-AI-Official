@@ -12,9 +12,10 @@ import EngagementTiers from '@/app/consulting/sections/EngagementTiers'
 import ConsultingCta from '@/app/consulting/sections/ConsultingCta'
 
 export const metadata: Metadata = {
-  title: 'AI Security Architect | MAS-AI Technologies',
+  title: { absolute: 'AI Security Architect | MAS-AI Technologies' },
   description:
     'Your AI deployment passes security review in 21 days, or you keep the audit free. I built Klyntar (25+ exploit signatures, Zero-FP gate). I know exactly where the holes are.',
+  alternates: { canonical: '/security/' },
   keywords: [
     'AI security architect',
     'LLM security audit',
@@ -29,8 +30,9 @@ export const metadata: Metadata = {
     title: 'AI Security Architect-for-Hire | MAS-AI Technologies',
     description:
       'Free AI security audit. 2-hour recon. Proof-of-exploit on every finding. Pay nothing until you want remediation.',
-    url: 'https://mas-ai.co/security',
+    url: 'https://mas-ai.co/security/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 

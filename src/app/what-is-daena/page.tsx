@@ -4,7 +4,7 @@ import { Section } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/what-is-daena'
+const slug = '/what-is-daena/'
 const title = 'What is Daena? Governed AI Control Plane by MAS-AI'
 const description =
   'Daena is a governed AI control plane and multi-agent AI company OS from MAS-AI Technologies — multi-LLM routing across 9 runtimes, a 10-stage governance pipeline, auditable memory, and human-approval gates.'
@@ -13,11 +13,17 @@ const tldr =
   'Daena is a governed AI control plane and multi-agent "AI company OS" from MAS-AI Technologies Inc.: it routes work across 9 LLM runtimes while enforcing a 10-stage governance pipeline, auditable memory, and human-approval gates before any agent action executes.'
 
 export const metadata: Metadata = {
-  title,
+  title: { absolute: title },
   description,
   alternates: { canonical: slug },
   keywords: ['what is Daena', 'Daena AI', 'Daena MAS-AI', 'governed AI control plane', 'AI company OS', 'multi-agent AI platform'],
-  openGraph: { title, description, url: 'https://mas-ai.co/what-is-daena', type: 'article' },
+  openGraph: {
+    title,
+    description,
+    url: 'https://mas-ai.co/what-is-daena/',
+    type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
+  },
 }
 
 const faq: FaqItem[] = [

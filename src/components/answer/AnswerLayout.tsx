@@ -77,7 +77,7 @@ export default function AnswerLayout({
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-3">
               <a
-                href="https://mas-ai.co/book"
+                href="https://mas-ai.co/book/"
                 className="btn-ripple rounded-full bg-[var(--color-mas-cyan)] px-6 py-2.5 text-sm font-semibold text-black"
               >
                 Book a demo

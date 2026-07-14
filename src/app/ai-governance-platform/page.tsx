@@ -4,7 +4,7 @@ import { Section } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
 
-const slug = '/ai-governance-platform'
+const slug = '/ai-governance-platform/'
 const title = 'AI Governance Platform for Multi-Agent Systems'
 const description =
   'Daena is a governed AI control plane: every AI agent action passes a 10-stage governance pipeline with a four-tier risk policy and an immutable audit log, across 9 LLM runtimes.'
@@ -29,8 +29,9 @@ export const metadata: Metadata = {
   openGraph: {
     title,
     description,
-    url: 'https://mas-ai.co/ai-governance-platform',
+    url: 'https://mas-ai.co/ai-governance-platform/',
     type: 'article',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 

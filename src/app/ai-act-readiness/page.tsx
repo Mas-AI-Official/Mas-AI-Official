@@ -8,9 +8,10 @@ import AiActGrandSlam from './sections/AiActGrandSlam'
 import AiActCta from './sections/AiActCta'
 
 export const metadata: Metadata = {
-  title: 'EU AI Act Readiness Sprint | MAS-AI Technologies',
+  title: { absolute: 'EU AI Act Readiness Sprint | MAS-AI Technologies' },
   description:
     'The EU AI Act enforces August 2, 2026. Up to €35M or 7% of global turnover in penalties. Fixed 2-week readiness sprint, architecture, documentation, exit-ready audit trail.',
+  alternates: { canonical: '/ai-act-readiness/' },
   keywords: [
     'EU AI Act compliance',
     'EU AI Act readiness',
@@ -22,8 +23,9 @@ export const metadata: Metadata = {
     title: 'EU AI Act Readiness Sprint. 2 Weeks to Compliant',
     description:
       'Aug 2, 2026 deadline. €35M max penalty. 2-week sprint to documented compliance.',
-    url: 'https://mas-ai.co/ai-act-readiness',
+    url: 'https://mas-ai.co/ai-act-readiness/',
     type: 'website',
+    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
 }
 
