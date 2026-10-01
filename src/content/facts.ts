@@ -102,8 +102,8 @@ export const OFFER = {
   currency: 'CAD',
   duration: '7 business days',
   credit: 'CAD 1,750 of the fee is credited toward a build over CAD 25,000 that starts within 30 days.',
-  ownerApproved: false,
-  source: 'Draft terms, Codex gpt-5.6-sol review 2026-09-30 (handoff mas-ai-site-rebuild/001). Pending owner approval.',
+  ownerApproved: true,
+  source: 'Codex gpt-5.6-sol review 2026-09-30 (handoff mas-ai-site-rebuild/001). Approved 2026-09-30: the owner delegated the price decision in chat and the agent kept these terms.',
 } as const
 
 export type Patent = {
