@@ -27,8 +27,8 @@ export default function WorkIndexPage() {
             About client work
           </h2>
           <p className="t-body">
-            Client work is shown only with the client&apos;s written permission. Until we have that, this page shows
-            systems we build, run and release ourselves.
+            Clients are named and linked only with their written permission, so client websites appear here without
+            names. Everything else is a system we build, run or release ourselves.
           </p>
         </div>
       </section>

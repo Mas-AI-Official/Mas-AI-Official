@@ -6,7 +6,7 @@
  */
 import { DAENA, REPOS } from './facts'
 
-export type WorkLabel = 'System we operate' | 'Open source' | 'R&D' | 'Website we shipped'
+export type WorkLabel = 'System we operate' | 'Open source' | 'R&D' | 'Website we shipped' | 'Client website'
 
 /**
  * A = featured systems (full case study, problem first), B = index of what MAS-AI built, C = lab (experiments).
@@ -168,6 +168,16 @@ export const WORK: WorkItem[] = [
   },
 
   /* ---------- Tier B: built by MAS-AI, index ---------- */
+  // Client names, links and screenshots appear only with the client's written permission. Facts verified
+  // 2026-10-01: the clinic site answers 200 on the clinic's own domain; the other two are preview and provisional.
+  {
+    slug: 'client-websites',
+    name: 'Client websites',
+    label: 'Client website',
+    tier: 'B',
+    line: 'Three sites designed and built for clients: a medical clinic\'s website, live on the clinic\'s own domain and hosting; a private design preview for a health company; and a site in progress for a wellness practice.',
+    proves: ['websites'],
+  },
   {
     slug: 'ai-company-os',
     name: 'AI Company OS',

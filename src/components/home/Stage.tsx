@@ -198,9 +198,12 @@ export function Stage() {
     const placeTrace = () => {
       measureGap()
       if (!ruled || !trace) return
-      const rr = ruled.getBoundingClientRect(), sr = sticky.getBoundingClientRect()
+      // Measured against the stage, not the pinned panel: the stage scrolls with the headline, so a re-place
+      // while scrolled (a resize, the mobile address bar hiding) still aims from the rule. At rest (G = 0) the
+      // panel sits at the top of the stage. Against the panel, the start drifted by the scroll distance.
+      const rr = ruled.getBoundingClientRect(), sr = sticky.getBoundingClientRect(), st = root.getBoundingClientRect()
       const b = gapScreenRect(view, 0)
-      const x0 = rr.right - sr.left + 6, y0 = rr.bottom - sr.top - 1
+      const x0 = rr.right - sr.left + 6, y0 = rr.bottom - st.top - 1
       if (view.phone) {
         // Phones: the headline sits below the stage panel, so the trace rises into it along the right
         // margin, clear of the eyebrow and the first line (it used to cut straight up through both).

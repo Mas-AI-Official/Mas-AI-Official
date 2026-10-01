@@ -213,7 +213,7 @@ const automation: ServiceContent = {
   },
   proof: {
     title: 'Systems we run ourselves',
-    intro: 'We do not publish client work. What we can show is what we build, operate and use every day. It is the same set of patterns we build for you.',
+    intro: 'We name clients only with their written permission. What we can show is what we build, operate and use every day. It is the same set of patterns we build for you.',
     order: ['daena', 'mcp-switchboard', 'ragx', 'ai-company-os', 'mergeloop'],
     why: {
       daena: 'Agents that plan and act inside approval gates, with every decision on the record.',
@@ -382,7 +382,7 @@ const software: ServiceContent = {
   },
   proof: {
     title: 'Software we build and run ourselves',
-    intro: 'We do not publish client work. These are products we built and operate, at different stages of maturity.',
+    intro: 'We name clients only with their written permission. These are products we built and operate, at different stages of maturity.',
     order: ['daena', 'mcp-switchboard', 'kya-mission-control'],
     why: {
       daena: 'A multi-tenant Python and FastAPI platform with a React front end, in beta.',
@@ -560,7 +560,7 @@ const websites: ServiceContent = {
   },
   proof: {
     title: 'Sites we have shipped',
-    intro: 'We do not publish client work. The sites we can show are our own.',
+    intro: "We have built three client websites: a medical clinic's live site, a health company's design preview and a wellness practice's site in progress. We name clients only with their written permission, so the sites we can show here are our own.",
     order: ['product-sites'],
     why: {
       'product-sites': 'Designed, written, built and deployed by the same people who would build yours.',
@@ -754,7 +754,7 @@ const privateAi: ServiceContent = {
   ],
   proof: {
     title: 'Systems we run ourselves',
-    intro: 'We do not publish client work. Two systems we operate show the pattern.',
+    intro: 'We name clients only with their written permission. Two systems we operate show the pattern.',
     order: ['daena', 'ragx'],
     why: {
       daena: 'Routes across model providers with local and cloud runtimes as options, and keeps the routing on the record.',
@@ -926,7 +926,7 @@ const security: ServiceContent = {
   },
   proof: {
     title: 'Governance we build into our own systems',
-    intro: 'We do not publish client work. These are systems we run, and the controls are part of how they work.',
+    intro: 'We name clients only with their written permission. These are systems we run, and the controls are part of how they work.',
     order: ['daena', 'mcp-switchboard', 'ai-company-os', 'kya-mission-control'],
     why: {
       daena:
@@ -1101,7 +1101,7 @@ const rag: ServiceContent = {
   },
   proof: {
     title: 'The engine we run ourselves',
-    intro: 'We do not publish client work. ragX is the retrieval engine we operate for our own tools.',
+    intro: 'We name clients only with their written permission. ragX is the retrieval engine we operate for our own tools.',
     order: ['ragx'],
     why: {
       ragx: 'Hybrid retrieval, reranking and a verifier that makes it abstain. It runs locally, with a local model for the critic step.',
