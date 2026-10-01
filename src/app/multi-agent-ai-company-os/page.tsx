@@ -1,99 +1,97 @@
-import type { Metadata } from 'next'
 import AnswerLayout from '@/components/answer/AnswerLayout'
-import { Section } from '@/components/answer/Section'
+import { Section, Terms } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
-import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { CAPABILITY_NAMES, DEPARTMENT_NAMES } from '@/components/answer/daena-facts'
+import { answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { pageMetadata } from '@/lib/seo'
+import { DAENA } from '@/content/facts'
 
-const slug = '/multi-agent-ai-company-os/'
-const title = 'Multi-Agent AI Company OS — Daena by MAS-AI'
-const description =
-  'A multi-agent AI company OS organizes specialized agents by department, capability, memory, and approval level. Daena maps 10 departments into 60 governed agent slots with three reasoning modes.'
+const path = '/multi-agent-ai-company-os/'
+const title = 'Multi-agent AI company OS'
+const description = `A multi-agent AI company OS organizes agents by department, capability, memory and approval level. Daena has ${DAENA.agents.display}, three reasoning modes and ${DAENA.memoryTiers.display}.`
 const h1 = 'What is a multi-agent AI company OS?'
-const tldr =
-  'Daena is a multi-agent AI company OS that organizes 60 governed agent slots across 10 departments and 6 capability types (MIND, EYES, HANDS, VOICE, SHIELD, MEMORY), with three reasoning modes and a shared, auditable 5-tier memory fabric.'
+const tldr = `A multi-agent AI company OS organizes AI agents the way a company organizes departments. Daena has ${DAENA.agents.display}, three reasoning modes and ${DAENA.memoryTiers.display}, all behind one governed request pipeline.`
 
-export const metadata: Metadata = {
-  title: { absolute: title },
-  description,
-  alternates: { canonical: slug },
-  keywords: ['AI company OS', 'multi-agent AI company OS', 'multi-agent orchestration', 'AI departments', 'agent capabilities', 'governed multi-agent platform'],
-  openGraph: {
-    title,
-    description,
-    url: 'https://mas-ai.co/multi-agent-ai-company-os/',
-    type: 'article',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
-  },
-}
+export const metadata = pageMetadata({ title, description, path })
 
 const faq: FaqItem[] = [
   {
     q: 'What is an AI company OS?',
-    a: 'An AI company OS coordinates many specialized agents the way a business coordinates departments — assigning work, enforcing policy, sharing memory, and keeping an audit trail. Daena structures this as 10 departments and 60 governed agent slots rather than a flat pool of bots.',
+    a: `An AI company OS coordinates specialized agents the way a business coordinates departments: it assigns work, enforces policy, shares memory and keeps an audit trail. Daena structures this as ${DAENA.departments.display}, not a flat pool of bots.`,
   },
   {
-    q: 'What are the 6 agent capabilities?',
-    a: 'Each agent is composed from six capability types: MIND (reasoning), EYES (perception/input), HANDS (actions/tools), VOICE (output/communication), SHIELD (security), and MEMORY. Agents are defined by capability, not just by which model they use.',
+    q: 'How many agents does Daena have?',
+    a: `${DAENA.agents.display}. Daena is not sixty independent agents. It is ten unified department agents, each with specialized capabilities.`,
   },
   {
-    q: 'What are Daena’s three reasoning modes?',
-    a: 'Standard for routine work, Council for multi-model synthesis on harder problems, and Quintessence for the highest-stakes decisions. Higher modes engage more agents and more deliberation, which the governance pipeline still audits.',
+    q: 'What are the six capabilities?',
+    a: 'Mind for reasoning, eyes for perception and input, hands for actions and tools, voice for output and communication, shield for security and memory for recall. Agents are defined by what they can do, not only by which model runs them.',
   },
   {
-    q: 'How do agents share context across the company?',
-    a: 'Through a 5-tier Neural-Backed Memory Fabric — Ephemeral, Working, Project, Institutional, and Founder-Private — with trust-gated promotion between tiers, so the right context persists at the right scope without leaking across tenants.',
+    q: 'What are the three reasoning modes?',
+    a: 'Standard picks the best single model. Council sends a task to three or more models and synthesizes one answer. Quintessence pairs experts with models in a matrix. The governance pipeline audits every mode.',
+  },
+  {
+    q: 'How do agents share context?',
+    a: `Through ${DAENA.memoryTiers.display}. Unverified content expires, and permanent tiers need approval, so context lasts at the right scope and does not become a permanent record by accident.`,
   },
   {
     q: 'Does a company OS replace frameworks like CrewAI or AutoGen?',
-    a: 'No — it sits above them. Frameworks help you build agent behaviors; a company OS like Daena governs, routes, remembers, and audits them across the whole organization. You can build with a framework and run inside Daena.',
+    a: 'No. Frameworks help you build agent behavior. A company OS runs, routes, remembers and audits agents across an organization. You can use both.',
   },
 ]
 
 export default function Page() {
-  const jsonLd = answerGraph([
-    techArticle({ slug, headline: h1, description }),
-    faqPage(slug, faq),
-    breadcrumb(slug, 'Multi-Agent AI Company OS'),
-  ])
   return (
     <AnswerLayout
-      eyebrow="AI Company OS"
+      crumbs={[
+        { name: 'What is Daena', path: '/what-is-daena/' },
+        { name: 'Multi-agent AI company OS', path },
+      ]}
       h1={h1}
       tldr={tldr}
-      proof={['10 departments × 6 capabilities = 60 slots', '3 reasoning modes', '5-tier memory fabric', 'Daena v3.7 in production']}
-      jsonLd={jsonLd}
+      proof={[DAENA.departments.display, DAENA.agents.display, '3 reasoning modes', DAENA.memoryTiers.display, `Status: ${DAENA.version.display}`]}
+      jsonLd={answerGraph(path, h1, description, faq)}
       related={[
-        { href: '/what-is-daena', label: 'What is Daena?' },
-        { href: '/ai-governance-platform', label: 'What is an AI governance platform?' },
-        { href: '/use-cases/multi-llm-routing', label: 'How to route across multiple LLMs' },
-        { href: '/compare/daena-vs-autogen', label: 'How is Daena different from AutoGen?' },
+        { href: '/what-is-daena/', label: 'What is Daena?' },
+        { href: '/ai-governance-platform/', label: 'What is an AI governance platform?' },
+        { href: '/use-cases/multi-llm-routing/', label: 'How to route across multiple LLMs' },
+        { href: '/compare/daena-vs-autogen/', label: 'How is Daena different from AutoGen?' },
+        { href: '/automation/', label: 'Automate operations in your own business' },
       ]}
     >
-      <Section h2="What a “company OS” means">
+      <Section h2="What a company OS means">
         <p>
-          A company runs on departments, roles, shared memory, and approval chains. A
-          multi-agent AI company OS mirrors that: agents are organized by function,
-          composed from capabilities, given scoped memory, and held to an approval
-          policy. Daena makes the org chart the architecture.
+          A company runs on departments, roles, shared memory and approval chains. A multi-agent AI company OS
+          mirrors that. Agents are organized by function, composed from capabilities, given scoped memory and held
+          to an approval policy. In Daena the org chart is the architecture.
         </p>
       </Section>
 
-      <Section h2="10 departments × 6 capabilities = 60 governed slots">
+      <Section h2="Departments and capabilities">
         <p>
-          Departments map to real business functions (Engineering, Product, Marketing,
-          Sales, Finance, Operations, Research, Legal &amp; Compliance, Skill
-          Governance, Security Operations). Each department draws on six capability
-          types — MIND, EYES, HANDS, VOICE, SHIELD, MEMORY — for 60 governed agent
-          slots in total. Every slot inherits the same 10-stage governance pipeline.
+          Daena has {DAENA.departments.display}, and each one is a single agent with six capabilities. That is{' '}
+          <strong>{DAENA.agents.display}</strong>.
         </p>
+        <Terms items={DEPARTMENT_NAMES} label="Daena departments" />
+        <p>The six capabilities every department draws on:</p>
+        <Terms items={CAPABILITY_NAMES} label="Daena capabilities" />
+        <p>Every department agent goes through the same governed request pipeline.</p>
       </Section>
 
       <Section h2="Reasoning that scales with the stakes">
         <p>
-          Standard mode handles routine tasks. Council mode runs a multi-model
-          deliberation for harder calls. Quintessence mode is reserved for the highest
-          stakes. The mode changes how much the system deliberates — it does not change
-          whether the action is governed and audited.
+          Standard mode handles routine work with the best single model. Council mode asks three or more models and
+          synthesizes one answer. Quintessence mode pairs experts with models for the hardest calls. The mode
+          changes how much the system deliberates. It does not change whether the request is governed and audited.
+        </p>
+      </Section>
+
+      <Section h2="Where the idea comes from">
+        <p>
+          We run MAS-AI on a related internal system: several AI assistants sharing one memory, with deterministic
+          checks deciding when work is done. Daena puts the department model into a governed platform. If you want
+          something like it built around your own departments, that is the kind of work we do.
         </p>
       </Section>
 

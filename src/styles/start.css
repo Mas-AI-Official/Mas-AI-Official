@@ -1,0 +1,85 @@
+/* /start/ inquiry flow and /privacy/. Owned by the start builder. Tokens only; animate opacity/transform only. */
+
+.inq-layout { display: grid; gap: var(--space-8); align-items: start; }
+.inq-aside { display: grid; gap: var(--space-5); max-width: 34rem; }
+.inq-aside .rows { margin-top: var(--space-2); }
+@media (min-width: 1024px) {
+  .inq-layout { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); gap: var(--space-9); }
+  .inq-aside { position: sticky; top: calc(var(--header-h) + var(--space-6)); }
+}
+
+.inq { display: grid; gap: var(--space-6); padding: clamp(1.25rem, 1rem + 1.5vw, 2.25rem); }
+.inq-heading { max-width: 22ch; outline-offset: 6px; }
+.inq-heading:focus-visible { outline: 2px solid var(--gold); }
+
+/* Progress: four bars, current one gold */
+.inq-progress { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); }
+.inq-progress li { display: grid; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--text-3); }
+.inq-progress li::before { content: ''; height: 3px; border-radius: 2px; background: var(--line-2); }
+.inq-progress li[data-state='done']::before { background: var(--line-ui); }
+.inq-progress li[data-state='current']::before { background: var(--gold); }
+.inq-progress li[data-state='current'] { color: var(--text); }
+.inq-progress__label { display: none; }
+@media (min-width: 768px) { .inq-progress__label { display: block; } }
+
+/* Choice chips: native radio and checkbox inputs, stretched over a pill label */
+.inq-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.inq-chip { position: relative; display: inline-flex; max-width: 100%; }
+.inq-chip input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.inq-chip span {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  min-height: var(--tap); padding: 0.55rem 1.1rem;
+  border-radius: var(--r-control); border: 1px solid var(--line-ui);
+  color: var(--text); font-size: 0.95rem; line-height: 1.25;
+  transition: border-color var(--dur-ui) var(--ease), background-color var(--dur-ui) var(--ease);
+}
+.inq-chip span::before {
+  content: ''; flex: none; width: 0.9rem; height: 0.9rem;
+  border: 1.5px solid var(--line-ui); background: transparent;
+  transition: background-color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
+}
+.inq-chip--radio span::before { border-radius: 50%; }
+.inq-chip--check span::before { border-radius: 3px; }
+.inq-chip input:checked + span { border-color: var(--gold); background: var(--gold-wash); }
+.inq-chip input:checked + span::before { border-color: var(--gold); background: var(--gold); box-shadow: inset 0 0 0 3px var(--ground); }
+.inq-chip input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 3px; }
+@media (hover: hover) and (pointer: fine) {
+  .inq-chip input:not(:checked):hover + span { border-color: var(--text-2); }
+}
+.inq-fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.inq-fieldset legend { padding: 0; margin-bottom: var(--space-3); }
+.inq-textarea { min-height: 9rem; resize: vertical; line-height: 1.5; }
+
+.inq-row { display: grid; gap: var(--space-4); }
+@media (min-width: 768px) { .inq-row { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); } }
+.inq-phone { max-width: 26rem; }
+
+.inq-nav { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+.inq-nav .btn:disabled { opacity: 0.6; cursor: progress; }
+.inq-privacy { margin-top: calc(var(--space-2) * -1); }
+@media (max-width: 767px) {
+  .inq-nav { flex-direction: column-reverse; align-items: stretch; }
+  .inq-nav > div:empty { display: none; }
+  .inq-nav .btn { width: 100%; }
+  .inq-chip { width: 100%; }
+  .inq-chip span { width: 100%; }
+  .inq-failure__actions .btn { width: 100%; white-space: normal; text-align: center; }
+}
+
+/* Failure: text and icon, never colour alone */
+.inq-failure { display: grid; gap: var(--space-3); padding: var(--space-5); border: 1px solid var(--error); border-radius: var(--r-surface); background: var(--panel); }
+.inq-failure__title { display: flex; align-items: center; gap: 0.5rem; color: var(--error); }
+.inq-failure__title svg { flex: none; }
+.inq-failure__title:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.inq-failure__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+.inq-done { gap: var(--space-5); }
+.inq-done strong { color: var(--text); overflow-wrap: anywhere; }
+
+/* Privacy notice */
+.legal { display: grid; gap: var(--space-4); max-width: var(--measure); }
+.legal h2 { margin-top: var(--space-6); }
+.legal h2:first-child { margin-top: 0; }
+.legal dl { display: grid; gap: var(--space-3); margin: 0; }
+.legal dt { color: var(--text); font-weight: 600; }
+.legal dd { margin: 0; color: var(--text-2); }

@@ -1,539 +1,241 @@
 @import "tailwindcss";
+@import "../styles/tokens.css";
+@import "../styles/motion.css";
+@import "../styles/site.css";
+@import "../styles/home.css";
+@import "../styles/stage.css";
+@import "../styles/scenes.css";
+@import "../styles/pages.css";
+@import "../styles/services.css";
+@import "../styles/work.css";
+@import "../styles/start.css";
+@import "../styles/answer.css";
+@import "../styles/guide.css";
 
-@theme {
-  --color-mas-bg: #080b14;
-  --color-mas-bg-light: #0d1420;
-  --color-mas-bg-card: #0f1629;
-  --color-mas-cyan: #00c8ff;
-  --color-mas-cyan-glow: #00c8ff40;
-  --color-mas-gold: #d4a853;
-  --color-mas-gold-glow: #d4a85340;
-  --color-klyntar-red: #ff4060;
-  --color-klyntar-red-glow: #ff406040;
-  --color-klyntar-crimson: #b91c3c;
-  --color-mas-text: #e8eaf0;
-  --color-mas-text-secondary: #94a3b8;
-  /* Muted text bumped from #6b7280 (4.06 contrast vs bg #080b14 — fails AA)
-   * to #8a93a3 (~6.0 contrast — passes AA at 4.5:1). Used in counter labels,
-   * micro-copy, footer fine print. */
-  --color-mas-text-muted: #8a93a3;
-  --color-mas-border: #1e293b;
-  --color-mas-border-glow: #00c8ff20;
-
-  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
-}
-
-html {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-mas-bg);
-  overflow-x: hidden;
-}
-
-/* ═══ MOBILE-HARDENING. prevents horizontal scroll on phones ═══
- * Minimal, surgical. The earlier version applied word-break to
- * every <a> globally, which broke nav links into single-letter
- * vertical stacks ("S/e/c/u/r/i/t/y"). That's now scoped to long-
- * paragraph contexts only. Images are left alone (Next/Image
- * handles its own sizing). only the overflow containers and wrap
- * behavior matter for the mobile scroll problem.
- */
-body {
-  overflow-x: clip;
-}
-/* Media fallback: if a component ships a raw <img> without width
- * constraints, cap it at parent width. Leave height free so
- * intrinsic aspect ratio is preserved. This rule must NOT apply
- * to Next/Image output because Next renders explicit width/height
- * attributes that should win over max-width: 100%. And they do,
- * because max-width only kicks in when computed width exceeds
- * parent. Verified on Navbar h-9 logo. */
-img:not([width]):not([style*="width"]),
-video:not([width]),
-iframe:not([width]) {
-  max-width: 100%;
-}
-/* Long-prose contexts only. paragraphs, list items, code blocks.
- * Does NOT apply to <a>, <h1-5>, <li> elements in nav contexts,
- * which need their text intact. */
-p, code, pre, blockquote {
-  overflow-wrap: anywhere;
-}
-pre, code {
-  white-space: pre-wrap;
-}
-/* Grid children can shrink below content width. Flex removed .
- * it was too aggressive for flex-row nav bars and button rows. */
-.grid > * {
-  min-width: 0;
+/* Tokens exposed as Tailwind utilities (bg-ground, text-text-2, border-line, font-mono ...). */
+@theme inline {
+  --color-ground: var(--ground);
+  --color-raised: var(--raised);
+  --color-panel: var(--panel);
+  --color-panel-hi: var(--panel-hi);
+  --color-text: var(--text);
+  --color-text-2: var(--text-2);
+  --color-text-3: var(--text-3);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-line-ui: var(--line-ui);
+  --color-gold: var(--gold);
+  --color-gold-hi: var(--gold-hi);
+  --color-gold-ink: var(--gold-ink);
+  --color-error: var(--error);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --radius-surface: var(--r-surface);
+  --radius-input: var(--r-input);
 }
 
-/* Lenis smooth scroll */
-html.lenis, html.lenis body {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-body {
-  background-color: transparent;
-  color: var(--color-mas-text);
-  font-family: var(--font-body);
-}
-
-::selection {
-  background-color: var(--color-mas-cyan);
-  color: var(--color-mas-bg);
-}
-
-/* AA-contrast version of the brand-red CTA background. The plain
- * #ff4060 gives white-bold text a 3.41 contrast ratio against itself
- * (fails WCAG AA 4.5:1). The 135° gradient darkens the bottom-right
- * enough to land at ~4.6:1 where the text body sits, while keeping the
- * upper-left as the recognisable brand red. The text-shadow squeezes
- * out another fraction of contrast and crispens the lettering.
- *
- * Use this on any white-on-red CTA across the site instead of the
- * bare bg-[var(--color-klyntar-red)] arbitrary value. Accent dots,
- * pills, and small visual markers can keep the bare brand red since
- * they don't carry text. */
-.cta-klyntar {
-  background: linear-gradient(135deg, var(--color-klyntar-red) 0%, #c61b3a 100%);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
-}
-
-/* Gradient text utility */
-.text-gradient {
-  background: linear-gradient(135deg, var(--color-mas-cyan) 0%, #7c3aed 50%, var(--color-mas-cyan) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-gold {
-  background: linear-gradient(135deg, var(--color-mas-gold) 0%, #f59e0b 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Glass card: solid enough to read, blurred for depth */
-.glass {
-  background: rgba(15, 22, 41, 0.55);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(30, 41, 59, 0.4);
-}
-
-.glass:hover {
-  background: rgba(15, 22, 41, 0.65);
-  border-color: var(--color-mas-border-glow);
-}
-
-/* Glow border for patent/feature cards */
-.glow-border {
-  position: relative;
-}
-
-.glow-border::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, var(--color-mas-cyan-glow), transparent, var(--color-mas-cyan-glow));
-  z-index: -1;
-}
-
-/* ─── Text Effects ─── */
-
-/* Animated gradient shimmer */
-.text-shimmer {
-  background: linear-gradient(
-    120deg,
-    #00c8ff 0%,
-    #7c3aed 25%,
-    #00c8ff 50%,
-    #d4a853 75%,
-    #00c8ff 100%
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s ease-in-out infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: 100% 0; }
-  100% { background-position: -100% 0; }
-}
-
-/* Neon glow pulse for stat numbers */
-.text-neon {
-  color: #00c8ff;
-  text-shadow: 0 0 10px rgba(0, 200, 255, 0.5), 0 0 40px rgba(0, 200, 255, 0.2);
-  animation: neon-pulse 2s ease-in-out infinite alternate;
-}
-
-@keyframes neon-pulse {
-  from { text-shadow: 0 0 10px rgba(0, 200, 255, 0.5), 0 0 40px rgba(0, 200, 255, 0.2); }
-  to { text-shadow: 0 0 20px rgba(0, 200, 255, 0.8), 0 0 60px rgba(0, 200, 255, 0.4); }
-}
-
-/* Badge shimmer */
-.badge-shimmer {
-  position: relative;
-  overflow: hidden;
-}
-.badge-shimmer::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
-  background-size: 200% 100%;
-  animation: badge-sweep 3s ease-in-out infinite;
-}
-@keyframes badge-sweep {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Animated gradient border (Daena flagship card) */
-.animated-border {
-  position: relative;
-  z-index: 0;
-}
-.animated-border::before {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: conic-gradient(from 0deg, #00c8ff, #7c3aed, #d4a853, #00c8ff);
-  animation: border-spin 4s linear infinite;
-  z-index: -1;
-}
-.animated-border::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: var(--color-mas-bg-card);
-  z-index: -1;
-}
-@keyframes border-spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Section gradient divider */
-.section-divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.15), transparent);
-  margin: 0 auto;
-  width: 60%;
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .text-shimmer,
-  .badge-shimmer::after,
-  .animated-border::before {
-    animation: none;
+@layer base {
+  html {
+    background: var(--ground);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-variation-settings: 'wdth' var(--wdth-body);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
   }
-  .text-neon {
-    animation: none;
-    text-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
   }
-}
-
-/* Custom cursor (hide default when custom is active) */
-.custom-cursor-active,
-.custom-cursor-active * {
-  cursor: none !important;
-}
-
-/* Enterprise wireframe grid background */
-.enterprise-grid-bg {
-  background-image:
-    linear-gradient(rgba(212,168,83,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212,168,83,0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
-
-/* Klyntar fortress grid (tighter, red, defense signal) */
-.klyntar-grid-bg {
-  background-image:
-    linear-gradient(rgba(255,64,96,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,64,96,0.06) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* Klyntar red text gradient */
-.text-gradient-red {
-  background: linear-gradient(135deg, #ff4060 0%, #b91c3c 50%, #ff4060 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Klyntar neon red (for counters, emphasis) */
-.text-neon-red {
-  color: #ff4060;
-  text-shadow: 0 0 10px rgba(255, 64, 96, 0.55), 0 0 40px rgba(255, 64, 96, 0.2);
-}
-
-/* Vertical divider between product sectors */
-.product-divider-vert {
-  background: linear-gradient(180deg, transparent 0%, rgba(0,200,255,0.25) 30%, rgba(255,64,96,0.25) 70%, transparent 100%);
-  width: 1px;
-}
-
-/* Glitch effect for "without" */
-.text-glitch {
-  animation: glitch 4s infinite;
-}
-@keyframes glitch {
-  0%, 94%, 100% { transform: none; opacity: 1; color: inherit; }
-  95% { transform: translate(-2px, 1px); opacity: 0.8; color: #ef4444; }
-  96% { transform: translate(2px, -1px); opacity: 0.9; color: #ef4444; }
-  97% { transform: translate(-1px, 2px); opacity: 0.7; color: #f87171; }
-  98% { transform: translate(1px, -1px); opacity: 0.85; color: #ef4444; }
-}
-
-/* Floating particles for contact section */
-@keyframes float-up {
-  0% { transform: translateY(0) translateX(0); opacity: 0; }
-  20% { opacity: 0.5; }
-  100% { transform: translateY(-80px) translateX(15px); opacity: 0; }
-}
-
-.particle {
-  position: absolute;
-  width: 3px;
-  height: 3px;
-  border-radius: 50%;
-  background: var(--color-mas-cyan);
-  animation: float-up 4s ease-out infinite;
-}
-
-/* Section highlight flash (chat scroll-to) */
-.section-highlight {
-  outline: 1px solid rgba(0, 200, 255, 0.25);
-  outline-offset: -1px;
-  transition: outline-color 1s ease;
-}
-
-/* Typing dots pulse */
-@keyframes pulse {
-  0%, 100% { opacity: 0.3; transform: scale(0.8); }
-  50% { opacity: 1; transform: scale(1.2); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .text-glitch { animation: none; }
-  .particle { animation: none; display: none; }
-}
-
-/* ─── Premium Hover Effects ─── */
-
-/* Card lift with glow shadow */
-.card-hover-lift {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-}
-.card-hover-lift:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px -12px rgba(0, 200, 255, 0.15), 0 8px 16px -8px rgba(0, 0, 0, 0.3);
-  border-color: rgba(0, 200, 255, 0.3) !important;
-}
-
-/* Card with gold glow on hover */
-.card-hover-gold:hover {
-  box-shadow: 0 20px 40px -12px rgba(212, 168, 83, 0.15), 0 8px 16px -8px rgba(0, 0, 0, 0.3);
-  border-color: rgba(212, 168, 83, 0.3) !important;
-}
-
-/* Icon container hover glow */
-.icon-hover-glow {
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-.icon-hover-glow:hover {
-  transform: scale(1.1) rotate(3deg);
-  filter: drop-shadow(0 0 12px rgba(0, 200, 255, 0.5));
-}
-
-/* Link underline slide animation */
-.link-underline {
-  position: relative;
-}
-.link-underline::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--color-mas-cyan);
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.link-underline:hover::after {
-  width: 100%;
-}
-
-/* Button ripple effect */
-.btn-ripple {
-  position: relative;
-  overflow: hidden;
-}
-.btn-ripple::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at var(--ripple-x, 50%) var(--ripple-y, 50%), rgba(255,255,255,0.2) 0%, transparent 60%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-.btn-ripple:hover::after {
-  opacity: 1;
-}
-
-/* Card gradient background on hover */
-.card-gradient-hover {
-  position: relative;
-  overflow: hidden;
-}
-.card-gradient-hover::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 0%, rgba(0, 200, 255, 0.06) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  z-index: 0;
-}
-.card-gradient-hover:hover::before {
-  opacity: 1;
-}
-
-/* Stagger children entrance (use with JS adding .revealed) */
-.stagger-children > * {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-.stagger-children.revealed > *:nth-child(1) { transition-delay: 0s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(2) { transition-delay: 0.1s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(3) { transition-delay: 0.2s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(4) { transition-delay: 0.3s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(5) { transition-delay: 0.4s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(6) { transition-delay: 0.5s; opacity: 1; transform: translateY(0); }
-.stagger-children.revealed > *:nth-child(7) { transition-delay: 0.6s; opacity: 1; transform: translateY(0); }
-
-/* Gradient border on hover */
-.hover-gradient-border {
-  position: relative;
-  z-index: 0;
-}
-.hover-gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(0,200,255,0.3), transparent 40%, transparent 60%, rgba(124,58,237,0.3));
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: -1;
-}
-.hover-gradient-border:hover::before {
-  opacity: 1;
-}
-
-/* Blur-in entrance */
-@keyframes blur-in {
-  from { filter: blur(8px); opacity: 0; transform: translateY(12px); }
-  to { filter: blur(0); opacity: 1; transform: translateY(0); }
-}
-
-/* Scale-in pop */
-@keyframes scale-in {
-  from { transform: scale(0.85); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
-}
-
-/* Subtle breathing glow */
-@keyframes breathe {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 200, 255, 0); }
-  50% { box-shadow: 0 0 20px 2px rgba(0, 200, 255, 0.1); }
-}
-
-.breathe-glow {
-  animation: breathe 3s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card-hover-lift:hover { transform: none; }
-  .icon-hover-glow:hover { transform: none; }
-  .breathe-glow { animation: none; }
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-mas-bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-mas-border);
-  border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-mas-cyan);
-}
-
-/* ============================================================
-   MOBILE PERFORMANCE GUARD
-   The decorative ambient orbs use enormous Gaussian blurs
-   (blur(120-150px) on 500-800px elements). At DPR 3 that is a
-   ~2400px raster with a huge kernel - on phones the very first
-   layout/paint takes 2-3 SECONDS (measured: 2,474ms layout,
-   LCP 4.8s). Cap decorative blur and drop backdrop-filter on
-   small screens; desktop is untouched.
-   ============================================================ */
-@media (max-width: 767px) {
-  /* Tailwind arbitrary blur utilities: blur-[40px]...blur-[150px].
-     32px is visually indistinguishable on a 390px viewport but
-     an order of magnitude cheaper to rasterize. */
-  [class*='blur-['] {
-    filter: blur(32px);
+  body {
+    min-height: 100dvh;
+    background: var(--ground);
+    font-size: var(--step-0);
+    line-height: 1.6;
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
   }
-  /* Glassmorphism panels: the rgba() backgrounds already carry the
-     look; live backdrop sampling is pure GPU cost on phones. */
-  .backdrop-blur-sm,
-  .backdrop-blur-md,
-  .backdrop-blur-lg,
-  .backdrop-blur-xl,
-  [class*='backdrop-blur'],
-  [style*='backdrop-filter'] {
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  ::selection { background: var(--gold); color: var(--gold-ink); }
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+  img, svg, video { max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  [hidden] { display: none !important; }
 }
 
-/* Below-the-fold sections: skip layout/paint until scrolled near.
-   Cuts the initial mobile layout pass from ~1400 nodes to the hero
-   only. contain-intrinsic-size keeps the scrollbar stable; CLS was
-   0.00 before and the placeholder estimate keeps it that way. */
-@media (max-width: 767px) {
-  main > section[id] {
-    content-visibility: auto;
-    contain-intrinsic-size: auto 900px;
+@layer components {
+  /* Layout */
+  .wrap {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+  .section { padding-block: var(--section-y); }
+  .section + .section { border-top: 1px solid var(--line); }
+
+  /* Type: one family; width axis carries hierarchy, weight carries emphasis */
+  .t-display {
+    font-size: var(--step-5);
+    font-weight: 620;
+    font-variation-settings: 'wdth' var(--wdth-display);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+  .t-h2 {
+    font-size: var(--step-4);
+    font-weight: 600;
+    font-variation-settings: 'wdth' var(--wdth-display);
+    line-height: 1.02;
+    letter-spacing: -0.015em;
+  }
+  .t-h3 {
+    font-size: var(--step-2);
+    font-weight: 600;
+    font-variation-settings: 'wdth' var(--wdth-tight);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  .t-h4 {
+    font-size: var(--step-1);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .t-lead { font-size: var(--step-1); line-height: 1.55; color: var(--text-2); max-width: var(--measure); }
+  .t-body { color: var(--text-2); max-width: var(--measure); }
+  .t-small { font-size: var(--step--1); color: var(--text-2); }
+  .t-mono {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    color: var(--text-3);
+  }
+  .t-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .accent { color: var(--gold); }
+
+  /* Controls. One radius rule: controls and inputs 10px, surfaces 14px. No pills. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: var(--tap);
+    padding: 0.7rem 1.25rem;
+    border-radius: var(--r-control);
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    touch-action: manipulation;
+    transition: background-color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease),
+      color var(--dur-ui) var(--ease), transform var(--dur-press) var(--ease);
+  }
+  .btn:active { transform: scale(0.97); }
+  /* In content, a button may wrap instead of widening its column past the screen (text at 175 to 200
+     percent pushed "Bring us a bottleneck" wider than a 390 px phone). The header CTA stays on one line. */
+  :is(main, footer) .btn { white-space: normal; max-width: 100%; line-height: 1.2; text-align: center; }
+  .btn-primary { background: var(--gold); color: var(--gold-ink); }
+  .btn-ghost { border-color: var(--line-ui); color: var(--text); }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover { background: var(--gold-hi); }
+    .btn-ghost:hover { border-color: var(--text-2); background: var(--panel); }
+  }
+  .btn svg { width: 1rem; height: 1rem; flex: none; }
+
+  .link {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: var(--line-ui);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.22em;
+    transition: text-decoration-color var(--dur-ui) var(--ease);
+  }
+  .link:hover { text-decoration-color: var(--gold); text-decoration-thickness: 2px; }
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .link-arrow svg { width: 1rem; height: 1rem; transition: transform var(--dur-ui) var(--ease); }
+  @media (hover: hover) and (pointer: fine) {
+    .link-arrow:hover { color: var(--gold); }
+    .link-arrow:hover svg { transform: translateX(3px); }
+  }
+
+  /* Surfaces */
+  .surface {
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: var(--r-surface);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: var(--r-control);
+    border: 1px solid var(--line-2);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--text-2);
+  }
+  .chip-gold { border-color: rgb(217 168 62 / 0.45); color: var(--gold); }
+
+  /* Forms */
+  .field { display: grid; gap: 0.5rem; }
+  .field label, .field legend { font-weight: 600; font-size: 0.95rem; }
+  .field .hint { font-size: var(--step--1); color: var(--text-2); }
+  .input {
+    width: 100%;
+    min-height: var(--tap);
+    padding: 0.7rem 0.9rem;
+    border-radius: var(--r-input);
+    border: 1px solid var(--line-ui);
+    background: var(--ground);
+    color: var(--text);
+    font: inherit;
+  }
+  .input::placeholder { color: var(--text-3); }
+  .input:focus-visible { outline: 2px solid var(--gold); outline-offset: 1px; border-color: var(--gold); }
+  .input[aria-invalid='true'] { border-color: var(--error); }
+  .field .error { display: flex; gap: 0.4rem; align-items: flex-start; color: var(--error); font-size: var(--step--1); }
+
+  /* Skip link */
+  .skip-link {
+    position: fixed;
+    left: 1rem;
+    top: 0.75rem;
+    z-index: var(--z-skip);
+    padding: 0.6rem 1rem;
+    border-radius: var(--r-control);
+    background: var(--gold);
+    color: var(--gold-ink);
+    font-weight: 600;
+    transform: translateY(-200%);
+  }
+  .skip-link:focus-visible { transform: none; }
+
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0);
+    white-space: nowrap; border: 0;
   }
 }

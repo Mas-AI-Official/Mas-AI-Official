@@ -1,0 +1,39 @@
+/* Shared inner-page primitives: PageHead, CtaBand, prose blocks, lists. Owned by the lead; agents compose. */
+
+.page-head { padding-block: clamp(2.5rem, 2rem + 3vw, 5rem) clamp(2.5rem, 2rem + 3vw, 4.5rem); border-bottom: 1px solid var(--line); }
+.page-head__inner { display: grid; gap: var(--space-5); justify-items: start; }
+.page-head__title { max-width: 18ch; font-size: clamp(2.5rem, 1.6rem + 3.6vw, 4.75rem); }
+.page-head__lead { max-width: 56ch; }
+.page-head__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+
+.crumbs { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-3); }
+.crumbs li + li::before { content: '/'; margin-right: var(--space-2); color: var(--line-ui); }
+.crumbs a { color: var(--text-2); }
+.crumbs a:hover { color: var(--text); }
+.crumbs [aria-current] { color: var(--text-3); }
+
+.cta-band { background: linear-gradient(180deg, transparent, var(--gold-wash)); }
+.cta-band__inner { display: grid; gap: var(--space-5); justify-items: start; }
+.cta-band__inner .t-h2 { max-width: 18ch; }
+
+/* Two-column content block: heading left, content right on wide screens. */
+.split { display: grid; gap: var(--space-6); }
+@media (min-width: 1024px) { .split { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-9); } }
+
+/* Readable prose */
+.prose { display: grid; gap: var(--space-4); max-width: var(--measure); color: var(--text-2); }
+.prose h2, .prose h3 { color: var(--text); margin-top: var(--space-5); }
+.prose ul { padding-left: 1.1rem; display: grid; gap: var(--space-2); }
+.prose a { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-ui); text-underline-offset: 0.2em; }
+.prose a:hover { text-decoration-color: var(--gold); }
+
+/* Checked list with gold square markers (same marker as service cards) */
+.tick-list { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--space-3); }
+.tick-list li { display: flex; gap: var(--space-3); color: var(--text-2); }
+.tick-list li::before { content: ''; flex: none; width: 8px; height: 8px; margin-top: 0.6em; border-radius: 2px; border: 1.5px solid var(--gold); }
+
+/* Hairline-divided rows (use for <= 6 items) */
+.rows { list-style: none; padding: 0; margin: 0; }
+.rows > li { display: grid; gap: var(--space-2); padding: var(--space-5) 0; border-top: 1px solid var(--line); }
+.rows > li:last-child { border-bottom: 1px solid var(--line); }
+@media (min-width: 900px) { .rows > li { grid-template-columns: minmax(0, 16rem) minmax(0, 1fr); gap: var(--space-6); } }

@@ -1,101 +1,87 @@
-import type { Metadata } from 'next'
 import AnswerLayout from '@/components/answer/AnswerLayout'
-import { Section } from '@/components/answer/Section'
+import { Section, Terms } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
-import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { PROVIDER_NAMES } from '@/components/answer/daena-facts'
+import { answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { pageMetadata } from '@/lib/seo'
+import { DAENA } from '@/content/facts'
 
-const slug = '/ai-control-plane-for-business/'
-const title = 'AI Control Plane for Business — Daena by MAS-AI'
+const path = '/ai-control-plane-for-business/'
+const title = 'AI control plane for business'
 const description =
-  'An AI control plane centralizes LLM routing, governance, memory, and audit logging across a business’s AI agents. Daena lets companies deploy agents without losing oversight or reproducibility.'
+  'An AI control plane centralizes model routing, governance, memory and audit across a business’s AI agents. Daena is one, so a company can deploy agents without losing oversight.'
 const h1 = 'What is an AI control plane for business?'
 const tldr =
-  'Daena is an AI control plane for business that centralizes LLM routing, governance enforcement, memory, and audit logging — so a company can deploy AI agents across teams without losing oversight or reproducibility.'
+  'An AI control plane is the one layer that decides which model runs a task, whether an action is allowed, what the agent remembers and how it is logged. Daena is a control plane for AI agents, so a company can deploy them across teams and still see what they did.'
 
-export const metadata: Metadata = {
-  title: { absolute: title },
-  description,
-  alternates: { canonical: slug },
-  keywords: ['AI control plane', 'AI control plane for business', 'enterprise AI orchestration', 'AI governance', 'multi-LLM control plane', 'AI agent oversight'],
-  openGraph: {
-    title,
-    description,
-    url: 'https://mas-ai.co/ai-control-plane-for-business/',
-    type: 'article',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
-  },
-}
+export const metadata = pageMetadata({ title, description, path })
 
 const faq: FaqItem[] = [
   {
     q: 'What is an AI control plane?',
-    a: 'Borrowing the term from networking, a control plane is the layer that decides and enforces policy while the work runs underneath. An AI control plane centralizes model routing, governance, memory, and audit for a company’s agents, separating those concerns from the agent logic itself.',
+    a: 'The term comes from networking: the control plane decides and enforces policy while the work runs underneath. An AI control plane centralizes model routing, governance, memory and audit for a company’s agents, and keeps those concerns out of each agent’s own code.',
   },
   {
-    q: 'Why do businesses need an AI control plane?',
-    a: 'Once more than one team is shipping AI agents, you get inconsistent policy, scattered logs, and vendor lock-in. A control plane like Daena gives one place to enforce governance, route across models, and produce an audit trail — so oversight does not depend on each team remembering to add it.',
+    q: 'Why do businesses need one?',
+    a: 'Once more than one team ships AI agents, you get inconsistent policy, scattered logs and vendor lock-in. A control plane gives one place to enforce governance, route across models and produce an audit trail, so oversight does not depend on every team remembering to add it.',
   },
   {
     q: 'How is a control plane different from an agent framework?',
-    a: 'A framework helps developers build agent behavior; a control plane governs and operates those agents in production. Daena composes with frameworks: you build with the framework and run, route, and audit through the control plane.',
+    a: 'A framework helps developers build agent behavior. A control plane governs and operates those agents in production. They fit together: build with a framework, run and audit through the control plane.',
   },
   {
-    q: 'Does the control plane lock me into one LLM?',
-    a: 'No. Daena separates model choice from policy and routes across 9 runtimes with hot-swap, so you can change providers without rewriting workflows or relaxing governance.',
+    q: 'Does a control plane lock me into one model?',
+    a: `Not Daena. It separates model choice from policy and routes across ${DAENA.providers.display}, including local runtimes, so you can change providers without rewriting workflows.`,
   },
   {
-    q: 'Is Daena production-ready?',
-    a: 'Daena v3.7 runs in production on Google Cloud Run with 3,086+ tests passing, and its architecture is covered by two USPTO provisional patents.',
+    q: 'Is Daena ready for production use?',
+    a: `Daena is in ${DAENA.version.display}. An earlier build runs on Google Cloud Run, its product page is daena.mas-ai.co, and the source is public under BSL 1.1. Treat it as a reference architecture and a working beta, and ask us how it would fit your setup.`,
   },
 ]
 
 export default function Page() {
-  const jsonLd = answerGraph([
-    techArticle({ slug, headline: h1, description }),
-    faqPage(slug, faq),
-    breadcrumb(slug, 'AI Control Plane for Business'),
-  ])
   return (
     <AnswerLayout
-      eyebrow="AI Control Plane"
+      crumbs={[
+        { name: 'What is Daena', path: '/what-is-daena/' },
+        { name: 'AI control plane for business', path },
+      ]}
       h1={h1}
       tldr={tldr}
-      proof={['Daena v3.7 in production', '9 LLM runtimes, hot-swap', '3,086+ tests passing', 'Runs on Google Cloud Run']}
-      jsonLd={jsonLd}
+      proof={[DAENA.providers.display, DAENA.memoryTiers.display, DAENA.connectors.display, `Status: ${DAENA.version.display}`]}
+      jsonLd={answerGraph(path, h1, description, faq)}
       related={[
-        { href: '/what-is-daena', label: 'What is Daena?' },
-        { href: '/ai-governance-platform', label: 'What is an AI governance platform?' },
-        { href: '/use-cases/multi-llm-routing', label: 'How to route across multiple LLMs' },
-        { href: '/use-cases/ai-agent-governance', label: 'How to govern AI agents in production' },
+        { href: '/what-is-daena/', label: 'What is Daena?' },
+        { href: '/ai-governance-platform/', label: 'What is an AI governance platform?' },
+        { href: '/use-cases/multi-llm-routing/', label: 'How to route across multiple LLMs' },
+        { href: '/use-cases/ai-agent-governance/', label: 'How to govern AI agents in production' },
+        { href: '/private-ai/', label: 'Private, local and cloud AI for your business' },
       ]}
     >
-      <Section h2="What a control plane is — and why agents need one">
+      <Section h2="What a control plane is, and why agents need one">
         <p>
-          In networking, the control plane decides where traffic goes while the data
-          plane moves it. Applied to AI, the control plane is where you decide which
-          model runs a task, whether an action is allowed, what the agent remembers,
-          and how it is logged. Without one, every team re-invents those decisions and
+          In networking, the control plane decides where traffic goes while the data plane moves it. Applied to AI,
+          the control plane is where you decide which model runs a task, whether an action is allowed, what the
+          agent remembers and how it is logged. Without one, every team makes those decisions again on its own and
           governance drifts.
         </p>
       </Section>
 
       <Section h2="What Daena centralizes">
         <p>
-          Four things, in one layer: <strong className="text-white">routing</strong>{' '}
-          across 9 LLM runtimes; <strong className="text-white">governance</strong> via
-          the 10-stage pipeline and four-tier risk policy;{' '}
-          <strong className="text-white">memory</strong> via the 5-tier NBMF; and{' '}
-          <strong className="text-white">audit</strong> via an immutable per-action log.
-          Agent code stays simple because policy, memory, and routing live in the plane.
+          Four things in one layer. <strong>Routing</strong> across {DAENA.providers.display}.{' '}
+          <strong>Governance</strong> through the ten-stage request pipeline and an approval queue for high-risk
+          actions. <strong>Memory</strong> in {DAENA.memoryTiers.display}. <strong>Audit</strong> through a record
+          written for each request. Agent code stays simple because policy, memory and routing live in the plane.
         </p>
+        <Terms items={PROVIDER_NAMES} label="Model providers Daena can route to" />
       </Section>
 
       <Section h2="Separating model choice from policy">
         <p>
-          Because policy is enforced in the control plane, switching the underlying
-          model never relaxes it. The same governance applies whether a task runs on
-          Claude, GPT, Gemini, or a local Ollama model — which is what makes
-          multi-vendor AI safe to operate at a business.
+          In governed mode, policy is enforced before the model is chosen, so switching the model does not skip it. The same
+          governance check applies whether a task ends up on a hosted model or on a local one. That is what makes a
+          multi-vendor setup manageable for a business.
         </p>
       </Section>
 

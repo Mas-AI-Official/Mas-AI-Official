@@ -1,0 +1,122 @@
+/* Capabilities (living system per capability), selected work, the closing act, service page heads. */
+
+.system-scene { display: block; width: 100%; aspect-ratio: 1000 / 620; }
+
+/* Capabilities: a vertical tablist beside one system that changes shape. */
+.caps__head { display: grid; gap: var(--space-4); max-width: 46rem; margin-bottom: var(--space-7); }
+.caps__grid { display: grid; gap: var(--space-5); }
+.caps__list { display: grid; border-top: 1px solid var(--line); }
+.caps__tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 3.5rem;
+  padding: 0.85rem 0.25rem 0.85rem 1.1rem;
+  text-align: left;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-2);
+  font-size: var(--step-1);
+  font-weight: 600;
+  font-variation-settings: 'wdth' var(--wdth-tight);
+  transition: color var(--dur-ui) var(--ease);
+}
+.caps__tab::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.9rem;
+  bottom: 0.9rem;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--gold);
+  transform: scaleY(0);
+  transition: transform var(--dur-ui) var(--ease);
+}
+.caps__tab[aria-selected='true'] { color: var(--text); }
+.caps__tab[aria-selected='true']::before { transform: scaleY(1); }
+@media (hover: hover) and (pointer: fine) {
+  .caps__tab:hover { color: var(--text); }
+}
+.caps__panel { display: grid; gap: var(--space-4); }
+.caps__scene { background: var(--raised); border-radius: var(--r-surface); outline: 1px solid var(--line); outline-offset: -1px; }
+.caps__detail { display: grid; gap: var(--space-3); justify-items: start; }
+.caps__line { color: var(--text-2); max-width: 52ch; min-height: 3.2em; }
+/* Technical depth for technical readers, under the buyer line. Desktop only: on phones the panel is sticky above
+   the list and must stay short, and the service pages carry the same detail. */
+.caps__stack { color: var(--text-3); font-size: var(--step--1); line-height: 1.5; max-width: 60ch; min-height: 3em; }
+
+@media (min-width: 960px) {
+  .caps__grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: var(--space-8); align-items: start; }
+  .caps__panel { position: sticky; top: calc(var(--header-h) + 24px); }
+}
+/* Phones and tablets: the system stays pinned above the list while the visitor picks a capability. */
+@media (max-width: 959.98px) {
+  .caps__panel {
+    position: sticky;
+    top: var(--header-h);
+    z-index: 2;
+    order: -1;
+    padding-block: var(--space-3);
+    background: var(--ground);
+    border-bottom: 1px solid var(--line);
+  }
+  .caps__line { min-height: 0; font-size: var(--step--1); }
+  .caps__stack { display: none; }
+  .caps__tab { font-size: var(--step-0); min-height: var(--tap); }
+}
+
+/* Selected work: problem first, one row each, the whole row is the link. */
+.sw__head { display: grid; gap: var(--space-4); max-width: 46rem; margin-bottom: var(--space-7); }
+.sw__list { list-style: none; margin: 0 0 var(--space-6); padding: 0; border-top: 1px solid var(--line); }
+.sw__item { position: relative; display: grid; gap: var(--space-3); padding: var(--space-6) 0; border-bottom: 1px solid var(--line); }
+.sw__meta { font-size: var(--step--1); color: var(--text-3); }
+.sw__body { display: grid; gap: var(--space-3); }
+.sw__problem { font-size: var(--step-1); line-height: 1.45; color: var(--text); max-width: 50ch; }
+.sw__link::after { content: ''; position: absolute; inset: 0; }
+.sw__link:focus-visible { outline: none; }
+.sw__item:has(.sw__link:focus-visible) { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 4px; }
+.sw__arrow { width: 1.25rem; height: 1.25rem; color: var(--text-3); transition: transform var(--dur-ui) var(--ease), color var(--dur-ui) var(--ease); }
+@media (hover: hover) and (pointer: fine) {
+  .sw__item:hover .sw__arrow { color: var(--gold); transform: translateX(4px); }
+  .sw__item:hover .sw__link { text-decoration: underline; text-decoration-color: var(--line-ui); text-underline-offset: 0.2em; }
+}
+@media (min-width: 900px) {
+  .sw__item { grid-template-columns: 13rem minmax(0, 1fr) 2rem; gap: var(--space-6); align-items: start; }
+  .sw__meta { padding-top: 0.35rem; }
+  .sw__arrow { margin-top: 0.35rem; }
+}
+
+/* The closing act: signals from the story route into one system. --p (0..1) is scroll progress. */
+.closing { padding-block: clamp(5rem, 4rem + 7vw, 9.5rem); }
+.closing__inner { display: grid; gap: var(--space-7); justify-items: center; text-align: center; }
+.closing__svg { width: 100%; max-width: 1000px; height: auto; overflow: visible; --p: 1; }
+html.js .closing__svg { --p: 0; }
+.closing__path { fill: none; stroke: var(--line-2); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
+.closing__end {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - clamp(0, (var(--p) - 0.7) * 3.4, 1));
+}
+.closing__label { font-family: var(--font-mono); font-size: 13px; fill: var(--text-3); opacity: clamp(0, var(--p) * 2, 1); }
+.closing__core { fill: var(--panel); stroke: var(--gold); stroke-width: 1.5; opacity: clamp(0, (var(--p) - 0.75) * 4, 1); }
+.closing__mark { opacity: clamp(0, (var(--p) - 0.8) * 5, 1); }
+.closing__copy { display: grid; gap: var(--space-5); justify-items: center; max-width: 40rem; }
+.closing__title { max-width: 14ch; }
+.closing__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
+@media (max-width: 600px) {
+  .closing__label { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .closing__svg { --p: 1; }
+}
+
+/* Service page heads: the heading beside the operation drawn in that service's shape. */
+.page-head__grid { display: grid; gap: var(--space-6); }
+.page-head__scene { background: var(--raised); border-radius: var(--r-surface); outline: 1px solid var(--line); outline-offset: -1px; }
+@media (min-width: 1024px) {
+  .page-head--visual .page-head__grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); align-items: center; gap: var(--space-8); }
+}

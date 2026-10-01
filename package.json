@@ -6,22 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "typecheck": "tsc --noEmit -p .",
+    "test": "node --test src/lib/guide/guide.test.ts src/lib/guide/mode.test.ts src/lib/inquiry.test.ts",
+    "check:content": "node scripts/check-content.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "gates": "npm run typecheck && npm test && npm run build && node scripts/check-content.mjs --out && node scripts/check-links.mjs",
     "postbuild": "node scripts/postbuild.js"
   },
   "dependencies": {
     "@types/node": "^25.5.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
-    "clsx": "^2.1.1",
-    "framer-motion": "^12.38.0",
-    "gsap": "^3.14.2",
-    "lenis": "^1.3.19",
     "lucide-react": "^0.577.0",
     "next": "^16.1.7",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4",
-    "tailwind-merge": "^3.5.0"
+    "react-dom": "^19.2.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.2.1",

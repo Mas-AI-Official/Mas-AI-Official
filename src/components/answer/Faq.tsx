@@ -1,23 +1,20 @@
 import type { FaqItem } from '@/lib/answer-seo'
 
-// Visible FAQ using native <details> — fully crawlable, zero JS, and the
-// rendered text matches the FAQPage JSON-LD 1:1 (no schema-only questions,
-// which Google penalizes as spam).
+/**
+ * Visible FAQ on native <details>: crawlable, no JavaScript, and the text matches the FAQPage JSON-LD in the
+ * page graph one to one. The JSON-LD lives in AnswerLayout's graph, so this component emits none.
+ */
 export default function Faq({ items }: { items: FaqItem[] }) {
   return (
-    <section>
-      <h2 className="font-display text-xl font-bold text-white sm:text-2xl">
-        Frequently asked questions
+    <section className="answer-sec" aria-labelledby="answer-faq-title">
+      <h2 id="answer-faq-title" className="t-h3">
+        Questions
       </h2>
-      <div className="mt-4 flex flex-col gap-3">
-        {items.map((it, i) => (
-          <details key={i} className="glass rounded-xl px-5 py-4">
-            <summary className="cursor-pointer font-display text-base font-semibold text-white">
-              {it.q}
-            </summary>
-            <p className="mt-3 text-sm leading-relaxed text-[var(--color-mas-text-secondary)] sm:text-base">
-              {it.a}
-            </p>
+      <div className="answer-faq">
+        {items.map((it) => (
+          <details key={it.q} className="answer-faq__item">
+            <summary>{it.q}</summary>
+            <p>{it.a}</p>
           </details>
         ))}
       </div>

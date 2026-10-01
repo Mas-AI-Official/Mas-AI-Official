@@ -45,3 +45,6 @@ next-env.d.ts
 /public/_originals/
 _orig_backup/
 lh_*.json
+
+# QA harness output (scripts/qa)
+/qa-out/

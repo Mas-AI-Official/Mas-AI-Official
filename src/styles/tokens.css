@@ -1,0 +1,105 @@
+/*
+ * MAS-AI design tokens. One source for colour, type, space, radius, motion and layers.
+ * Theme is locked dark (engineering black): the brand mark is gold on black and only reads on a dark ground.
+ * COLOUR IS STATE, NOT DECORATION (pass 3, 2026-09-30):
+ *   gray / ivory  = the existing environment and the human narrative
+ *   friction      = a problem: waiting work, re-typing, a stalled hand-off
+ *   gold          = MAS-AI intervention: the diagnosis, a decision, an engineered connection, the primary action
+ *   blue / cyan   = active technology and information moving through a built system
+ *   ok (green)    = working, validated, operational
+ * Gold is not a border or heading colour. Contrast (WCAG 2.2, computed 2026-09-30) on --ground / --panel-hi:
+ *   text 16.95 / 13.59, text-2 8.81 / 7.06, text-3 6.44 / 5.16, gold 8.92 / 7.15, cyan 9.49 / 7.61, blue 5.86 / 4.69,
+ *   ok 8.20 / 6.57, friction 6.88 / 5.52, error 7.37 / 5.91, line-ui 4.05 / 3.25 (UI boundary, 3:1 needed).
+ *   gold-deep 3.86 on ground: fills and hairlines only, never text.
+ */
+:root {
+  color-scheme: dark;
+
+  /* Grounds (one family, monotonic) */
+  --ground: #0b0d0f;
+  --raised: #111418;
+  --panel: #171b20;
+  --panel-hi: #1f242b;
+
+  /* Ink */
+  --text: #f2efe8;
+  --text-2: #a9afb7;
+  --text-3: #8e959e;
+
+  /* Lines: decorative hairlines and UI boundaries (UI boundaries need 3:1) */
+  --line: #22272d;
+  --line-2: #313840;
+  --line-ui: #6b737d;
+
+  /* MAS-AI intervention */
+  --gold: #d9a83e;
+  --gold-hi: #e6bc5e;
+  --gold-deep: #8c6924;
+  --gold-ink: #0b0d0f;
+  --gold-wash: rgb(217 168 62 / 0.08);
+
+  /* System state */
+  --blue: #2f8cff;
+  --cyan: #20c7d9;
+  --ok: #3dbe7a;
+  --friction: #e0823a;
+
+  /* Form errors only (always paired with an icon and words) */
+  --error: #f07f6a;
+
+  /* Type */
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  --wdth-display: 72;
+  --wdth-tight: 88;
+  --wdth-body: 100;
+
+  --step--1: clamp(0.8125rem, 0.79rem + 0.1vw, 0.875rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem);
+  --step-2: clamp(1.5rem, 1.33rem + 0.75vw, 2rem);
+  --step-3: clamp(1.875rem, 1.55rem + 1.5vw, 2.875rem);
+  --step-4: clamp(2.375rem, 1.8rem + 2.6vw, 4.25rem);
+  --step-5: clamp(2.75rem, 1.9rem + 4vw, 5.75rem);
+
+  /* Space (4 px base) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --section-y: clamp(4.5rem, 3rem + 7vw, 9rem);
+  --gutter: clamp(1rem, 0.6rem + 1.8vw, 2rem);
+  --measure: 62ch;
+  --page-max: 1320px;
+
+  /* Radius: one rule. Controls 999px (pill), surfaces 14px, inputs 10px, chips 999px. */
+  --r-control: 10px;
+  --r-surface: 14px;
+  --r-input: 10px;
+
+  /* Motion: ONE site ease (design-motion G9), durations by job */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-press: 140ms;
+  --dur-ui: 220ms;
+  --dur-panel: 320ms;
+  --dur-reveal: 560ms;
+  --dur-draw: 1200ms;
+  --rise: 14px;
+
+  /* Layers (documented scale, taste 6.F) */
+  --z-base: 0;
+  --z-sticky: 10;
+  --z-header: 40;
+  --z-guide: 60;
+  --z-menu: 70;
+  --z-skip: 100;
+
+  --header-h: 64px;
+  --tap: 44px;
+}

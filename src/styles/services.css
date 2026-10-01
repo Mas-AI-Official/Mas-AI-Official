@@ -1,0 +1,217 @@
+/*
+ * Service pages (/services/, /automation/, /software/, /websites/, /private-ai/, /security/, /rag/,
+ * /ai-act-readiness/). Prefix svp-. Uses tokens and shared classes only; animates opacity/transform via
+ * the global data-reveal attribute. Every multi-column layout collapses explicitly under 768px.
+ */
+
+.svp-head { display: grid; gap: var(--space-4); align-content: start; }
+.svp-head--wide { max-width: 46rem; margin-bottom: var(--space-8); }
+@media (min-width: 1024px) {
+  .svp-problems .svp-head { position: sticky; top: calc(var(--header-h) + var(--space-6)); }
+}
+
+/* ---------- 1. Problems, in the buyer's words ---------- */
+.svp-said { list-style: none; margin: 0; padding: 0; }
+.svp-said > li { display: grid; gap: var(--space-2); padding: var(--space-5) 0; border-top: 1px solid var(--line); }
+.svp-said > li:last-child { border-bottom: 1px solid var(--line); }
+.svp-said__q {
+  font-size: var(--step-1);
+  font-weight: 600;
+  font-variation-settings: 'wdth' var(--wdth-tight);
+  line-height: 1.3;
+  color: var(--text);
+  max-width: 34ch;
+}
+
+/* ---------- 2. What we build ---------- */
+.svp-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+.svp-grid > li { display: grid; gap: var(--space-2); align-content: start; padding: var(--space-5) 0; border-top: 1px solid var(--line-2); }
+.svp-grid .t-mono { color: var(--gold); }
+@media (min-width: 768px) {
+  .svp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-8); }
+  .svp-grid > li { padding-block: var(--space-6); }
+}
+
+.svp-callout {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 72ch;
+  margin-top: var(--space-7);
+  padding: var(--space-5) var(--space-6);
+  border-left: 2px solid var(--gold);
+  border-radius: 0 var(--r-surface) var(--r-surface) 0;
+  background: var(--gold-wash);
+}
+
+/* ---------- 2b. Three stages (websites) ---------- */
+.svp-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-4); grid-template-columns: minmax(0, 1fr); }
+.svp-step {
+  display: grid;
+  gap: var(--space-3);
+  align-content: start;
+  padding: var(--space-5);
+  border-radius: var(--r-surface);
+  border: 1px solid var(--line);
+  background: var(--raised);
+}
+.svp-step__n {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--line-ui);
+  color: var(--text-2);
+}
+.svp-step[data-step='3'] { border-color: rgb(217 168 62 / 0.45); background: linear-gradient(180deg, var(--gold-wash), transparent 80%), var(--raised); }
+.svp-step[data-step='3'] .svp-step__n { border-color: var(--gold); background: var(--gold); color: var(--gold-ink); }
+.svp-steps__note { margin-top: var(--space-6); max-width: 60ch; }
+@media (min-width: 768px) {
+  .svp-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end; }
+  .svp-step[data-step='1'] { min-height: 13rem; }
+  .svp-step[data-step='2'] { min-height: 16rem; }
+  .svp-step[data-step='3'] { min-height: 19rem; }
+}
+
+/* ---------- 3. What you receive ---------- */
+.svp-receive__grid { display: grid; gap: var(--space-7); }
+.svp-receive__side { display: grid; gap: var(--space-5); align-content: start; }
+.svp-handover { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-5); }
+.svp-handover svg { width: 1.5rem; height: 1.5rem; color: var(--gold); }
+.svp-receive__list { gap: var(--space-4); }
+.svp-receive__list li { padding-bottom: var(--space-4); border-bottom: 1px solid var(--line); }
+.svp-receive__list li:last-child { padding-bottom: 0; border-bottom: 0; }
+@media (min-width: 1024px) {
+  .svp-receive__grid { grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: var(--space-9); }
+}
+
+/* ---------- 4. Connects: tinted band ---------- */
+.section.svp-connects { background: var(--raised); }
+.svp-connects__body { display: grid; gap: var(--space-5); align-content: start; }
+.svp-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.svp-chips .chip { background: var(--ground); }
+
+/* ---------- 5. Where it can run: deployment-mode rail ---------- */
+.svp-modes { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.svp-mode {
+  position: relative;
+  display: grid;
+  gap: var(--space-2);
+  align-content: start;
+  padding: var(--space-4) 0 var(--space-5) var(--space-6);
+  border-left: 1px solid var(--line-2);
+}
+.svp-mode__dot {
+  position: absolute;
+  left: -7px;
+  top: calc(var(--space-4) + 0.3rem);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line-ui);
+  background: var(--ground);
+}
+.svp-mode[data-fit='fits'] .svp-mode__dot { border-color: var(--gold); background: var(--gold); }
+.svp-mode[data-fit='limits'] .svp-mode__dot { border-color: var(--gold); }
+.svp-mode__fit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+.svp-mode__fit svg { width: 0.9rem; height: 0.9rem; flex: none; }
+.svp-mode[data-fit='fits'] .svp-mode__fit { color: var(--gold); }
+.svp-mode[data-fit='no'] .svp-mode__fit { color: var(--text-3); }
+.svp-runs__note { margin-top: var(--space-6); max-width: 70ch; }
+@media (min-width: 1100px) {
+  .svp-modes { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: var(--space-5); }
+  .svp-mode { padding: var(--space-6) 0 0; border-left: 0; border-top: 1px solid var(--line-2); }
+  .svp-mode__dot { left: 0; top: -7px; }
+}
+
+/* ---------- 6. Proof ---------- */
+.svp-lead { display: grid; gap: var(--space-6); padding: var(--space-5); }
+.svp-lead__text { display: grid; gap: var(--space-3); justify-items: start; align-content: start; }
+.svp-lead__aside { align-self: center; min-width: 0; }
+.svp-lead__figure { margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--line-2); }
+.svp-lead__figure img { display: block; width: 100%; height: auto; }
+.svp-links { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+@media (min-width: 1024px) {
+  .svp-lead { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: var(--space-8); padding: var(--space-7); }
+}
+
+.svp-prows { list-style: none; margin: var(--space-6) 0 0; padding: 0; }
+.svp-prow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-2) var(--space-5);
+  align-items: baseline;
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--line);
+}
+.svp-prows > li:last-child { border-bottom: 1px solid var(--line); }
+.svp-prow__name { grid-column: 1; }
+.svp-prow__label { grid-row: 1; grid-column: 2; justify-self: end; }
+.svp-prow__why { grid-column: 1 / -1; }
+.svp-prow__go { grid-column: 1 / -1; }
+.svp-prow__go .link-arrow { white-space: nowrap; }
+@media (min-width: 900px) {
+  .svp-prow { grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) auto auto; align-items: center; }
+  .svp-prow__name { grid-column: 1; }
+  .svp-prow__why { grid-column: 2; }
+  .svp-prow__label { grid-row: auto; grid-column: 3; }
+  .svp-prow__go { grid-column: 4; justify-self: end; }
+}
+
+/* ---------- 7. Related ---------- */
+.section.svp-related { padding-block: var(--space-8); }
+.svp-related__list { list-style: none; margin: var(--space-5) 0 0; padding: 0; display: grid; gap: var(--space-5); grid-template-columns: minmax(0, 1fr); }
+.svp-related__list > li { display: grid; gap: var(--space-2); align-content: start; padding-top: var(--space-4); border-top: 1px solid var(--line-2); }
+@media (min-width: 768px) {
+  .svp-related__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); }
+}
+
+/* ---------- Hub ---------- */
+.svp-hub-rows { list-style: none; margin: 0; padding: 0; }
+.svp-hub-rows > li { display: grid; gap: var(--space-3); justify-items: start; padding: var(--space-5) 0; border-top: 1px solid var(--line); }
+.svp-hub-rows > li:last-child { border-bottom: 1px solid var(--line); }
+.svp-hub-list { list-style: none; margin: var(--space-1) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.svp-hub-list li {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-control);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--text-2);
+}
+
+.svp-blueprint__box {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-5);
+  border-color: rgb(217 168 62 / 0.35);
+  background: linear-gradient(180deg, var(--gold-wash), transparent 70%), var(--raised);
+}
+.svp-blueprint__text { display: grid; gap: var(--space-4); justify-items: start; align-content: start; }
+.svp-blueprint__list { align-self: center; }
+@media (min-width: 1024px) {
+  .svp-blueprint__box { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: var(--space-8); padding: var(--space-7); }
+}
+
+/* ---------- 5b. Extras (private AI: hardware, offline operation) ---------- */
+.svp-extra__note { margin-top: var(--space-6); max-width: 64ch; }
+
+/* ---------- 5c. How it is built: technical depth for technical readers ---------- */
+.svp-stack__body { display: grid; gap: var(--space-5); align-content: start; }
+.svp-stack__list { margin: 0; display: grid; gap: 0; }
+.svp-stack__row { display: grid; gap: var(--space-1); padding: var(--space-4) 0; border-top: 1px solid var(--line); }
+.svp-stack__row:last-child { border-bottom: 1px solid var(--line); }
+.svp-stack__row dt { color: var(--text-2); font-size: var(--step--1); }
+.svp-stack__row dd { margin: 0; max-width: 62ch; }
+@media (min-width: 768px) {
+  .svp-stack__row { grid-template-columns: minmax(8rem, 0.32fr) minmax(0, 1fr); column-gap: var(--space-6); align-items: baseline; }
+}

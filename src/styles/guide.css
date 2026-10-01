@@ -1,0 +1,383 @@
+/*
+ * Site guide: launcher, caption bubble and non-modal panel.
+ * Tokens only. Motion is opacity and transform, and only under no-preference.
+ * Layer is var(--z-guide), below the header menu sheet (--z-menu) so the sheet always wins.
+ */
+
+/* Applied by the guide to the section it scrolls to. Inset so the ring is never clipped. */
+.section-highlight {
+  outline: 2px solid var(--gold);
+  outline-offset: -2px;
+}
+
+.guide {
+  --guide-edge: 16px;
+  --guide-bottom: calc(var(--guide-edge) + env(safe-area-inset-bottom, 0px));
+  --guide-right: calc(var(--guide-edge) + env(safe-area-inset-right, 0px));
+}
+
+/* Launcher and caption share one fixed row at the bottom right. */
+.guide__dock {
+  position: fixed;
+  right: var(--guide-right);
+  bottom: var(--guide-bottom);
+  z-index: var(--z-guide);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  pointer-events: none;
+}
+.guide__dock > * { pointer-events: auto; }
+
+/*
+ * Launcher: a round face crop (40px desktop) with a status dot in the mode accent, and the label "Ask Daena" /
+ * "Ask Klyntar" beside it. On phones the face is the whole button (48px, no text).
+ * --guide-accent is set on .guide from the mode (Daena: var(--cyan), Klyntar: #ff4060 as in the original guide).
+ */
+.guide {
+  --guide-launcher-h: var(--tap);
+}
+.guide__launcher {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--guide-launcher-h);
+  min-width: var(--guide-launcher-h);
+  padding: 2px var(--space-4) 2px 2px;
+  background: var(--raised);
+  color: var(--text);
+  border: 1px solid var(--line-ui);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
+}
+.guide__launcher[aria-expanded='true'] { background: var(--panel-hi); border-color: var(--guide-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .guide__launcher:hover { background: var(--panel-hi); border-color: var(--guide-accent); }
+}
+
+/* Face crop, shared by the launcher (40px) and the panel header (36px). */
+.guide__avatar {
+  position: relative;
+  flex: none;
+  display: block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--panel-hi);
+}
+.guide__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .guide__avatar img { animation: guide-fade var(--dur-ui) var(--ease) both; }
+}
+@keyframes guide-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* Status dot in the mode accent, ringed in the surface colour so it reads on the photo. */
+.guide__status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--guide-accent);
+  box-shadow: 0 0 0 2px var(--raised);
+}
+.guide__launcher:is(:hover, [aria-expanded='true']) .guide__status { box-shadow: 0 0 0 2px var(--panel-hi); }
+
+.guide__who { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+.guide__who .guide__avatar { width: 36px; height: 36px; }
+
+/* Hover and focus line above the launcher. Desktop pointer or keyboard focus only, never touch. */
+.guide__hover {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + var(--space-2));
+  padding: var(--space-2) var(--space-3);
+  background: var(--raised);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--guide-accent);
+  border-radius: var(--r-surface);
+  font-size: var(--step--1);
+  line-height: 1.35;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur-ui) var(--ease), visibility 0s linear var(--dur-ui);
+}
+.guide__launcher[aria-expanded='false']:focus-visible ~ .guide__hover {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .guide__launcher[aria-expanded='false']:hover ~ .guide__hover {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+}
+@media (max-width: 767px) {
+  .guide { --guide-launcher-h: 48px; }
+  /* On phones the face is the whole button: no text, no hover line. */
+  .guide__launcher { width: 48px; padding: 0; justify-content: center; }
+  .guide__launcher .guide__avatar { width: 100%; height: 100%; }
+  .guide__label-ask,
+  .guide__hover { display: none; }
+}
+
+.guide__launcher:focus-visible,
+.guide__close:focus-visible,
+.guide__send:focus-visible,
+.guide__input:focus-visible,
+.guide__log:focus-visible,
+.guide__link:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+/* Proactive caption, decorative and hidden from assistive tech. */
+.guide__caption {
+  max-width: 220px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--raised);
+  color: var(--text-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-surface);
+  font-size: var(--step--1);
+  line-height: 1.35;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .guide__caption { animation: guide-in var(--dur-ui) var(--ease) both; }
+}
+@media (max-width: 767px) {
+  .guide__caption { display: none; }
+}
+
+/* Panel */
+.guide__panel {
+  position: fixed;
+  right: var(--guide-right);
+  bottom: calc(var(--guide-bottom) + var(--guide-launcher-h) + var(--space-3));
+  z-index: var(--z-guide);
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  max-height: min(560px, 70dvh);
+  background: var(--raised);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: var(--r-surface);
+  overflow: hidden;
+}
+.guide__panel[hidden] { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .guide__panel { animation: guide-in var(--dur-ui) var(--ease) both; }
+}
+@keyframes guide-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 767px) {
+  .guide__panel {
+    left: 12px;
+    right: 12px;
+    width: auto;
+    max-height: 70dvh;
+  }
+}
+
+.guide__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  /* Thin accent line in the mode colour. */
+  box-shadow: inset 0 2px 0 var(--guide-accent);
+}
+.guide__title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  line-height: 1.2;
+}
+.guide__name {
+  font-size: 1rem;
+  font-weight: 600;
+  font-variation-settings: 'wdth' 88;
+}
+.guide__sub {
+  color: var(--guide-accent);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.guide__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--tap);
+  height: var(--tap);
+  background: none;
+  color: var(--text-2);
+  border: 0;
+  border-radius: var(--r-control);
+  cursor: pointer;
+}
+.guide__close svg { width: 18px; height: 18px; }
+@media (hover: hover) and (pointer: fine) {
+  .guide__close:hover { color: var(--text); background: var(--panel-hi); }
+}
+
+.guide__log {
+  flex: 1 1 auto;
+  min-height: 120px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+.guide__msg {
+  max-width: 88%;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--r-surface);
+  font-size: var(--step--1);
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.guide__msg p { margin: 0; }
+.guide__msg--user {
+  align-self: flex-end;
+  background: var(--panel-hi);
+  color: var(--text);
+}
+.guide__msg--guide {
+  align-self: flex-start;
+  border: 1px solid var(--line);
+  color: var(--text);
+}
+
+.guide__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: var(--tap);
+  margin-top: var(--space-1);
+  color: var(--gold);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.guide__link svg { width: 14px; height: 14px; flex: none; }
+.guide__link + .guide__link { margin-left: var(--space-4); }
+@media (hover: hover) and (pointer: fine) {
+  .guide__link:hover { color: var(--gold-hi); }
+}
+
+.guide__typing {
+  align-self: flex-start;
+  display: inline-flex;
+  gap: 4px;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--r-surface);
+}
+.guide__typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--text-2);
+  opacity: 0.6;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .guide__typing span { animation: guide-dot 1s ease-in-out infinite; }
+  .guide__typing span:nth-child(2) { animation-delay: 0.15s; }
+  .guide__typing span:nth-child(3) { animation-delay: 0.3s; }
+}
+@keyframes guide-dot {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 1; }
+}
+
+.guide__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--line);
+}
+.guide__label {
+  font-size: var(--step--1);
+  color: var(--text-2);
+}
+.guide__row {
+  display: flex;
+  gap: var(--space-2);
+}
+.guide__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
+  background: var(--ground);
+  color: var(--text);
+  border: 1px solid var(--line-ui);
+  border-radius: var(--r-input);
+  font: inherit;
+  font-size: 1rem; /* 16px keeps iOS from zooming on focus */
+}
+.guide__input::placeholder { color: var(--text-3); }
+.guide__send {
+  flex: none;
+  min-height: var(--tap);
+  padding: 0 var(--space-4);
+  background: var(--gold);
+  color: var(--gold-ink);
+  border: 0;
+  border-radius: var(--r-control);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-ui) var(--ease);
+}
+.guide__send:disabled {
+  background: var(--panel-hi);
+  color: var(--text-3);
+  cursor: not-allowed;
+}
+@media (hover: hover) and (pointer: fine) {
+  .guide__send:not(:disabled):hover { background: var(--gold-hi); }
+}
+
+.guide .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

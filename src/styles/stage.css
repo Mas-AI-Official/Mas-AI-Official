@@ -1,0 +1,257 @@
+/* Homepage stage: one sticky canvas, seven copy blocks scrolling over it (Stage.tsx, stage/field.ts).
+   The copy column width here is mirrored in computeView(); change both together. */
+
+.stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.stage__sticky {
+  grid-row: 1 / span 7;
+  grid-column: 1;
+  align-self: start;
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100svh - var(--header-h));
+  overflow: hidden;
+  z-index: 0;
+}
+.stage__canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.stage__shot {
+  position: absolute;
+  height: auto;
+  opacity: 0;
+  border-radius: var(--r-surface);
+  outline: 1px solid rgb(255 255 255 / 0.1);
+  outline-offset: -1px;
+  box-shadow: 0 24px 60px rgb(0 0 0 / 0.5);
+}
+
+.stage__block {
+  grid-column: 1;
+  position: relative;
+  z-index: 1;
+  min-height: calc(100svh - var(--header-h));
+  display: flex;
+  align-items: center;
+}
+/* Every block gets an explicit row, in document order (child 1 is the sticky). Auto-placement put a
+   block pinned by id ahead of its siblings once the ids changed. */
+.stage > .stage__block:nth-child(2) { grid-row: 1; }
+.stage > .stage__block:nth-child(3) { grid-row: 2; }
+.stage > .stage__block:nth-child(4) { grid-row: 3; }
+.stage > .stage__block:nth-child(5) { grid-row: 4; }
+.stage > .stage__block:nth-child(6) { grid-row: 5; }
+.stage > .stage__block:nth-child(7) { grid-row: 6; }
+.stage > .stage__block:nth-child(8) { grid-row: 7; }
+
+.stage__inner { display: grid; align-items: center; column-gap: 24px; }
+.stage__copy { display: grid; gap: var(--space-5); justify-items: start; max-width: min(42vw, 560px); }
+.stage__copy .t-h2 { max-width: 16ch; }
+
+.stage__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--gold);
+  font-weight: 600;
+  font-size: 0.95rem;
+  font-variation-settings: 'wdth' var(--wdth-tight);
+}
+.stage__eyebrow::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  border: 1.5px solid var(--gold);
+}
+.stage__title {
+  font-size: clamp(2.6rem, 1.1rem + 3.9vw, 4.6rem);
+  letter-spacing: -0.025em;
+}
+.stage__line { display: block; }
+
+/* The system line under "Find the gap.": broken under the word, closed in gold by the intro (Stage.tsx
+   measures --gap-l / --gap-w and scales .stage__gapfill). Without JS it is one unbroken hairline. */
+.stage__ruled { position: relative; display: inline-block; padding-bottom: 0.1em; --gap-l: 0px; --gap-w: 0px; }
+.stage__ruled::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: linear-gradient(to right,
+    var(--line-ui) var(--gap-l), transparent var(--gap-l),
+    transparent calc(var(--gap-l) + var(--gap-w)), var(--line-ui) calc(var(--gap-l) + var(--gap-w)));
+}
+.stage__gapfill {
+  position: absolute;
+  left: var(--gap-l);
+  width: var(--gap-w);
+  bottom: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.stage__trace { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
+.stage__trace path { fill: none; stroke: var(--gold); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+
+.stage__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+.stage__note { font-size: var(--step--1); color: var(--text-3); max-width: 44ch; }
+.stage__note--wide { max-width: 52ch; }
+.stage__close { font-size: var(--step-1); font-weight: 600; color: var(--text); max-width: 30ch; }
+.stage__links { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-6); }
+.stage__statement { font-size: clamp(2.6rem, 1.1rem + 3.9vw, 4.6rem); letter-spacing: -0.025em; max-width: 12ch; }
+
+/* Act 5: where it runs. Pressed state in cyan (a live system choice), not gold. */
+.stage__deploy { display: grid; gap: var(--space-3); }
+.stage__modes { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.stage__mode {
+  min-height: var(--tap);
+  padding: 0 0.85rem;
+  border-radius: var(--r-control);
+  border: 1px solid var(--line-2);
+  background: var(--raised);
+  color: var(--text-2);
+  font-weight: 600;
+  font-size: var(--step--1);
+  transition: color var(--dur-ui) var(--ease), border-color var(--dur-ui) var(--ease);
+}
+.stage__mode[aria-pressed='true'] { color: var(--text); border-color: var(--cyan); box-shadow: inset 0 0 0 1px var(--cyan); }
+@media (hover: hover) and (pointer: fine) {
+  .stage__mode:hover { color: var(--text); border-color: var(--line-ui); }
+}
+.stage__modeline { font-size: var(--step--1); color: var(--text-2); max-width: 44ch; min-height: 2.9em; }
+
+/* Act 6: the canvas prints what the example system did, as it happens (decorative; described in text). */
+.stage__logwrap { display: grid; gap: var(--space-2); width: 100%; max-width: 30rem; }
+.stage__loglabel { font-size: var(--step--1); color: var(--text-3); }
+.stage__log {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  height: 7.5rem;
+  overflow: hidden;
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  border-left: 2px solid var(--line-2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-2);
+}
+/* One line per event, fixed box: a wrapped line grew the bottom-aligned block and shifted the layout. */
+.stage__log li { display: grid; grid-template-columns: 5.2rem 5.6rem minmax(0, 1fr); gap: 0.5rem; white-space: nowrap; min-height: 1.4em; }
+.stage__log li > * { overflow: hidden; text-overflow: ellipsis; }
+.stage__log li:first-child { color: var(--text); }
+.stage__log time { color: var(--text-3); font-variant-numeric: tabular-nums; }
+.stage__log span:nth-child(2) { color: var(--cyan); }
+
+@media (min-width: 900px) {
+  .stage__inner { grid-template-columns: min(42vw, 560px) minmax(0, 1fr); }
+  /* Canvas starts 64px left of the world area (computeView: copy column right edge + 24px). */
+  .stage__canvas { left: calc(max(0px, (100% - 1320px) / 2) + var(--gutter) + min(42%, 560px) - 40px); width: auto; }
+}
+
+/* Phones and small tablets: the stage is an opaque panel under the header and the copy slides beneath
+   it, so text never sits on the drawing. Height tracks the viewport so the hero copy fits below. */
+@media (max-width: 899.98px) {
+  /* --panel-fit (Stage.tsx) lowers the panel when the tallest copy block needs the room. */
+  .stage {
+    --stage-cap: clamp(190px, calc((100svh - var(--header-h)) * 0.34), 360px);
+    --stage-panel: min(var(--panel-fit, 100vh), var(--stage-cap));
+  }
+  .stage__sticky {
+    height: var(--stage-panel);
+    z-index: 2;
+    overflow: visible;
+    background: var(--ground);
+  }
+  .stage__sticky::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 28px;
+    background: linear-gradient(var(--ground), rgb(11 13 15 / 0));
+    pointer-events: none;
+  }
+  /* Copy rests right under the panel and its fade (PANEL_FADE 28 + 8 in Stage.tsx), so each act's words sit
+     next to its drawing; bottom-aligned copy left a 140 to 285 px empty band between them at 390x844. The offset
+     uses the panel's CSS cap, not --panel-fit: the fit arrives after hydration, and copy that followed it moved
+     (CLS 0.018 at 768x1024 with 130% text). When the fit is lower the gap grows a little; nothing moves. */
+  .stage__block { align-items: flex-start; padding-top: calc(var(--stage-cap) + 36px); padding-bottom: 5svh; }
+  .stage__copy { max-width: none; gap: var(--space-4); }
+  /* Wrap before the fixed guide launcher in the bottom-right corner. */
+  .stage__proofline { max-width: calc(100% - 104px); }
+  .stage__logwrap { max-width: min(30rem, calc(100% - 72px)); }
+}
+@media (min-width: 600px) and (max-width: 899.98px) {
+  /* Tablets in portrait: a taller panel instead of a wide empty band between drawing and copy. */
+  .stage {
+    --stage-cap: clamp(190px, calc((100svh - var(--header-h)) * 0.46), 480px);
+    --stage-panel: min(var(--panel-fit, 100vh), var(--stage-cap));
+  }
+}
+@media (max-width: 599.98px) {
+  .stage__log { height: 5.9rem; }
+  .stage__log li:nth-child(4) { display: none; }
+  .stage__log li { grid-template-columns: 4.6rem minmax(0, 1fr); }
+  .stage__log li > span:nth-child(2) { display: none; }
+}
+
+/* Stills: reduced motion and no-JS get the end frame of each act and a plain screenshot. */
+.stage__still, .stage__still-shot { display: none; }
+.stage__still-shot {
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-surface);
+  outline: 1px solid rgb(255 255 255 / 0.1);
+  outline-offset: -1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .stage__sticky { display: none; }
+  .stage__block { min-height: 0; padding-block: var(--section-y); align-items: center; }
+  .stage__inner { background: none; padding-top: 0; row-gap: var(--space-6); }
+  .stage__still { display: block; width: 100%; aspect-ratio: 1000 / 620; }
+  .stage__still-shot { display: block; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 899.98px) {
+  .stage__still, .stage__still-shot { order: -1; }
+  #deploy .stage__still { order: 1; }
+}
+html:not(.js) .stage__sticky, html:not(.js) .stage__still { display: none; }
+html:not(.js) .stage__block { min-height: 0; padding-block: var(--section-y); }
+html:not(.js) .stage__still-shot { display: block; }
+
+/* The live log only makes sense while the loop runs. */
+@media (prefers-reduced-motion: reduce) {
+  .stage__logwrap { display: none; }
+  .stage__gapfill { transform: scaleX(1); }
+}
+html:not(.js) .stage__logwrap { display: none; }
+
+/* Phones whose text does not fit under the panel (Stage.tsx sets data-flow): the stage stops pinning and
+   every act sits in normal flow with its still above the copy, like reduced motion. Text keeps its size. */
+.stage[data-flow] .stage__sticky { display: none; }
+.stage[data-flow] .stage__block { min-height: 0; padding-block: var(--section-y); align-items: center; }
+.stage[data-flow] .stage__inner { row-gap: var(--space-6); }
+.stage[data-flow] .stage__still { display: block; width: 100%; aspect-ratio: 1000 / 620; order: -1; }
+.stage[data-flow] .stage__still-shot { display: block; order: -1; }
+.stage[data-flow] #deploy .stage__still { order: 1; }
+.stage[data-flow] .stage__logwrap { display: none; }
+
+/* The live log never truncates: by its own width in mono characters it drops the actor column, then the time
+   column. Messages are at most 21 characters (Stage.tsx logLine), so 32ch holds time plus message. */
+.stage__log { container-type: inline-size; }
+@container (max-width: 46ch) {
+  .stage__log li { grid-template-columns: 8.5ch minmax(0, 1fr); }
+  .stage__log li > span:nth-child(2) { display: none; }
+}
+@container (max-width: 32ch) {
+  .stage__log li { grid-template-columns: minmax(0, 1fr); }
+  .stage__log li > time { display: none; }
+}

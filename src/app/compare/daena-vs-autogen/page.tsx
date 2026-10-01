@@ -1,95 +1,96 @@
-import type { Metadata } from 'next'
 import AnswerLayout from '@/components/answer/AnswerLayout'
-import { Section } from '@/components/answer/Section'
+import { Section, Sources } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import CompareTable from '@/components/answer/CompareTable'
-import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { pageMetadata } from '@/lib/seo'
+import { DAENA } from '@/content/facts'
 
-const slug = '/compare/daena-vs-autogen/'
-const title = 'Daena vs AutoGen — Governed Control Plane vs Agent Framework'
+const path = '/compare/daena-vs-autogen/'
+const title = 'Daena vs AutoGen: control plane or framework'
 const description =
-  'AutoGen is a Microsoft framework for multi-agent conversation patterns; Daena is a governed control plane that adds approval gates, audit logging, multi-LLM routing, and a memory fabric for production.'
+  'AutoGen is a Microsoft framework for multi-agent applications, now in maintenance mode. Daena is a governed platform for running agents. A factual comparison with sources.'
 const h1 = 'How is Daena different from AutoGen?'
 const tldr =
-  'AutoGen is a Microsoft framework for multi-agent conversation patterns; Daena is a governed control plane that adds approval gates, an immutable audit log, multi-LLM routing across 9 runtimes, and a memory fabric for production deployment.'
+  'AutoGen is a Microsoft open-source framework for building multi-agent applications. Its repository now says it is in maintenance mode and points new users to Microsoft Agent Framework. Daena is a governed platform for running agents, with approval, memory and audit built into the request path.'
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: slug },
-  keywords: ['Daena vs AutoGen', 'AutoGen alternative', 'AutoGen governance', 'AutoGen audit logs', 'enterprise multi-agent governance', 'Microsoft AutoGen alternative'],
-  openGraph: {
-    title,
-    description,
-    url: 'https://mas-ai.co/compare/daena-vs-autogen/',
-    type: 'article',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
-  },
-}
+export const metadata = pageMetadata({ title, description, path })
 
 const faq: FaqItem[] = [
   {
     q: 'Is Daena an AutoGen alternative?',
-    a: 'They overlap but aim at different goals. AutoGen is a framework for multi-agent conversation and collaboration patterns; Daena is a governed control plane for operating agents in production with policy, audit, routing, and memory. You can build agents in AutoGen and run them under Daena.',
+    a: 'They aim at different goals. AutoGen is a framework for multi-agent conversation and collaboration patterns. Daena is a governed platform for operating agents with policy, audit, routing and memory. Different layers, so they are not a like-for-like swap.',
+  },
+  {
+    q: 'What is the status of AutoGen?',
+    a: 'The AutoGen repository README says AutoGen is in maintenance mode, will not receive new features or enhancements and is community managed going forward. It tells new users to start with Microsoft Agent Framework. Check the repository for the current notice before you decide.',
   },
   {
     q: 'What is AutoGen good at?',
-    a: 'AutoGen, from Microsoft Research, is strong for multi-agent conversation patterns and rapid research and prototyping of agents that talk to each other.',
+    a: 'Multi-agent conversation patterns, and prototyping agents that talk to each other. Microsoft now points new projects to Microsoft Agent Framework instead.',
   },
   {
     q: 'What does Daena add for production use?',
-    a: 'A mandatory 10-stage governance pipeline, four-tier risk policy with human-approval gates, an immutable audit log, hot-swap routing across 9 LLM runtimes, a 5-tier memory fabric, and Klyntar security screening — the operational concerns frameworks leave to you.',
+    a: `A fixed ten-stage request pipeline, risk classification, an approval queue for high-risk actions, an audit record for each request, routing across ${DAENA.providers.display} and ${DAENA.memoryTiers.display}. The trade-off: Daena is a ${DAENA.version.display} product with a small ecosystem.`,
   },
   {
-    q: 'Does Daena lock me into one model like a vendor framework might?',
-    a: 'No. Daena is model-agnostic and routes across 9 runtimes including local Ollama, so you are not tied to any single provider.',
+    q: 'Does Daena lock me into one model?',
+    a: `No. Daena routes across ${DAENA.providers.display}, including local runtimes, so it is not tied to a single provider.`,
   },
 ]
 
 export default function Page() {
-  const jsonLd = answerGraph([
-    techArticle({ slug, headline: h1, description }),
-    faqPage(slug, faq),
-    breadcrumb(slug, 'Daena vs AutoGen'),
-  ])
   return (
     <AnswerLayout
-      eyebrow="Compare"
+      crumbs={[
+        { name: 'What is Daena', path: '/what-is-daena/' },
+        { name: 'Daena vs AutoGen', path },
+      ]}
       h1={h1}
       tldr={tldr}
-      proof={['Framework vs control plane', 'Model-agnostic (9 runtimes)', 'Daena v3.7 in production']}
-      jsonLd={jsonLd}
+      proof={['Framework vs platform', `Daena: ${DAENA.license.display}`, `Daena status: ${DAENA.version.display}`]}
+      jsonLd={answerGraph(path, h1, description, faq)}
       related={[
-        { href: '/ai-governance-platform', label: 'What is an AI governance platform?' },
-        { href: '/compare/daena-vs-langchain', label: 'How is Daena different from LangChain?' },
-        { href: '/multi-agent-ai-company-os', label: 'What is a multi-agent AI company OS?' },
-        { href: '/use-cases/ai-agent-governance', label: 'How to govern AI agents in production' },
+        { href: '/ai-governance-platform/', label: 'What is an AI governance platform?' },
+        { href: '/compare/daena-vs-langchain/', label: 'How is Daena different from LangChain?' },
+        { href: '/multi-agent-ai-company-os/', label: 'What is a multi-agent AI company OS?' },
+        { href: '/use-cases/ai-agent-governance/', label: 'How to govern AI agents in production' },
       ]}
     >
-      <Section h2="Conversation framework vs governed operations">
+      <Section h2="Conversation framework or governed operations">
         <p>
-          AutoGen focuses on how agents collaborate — the conversation patterns between
-          them. Daena focuses on how agents are governed and operated — what each one is
-          allowed to do, on which model, with what memory, and with what audit trail.
-          Both can be true at once: AutoGen for the pattern, Daena for the control.
+          AutoGen focuses on how agents collaborate: the conversation patterns between them. Daena focuses on how
+          agents are governed and operated: what each one may do, on which model, with what memory and what audit
+          trail. They answer different questions.
         </p>
       </Section>
 
       <Section h2="Side by side">
         <CompareTable
-          caption="Daena compared with AutoGen across governance, audit, routing, memory, security, and target use"
+          caption="Daena compared with AutoGen: goal, project status and license"
           head={['Dimension', 'Daena', 'AutoGen']}
           rows={[
-            ['Primary goal', 'Govern + operate agents in production', 'Multi-agent conversation patterns'],
-            ['Governance', '10-stage pipeline, four-tier policy', 'Not included natively'],
-            ['Audit trail', 'Immutable per-action AuditLog', 'Application-level'],
-            ['Multi-LLM routing', '9 runtimes, hot-swap', 'Configurable per model'],
-            ['Memory', '5-tier NBMF (patent-pending)', 'Conversation-buffer based'],
-            ['Security screening', 'Klyntar, zero-false-positive gate', 'Not included'],
-            ['Strength', 'Production governance + operations', 'Research, prototyping, agent dialogue'],
+            ['Main goal', 'Run agents with governance in the request path', 'Build multi-agent applications'],
+            ['Project status', `${DAENA.version.display}; product page daena.mas-ai.co`, 'Maintenance mode, community managed, per its README'],
+            ['License', DAENA.license.display, 'Open source, see the repository'],
           ]}
         />
       </Section>
+
+      <Section h2="What this means if you use AutoGen today">
+        <p>
+          AutoGen&rsquo;s own README recommends Microsoft Agent Framework for new users and offers a migration
+          guide for existing ones. If you run AutoGen agents in production, the useful next step is a plan for
+          where they run and who approves their actions, whichever framework they end up on. That is a
+          governance question, and it is the kind of scoping a Build Blueprint covers.
+        </p>
+      </Section>
+
+      <Sources
+        items={[
+          { label: 'AutoGen repository README, checked 2026-09-30', href: 'https://github.com/microsoft/autogen' },
+        ]}
+      />
 
       <Faq items={faq} />
     </AnswerLayout>

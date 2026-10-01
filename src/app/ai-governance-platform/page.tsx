@@ -1,150 +1,122 @@
-import type { Metadata } from 'next'
 import AnswerLayout from '@/components/answer/AnswerLayout'
-import { Section } from '@/components/answer/Section'
+import { Section, Steps, Terms } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
-import { techArticle, faqPage, breadcrumb, answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { PIPELINE_STAGES, PROVIDER_NAMES } from '@/components/answer/daena-facts'
+import { answerGraph, type FaqItem } from '@/lib/answer-seo'
+import { pageMetadata } from '@/lib/seo'
+import { DAENA } from '@/content/facts'
 
-const slug = '/ai-governance-platform/'
-const title = 'AI Governance Platform for Multi-Agent Systems'
-const description =
-  'Daena is a governed AI control plane: every AI agent action passes a 10-stage governance pipeline with a four-tier risk policy and an immutable audit log, across 9 LLM runtimes.'
+const path = '/ai-governance-platform/'
+const title = 'AI governance platform for multi-agent systems'
+const description = `Daena is a governed AI control plane: in governed mode every agent request passes a ten-stage pipeline with risk classification, an approval queue for high-risk actions and an audit trail, across ${DAENA.providers.display}.`
 const h1 = 'What is an AI governance platform for multi-agent systems?'
 const tldr =
-  'Daena is an AI governance platform that runs every AI agent action through a 10-stage pipeline — from SecurityGate to AuditLog — enforcing a four-tier risk policy and writing an immutable audit record before the action executes, regardless of which LLM is underneath.'
+  'An AI governance platform decides what AI agents may do before they act, and keeps a record of what they did. Daena does this inside the request path: a ten-stage pipeline, risk classification, an approval queue for high-risk actions and an audit trail.'
 
-export const metadata: Metadata = {
-  title,
-  description,
-  alternates: { canonical: slug },
-  keywords: [
-    'AI governance platform',
-    'AI governance platform for AI agents',
-    'governed multi-agent platform',
-    'AI agent governance',
-    'AI agent audit trail',
-    'human approval gates for AI agents',
-    'AI control plane',
-    'multi-LLM routing',
-  ],
-  openGraph: {
-    title,
-    description,
-    url: 'https://mas-ai.co/ai-governance-platform/',
-    type: 'article',
-    images: [{ url: '/og-image.png', width: 1200, height: 630 }],
-  },
-}
+export const metadata = pageMetadata({ title, description, path })
 
 const faq: FaqItem[] = [
   {
     q: 'What is the difference between AI governance and AI observability?',
-    a: 'Observability tells you what an AI agent did after the fact. Governance decides what an agent is allowed to do before it acts. Daena is governance-first: every action passes a 10-stage pipeline and a four-tier risk policy before execution, and that decision is written to an audit log.',
+    a: 'Observability tells you what an agent did after the fact. Governance decides what an agent may do before it acts. Daena is governance-first: in governed mode a request is checked and classified by risk before any action runs, and the decision is written to an audit trail.',
   },
   {
     q: 'How do you govern AI agents before they use tools?',
-    a: 'Daena routes every proposed action through SecurityGate, InputValidator, and a GovernanceEngine before any tool call, side effect, or output reaches the world. Routine actions are logged, medium-risk actions notify, high-risk actions require human approval, and critical actions are blocked.',
+    a: 'Put the check in the execution path. In Daena a request goes through a security gate, intent and risk classification and a governance check before the model is routed and anything is built or executed. Plan-only is the default action mode, and execution goes through the security gate and an approval queue for high-risk actions.',
   },
   {
     q: 'Does an AI governance platform require human approval?',
-    a: 'Only where it matters. Daena’s four-tier policy escalates by risk: routine actions run and are logged, high-risk actions pause for human approval (founder-approval gates), and critical actions are blocked pending review — so humans review the few actions that need it, not every action.',
+    a: 'Only where it matters. Daena classifies each action by risk. High-risk actions wait in an approval queue for a person. Lower-risk actions do not need a human on every step.',
   },
   {
-    q: 'Which AI governance platform supports multi-LLM routing?',
-    a: 'Daena routes across 9 LLM runtimes — Claude, GPT, Gemini, Grok, Ollama, Groq, OpenRouter, Together, and Perplexity — and applies the same governance pipeline regardless of which model handles the request. Switching providers does not relax policy enforcement.',
+    q: 'Which governance platform supports multi-LLM routing?',
+    a: `Daena routes across ${DAENA.providers.display}: ${PROVIDER_NAMES.join(', ')}. The routing stage sits after the governance check, so changing the model does not skip the check.`,
   },
   {
-    q: 'How does Daena compare with LangChain, AutoGen, and CrewAI?',
-    a: 'LangChain, AutoGen, and CrewAI are frameworks for building agents; Daena is a governed control plane for running them. Those frameworks give you the building blocks and leave governance, audit, and memory to the developer — Daena ships them as a mandatory pipeline. The two layers compose: build with a framework, govern with Daena.',
+    q: 'How does Daena compare with LangChain, AutoGen and CrewAI?',
+    a: 'Those are frameworks for building agents. Daena is a governed platform for running them, with governance, memory and audit built into the request path. The two layers can be combined: build behavior with a framework, and run it under a control plane.',
   },
   {
-    q: 'Is Daena tied to a specific LLM vendor?',
-    a: 'No. Daena is model-agnostic. It hot-swaps across 9 runtimes without restarting, so you are not locked to one provider, and the governance policy applies identically no matter which model is underneath.',
+    q: 'Is Daena tied to one model vendor?',
+    a: `No. Routing is separate from policy, and Daena supports ${DAENA.providers.display}, including local runtimes.`,
   },
   {
     q: 'Is Daena a real product or a concept?',
-    a: 'Daena v3.7 runs in production on Google Cloud Run with 3,086+ tests passing, and its architecture is covered by two USPTO provisional patents — PhiLattice (#63/877,082) for agent topology and NBMF (#64/020,421) for memory. MAS-AI Technologies Inc. is federally incorporated in Ontario, Canada.',
+    a: `It is a working system in ${DAENA.version.display}, and an earlier build runs on Google Cloud Run. The source is public under BSL 1.1 on GitHub, so you can read what it does.`,
   },
 ]
 
 export default function Page() {
-  const jsonLd = answerGraph([
-    techArticle({ slug, headline: h1, description }),
-    faqPage(slug, faq),
-    breadcrumb(slug, 'AI Governance Platform'),
-  ])
-
   return (
     <AnswerLayout
-      eyebrow="AI Governance"
+      crumbs={[
+        { name: 'What is Daena', path: '/what-is-daena/' },
+        { name: 'AI governance platform', path },
+      ]}
       h1={h1}
       tldr={tldr}
       proof={[
-        'Daena v3.7 in production',
-        '3,086+ tests passing',
-        '2 USPTO provisional patents',
-        'Runs on Google Cloud Run',
+        'Ten-stage request pipeline',
+        DAENA.hardLaws.display,
+        DAENA.providers.display,
+        DAENA.license.display,
+        `Status: ${DAENA.version.display}`,
       ]}
-      jsonLd={jsonLd}
+      jsonLd={answerGraph(path, h1, description, faq)}
       related={[
-        { href: '/what-is-daena', label: 'What is Daena?' },
-        { href: '/multi-agent-ai-company-os', label: 'What is a multi-agent AI company OS?' },
-        { href: '/compare/daena-vs-langchain', label: 'How is Daena different from LangChain?' },
-        { href: '/use-cases/ai-agent-governance', label: 'How to govern AI agents in production' },
+        { href: '/what-is-daena/', label: 'What is Daena?' },
+        { href: '/multi-agent-ai-company-os/', label: 'What is a multi-agent AI company OS?' },
+        { href: '/compare/daena-vs-langchain/', label: 'How is Daena different from LangChain?' },
+        { href: '/use-cases/ai-agent-governance/', label: 'How to govern AI agents in production' },
+        { href: '/security/', label: 'Security, evaluation and governance for your own build' },
       ]}
     >
       <Section h2="What an AI governance platform does">
         <p>
-          An AI governance platform controls what AI agents may see, decide, and do
-          before they execute — not just what they did afterward. As businesses move
-          from single chatbots to fleets of autonomous agents that call tools, spend
-          money, and touch production systems, the open question becomes: who decided
-          this agent could take this action, and can you prove it later?
+          It controls what AI agents may see, decide and do before they execute, not only what they did
+          afterward. When a business moves from one chatbot to a fleet of agents that call tools, spend money and
+          touch production systems, the open question is: who decided this agent could take this action, and can
+          you prove it later?
         </p>
         <p>
-          Daena answers that by making governance structural. Every agent action is
-          intercepted and evaluated before any side effect reaches the world, and the
-          decision is recorded in a tamper-evident audit log.
+          Daena answers that by putting governance inside the execution path. The check happens before the action,
+          and the decision is recorded.
         </p>
       </Section>
 
-      <Section h2="The 10-stage governance pipeline">
+      <Section h2="The ten-stage request pipeline">
+        <p>In governed mode every request passes these stages, in order:</p>
+        <Steps items={PIPELINE_STAGES} label="The ten stages of a Daena request" />
         <p>
-          Every action passes through ten sequential stages, in order, before it runs:
-        </p>
-        <p className="font-[family-name:var(--font-mono)] text-[var(--color-mas-cyan)]">
-          SecurityGate → InputValidator → GovernanceEngine → ContextBuilder →
-          ReasoningCore → ActionPlanner → OutputValidator → ResponseFormatter →
-          FeedbackLoop → AuditLog
-        </p>
-        <p>
-          No stage is skippable. SecurityGate and InputValidator screen the request,
-          the GovernanceEngine applies policy, the planning and output stages keep the
-          action inside scope, and AuditLog writes the immutable record.
+          The security gate screens the request. Intent and risk classify it. The governance check applies policy.
+          Only then does routing pick a model and memory recall add context. The last stage persists the result and
+          writes the audit record.
         </p>
       </Section>
 
-      <Section h2="Four-tier risk policy">
+      <Section h2="Risk, approval and modes">
         <p>
-          Daena classifies every action into one of four tiers, so oversight scales
-          with risk instead of blocking everything:
+          Each action gets a risk level. High-risk actions do not run on their own: they go to an approval queue
+          and wait for a person. Action mode is plan-only by default.
         </p>
         <p>
-          <strong className="text-white">Routine</strong> — runs and is logged silently.{' '}
-          <strong className="text-white">Medium</strong> — runs and notifies.{' '}
-          <strong className="text-white">High</strong> — pauses for human approval
-          (founder-approval gates).{' '}
-          <strong className="text-white">Critical</strong> — blocked pending review.
+          Daena has three governance modes. <strong>Governed</strong> runs the full pipeline with all{' '}
+          {DAENA.hardLaws.display}. <strong>Balanced</strong> runs a lighter path and asks for approval only on
+          dangerous operations. <strong>Unleashed</strong> skips the governance pipeline and keeps only data
+          protection. The governed mode is the one meant for business use.
         </p>
       </Section>
 
       <Section h2="Governance that outlives your model choice">
         <p>
-          Because Daena separates model choice from policy, the same governance applies
-          across all 9 supported LLM runtimes (Claude, GPT, Gemini, Grok, Ollama, Groq,
-          OpenRouter, Together, Perplexity). Context persists in a 5-tier Neural-Backed
-          Memory Fabric (NBMF) with trust-gated promotion, and Klyntar — Daena’s
-          security mode — screens actions against 25+ exploit signatures with a
-          zero-false-positive gate.
+          Policy and model choice are separate. The same governance check applies whichever provider handles the
+          request.
+        </p>
+        <Terms items={PROVIDER_NAMES} label="Model providers Daena can route to" />
+        <p>
+          Context persists in {DAENA.memoryTiers.display}, where unverified content expires and permanent tiers need
+          approval. Klyntar, Daena&rsquo;s security layer, runs scans with evidence checkpoints and rejects serious
+          findings that have no evidence chain.
         </p>
       </Section>
 
