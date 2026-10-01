@@ -22,9 +22,28 @@ def run(b, name, w, h, mobile, steps):
     pg.close()
     return ok
 
+def mid_scroll(b, name, w, h, mobile):
+    """While the line is still visible during a scroll, its start must follow the rule (it used to stay pinned)."""
+    pg = b.new_page(viewport={'width': w, 'height': h}, is_mobile=mobile, has_touch=mobile)
+    pg.goto(BASE + '/', wait_until='networkidle'); pg.wait_for_timeout(7500)
+    pg.mouse.move(w // 2, h // 2)
+    worst = 0
+    for _ in range(4):
+        pg.mouse.wheel(0, 25); pg.wait_for_timeout(250)
+        m = pg.evaluate(MEAS.replace("return {", "return {op: +getComputedStyle(svg).opacity, "))
+        if m['op'] > 0.05:
+            worst = max(worst, abs(m['off'][0]), abs(m['off'][1]))
+    ok = worst <= 3
+    print(f"{'HELD' if ok else 'BREACHED':9} {name}: worst start offset while visible {worst} px")
+    pg.close()
+    return ok
+
+
 with sync_playwright() as p:
     b = p.chromium.launch()
     res = [
+        mid_scroll(b, '1333 wheel 25 px steps through the fade', 1333, 717, False),
+        mid_scroll(b, '390 wheel 25 px steps through the fade', 390, 844, True),
         run(b, '1440 untouched', 1440, 900, False, []),
         run(b, '1440 scroll 600, resize 1440->1380, back to top', 1440, 900, False,
             [lambda pg: pg.evaluate("window.scrollTo({top: 600, behavior: 'instant'})"), lambda pg: pg.set_viewport_size({'width': 1380, 'height': 900})]),

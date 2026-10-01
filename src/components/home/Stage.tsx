@@ -178,6 +178,7 @@ export function Stage() {
     let introStart = 0
     let introDone = false
     let lastEvent = 0
+    let traceLive = false
 
     const lens = { x: 0, y: 0, tx: 0, ty: 0, active: false, until: 0 }
     const measureBlocks = () => {
@@ -195,15 +196,18 @@ export function Stage() {
     const introAt = (now: number) => (introDone ? INTRO_END : introStart ? Math.min(INTRO_END, (now - introStart) / 1000) : 0)
 
     // Canvas to DOM: aim the gold trace from the end of the headline rule at the canvas bracket.
-    const placeTrace = () => {
-      measureGap()
+    // `live` (every frame while the trace is visible during a scroll): aim from where the rule is now, so the line
+    // stays attached to the headline as it scrolls away under the pinned panel; it used to stay put and tear off.
+    const placeTrace = (live = false) => {
+      if (!live) measureGap()
       if (!ruled || !trace) return
-      // Measured against the stage, not the pinned panel: the stage scrolls with the headline, so a re-place
-      // while scrolled (a resize, the mobile address bar hiding) still aims from the rule. At rest (G = 0) the
-      // panel sits at the top of the stage. Against the panel, the start drifted by the scroll distance.
-      const rr = ruled.getBoundingClientRect(), sr = sticky.getBoundingClientRect(), st = root.getBoundingClientRect()
+      // At rest it is measured against the stage, not the pinned panel: the stage scrolls with the headline, so a
+      // re-place while scrolled (a resize, the mobile address bar hiding) still aims from the rule. At rest (G = 0)
+      // the panel sits at the top of the stage. Against the panel, the start drifted by the scroll distance.
+      const rr = ruled.getBoundingClientRect(), sr = sticky.getBoundingClientRect()
+      const ref = live ? sr : root.getBoundingClientRect()
       const b = gapScreenRect(view, 0)
-      const x0 = rr.right - sr.left + 6, y0 = rr.bottom - st.top - 1
+      const x0 = rr.right - sr.left + 6, y0 = rr.bottom - ref.top - 1
       if (view.phone) {
         // Phones: the headline sits below the stage panel, so the trace rises into it along the right
         // margin, clear of the eyebrow and the first line (it used to cut straight up through both).
@@ -299,8 +303,14 @@ export function Stage() {
       }
       if (fill) fill.style.transform = `scaleX(${smooth(5, 5.6, intro).toFixed(3)})`
       if (trace && traceSvg) {
+        const traceOp = 1 - smooth(0.02, 0.12, G)
+        // Re-aim only while scrolled into the fade (no per-frame layout reads at rest), and once on arriving back
+        // at rest so the last live aim never lingers.
+        if (traceOp > 0 && G > 0) placeTrace(true)
+        else if (G === 0 && traceLive) placeTrace()
+        traceLive = traceOp > 0 && G > 0
         trace.style.strokeDashoffset = String(1 - smooth(5.5, 6.4, intro))
-        traceSvg.style.opacity = String(1 - smooth(0.02, 0.12, G))
+        traceSvg.style.opacity = String(traceOp)
       }
       if (log && G >= LOG_WINDOW[0] && G <= LOG_WINDOW[1]) {
         for (const e of sim.events) {
