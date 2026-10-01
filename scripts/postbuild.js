@@ -40,8 +40,20 @@ if (!fs.existsSync(OUT)) {
   process.exit(1)
 }
 walk(OUT)
+// Some environments (the Linux CI export) already write the flat names. Fail only if neither layout exists.
+function hasFlat(dir) {
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) { if (hasFlat(path.join(dir, entry.name))) return true }
+    else if (/^__next\..+\.txt$/.test(entry.name)) return true
+  }
+  return false
+}
 if (!copied) {
-  console.error('postbuild: no nested __next.* prefetch payloads found; check the Next export layout')
+  if (hasFlat(OUT)) {
+    console.log('postbuild: export already has flat __next.* prefetch payloads; nothing to flatten')
+    process.exit(0)
+  }
+  console.error('postbuild: no __next.* prefetch payloads found, nested or flat; check the Next export layout')
   process.exit(1)
 }
 console.log(`postbuild: flattened ${copied} segment prefetch payloads`)
