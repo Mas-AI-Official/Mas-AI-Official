@@ -102,6 +102,7 @@ export function Stage() {
     const pal = readPalette(root)
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
     const fill = root.querySelector<HTMLElement>('[data-gapfill]')
+    const markFill = root.querySelector<HTMLElement>('[data-markfill]')
     const ruled = root.querySelector<HTMLElement>('[data-ruled]')
     const gapWord = root.querySelector<HTMLElement>('[data-gapword]')
 
@@ -146,6 +147,7 @@ export function Stage() {
 
     if (reduce.matches) {
       if (fill) fill.style.transform = 'scaleX(1)'
+      if (markFill) markFill.style.transform = 'scaleX(1)'
       document.fonts.ready.then(drawStills)
       drawStills()
       let stillRaf = 0
@@ -166,7 +168,10 @@ export function Stage() {
     const blocks = Array.from(root.querySelectorAll<HTMLElement>(':scope > .stage__block'))
     const shot = root.querySelector<HTMLImageElement>('.stage__shot')
     const trace = root.querySelector<SVGPathElement>('[data-trace]')
-    const traceSvg = trace?.ownerSVGElement ?? null
+    const trace2 = root.querySelector<SVGPathElement>('[data-trace2]')
+    const head = root.querySelector<SVGCircleElement>('[data-head]')
+    const head2 = root.querySelector<SVGCircleElement>('[data-head2]')
+    const mark = root.querySelector<HTMLElement>('[data-mark]')
     const log = root.querySelector<HTMLOListElement>('[data-log]')
     let ctx: CanvasRenderingContext2D | null = null
     let view = computeView(1, 1)
@@ -178,7 +183,10 @@ export function Stage() {
     let introStart = 0
     let introDone = false
     let lastEvent = 0
-    let traceLive = false
+    // Story position at which each line was last aimed: re-aim only when G moves (or after a resize), so a page
+    // at rest does no per-frame layout reads.
+    let aimG = NaN
+    let aimG2 = NaN
 
     const lens = { x: 0, y: 0, tx: 0, ty: 0, active: false, until: 0 }
     const measureBlocks = () => {
@@ -220,6 +228,42 @@ export function Stage() {
       trace.setAttribute('d', `M ${x0} ${y0} C ${x0 + dx} ${y0}, ${x1 - dx} ${y1}, ${x1} ${y1}`)
     }
 
+    // Act 2 half of the hand-off: from the gap bracket (where the camera holds it at G) out to the end of the mark
+    // under "a system". Always aimed live: it is only drawn while act 2 is scrolling in, settled or leaving.
+    const placeTrace2 = (G: number) => {
+      if (!mark || !trace2) return
+      const mr = mark.getBoundingClientRect(), sr = sticky.getBoundingClientRect()
+      const b = gapScreenRect(view, G)
+      const ax = mr.right - sr.left, ay = mr.bottom - sr.top - 1
+      if (view.phone) {
+        // Phones: the copy sits below the panel; drop down the right margin, clear of the text, then in.
+        const xr = sr.width - 14, bx = b.x + b.w / 2, by = b.y + b.h
+        trace2.setAttribute('d', `M ${bx} ${by} C ${xr} ${by + 40}, ${xr} ${ay}, ${ax + 6} ${ay}`)
+        return
+      }
+      const bx = b.x, by = b.y + b.h / 2
+      const dx = Math.max(60, (bx - ax) * 0.5)
+      trace2.setAttribute('d', `M ${bx} ${by} C ${bx - dx} ${by}, ${ax + dx} ${ay}, ${ax + 6} ${ay}`)
+    }
+    // A moving end gets a small gold head, the same mark the canvas trace walks the wiring with, so a line that
+    // is growing or retracting reads as travel rather than as a loose end. Hidden once the line is still.
+    const placeHead = (c: SVGCircleElement | null, p: SVGPathElement, at: number, show: boolean) => {
+      if (!c) return
+      if (!show) {
+        c.style.opacity = '0'
+        return
+      }
+      const q = p.getPointAtLength(at * p.getTotalLength())
+      c.setAttribute('cx', q.x.toFixed(1))
+      c.setAttribute('cy', q.y.toFixed(1))
+      c.style.opacity = '1'
+    }
+    // Show the part of a pathLength-1 line between `from` and `to` (0 to 1 along its direction).
+    const segment = (p: SVGPathElement, from: number, to: number) => {
+      p.style.strokeDasharray = `${Math.max(0, to - from).toFixed(4)} 2`
+      p.style.strokeDashoffset = (-from).toFixed(4)
+    }
+
     // Phones: the panel gives up height to the tallest copy block, so no line sits under it (or under its
     // 28 px fade) at rest. When even a PANEL_MIN panel leaves too little room (large text, short screens) the
     // stage stops pinning: data-flow puts every act in normal flow with its still, the text keeps its size.
@@ -236,6 +280,7 @@ export function Stage() {
         cancelAnimationFrame(raf)
         raf = 0
         if (fill) fill.style.transform = 'scaleX(1)'
+        if (markFill) markFill.style.transform = 'scaleX(1)'
         drawStills()
       } else redraw()
     }
@@ -272,6 +317,8 @@ export function Stage() {
         lens.y = view.area.y + view.area.h * 0.1
       }
       placeTrace()
+      aimG = NaN
+      aimG2 = NaN
       draw(0)
     }
 
@@ -302,16 +349,31 @@ export function Stage() {
         shot.style.opacity = P.shot.toFixed(3)
       }
       if (fill) fill.style.transform = `scaleX(${smooth(5, 5.6, intro).toFixed(3)})`
-      if (trace && traceSvg) {
-        const traceOp = 1 - smooth(0.02, 0.12, G)
-        // Re-aim only while scrolled into the fade (no per-frame layout reads at rest), and once on arriving back
-        // at rest so the last live aim never lingers.
-        if (traceOp > 0 && G > 0) placeTrace(true)
-        else if (G === 0 && traceLive) placeTrace()
-        traceLive = traceOp > 0 && G > 0
-        trace.style.strokeDashoffset = String(1 - smooth(5.5, 6.4, intro))
-        traceSvg.style.opacity = String(traceOp)
+      // The hand-off. Act 1: the line draws from the headline rule to the bracket (intro), then, as the hero
+      // scrolls away, it retracts into the bracket while staying attached to the rule. The canvas trace then walks
+      // the wiring (phases().trace, G 0.15 to 0.85). As act 2 settles, a second line draws out of the bracket to
+      // "a system" and fills its gold mark; it retracts again as act 2 leaves. Never aimed at empty space.
+      if (trace) {
+        const leave = smooth(0.02, 0.32, G)
+        if (leave < 1 && G !== aimG) {
+          placeTrace(G > 0)
+          aimG = G
+        }
+        const drawn = smooth(5.5, 6.4, intro)
+        segment(trace, leave, drawn)
+        placeHead(head, trace, leave > 0.001 ? leave : drawn, drawn - leave > 0.005 && (drawn < 0.999 || leave > 0.001))
       }
+      if (trace2) {
+        // Leaves early and fast: the end at the copy goes first, so the line never reaches the paragraph below.
+        const reach = smooth(0.6, 0.95, G) * (1 - smooth(1.02, 1.16, G))
+        if (reach > 0 && G !== aimG2) {
+          placeTrace2(G)
+          aimG2 = G
+        }
+        segment(trace2, 0, reach)
+        placeHead(head2, trace2, reach, reach > 0.005 && reach < 0.995)
+      }
+      if (markFill) markFill.style.transform = `scaleX(${smooth(0.88, 1, G).toFixed(3)})`
       if (log && G >= LOG_WINDOW[0] && G <= LOG_WINDOW[1]) {
         for (const e of sim.events) {
           if (e.at <= lastEvent) continue
@@ -469,6 +531,9 @@ export function Stage() {
         <canvas className="stage__canvas" />
         <svg className="stage__trace" width="100%" height="100%">
           <path data-trace pathLength={1} />
+          <path data-trace2 pathLength={1} />
+          <circle data-head r={3} />
+          <circle data-head2 r={3} />
         </svg>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img className="stage__shot" sizes="(min-width: 900px) 640px, 92vw" width={1600} height={913} alt="" decoding="async" />
@@ -486,6 +551,7 @@ function Acts() {
   const { hero, gap, decision } = STAGE_ONE
   const { build, deploy, runs, proof } = STAGE_TWO
   const [before, after] = hero.title[0].split(hero.gapWord)
+  const [gapBefore, gapAfter] = gap.title.split(gap.markWord)
   return (
     <>
       <div id="hero" className="stage__block">
@@ -520,7 +586,14 @@ function Acts() {
       <div id="gap" className="stage__block">
         <div className="wrap stage__inner">
           <div className="stage__copy">
-            <h2 className="t-h2">{gap.title}</h2>
+            <h2 className="t-h2">
+              {gapBefore}
+              <span className="stage__mark" data-mark>
+                {gap.markWord}
+                <span className="stage__markfill" data-markfill aria-hidden="true" />
+              </span>
+              {gapAfter}
+            </h2>
             <p className="t-lead">{gap.body}</p>
             <p className="stage__close">{gap.close}</p>
             <p className="visually-hidden">{gap.alt}</p>

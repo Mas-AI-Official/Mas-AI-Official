@@ -21,6 +21,8 @@ export const STAGE_ONE = {
   },
   gap: {
     title: 'Your business already runs on a system.',
+    /** Marked in gold where the hand-off line from the hero lands (Stage.tsx). Must appear in the title. */
+    markWord: 'a system',
     body: 'We sit with the people doing the work and trace every hand-off until the place where work waits is obvious.',
     close: 'We don’t prescribe AI before we understand the work.',
     alt: 'A trace walks every path in the operation and labels it; the hand-off from the inbox to the spreadsheet is done by hand and marked as the gap.',

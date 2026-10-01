@@ -97,6 +97,22 @@
 }
 .stage__trace { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
 .stage__trace path { fill: none; stroke: var(--gold); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
+.stage__trace circle { fill: var(--gold); opacity: 0; }
+/* Act 2: "a system" takes the gold mark where the hand-off line from the hero lands. It fills from the right,
+   the side the line arrives on. Kept on one line so the mark never splits. */
+.stage__mark { position: relative; display: inline-block; padding-bottom: 0.08em; }
+.stage__markfill {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: right center;
+}
+@media (prefers-reduced-motion: reduce) { .stage__markfill { transform: scaleX(1); } }
+.stage[data-flow] .stage__markfill { transform: scaleX(1); }
 
 .stage__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
 .stage__note { font-size: var(--step--1); color: var(--text-3); max-width: 44ch; }
@@ -178,6 +194,19 @@
     height: 28px;
     background: linear-gradient(var(--ground), rgb(11 13 15 / 0));
     pointer-events: none;
+  }
+  /* The header is a floating pill, so its box is see-through around it. Copy that slid under the pinned panel
+     would show again in that band, above and below the pill. The panel's ground reaches up under the header.
+     It never covers live copy: the panel's top is at or above the header's bottom, so the band stays inside it.
+     It takes taps like the panel does, so a hidden button under it cannot be pressed. */
+  .stage__sticky::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: var(--header-h);
+    background: var(--ground);
   }
   /* Copy rests right under the panel and its fade (PANEL_FADE 28 + 8 in Stage.tsx), so each act's words sit
      next to its drawing; bottom-aligned copy left a 140 to 285 px empty band between them at 390x844. The offset

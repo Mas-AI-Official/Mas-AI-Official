@@ -19,12 +19,14 @@
   pointer-events: auto;
   display: flex;
   align-items: center;
-  gap: var(--space-6);
+  /* Padding and gap stop growing at their 16px-text size: at 320 wide with 200% text they doubled and pushed the
+     menu button 58 px out of the pill and off the screen. */
+  gap: min(var(--space-6), 32px);
   height: 54px;
   width: calc(100% - 2 * var(--gutter));
   max-width: calc(var(--page-max) - 2 * var(--gutter));
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: min(1.25rem, 20px);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.07);
   background: rgba(11, 13, 15, 0.42);
@@ -38,13 +40,18 @@
 .site-header[data-scrolled='true'] .site-header__row {
   height: 48px;
   max-width: min(1040px, calc(var(--page-max) - 2 * var(--gutter)));
-  padding-inline: 1rem;
+  padding-inline: min(1rem, 16px);
   border-color: var(--line-2);
   /* Dense enough that copy scrolling under the bar cannot read as a ghost line (pass-3 finding). */
   background: rgba(11, 13, 15, 0.9);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+/* Narrow screens, in em so a larger default font size reaches it sooner: the pill keeps a 16 px inset however
+   large the gutter grows, so the wordmark and the menu button still fit side by side at 320 wide and 200% text. */
+@media (max-width: 30em) {
+  .site-header__row { width: calc(100% - 2 * min(var(--gutter), 16px)); gap: min(var(--space-6), 16px); }
 }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .site-header__row { background: rgba(11, 13, 15, 0.9); }
