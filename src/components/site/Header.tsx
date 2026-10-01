@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { HomeLink } from './HomeLink'
 import { CTA, DEPTH, FAMILIES, NAV, PRACTICES } from '@/content/site'
 
 /**
@@ -84,10 +85,17 @@ export function Header() {
       <div id="top-sentinel" aria-hidden="true" className="site-sentinel" />
       <header className="site-header" data-scrolled={scrolled || servicesOpen ? 'true' : 'false'}>
         <div className="wrap site-header__row">
-          <Link href="/" className="wordmark" aria-label="MAS-AI Technologies, home">
+          <HomeLink
+            className="wordmark"
+            label="MAS-AI Technologies, home"
+            onHome={() => {
+              setServicesOpen(false)
+              setSheetOpen(false)
+            }}
+          >
             <Image src="/brand/mark-64.png" alt="" width={32} height={32} priority />
             <span>MAS-AI</span>
-          </Link>
+          </HomeLink>
 
           <nav aria-label="Primary" className="site-nav">
             <ul>

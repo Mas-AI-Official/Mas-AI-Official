@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { HomeLink } from './HomeLink'
 import { FOOTER, CTA } from '@/content/site'
 import { COMPANY } from '@/content/facts'
 
@@ -9,10 +10,10 @@ export function Footer() {
       <div className="wrap">
         <div className="site-footer__top">
           <div className="site-footer__brand">
-            <Link href="/" className="wordmark" aria-label="MAS-AI Technologies, home">
+            <HomeLink className="wordmark" label="MAS-AI Technologies, home">
               <Image src="/brand/mark-64.png" alt="" width={32} height={32} />
               <span>MAS-AI</span>
-            </Link>
+            </HomeLink>
             <p id="footer-title" className="t-h3 site-footer__line">
               We build the system your business is missing.
             </p>
