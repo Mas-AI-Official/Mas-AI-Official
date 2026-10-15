@@ -167,6 +167,8 @@ html:not(.js) .site-nav__menu-btn { display: none; }
 @media (max-width: 63.99em) { .services-menu { display: none; } }
 @media (prefers-reduced-motion: no-preference) {
   .services-menu:not([hidden]) { animation: menu-in var(--dur-ui) var(--ease); }
+  /* The phone sheet opens on the same grammar as the desktop menu, in step with its toggle's icon morph. */
+  .site-sheet:not([hidden]) { animation: menu-in var(--dur-ui) var(--ease); }
 }
 @keyframes menu-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 

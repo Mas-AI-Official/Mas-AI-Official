@@ -54,6 +54,10 @@ function FieldError({ id, message }: { id: string; message?: string }) {
 
 export function InquiryFlow() {
   const [step, setStep] = useState(0)
+  // How the step last changed: next and back ease the new step in; a validation jump cuts straight to the step with
+  // the error. The gold bar always runs the way the step moved.
+  const [eased, setEased] = useState(false)
+  const [dir, setDir] = useState<'fwd' | 'back'>('fwd')
   const [data, setData] = useState<Inquiry>(EMPTY_INQUIRY)
   const [errors, setErrors] = useState<FieldErrors>({})
   const [phase, setPhase] = useState<Phase>('editing')
@@ -130,12 +134,16 @@ export function InquiryFlow() {
       return
     }
     if (phase === 'failed') setPhase('editing')
+    setEased(true)
+    setDir('fwd')
     setStep((s) => Math.min(s + 1, STEP_COUNT - 1))
   }
 
   function back() {
     setErrors({})
     if (phase === 'failed') setPhase('editing')
+    setEased(true)
+    setDir('back')
     setStep((s) => Math.max(s - 1, 0))
   }
 
@@ -144,7 +152,11 @@ export function InquiryFlow() {
     if (firstStep !== -1) {
       setErrors(all)
       if (phase === 'failed') setPhase('editing')
-      if (firstStep !== step) setStep(firstStep)
+      if (firstStep !== step) {
+        setEased(false)
+        setDir(firstStep < step ? 'back' : 'fwd')
+        setStep(firstStep)
+      }
       const first = Object.keys(all)[0] as FieldKey
       focusField(first)
       return
@@ -222,7 +234,7 @@ export function InquiryFlow() {
         <p className="t-mono" aria-hidden="true">
           Step {step + 1} of {STEP_COUNT}
         </p>
-        <ol className="inq-progress" aria-label="Progress">
+        <ol className="inq-progress" aria-label="Progress" data-dir={dir === 'back' ? 'back' : undefined}>
           {STEPS.map((s, i) => (
             <li
               key={s.short}
@@ -243,228 +255,231 @@ export function InquiryFlow() {
         {STEPS[step].title}
       </h2>
 
-      {step === 0 && (
-        <div className="field">
-          <div
-            role="radiogroup"
-            aria-labelledby="inq-heading"
-            aria-describedby={errors.need ? 'inq-need-error' : undefined}
-            aria-invalid={errors.need ? true : undefined}
-            aria-required="true"
-            className="inq-chips"
-          >
-            {START.options.map((o, i) => (
-              <label key={o.id} className="inq-chip inq-chip--radio">
-                <input
-                  type="radio"
-                  name="need"
-                  id={`inq-need-${i}`}
-                  value={o.id}
-                  checked={data.needId === o.id}
-                  onChange={() => patch({ needId: o.id, need: o.label }, 'need')}
-                />
-                <span>{o.label}</span>
-              </label>
-            ))}
-          </div>
-          <FieldError id="inq-need-error" message={errors.need} />
-        </div>
-      )}
-
-      {step === 1 && (
-        <>
+      <div key={step} className={eased ? 'inq-step state-in' : 'inq-step'}>
+        {step === 0 && (
           <div className="field">
-            <label htmlFor="inq-today">Walk us through it: who does what, with which tools, and where it slows down.</label>
-            <textarea
-              id="inq-today"
-              className="input inq-textarea"
-              rows={6}
-              maxLength={4000}
-              required
+            <div
+              role="radiogroup"
+              aria-labelledby="inq-heading"
+              aria-describedby={errors.need ? 'inq-need-error' : undefined}
+              aria-invalid={errors.need ? true : undefined}
               aria-required="true"
-              aria-invalid={errors.today ? true : undefined}
-              aria-describedby={errors.today ? 'inq-today-error' : 'inq-today-hint'}
-              value={data.today}
-              onChange={(e) => patch({ today: e.target.value }, 'today')}
-            />
-            <p id="inq-today-hint" className="hint">
-              Rough is fine. If you know them: how often it happens, what it costs in time or money, and what you have already tried.
-            </p>
-            <FieldError id="inq-today-error" message={errors.today} />
-          </div>
-          <fieldset className="field inq-fieldset">
-            <legend>Which tools are involved? Optional.</legend>
-            <div className="inq-chips">
-              {TOOL_OPTIONS.map((o) => (
-                <label key={o.id} className="inq-chip inq-chip--check">
+              className="inq-chips"
+            >
+              {START.options.map((o, i) => (
+                <label key={o.id} className="inq-chip inq-chip--radio">
                   <input
-                    type="checkbox"
-                    name="tools"
+                    type="radio"
+                    name="need"
+                    id={`inq-need-${i}`}
                     value={o.id}
-                    checked={data.tools.includes(o.id)}
-                    onChange={() => toggleTool(o.id)}
+                    checked={data.needId === o.id}
+                    onChange={() => patch({ needId: o.id, need: o.label }, 'need')}
                   />
                   <span>{o.label}</span>
                 </label>
               ))}
             </div>
-          </fieldset>
-          <div className="field">
-            <label htmlFor="inq-systems">Other systems you use, if you want to name them. Optional.</label>
-            <input
-              id="inq-systems"
-              className="input"
-              type="text"
-              maxLength={400}
-              aria-describedby="inq-systems-hint"
-              value={data.systems}
-              onChange={(e) => patch({ systems: e.target.value })}
-            />
-            <p id="inq-systems-hint" className="hint">
-              For example your CRM, accounting or document system by name.
-            </p>
+            <FieldError id="inq-need-error" message={errors.need} />
           </div>
-        </>
-      )}
+        )}
 
-      {step === 2 && (
-        <>
-          <p className="t-body">Everything on this step is optional. Skip what you do not know yet.</p>
-          <fieldset className="field inq-fieldset">
-            <legend>Where may the data be processed?</legend>
-            <div className="inq-chips">
-              {DATA_OPTIONS.map((o) => (
-                <label key={o.id} className="inq-chip inq-chip--radio">
-                  <input
-                    type="radio"
-                    name="data"
-                    value={o.id}
-                    checked={data.dataId === o.id}
-                    onChange={() => patch({ dataId: o.id })}
-                  />
-                  <span>{o.label}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="field inq-fieldset">
-            <legend>Hardware for running it on your side</legend>
-            <div className="inq-chips">
-              {HARDWARE_OPTIONS.map((o) => (
-                <label key={o.id} className="inq-chip inq-chip--radio">
-                  <input
-                    type="radio"
-                    name="hardware"
-                    value={o.id}
-                    checked={data.hardwareId === o.id}
-                    onChange={() => patch({ hardwareId: o.id })}
-                  />
-                  <span>{o.label}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-          <fieldset className="field inq-fieldset">
-            <legend>When would you like to start?</legend>
-            <div className="inq-chips">
-              {TIMELINE_OPTIONS.map((o) => (
-                <label key={o.id} className="inq-chip inq-chip--radio">
-                  <input
-                    type="radio"
-                    name="timeline"
-                    value={o.id}
-                    checked={data.timelineId === o.id}
-                    onChange={() => patch({ timelineId: o.id })}
-                  />
-                  <span>{o.label}</span>
-                </label>
-              ))}
-            </div>
-          </fieldset>
-          <div className="inq-row">
+        {step === 1 && (
+          <>
             <div className="field">
-              <label htmlFor="inq-company">Company name</label>
-              <input
-                id="inq-company"
-                className="input"
-                type="text"
-                autoComplete="organization"
-                maxLength={200}
-                value={data.company}
-                onChange={(e) => patch({ company: e.target.value })}
-              />
-            </div>
-            <div className="field">
-              <label htmlFor="inq-size">Company size</label>
-              <input
-                id="inq-size"
-                className="input"
-                type="text"
-                maxLength={100}
-                placeholder="For example, 12 people"
-                value={data.size}
-                onChange={(e) => patch({ size: e.target.value })}
-              />
-            </div>
-          </div>
-        </>
-      )}
-
-      {step === 3 && (
-        <>
-          <div className="inq-row">
-            <div className="field">
-              <label htmlFor="inq-name">Your name</label>
-              <input
-                id="inq-name"
-                className="input"
-                type="text"
-                autoComplete="name"
+              <label htmlFor="inq-today">Walk us through it: who does what, with which tools, and where it slows down.</label>
+              <textarea
+                id="inq-today"
+                className="input inq-textarea"
+                rows={6}
+                maxLength={4000}
                 required
                 aria-required="true"
-                maxLength={200}
-                aria-invalid={errors.name ? true : undefined}
-                aria-describedby={errors.name ? 'inq-name-error' : undefined}
-                value={data.name}
-                onChange={(e) => patch({ name: e.target.value }, 'name')}
+                aria-invalid={errors.today ? true : undefined}
+                aria-describedby={errors.today ? 'inq-today-error' : 'inq-today-hint'}
+                value={data.today}
+                onChange={(e) => patch({ today: e.target.value }, 'today')}
               />
-              <FieldError id="inq-name-error" message={errors.name} />
+              <p id="inq-today-hint" className="hint">
+                Rough is fine. If you know them: how often it happens, what it costs in time or money, and what you have already tried.
+              </p>
+              <FieldError id="inq-today-error" message={errors.today} />
             </div>
+            <fieldset className="field inq-fieldset">
+              <legend>Which tools are involved? Optional.</legend>
+              <div className="inq-chips">
+                {TOOL_OPTIONS.map((o) => (
+                  <label key={o.id} className="inq-chip inq-chip--check">
+                    <input
+                      type="checkbox"
+                      name="tools"
+                      value={o.id}
+                      checked={data.tools.includes(o.id)}
+                      onChange={() => toggleTool(o.id)}
+                    />
+                    <span>{o.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
             <div className="field">
-              <label htmlFor="inq-email">Your email</label>
+              <label htmlFor="inq-systems">Other systems you use, if you want to name them. Optional.</label>
               <input
-                id="inq-email"
+                id="inq-systems"
                 className="input"
-                type="email"
-                inputMode="email"
-                autoComplete="email"
-                required
-                aria-required="true"
-                maxLength={200}
-                aria-invalid={errors.email ? true : undefined}
-                aria-describedby={errors.email ? 'inq-email-error' : undefined}
-                value={data.email}
-                onChange={(e) => patch({ email: e.target.value }, 'email')}
+                type="text"
+                maxLength={400}
+                aria-describedby="inq-systems-hint"
+                value={data.systems}
+                onChange={(e) => patch({ systems: e.target.value })}
               />
-              <FieldError id="inq-email-error" message={errors.email} />
+              <p id="inq-systems-hint" className="hint">
+                For example your CRM, accounting or document system by name.
+              </p>
             </div>
-          </div>
-          <div className="field inq-phone">
-            <label htmlFor="inq-phone">Phone, optional</label>
-            <input
-              id="inq-phone"
-              className="input"
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel"
-              maxLength={60}
-              value={data.phone}
-              onChange={(e) => patch({ phone: e.target.value })}
-            />
-            <p className="hint">Only if you would rather we call.</p>
-          </div>
-        </>
-      )}
+          </>
+        )}
+
+        {step === 2 && (
+          <>
+            <p className="t-body">Everything on this step is optional. Skip what you do not know yet.</p>
+            <fieldset className="field inq-fieldset">
+              <legend>Where may the data be processed?</legend>
+              <div className="inq-chips">
+                {DATA_OPTIONS.map((o) => (
+                  <label key={o.id} className="inq-chip inq-chip--radio">
+                    <input
+                      type="radio"
+                      name="data"
+                      value={o.id}
+                      checked={data.dataId === o.id}
+                      onChange={() => patch({ dataId: o.id })}
+                    />
+                    <span>{o.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset className="field inq-fieldset">
+              <legend>Hardware for running it on your side</legend>
+              <div className="inq-chips">
+                {HARDWARE_OPTIONS.map((o) => (
+                  <label key={o.id} className="inq-chip inq-chip--radio">
+                    <input
+                      type="radio"
+                      name="hardware"
+                      value={o.id}
+                      checked={data.hardwareId === o.id}
+                      onChange={() => patch({ hardwareId: o.id })}
+                    />
+                    <span>{o.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <fieldset className="field inq-fieldset">
+              <legend>When would you like to start?</legend>
+              <div className="inq-chips">
+                {TIMELINE_OPTIONS.map((o) => (
+                  <label key={o.id} className="inq-chip inq-chip--radio">
+                    <input
+                      type="radio"
+                      name="timeline"
+                      value={o.id}
+                      checked={data.timelineId === o.id}
+                      onChange={() => patch({ timelineId: o.id })}
+                    />
+                    <span>{o.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+            <div className="inq-row">
+              <div className="field">
+                <label htmlFor="inq-company">Company name</label>
+                <input
+                  id="inq-company"
+                  className="input"
+                  type="text"
+                  autoComplete="organization"
+                  maxLength={200}
+                  value={data.company}
+                  onChange={(e) => patch({ company: e.target.value })}
+                />
+              </div>
+              <div className="field">
+                <label htmlFor="inq-size">Company size</label>
+                <input
+                  id="inq-size"
+                  className="input"
+                  type="text"
+                  maxLength={100}
+                  placeholder="For example, 12 people"
+                  value={data.size}
+                  onChange={(e) => patch({ size: e.target.value })}
+                />
+              </div>
+            </div>
+          </>
+        )}
+
+        {step === 3 && (
+          <>
+            <div className="inq-row">
+              <div className="field">
+                <label htmlFor="inq-name">Your name</label>
+                <input
+                  id="inq-name"
+                  className="input"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  aria-required="true"
+                  maxLength={200}
+                  aria-invalid={errors.name ? true : undefined}
+                  aria-describedby={errors.name ? 'inq-name-error' : undefined}
+                  value={data.name}
+                  onChange={(e) => patch({ name: e.target.value }, 'name')}
+                />
+                <FieldError id="inq-name-error" message={errors.name} />
+              </div>
+              <div className="field">
+                <label htmlFor="inq-email">Your email</label>
+                <input
+                  id="inq-email"
+                  className="input"
+                  type="email"
+                  inputMode="email"
+                  autoComplete="email"
+                  required
+                  aria-required="true"
+                  maxLength={200}
+                  aria-invalid={errors.email ? true : undefined}
+                  aria-describedby={errors.email ? 'inq-email-error' : undefined}
+                  value={data.email}
+                  onChange={(e) => patch({ email: e.target.value }, 'email')}
+                />
+                <FieldError id="inq-email-error" message={errors.email} />
+              </div>
+            </div>
+            <div className="field inq-phone">
+              <label htmlFor="inq-phone">Phone, optional</label>
+              <input
+                id="inq-phone"
+                className="input"
+                type="tel"
+                inputMode="tel"
+                autoComplete="tel"
+                maxLength={60}
+                value={data.phone}
+                onChange={(e) => patch({ phone: e.target.value })}
+              />
+              <p className="hint">Only if you would rather we call.</p>
+            </div>
+          </>
+        )}
+
+      </div>
 
       {phase === 'failed' && failure ? (
         <div className="inq-failure" role="alert">

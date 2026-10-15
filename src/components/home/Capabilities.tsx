@@ -12,6 +12,8 @@ import { SystemScene } from './SystemScene'
  */
 export function Capabilities({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
   const [active, setActive] = useState<CapabilityVariant>(CAPABILITIES.items[0].id)
+  // The text eases in with the drawing only when a pointer chose the tab; keyboard changes swap at once.
+  const [eased, setEased] = useState(false)
   const base = useId()
   const tabs = useRef<(HTMLButtonElement | null)[]>([])
   const hoverTimer = useRef<number>(0)
@@ -24,12 +26,16 @@ export function Capabilities({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
     if (next === undefined) return
     e.preventDefault()
     const j = (next + items.length) % items.length
+    setEased(false)
     setActive(items[j].id)
     tabs.current[j]?.focus()
   }
   const preview = (id: CapabilityVariant) => {
     window.clearTimeout(hoverTimer.current)
-    hoverTimer.current = window.setTimeout(() => setActive(id), 110)
+    hoverTimer.current = window.setTimeout(() => {
+      setEased(true)
+      setActive(id)
+    }, 110)
   }
 
   return (
@@ -56,7 +62,10 @@ export function Capabilities({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
                 aria-controls={`${base}-panel`}
                 tabIndex={active === item.id ? 0 : -1}
                 className="caps__tab"
-                onClick={() => setActive(item.id)}
+                onClick={(e) => {
+                  setEased(e.detail > 0)
+                  setActive(item.id)
+                }}
                 onKeyDown={(e) => onKey(e, i)}
                 onPointerEnter={(e) => e.pointerType === 'mouse' && preview(item.id)}
                 onPointerLeave={() => window.clearTimeout(hoverTimer.current)}
@@ -68,8 +77,12 @@ export function Capabilities({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
           <div id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${current.id}`} className="caps__panel">
             <SystemScene variant={current.id} className="caps__scene" />
             <div className="caps__detail">
-              <p className="caps__line">{current.line}</p>
-              <p className="caps__stack t-mono">{current.stack}</p>
+              <p key={`${current.id}-line`} className={eased ? 'caps__line state-in' : 'caps__line'}>
+                {current.line}
+              </p>
+              <p key={`${current.id}-stack`} className={eased ? 'caps__stack t-mono state-in' : 'caps__stack t-mono'}>
+                {current.stack}
+              </p>
               <Link href={current.href} className="link-arrow">
                 {current.linkLabel}
                 <ArrowRight aria-hidden="true" />

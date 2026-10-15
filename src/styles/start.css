@@ -12,12 +12,21 @@
 .inq-heading { max-width: 22ch; outline-offset: 6px; }
 .inq-heading:focus-visible { outline: 2px solid var(--gold); }
 
-/* Progress: four bars, current one gold */
+/* Progress: four bars, current one gold. The gold is a fill over the track (::after on ::before's cell): stepping
+   forward it leaves the old bar to the right and fills the next from the left; stepping back it runs the other way. */
 .inq-progress { list-style: none; margin: var(--space-2) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-2); }
 .inq-progress li { display: grid; gap: 0.4rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--text-3); }
-.inq-progress li::before { content: ''; height: 3px; border-radius: 2px; background: var(--line-2); }
+.inq-progress li::before, .inq-progress li::after { content: ''; grid-area: 1 / 1; height: 3px; border-radius: 2px; }
+.inq-progress li::before { background: var(--line-2); }
 .inq-progress li[data-state='done']::before { background: var(--line-ui); }
-.inq-progress li[data-state='current']::before { background: var(--gold); }
+.inq-progress li::after { background: var(--gold); transform: scaleX(0); transform-origin: right center; }
+.inq-progress li[data-state='current']::after { transform: scaleX(1); transform-origin: left center; }
+.inq-progress[data-dir='back'] li::after { transform-origin: left center; }
+.inq-progress[data-dir='back'] li[data-state='current']::after { transform-origin: right center; }
+@media (prefers-reduced-motion: no-preference) {
+  .inq-progress li::after { transition: transform var(--dur-panel) var(--ease); }
+}
+.inq-step { display: grid; gap: var(--space-6); }
 .inq-progress li[data-state='current'] { color: var(--text); }
 .inq-progress__label { display: none; }
 @media (min-width: 768px) { .inq-progress__label { display: block; } }

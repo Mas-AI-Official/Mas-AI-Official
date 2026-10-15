@@ -26,7 +26,9 @@
   font-weight: 600;
   font-size: var(--step-1);
   min-height: var(--tap);
+  transition: color var(--dur-ui) var(--ease);
 }
+@media (hover: hover) and (pointer: fine) { .faq__item summary:hover { color: var(--gold); } }
 .faq__item summary::-webkit-details-marker { display: none; }
 .faq__item summary::after { content: '+'; font-family: var(--font-mono); color: var(--gold); font-size: 1.25rem; line-height: 1; transition: transform var(--dur-ui) var(--ease); }
 .faq__item[open] summary::after { transform: rotate(45deg); }

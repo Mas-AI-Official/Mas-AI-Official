@@ -1,23 +1,30 @@
 /*
  * Motion grammar (design-motion numbers, story-first architecture, PLAN-v1):
- * - Content is visible by default. A hidden start state exists ONLY under html.js AND no-preference.
+ * - Content is visible by default. A hidden start state exists ONLY once RevealRoot has armed the page
+ *   (html.reveal-armed, after hydration) AND under no-preference. Until then every element shows as painted.
  * - Reveals are scroll-TRIGGERED (IntersectionObserver in components/site/RevealRoot.tsx), timed with the
  *   single site ease, 14 px rise, 560 ms. They reset only after the element has fully left the viewport,
  *   so they play again scrolling up, and nothing visible ever disappears.
  * - Anything scroll-LINKED uses linear timing inside @supports (animation-timeline: view()).
- * - Nothing in the first viewport waits for scroll; the LCP heading never animates.
+ * - Nothing in the first viewport waits for scroll or for JavaScript: it is marked in before the page is armed,
+ *   so it never hides (scripts/qa/firstview.py). The LCP heading never animates.
  * - Reduced motion: no movement, no pins, final states shown; opacity fades of 200 ms at most.
  */
 
 @media (prefers-reduced-motion: no-preference) {
-  html.js [data-reveal]:not(.is-in) {
+  html.reveal-armed [data-reveal]:not(.is-in) {
     opacity: 0;
     translate: 0 var(--rise);
   }
-  html.js [data-reveal] {
+  html.reveal-live [data-reveal] {
     transition: opacity var(--dur-reveal) var(--ease), translate var(--dur-reveal) var(--ease);
     transition-delay: calc(var(--i, 0) * 60ms);
   }
+
+  /* State text that a drawing is about to show (a capability, a deployment) lands with the drawing instead of
+     before it. Starts at 0.3, never 0, so a swap never shows a blank. Capabilities and the deploy picker use it for
+     pointer changes only (arrow keys scan fast and swap at once); a /start/ step is a new screen and eases in either way. */
+  .state-in { animation: state-in var(--dur-ui) var(--ease) var(--state-delay, 0ms) both; }
 
   /* Scroll-linked: work figures settle from 0.96 as they enter (linear, compositor-only). */
   @supports (animation-timeline: view()) {
@@ -27,6 +34,11 @@
       animation-range: entry 0% cover 35%;
     }
   }
+}
+
+@keyframes state-in {
+  from { opacity: 0.3; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
 }
 
 @keyframes settle {

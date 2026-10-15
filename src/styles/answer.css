@@ -92,7 +92,9 @@
   font-weight: 600;
   font-size: var(--step-1);
   min-height: var(--tap);
+  transition: color var(--dur-ui) var(--ease);
 }
+@media (hover: hover) and (pointer: fine) { .answer-faq__item summary:hover { color: var(--gold); } }
 .answer-faq__item summary::-webkit-details-marker { display: none; }
 .answer-faq__item summary::after {
   content: '+';

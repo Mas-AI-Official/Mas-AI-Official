@@ -152,8 +152,12 @@
   @media (hover: hover) and (pointer: fine) {
     .btn-primary:hover { background: var(--gold-hi); }
     .btn-ghost:hover { border-color: var(--text-2); background: var(--panel); }
+    .btn:hover .lucide-arrow-right { transform: translateX(3px); }
+    .btn:hover .lucide-arrow-up-right { transform: translate(2px, -2px); }
   }
-  .btn svg { width: 1rem; height: 1rem; flex: none; }
+  /* Hover motion runs on one clock, --dur-ui (220 ms, above the 100 to 150 ms house range on purpose): the text,
+     its arrow and the button around it start and land together. */
+  .btn svg { width: 1rem; height: 1rem; flex: none; transition: transform var(--dur-ui) var(--ease); }
 
   .link {
     color: var(--text);
@@ -170,6 +174,7 @@
     gap: 0.4rem;
     font-weight: 600;
     color: var(--text);
+    transition: color var(--dur-ui) var(--ease);
   }
   .link-arrow svg { width: 1rem; height: 1rem; transition: transform var(--dur-ui) var(--ease); }
   @media (hover: hover) and (pointer: fine) {

@@ -116,7 +116,8 @@ export function Stage() {
 
     // Where the built system runs: the picker in the copy writes data-deploy and fires stage:deploy.
     const deploy = { from: (root.dataset.deploy as DeployMode) || 'private', to: (root.dataset.deploy as DeployMode) || 'private', start: 0 }
-    const deployAt = (now: number): Deploy => ({ mode: deploy.to, from: deploy.from, t: deploy.start ? Math.min(1, (now - deploy.start) / 320) : 1 })
+    // The crossfade runs on the site ease: quint-out, the JS mirror of --ease cubic-bezier(0.22, 1, 0.36, 1).
+    const deployAt = (now: number): Deploy => ({ mode: deploy.to, from: deploy.from, t: deploy.start ? 1 - (1 - Math.min(1, (now - deploy.start) / 320)) ** 5 : 1 })
 
     const stills = Array.from(root.querySelectorAll<HTMLCanvasElement>('canvas[data-still]'))
     const drawStills = () => {
@@ -689,8 +690,10 @@ function Acts() {
 function DeployPicker() {
   const { deploy } = STAGE_TWO
   const [mode, setMode] = useState<DeployMode>(deploy.initial)
+  const [eased, setEased] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-  const pick = (m: DeployMode) => {
+  const pick = (m: DeployMode, pointer: boolean) => {
+    setEased(pointer)
     setMode(m)
     const stage = ref.current?.closest<HTMLElement>('.stage')
     if (!stage) return
@@ -702,13 +705,15 @@ function DeployPicker() {
     <div ref={ref} className="stage__deploy">
       <div className="stage__modes" role="group" aria-label={deploy.pickLabel}>
         {deploy.modes.map((m) => (
-          <button key={m.id} type="button" className="stage__mode" aria-pressed={mode === m.id} onClick={() => pick(m.id)}>
+          <button key={m.id} type="button" className="stage__mode" aria-pressed={mode === m.id} onClick={(e) => pick(m.id, e.detail > 0)}>
             {m.label}
           </button>
         ))}
       </div>
       <p className="stage__modeline" aria-live="polite">
-        {current.line}
+        <span key={mode} className={eased ? 'state-in' : undefined}>
+          {current.line}
+        </span>
       </p>
     </div>
   )
