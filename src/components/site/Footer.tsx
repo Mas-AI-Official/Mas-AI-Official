@@ -38,7 +38,7 @@ export function Footer() {
         </div>
         <div className="site-footer__bottom">
           <p>
-            {COMPANY.legalName}. {COMPANY.locality}, {COMPANY.region}, {COMPANY.countryName}.
+            {COMPANY.legalName} {COMPANY.locality}, {COMPANY.region}, {COMPANY.countryName}.
           </p>
           <ul>
             <li><a href={`mailto:${COMPANY.email}`}>{COMPANY.email}</a></li>
