@@ -29,6 +29,9 @@ export const COMPANY = {
   shortName: 'MAS-AI',
   founded: '2026-01-25',
   locality: 'Richmond Hill',
+  /** How the location reads in marketing copy (owner-delegated decision 2026-10-14): Richmond Hill is in the Greater
+   *  Toronto Area, the name buyers recognize and search. The precise locality stays in legal text and JSON-LD. */
+  area: 'Greater Toronto Area',
   region: 'Ontario',
   country: 'CA',
   countryName: 'Canada',

@@ -18,7 +18,9 @@ const SIGNALS = [
 
 /**
  * Act 7. Every signal from the story routes into one system, then the invitation. Scroll draws the
- * lines (a CSS custom property --p from 0 to 1); reduced motion and no-JS show them drawn.
+ * lines (a CSS custom property --p from 0 to 1) while the drawing enters, and the system is complete, the mark in
+ * place, by the time the whole drawing is in view (owner note 2026-10-14: it used to finish only when the drawing
+ * had reached the top quarter of the screen). Reduced motion and no-JS show it drawn.
  */
 export function Closing() {
   const ref = useRef<HTMLElement>(null)
@@ -32,7 +34,9 @@ export function Closing() {
       raf = 0
       const r = svg.getBoundingClientRect()
       const vh = window.innerHeight
-      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.75)))
+      // 0 as its top enters, 1 when 90% of its own height is on screen: complete by the time it is fully in view, on
+      // every screen size (a term in screen height made it late on phones and very large screens).
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (r.height * 0.9)))
       svg.style.setProperty('--p', p.toFixed(3))
     }
     const onScroll = () => {

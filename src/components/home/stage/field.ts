@@ -639,20 +639,55 @@ function drawWorld(ctx: CanvasRenderingContext2D, v: View, pal: Palette, sim: Si
   }
   drawEdges(false)
 
-  // Path annotations appear while the trace reads the wiring (act 2).
+  // Path annotations appear while the trace reads the wiring (act 2). Their boxes are kept for the lens, so the item
+  // names it prints never land on a wire's name.
+  const wireBoxes: Rect[] = []
   if (P.labels > 0.01 && L.k < 0.5) {
-    ctx.font = mono(v.phone ? 9.5 : 10.5)
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    TRACE_ORDER.forEach((id, j) => {
-      const e = EDGES[id]
-      if (!e.label || clamp(P.trace * TRACE_ORDER.length - j) < 0.6) return
-      if (v.phone && e.kind !== 'hop') return
-      const c = controls(L, e)
-      const p = toScreen(cam, bez(c[0], c[1], c[2], c[3], e.kind === 'hop' ? 0.3 : 0.5))
-      ctx.fillStyle = withAlpha(e.kind === 'hop' ? pal.friction : pal.text3, P.labels * dimFor(P, e.from, e.to))
-      ctx.fillText(e.label, p.x, p.y - 10)
+    // On a phone the wires run close together, so each label slides along its own wire, above it or below it, to the
+    // first spot that touches no station and no label already placed, and is skipped only if there is none. The
+    // hand-off label goes first and never moves: the lens prints it at that same spot and size while it is open, and
+    // this copy fades out as the lens fades in, so the two coincide instead of printing twice. The manual copies go
+    // next, so the friction is never the label that loses its spot.
+    const placed: Rect[] = (Object.keys(STATIONS) as StationId[]).map((sid) => {
+      const q = toScreen(cam, L.pos[sid])
+      const { w, h } = stationSize(ctx, pal, STATIONS[sid].label, cam.s, v.phone)
+      return { x: q.x - w / 2, y: q.y - h / 2, w, h }
     })
+    // The stalled queue and its count, drawn later, take room too.
+    if (sim.queue.length > 0 && L.k < 0.98) {
+      const iw = clamp(cam.s * 19, 7, 22)
+      const slots = Array.from({ length: Math.min(12, sim.queue.length) }, (_, k) => toScreen(cam, queueSlot(L, k)))
+      const x0 = Math.min(...slots.map((s) => s.x)) - iw / 2
+      const y0 = slots[0].y - iw * 0.68 - 20
+      placed.push({ x: x0, y: y0, w: Math.max(...slots.map((s) => s.x)) + iw / 2 - x0, h: Math.max(...slots.map((s) => s.y)) + iw / 2 - y0 })
+      ctx.save()
+      ctx.font = mono(v.phone ? 10 : 11)
+      placed.push({ x: slots[0].x - iw / 2, y: y0, w: ctx.measureText(`${sim.queue.length} waiting`).width, h: 14 })
+      ctx.restore()
+    }
+    const rank = (id: EdgeId) => (EDGES[id].kind === 'hop' ? 0 : EDGES[id].kind === 'drop' ? 1 : 2)
+    for (const id of [...TRACE_ORDER].sort((x, y) => rank(x) - rank(y))) {
+      const e = EDGES[id]
+      if (!e.label || clamp(P.trace * TRACE_ORDER.length - TRACE_ORDER.indexOf(id)) < 0.6) continue
+      const a = P.labels * dimFor(P, e.from, e.to) * (e.kind === 'hop' && lens && L.k < 0.9 ? 1 - P.lens : 1)
+      const c = controls(L, e)
+      ctx.font = mono(e.kind === 'hop' ? 10 : v.phone ? 9.5 : 10.5)
+      const w = ctx.measureText(e.label).width
+      const spots = e.kind === 'hop' ? [[0.3, -10]] : [0.5, 0.4, 0.6, 0.3, 0.7, 0.2, 0.8, 0.12, 0.88].flatMap((t) => [[t, -10], [t, 11]])
+      for (const [t, dy] of spots) {
+        const p = toScreen(cam, bez(c[0], c[1], c[2], c[3], t))
+        const box = { x: p.x - w / 2, y: p.y + dy - 7, w, h: 14 }
+        if (e.kind !== 'hop' && (box.x < 4 || box.x + box.w > v.w - 4)) continue
+        if (e.kind !== 'hop' && placed.some((b) => box.x < b.x + b.w + 4 && b.x < box.x + box.w + 4 && box.y < b.y + b.h + 1 && b.y < box.y + box.h + 1)) continue
+        placed.push(box)
+        wireBoxes.push(box)
+        ctx.fillStyle = withAlpha(e.kind === 'hop' ? pal.friction : pal.text3, a)
+        ctx.fillText(e.label, p.x, p.y + dy)
+        break
+      }
+    }
   }
 
   // Items travelling, dwelling or queued.
@@ -721,7 +756,7 @@ function drawWorld(ctx: CanvasRenderingContext2D, v: View, pal: Palette, sim: Si
     // Subject labels are placed greedily: one that would touch a placed label (or the hand-off label)
     // is skipped, so items bunched on one edge never print over each other.
     const hopW = ctx.measureText('re-typed by hand').width
-    const taken: Rect[] = L.k < 0.9 ? [{ x: mid.x - hopW / 2, y: mid.y - 20, w: hopW, h: 16 }] : []
+    const taken: Rect[] = [...wireBoxes, ...(L.k < 0.9 ? [{ x: mid.x - hopW / 2, y: mid.y - 20, w: hopW, h: 16 }] : [])]
     const hits = (a: Rect) => taken.some((b) => a.x < b.x + b.w + 4 && b.x < a.x + a.w + 4 && a.y < b.y + b.h + 2 && b.y < a.y + a.h + 2)
     sim.items.forEach((it, id) => {
       const p = itemPos[id]
@@ -738,7 +773,7 @@ function drawWorld(ctx: CanvasRenderingContext2D, v: View, pal: Palette, sim: Si
     if (L.k < 0.9) {
       ctx.fillStyle = pal.friction
       ctx.textAlign = 'center'
-      ctx.fillText('re-typed by hand', mid.x, mid.y - 12)
+      ctx.fillText('re-typed by hand', mid.x, mid.y - 10)
     }
     ctx.restore()
 

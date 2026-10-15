@@ -95,8 +95,8 @@ with sync_playwright() as p:
         shot(page, f'{key}-08-capabilities')
         if full:
             for tab in ('Custom software', 'AI websites and digital products', 'Private and enterprise AI'):
-                page.get_by_role('tab', name=tab).click()
-                page.wait_for_timeout(800)
+                page.get_by_role('button', name=tab, exact=True).click()  # the progress tick for that capability
+                page.wait_for_timeout(1300)
                 shot(page, f"{key}-09-cap-{tab.split()[0].lower()}")
         for local, name in [(0, '10-statement'), (0.6, '11-building'), (1, '12-build'), (2, '13-runs'), (2.6, '14-handoff'), (3, '15-proof')]:
             to_two(page, local)
@@ -153,12 +153,13 @@ with sync_playwright() as p:
             page.goto(BASE + '/company/', wait_until='networkidle')
             ctrl = page.evaluate(FRAMES, ['main', 2400])
             verdict('1440 control page (no canvas) frame p95', ctrl['p95'] < 20, json.dumps(ctrl))
-            # Keyboard: tab into the capability tablist and move with arrows.
+            # Keyboard: the capability steps are read by scrolling; a progress tick jumps to its step.
             page.goto(BASE + '/', wait_until='networkidle')
-            page.locator('.caps__tab').first.focus()
-            page.keyboard.press('ArrowDown')
-            sel = page.evaluate("document.activeElement.getAttribute('aria-selected') + ' ' + document.activeElement.textContent")
-            verdict('keyboard: ArrowDown moves the capability tab', sel.startswith('true') and 'Automation' in sel, sel)
+            page.locator('.caps__tick').nth(1).focus()
+            page.keyboard.press('Enter')
+            page.wait_for_timeout(1500)
+            sel = page.evaluate("[...document.querySelectorAll('.caps__step')].findIndex(s => s.dataset.active === 'true') + ' ' + (document.querySelector('.caps__current [data-on]') || {}).textContent")
+            verdict('keyboard: a progress tick brings its capability to the reading line', sel.startswith('1 ') and 'Automation' in sel, sel)
             # Klyntar mode on /security/.
             page.goto(BASE + '/security/', wait_until='networkidle')
             page.wait_for_timeout(2500)

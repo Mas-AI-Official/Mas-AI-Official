@@ -2,69 +2,130 @@
 
 .system-scene { display: block; width: 100%; aspect-ratio: 1000 / 620; }
 
-/* Capabilities: a vertical tablist beside one system that changes shape. */
+/* Capabilities: a list of steps read by scrolling, beside one system that stays in view and changes shape to the
+   step at the reading line (Capabilities.tsx). Ordinary scrolling, no pin, no snap. */
 .caps__head { display: grid; gap: var(--space-4); max-width: 46rem; margin-bottom: var(--space-7); }
 .caps__grid { display: grid; gap: var(--space-5); }
-.caps__list { display: grid; border-top: 1px solid var(--line); }
-.caps__tab {
+.caps__steps { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+/* 22svh per step: the house floor for one state of a scroll sequence, so each step is read, never skipped. */
+.caps__step {
   position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 3.5rem;
-  padding: 0.85rem 0.25rem 0.85rem 1.1rem;
-  text-align: left;
-  background: none;
-  border: 0;
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  min-height: 22svh;
+  padding: var(--space-6) 0;
   border-bottom: 1px solid var(--line);
-  color: var(--text-2);
-  font-size: var(--step-1);
-  font-weight: 600;
-  font-variation-settings: 'wdth' var(--wdth-tight);
-  transition: color var(--dur-ui) var(--ease);
 }
-.caps__tab::before {
+.caps__step::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.9rem;
-  bottom: 0.9rem;
+  top: var(--space-6);
+  bottom: var(--space-6);
   width: 2px;
   border-radius: 2px;
   background: var(--gold);
   transform: scaleY(0);
-  transition: transform var(--dur-ui) var(--ease);
+  transform-origin: top center;
 }
-.caps__tab[aria-selected='true'] { color: var(--text); }
-.caps__tab[aria-selected='true']::before { transform: scaleY(1); }
-@media (hover: hover) and (pointer: fine) {
-  .caps__tab:hover { color: var(--text); }
+/* The step at the reading line leads only with JS; without it every step reads the same. */
+html.js .caps__step[data-active='true']::before { transform: scaleY(1); }
+.caps__step:focus { outline: none; }
+.caps__step:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 4px; }
+.caps__num { padding: 0.35rem 0 0 0.9rem; font-size: var(--step--1); color: var(--text-3); }
+html.js .caps__step[data-active='true'] .caps__num { color: var(--gold); }
+/* min-width 0 and breakable words: at 320 px with 200% text "implementation" alone was wider than the column. */
+.caps__body { display: grid; gap: var(--space-3); justify-items: start; align-content: start; min-width: 0; overflow-wrap: break-word; hyphens: auto; }
+.caps__name {
+  font-size: var(--step-1);
+  font-weight: 600;
+  line-height: 1.25;
+  font-variation-settings: 'wdth' var(--wdth-tight);
+  color: var(--text-2);
 }
-.caps__panel { display: grid; gap: var(--space-4); }
+html.js .caps__step[data-active='true'] .caps__name { color: var(--text); }
+.caps__line { color: var(--text-2); max-width: 52ch; }
+/* Technical depth for technical readers, under the buyer line. Wide screens only: on phones the system is sticky above
+   the list and each step must stay short; the service pages carry the same detail. */
+.caps__stack { color: var(--text-3); font-size: var(--step--1); line-height: 1.5; max-width: 60ch; }
+@media (prefers-reduced-motion: no-preference) {
+  .caps__step::before { transition: transform var(--dur-panel) var(--ease); }
+  .caps__num, .caps__name { transition: color var(--dur-ui) var(--ease); }
+}
+
+.caps__panel { display: grid; gap: var(--space-3); }
 .caps__scene { background: var(--raised); border-radius: var(--r-surface); outline: 1px solid var(--line); outline-offset: -1px; }
-.caps__detail { display: grid; gap: var(--space-3); justify-items: start; --state-delay: 120ms; }
-.caps__line { color: var(--text-2); max-width: 52ch; min-height: 3.2em; }
-/* Technical depth for technical readers, under the buyer line. Desktop only: on phones the panel is sticky above
-   the list and must stay short, and the service pages carry the same detail. */
-.caps__stack { color: var(--text-3); font-size: var(--step--1); line-height: 1.5; max-width: 60ch; min-height: 3em; }
+.caps__progress { display: grid; gap: var(--space-1); }
+html:not(.js) .caps__progress { display: none; }
+/* Every name sits in one cell and only the current one shows, so the cell is always as tall as the longest name: names
+   wrap when text is enlarged instead of being cut off, and the panel's height still never changes with the step (a
+   height that did moved the steps under the reading line, and the current step with them). */
+/* The name drops to its own full-width line when the longest one does not fit beside the count. */
+.caps__count { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.5rem; font-size: var(--step--1); color: var(--text-3); white-space: nowrap; min-width: 0; }
+.caps__index { color: var(--gold); }
+.caps__current { display: grid; color: var(--text-2); min-width: 0; white-space: normal; overflow-wrap: anywhere; }
+.caps__current > span { grid-area: 1 / 1; visibility: hidden; }
+.caps__current > [data-on] { visibility: visible; }
+/* Same grammar as the /start/ progress, at control contrast (3:1 or more): upcoming bars --line-ui, done bars lighter,
+   the current one gold. */
+.caps__ticks { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 4px; }
+.caps__tick { position: relative; height: 28px; padding: 0; background: none; border: 0; cursor: pointer; }
+.caps__tick::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 3px;
+  margin-top: -1.5px;
+  border-radius: 2px;
+  background: var(--line-ui);
+}
+.caps__tick[data-state='done']::before { background: var(--text-3); }
+.caps__tick[data-state='current']::before { background: var(--gold); }
+.caps__tick:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 4px; }
+@media (prefers-reduced-motion: no-preference) {
+  .caps__tick::before { transition: background-color var(--dur-ui) var(--ease); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .caps__tick:hover::before { background: var(--text-2); }
+  .caps__tick[data-state='current']:hover::before { background: var(--gold-hi); }
+}
 
 @media (min-width: 960px) {
-  .caps__grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: var(--space-8); align-items: start; }
-  .caps__panel { position: sticky; top: calc(var(--header-h) + 24px); }
+  .caps__grid { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: var(--space-8); align-items: start; }
+  .caps__steps { grid-column: 1; grid-row: 1; padding-bottom: 18vh; }
+  .caps__panel { grid-column: 2; grid-row: 1; position: sticky; top: calc(var(--header-h) + 24px); }
 }
-/* Phones and tablets: the system stays pinned above the list while the visitor picks a capability. */
+/* Phones and tablets: the system stays pinned above the list while the steps scroll under it. */
 @media (max-width: 959.98px) {
   .caps__panel {
     position: sticky;
     top: var(--header-h);
     z-index: 2;
-    order: -1;
-    padding-block: var(--space-3);
+    padding-block: var(--space-3) var(--space-2);
     background: var(--ground);
     border-bottom: 1px solid var(--line);
   }
-  .caps__line { min-height: 0; font-size: var(--step--1); }
+  /* The header is a floating pill, so its box is see-through around it. While the panel is stuck under it, the panel's
+     ground reaches up under the header so steps that slid under the panel do not show again above it. */
+  .caps__panel[data-stuck]::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: var(--header-h);
+    background: var(--ground);
+  }
+  /* Height-capped so the stuck panel leaves room for the steps, but never under 300 px: narrower, its labels collide. */
+  .caps__scene { width: min(100%, max(300px, calc(26svh * 1000 / 620))); margin-inline: auto; }
+  .caps__step { padding: var(--space-5) 0; grid-template-columns: min(2.5rem, 40px) minmax(0, 1fr); }
+  .caps__step::before { top: var(--space-5); bottom: var(--space-5); }
+  .caps__num { padding-left: 0.7rem; }
+  .caps__line { font-size: var(--step--1); }
   .caps__stack { display: none; }
-  .caps__tab { font-size: var(--step-0); min-height: var(--tap); }
+  .caps__steps { padding-bottom: 12svh; }
 }
 
 /* Selected work: problem first, one row each, the whole row is the link. */
@@ -100,16 +161,22 @@ html.js .closing__svg { --p: 0; }
   stroke: var(--gold);
   stroke-width: 2;
   stroke-dasharray: 1;
-  stroke-dashoffset: calc(1 - clamp(0, (var(--p) - 0.7) * 3.4, 1));
+  stroke-dashoffset: calc(1 - clamp(0, (var(--p) - 0.45) * 3, 1));
 }
-.closing__label { font-family: var(--font-mono); font-size: 13px; fill: var(--text-3); opacity: clamp(0, var(--p) * 2, 1); }
-.closing__core { fill: var(--panel); stroke: var(--gold); stroke-width: 1.5; opacity: clamp(0, (var(--p) - 0.75) * 4, 1); }
-.closing__mark { opacity: clamp(0, (var(--p) - 0.8) * 5, 1); }
+.closing__label { font-family: var(--font-mono); font-size: 13px; fill: var(--text-3); opacity: clamp(0, var(--p) * 3, 1); }
+/* The system arrives as the lines reach it, well before the drawing is fully in view. */
+.closing__core { fill: var(--panel); stroke: var(--gold); stroke-width: 1.5; opacity: clamp(0, (var(--p) - 0.5) * 4, 1); }
+.closing__mark { opacity: clamp(0, (var(--p) - 0.55) * 4, 1); }
 .closing__copy { display: grid; gap: var(--space-5); justify-items: center; max-width: 40rem; }
 .closing__title { max-width: 14ch; }
 .closing__actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
+/* Phones: the 1000-unit drawing renders at about a third of its size, so strokes and labels are drawn in proportion
+   (a 1.5 stroke was half a pixel and the sources were hidden, so lines arrived from nowhere). Labels render ~11.5 px. */
 @media (max-width: 600px) {
-  .closing__label { display: none; }
+  .closing__label { font-size: 32px; }
+  .closing__path { stroke-width: 4; }
+  .closing__end { stroke-width: 5; }
+  .closing__core { stroke-width: 4; }
 }
 @media (prefers-reduced-motion: reduce) {
   html.js .closing__svg { --p: 1; }

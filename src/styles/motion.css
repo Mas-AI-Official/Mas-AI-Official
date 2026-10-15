@@ -22,8 +22,8 @@
   }
 
   /* State text that a drawing is about to show (a capability, a deployment) lands with the drawing instead of
-     before it. Starts at 0.3, never 0, so a swap never shows a blank. Capabilities and the deploy picker use it for
-     pointer changes only (arrow keys scan fast and swap at once); a /start/ step is a new screen and eases in either way. */
+     before it. Starts at 0.3, never 0, so a swap never shows a blank. The deploy picker uses it for pointer
+     changes only (keys swap at once); a /start/ step is a new screen and eases in either way. */
   .state-in { animation: state-in var(--dur-ui) var(--ease) var(--state-delay, 0ms) both; }
 
   /* Scroll-linked: work figures settle from 0.96 as they enter (linear, compositor-only). */

@@ -238,8 +238,37 @@ function overlay(ctx: CanvasRenderingContext2D, view: SceneView, pal: Palette, v
       ctx.arc(gate.x, gate.y, Math.max(8, 13 * cam.s), 0, Math.PI * 2)
       ctx.stroke()
       const gr = Math.max(8, 13 * cam.s)
-      if (view.phone) label(ctx, pal, 'approval', { x: gate.x + gr + 5, y: gate.y }, pal.gold, mono, 'left')
-      else label(ctx, pal, 'approval', { x: gate.x, y: gate.y + Math.max(18, 26 * cam.s) }, pal.gold, mono)
+      if (view.phone) {
+        // Beside the gate on whichever side clears the stations and the agent (Calendar sits right of it on a narrow
+        // scene), else under it as on wide screens. On the narrowest scenes nothing is fully clear: take the spot
+        // that overlaps least.
+        ctx.font = `500 ${mono}px ${pal.mono}`
+        const tw = ctx.measureText('approval').width, th = mono + 2
+        const ar = Math.max(16, 30 * cam.s), ag = P(agent)
+        const boxes = [
+          ...(Object.keys(LABELS) as Id[]).map((id) => {
+            const q = S(cam, L[id]), z = stationSize(ctx, pal, LABELS[id], cam.s, true)
+            return { x: q.x - z.w / 2, y: q.y - z.h / 2, w: z.w, h: z.h }
+          }),
+          { x: ag.x - ar, y: ag.y - ar, w: ar * 2, h: ar * 2 },
+          { x: k.x - 34, y: k.y - 14, w: 68, h: 28 },
+        ]
+        const below = gate.y + Math.max(18, 26 * cam.s)
+        const spots: [number, number, CanvasTextAlign, number][] = [
+          [gate.x + gr + 5, gate.y, 'left', gate.x + gr + 5],
+          [gate.x - gr - 5, gate.y, 'right', gate.x - gr - 5 - tw],
+          [gate.x, below, 'center', gate.x - tw / 2],
+        ]
+        const cost = ([, y, , left]: (typeof spots)[number]) =>
+          (left < 2 || left + tw > view.w - 2 ? 1e6 : 0) +
+          boxes.reduce((sum, b) => {
+            const ox = Math.min(left + tw + 3, b.x + b.w) - Math.max(left - 3, b.x)
+            const oy = Math.min(y + th / 2, b.y + b.h) - Math.max(y - th / 2, b.y)
+            return sum + (ox > 0 && oy > 0 ? ox * oy : 0)
+          }, 0)
+        const [x, y, align] = spots.reduce((best, sp) => (cost(sp) < cost(best) ? sp : best))
+        label(ctx, pal, 'approval', { x, y }, pal.gold, mono, align)
+      } else label(ctx, pal, 'approval', { x: gate.x, y: gate.y + Math.max(18, 26 * cam.s) }, pal.gold, mono)
       break
     }
     case 'websites': {

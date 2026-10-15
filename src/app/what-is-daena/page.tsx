@@ -3,6 +3,7 @@ import AnswerLayout from '@/components/answer/AnswerLayout'
 import { Section, Steps, Terms } from '@/components/answer/Section'
 import Faq from '@/components/answer/Faq'
 import { DEPARTMENT_NAMES, PIPELINE_STAGES, PROVIDER_NAMES } from '@/components/answer/daena-facts'
+import { COMPANY } from '@/content/facts'
 import { answerGraph, type FaqItem } from '@/lib/answer-seo'
 import { pageMetadata } from '@/lib/seo'
 import { DAENA, PATENTS } from '@/content/facts'
@@ -32,7 +33,7 @@ const faq: FaqItem[] = [
   },
   {
     q: 'Who builds Daena?',
-    a: `MAS-AI Technologies Inc., a founder-led company in Richmond Hill, Ontario, founded by Masoud Masoori. Klyntar, the security-scan layer, is part of Daena. KYA Mission Control, a separate research project on agent identity, lives at kya.mas-ai.co.`,
+    a: `MAS-AI Technologies Inc., a founder-led company in the ${COMPANY.area}, ${COMPANY.countryName}, founded by Masoud Masoori. Klyntar, the security-scan layer, is part of Daena. KYA Mission Control, a separate research project on agent identity, lives at kya.mas-ai.co.`,
   },
   {
     q: 'How do I try Daena?',

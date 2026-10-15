@@ -1,41 +1,89 @@
 'use client'
 
-import { useId, useRef, useState, type KeyboardEvent } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { CAPABILITIES, type CapabilityVariant } from '@/content/home'
+import { CAPABILITIES } from '@/content/home'
 import { SystemScene } from './SystemScene'
 
+const pad = (n: number) => String(n).padStart(2, '0')
+
 /**
- * One method, different answers: a vertical tablist of capabilities beside one living system that changes
- * shape to match the selected tab. Hover previews on fine pointers; arrows, Home and End move between tabs.
+ * One method, different answers, read by scrolling: the capabilities are a list of steps beside one living system
+ * that stays in view (sticky) and changes shape to the step at the reading line. Ordinary scrolling, no pin and no
+ * snap, so the page never holds the visitor. Every step is in the HTML, readable without JS and by search engines.
+ * The progress ticks jump to a step.
  */
 export function Capabilities({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
-  const [active, setActive] = useState<CapabilityVariant>(CAPABILITIES.items[0].id)
-  // The text eases in with the drawing only when a pointer chose the tab; keyboard changes swap at once.
-  const [eased, setEased] = useState(false)
-  const base = useId()
-  const tabs = useRef<(HTMLButtonElement | null)[]>([])
-  const hoverTimer = useRef<number>(0)
   const items = CAPABILITIES.items
-  const current = items.find((i) => i.id === active) ?? items[0]
+  const [active, setActive] = useState(0)
+  const base = useId()
+  const panelRef = useRef<HTMLDivElement>(null)
+  const listRef = useRef<HTMLOListElement>(null)
   const H = headingLevel === 2 ? 'h2' : 'h3'
+  const Hs = headingLevel === 2 ? 'h3' : 'h4'
 
-  const onKey = (e: KeyboardEvent<HTMLButtonElement>, i: number) => {
-    const next = { ArrowDown: i + 1, ArrowUp: i - 1, Home: 0, End: items.length - 1 }[e.key]
-    if (next === undefined) return
-    e.preventDefault()
-    const j = (next + items.length) % items.length
-    setEased(false)
-    setActive(items[j].id)
-    tabs.current[j]?.focus()
+  // The reading line: 45% down on wide screens. On phones and tablets the system is stuck above the list, so the line
+  // is a third of the way into the space below the panel AS STUCK (header plus panel height), not where the panel is
+  // now: one fixed line for scrolling and for jumps, whether or not the panel has reached the header yet.
+  const readingLine = () => {
+    const panel = panelRef.current
+    if (!panel || !window.matchMedia('(max-width: 959.98px)').matches) return window.innerHeight * 0.45
+    const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64
+    const bottom = headerH + panel.offsetHeight
+    return bottom + (window.innerHeight - bottom) / 3
   }
-  const preview = (id: CapabilityVariant) => {
-    window.clearTimeout(hoverTimer.current)
-    hoverTimer.current = window.setTimeout(() => {
-      setEased(true)
-      setActive(id)
-    }, 110)
+
+  useEffect(() => {
+    const panel = panelRef.current
+    const list = listRef.current
+    if (!panel || !list) return
+    const steps = Array.from(list.children) as HTMLElement[]
+    const root = document.documentElement
+    let raf = 0
+    const pick = () => {
+      raf = 0
+      const line = readingLine()
+      let i = 0
+      steps.forEach((s, k) => {
+        if (s.getBoundingClientRect().top <= line) i = k
+      })
+      setActive(i)
+      // Stuck under the header on phones: the panel covers the see-through band around the floating header, so steps
+      // scrolled under it do not show again above it. Only while stuck: unstuck, that band holds the section intro.
+      const headerH = parseFloat(getComputedStyle(root).getPropertyValue('--header-h')) || 64
+      panel.toggleAttribute('data-stuck', getComputedStyle(panel).position === 'sticky' && panel.getBoundingClientRect().top <= headerH + 1)
+    }
+    const schedule = () => {
+      if (!raf) raf = requestAnimationFrame(pick)
+    }
+    // Listen only while the section is near the viewport.
+    const io = new IntersectionObserver((entries) => {
+      if (entries[entries.length - 1].isIntersecting) {
+        window.addEventListener('scroll', schedule, { passive: true })
+        window.addEventListener('resize', schedule)
+        schedule()
+      } else {
+        window.removeEventListener('scroll', schedule)
+        window.removeEventListener('resize', schedule)
+      }
+    }, { rootMargin: '25% 0px 25% 0px' })
+    io.observe(list.parentElement ?? list)
+    return () => {
+      cancelAnimationFrame(raf)
+      io.disconnect()
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [])
+
+  // Bring a step to the reading line (smooth unless reduced motion, via the html scroll-behavior rule) and move focus
+  // to it, so the next Tab continues from that step instead of jumping back to the first one.
+  const jump = (i: number) => {
+    const step = listRef.current?.children[i] as HTMLElement | undefined
+    if (!step) return
+    window.scrollTo({ top: window.scrollY + step.getBoundingClientRect().top - readingLine() + 2 })
+    step.focus({ preventScroll: true })
   }
 
   return (
@@ -48,47 +96,52 @@ export function Capabilities({ headingLevel = 2 }: { headingLevel?: 2 | 3 }) {
           <p className="t-lead">{CAPABILITIES.intro}</p>
         </div>
         <div className="caps__grid">
-          <div className="caps__list" role="tablist" aria-orientation="vertical" aria-label="Capabilities">
-            {items.map((item, i) => (
-              <button
-                key={item.id}
-                ref={(el) => {
-                  tabs.current[i] = el
-                }}
-                id={`${base}-tab-${item.id}`}
-                type="button"
-                role="tab"
-                aria-selected={active === item.id}
-                aria-controls={`${base}-panel`}
-                tabIndex={active === item.id ? 0 : -1}
-                className="caps__tab"
-                onClick={(e) => {
-                  setEased(e.detail > 0)
-                  setActive(item.id)
-                }}
-                onKeyDown={(e) => onKey(e, i)}
-                onPointerEnter={(e) => e.pointerType === 'mouse' && preview(item.id)}
-                onPointerLeave={() => window.clearTimeout(hoverTimer.current)}
-              >
-                <span className="caps__name">{item.name}</span>
-              </button>
-            ))}
-          </div>
-          <div id={`${base}-panel`} role="tabpanel" aria-labelledby={`${base}-tab-${current.id}`} className="caps__panel">
-            <SystemScene variant={current.id} className="caps__scene" />
-            <div className="caps__detail">
-              <p key={`${current.id}-line`} className={eased ? 'caps__line state-in' : 'caps__line'}>
-                {current.line}
+          <div ref={panelRef} className="caps__panel">
+            <SystemScene variant={items[active].id} className="caps__scene" />
+            <div className="caps__progress">
+              <p className="caps__count t-mono" aria-hidden="true">
+                <span className="caps__index">{pad(active + 1)}</span> / {pad(items.length)}
+                <span className="caps__current">
+                  {items.map((item, i) => (
+                    <span key={item.id} data-on={i === active ? 'true' : undefined}>
+                      {item.name}
+                    </span>
+                  ))}
+                </span>
               </p>
-              <p key={`${current.id}-stack`} className={eased ? 'caps__stack t-mono state-in' : 'caps__stack t-mono'}>
-                {current.stack}
-              </p>
-              <Link href={current.href} className="link-arrow">
-                {current.linkLabel}
-                <ArrowRight aria-hidden="true" />
-              </Link>
+              <div className="caps__ticks" role="group" aria-label="Jump to a capability">
+                {items.map((item, i) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className="caps__tick"
+                    aria-label={item.name}
+                    aria-current={i === active ? 'step' : undefined}
+                    data-state={i < active ? 'done' : i === active ? 'current' : 'todo'}
+                    onClick={() => jump(i)}
+                  />
+                ))}
+              </div>
             </div>
           </div>
+          <ol ref={listRef} className="caps__steps" aria-label="Capabilities">
+            {items.map((item, i) => (
+              <li key={item.id} id={`${base}-${item.id}`} className="caps__step" tabIndex={-1} data-active={i === active ? 'true' : undefined}>
+                <span className="caps__num t-mono" aria-hidden="true">
+                  {pad(i + 1)}
+                </span>
+                <div className="caps__body">
+                  <Hs className="caps__name">{item.name}</Hs>
+                  <p className="caps__line">{item.line}</p>
+                  <p className="caps__stack t-mono">{item.stack}</p>
+                  <Link href={item.href} className="link-arrow">
+                    {item.linkLabel}
+                    <ArrowRight aria-hidden="true" />
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

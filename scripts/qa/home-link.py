@@ -20,7 +20,16 @@ with sync_playwright() as p:
             el = pg.locator(sel).first
             el.scroll_into_view_if_needed()
             (el.tap() if mob else el.click())
-            pg.wait_for_timeout(2500)
+            # Wait for the smooth scroll to settle (unchanged for 400 ms, at most 6 s), not a fixed time: from the
+            # footer of the long home page the native smooth scroll alone takes about 1.5 s.
+            last, still = None, 0
+            for _ in range(60):
+                pg.wait_for_timeout(100)
+                y = pg.evaluate('scrollY')
+                still = still + 1 if y == last else 0
+                last = y
+                if still >= 4:
+                    break
             y1, path = pg.evaluate('scrollY'), pg.evaluate('location.pathname + location.hash')
             ok = y1 <= 1 and path == '/'
             print(f'{"HELD" if ok else "BREACHED"} {name} from {start} scrolled {round(y0)} click {sel}: scrollY {round(y1)} at {path}')

@@ -29,12 +29,12 @@ export function monthYear(iso: string): string {
 }
 
 export const COMPANY_PAGE = {
-  title: `Founder-led, in ${COMPANY.locality}, ${COMPANY.region}.`,
+  title: `Founder-led, in the ${COMPANY.area}.`,
   lead: 'MAS-AI maps how a business runs and builds the software, automation or AI that closes the gap. The person who diagnoses the problem is the person who builds the system.',
   facts: [
     { term: 'Legal name', value: COMPANY.legalName },
     { term: 'Founded', value: monthYear(COMPANY.founded) },
-    { term: 'Based in', value: `${COMPANY.locality}, ${COMPANY.region}, ${COMPANY.countryName}` },
+    { term: 'Based in', value: `${COMPANY.area}, ${COMPANY.region}, ${COMPANY.countryName}` },
     { term: 'Founder', value: `${COMPANY.founder.name}, ${COMPANY.founder.title}` },
   ],
   /** Who does the work. Only facts verified on 2026-09-30 (pass6 evidence record); nothing owner-stated alone. */

@@ -77,7 +77,7 @@ export type CapabilityVariant = 'ai' | 'integration' | 'software' | 'agents' | '
 /** Capabilities: one method, different answers. Each shows the same operation transformed. */
 export const CAPABILITIES = {
   title: 'What we build depends on the gap.',
-  intro: 'One method, different answers. Pick one to see how the same operation changes.',
+  intro: 'One method, different answers. Scroll through them to see how the same operation changes.',
   items: [
     { id: 'ai', name: 'AI implementation', line: 'A model where it earns its place: answers from your own documents, drafts a person approves, decisions with a trail.', stack: 'OpenAI, Anthropic, Gemini, Grok or open-weight models · retrieval · document extraction and OCR · evaluation', href: '/services/', linkLabel: 'All services' },
     { id: 'integration', name: 'Automation and integration', line: 'The tools you already pay for, joined through one layer, so work moves between them without anyone re-typing it.', stack: 'APIs, webhooks and MCP · CRM, ERP, accounting and document systems · queues and scheduled jobs', href: '/automation/', linkLabel: 'Automation' },
