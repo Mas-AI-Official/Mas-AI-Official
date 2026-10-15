@@ -7,7 +7,8 @@ Gates
   routes      every sitemap route: 200, one h1, no page errors, no console errors, JSON-LD parses, canonical matches
   overflow    no horizontal overflow at 320/375/390/430/768/1024/1440 on every route
   nojs        JavaScript disabled: home and a service page show their headings and body copy (static story)
-  reduce      reduced motion: no running CSS animations or transitions after load on home; no hidden reveal content
+  reduce      reduced motion, on home, /start/, /blueprint/, /work/ and one answer page at load and while scrolled: no running
+              animation longer than 1 ms, no hidden reveal content, the home stage unpinned (a 0.01 ms leak is invisible here)
   history     direct nested load, client navigation, back/forward and hash scroll keep content and URL in sync
   guide       site guide: lazy mount, keyboard open, golden answers, Escape returns focus, no network from chat
   inquiry     /start/: 500, network abort, success:false and invalid JSON all show the error state with input kept;
@@ -129,19 +130,22 @@ async def gate_nojs(browser) -> None:
 
 async def gate_reduce(browser) -> None:
     bad = []
-    for vp in [(1440, 900), (390, 844)]:
+    # The home stage must unpin; the other routes carry reveals and the answer layout (loaded and scrolled, not driven).
+    for vp, route in [(v, r) for v in [(1440, 900), (390, 844)] for r in ['/', '/start/', '/blueprint/', '/work/', '/what-is-daena/']]:
         ctx = await browser.new_context(reduced_motion='reduce', viewport={'width': vp[0], 'height': vp[1]})
         page = await ctx.new_page()
-        await page.goto(BASE + '/', wait_until='networkidle')
+        await page.goto(BASE + route, wait_until='networkidle')
         await page.wait_for_timeout(600)
         for y in [0, 0.25, 0.5, 0.75, 1.0]:
             await page.evaluate(f'window.scrollTo(0, (document.body.scrollHeight - innerHeight) * {y})')
             await page.wait_for_timeout(300)
             running = await page.evaluate('''() => document.getAnimations().filter(a => a.playState === 'running' && a.effect && (a.effect.getComputedTiming().duration > 1)).length''')
             hidden = await page.evaluate('''() => [...document.querySelectorAll('[data-reveal]')].filter(e => getComputedStyle(e).opacity === '0').length''')
-            sticky = await page.evaluate('''() => { const s = document.querySelector('.approach__stage'); return s ? getComputedStyle(s).display : 'none' }''')
+            # A missing pinned panel on the home page is a breach, not a pass (this leg read a selector that no longer
+            # existed and passed for every build until 2026-10-14).
+            sticky = 'none' if route != '/' else await page.evaluate('''() => { const s = document.querySelector('.stage__sticky'); return s ? getComputedStyle(s).display : 'MISSING' }''')
             if running or hidden or sticky != 'none':
-                bad.append(f'{vp[0]}x{vp[1]} at {int(y*100)}%: {running} running animations, {hidden} hidden reveals, stage display {sticky}')
+                bad.append(f'{vp[0]}x{vp[1]} {route} at {int(y*100)}%: {running} running animations, {hidden} hidden reveals, stage display {sticky}')
         await ctx.close()
     verdict('reduce', 'BREACHED' if bad else 'HELD', 'reduced motion: no motion, no pins, all content' + (' | ' + ' || '.join(bad[:6]) if bad else ''))
 
@@ -234,7 +238,7 @@ async def fill_inquiry(page: Page) -> None:
     await page.get_by_role('textbox').first.fill('Invoices are re-typed from email into our accounting tool every day.')
     await next_step()
     await next_step()  # optional context
-    await page.get_by_label(re.compile(r'^name', re.I)).first.fill('Test Visitor')
+    await page.get_by_label(re.compile(r'^(your )?name', re.I)).first.fill('Test Visitor')
     await page.get_by_label(re.compile(r'email', re.I)).first.fill('visitor@example.com')
     await page.get_by_role('button', name=re.compile(r'(send|submit)', re.I)).first.click()
 
@@ -252,16 +256,29 @@ async def gate_inquiry(browser) -> None:
         ctx = await browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True)
         page = await ctx.new_page()
         hits: list[str] = []
-        async def route_handler(route, handler=handler):
-            hits.append(route.request.url)
-            await handler(route)
-        await page.route('**/formsubmit.co/**', route_handler)
+        # Playwright calls a route handler as (route, request): a default-argument binding received the Request.
+        def make_handler(respond):
+            async def route_handler(route, request):
+                hits.append(request.url)
+                await respond(route)
+            return route_handler
+        await page.route('**/formsubmit.co/**', make_handler(handler))
         try:
             await fill_inquiry(page)
             await page.wait_for_timeout(1200)
             body = (await page.inner_text('main')).lower()
             said_success = bool(re.search(r'(thank you|thanks|we have your|received|sent)', body)) and 'try again' not in body
-            kept = 'invoices are re-typed' in (await page.content()).lower()
+            # The failure state promises every answer is still in the form. Check it the way a visitor would: go Back to
+            # the step-2 answer and read it (it is form state, never in the serialized HTML of the last step).
+            kept = False
+            if name != 'success':
+                for _ in range(3):
+                    if await page.locator('#inq-today').count():
+                        break
+                    await page.get_by_role('button', name=re.compile(r'^back$', re.I)).first.click()
+                    await page.wait_for_timeout(300)
+                if await page.locator('#inq-today').count():
+                    kept = 'invoices are re-typed' in (await page.locator('#inq-today').input_value()).lower()
             if not hits: bad.append(f'{name}: form never posted')
             elif name == 'success' and not said_success: bad.append('success: no thank-you state')
             elif name != 'success' and said_success: bad.append(f'{name}: showed success after a failure')
