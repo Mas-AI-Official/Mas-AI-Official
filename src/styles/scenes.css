@@ -155,13 +155,15 @@ html:not(.js) .caps__progress { display: none; }
 .closing__inner { display: grid; gap: var(--space-7); justify-items: center; text-align: center; }
 .closing__svg { width: 100%; max-width: 1000px; height: auto; overflow: visible; --p: 1; }
 html.js .closing__svg { --p: 0; }
-.closing__path { fill: none; stroke: var(--line-2); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--p)); }
+/* Offsets in px (a user unit, scaled by pathLength like a plain number): Firefox drops a unitless calc() here and
+   computes 0, which showed every line already drawn. */
+.closing__path { fill: none; stroke: var(--line-2); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: calc((1 - var(--p)) * 1px); }
 .closing__end {
   fill: none;
   stroke: var(--gold);
   stroke-width: 2;
   stroke-dasharray: 1;
-  stroke-dashoffset: calc(1 - clamp(0, (var(--p) - 0.45) * 3, 1));
+  stroke-dashoffset: calc((1 - clamp(0, (var(--p) - 0.45) * 3, 1)) * 1px);
 }
 .closing__label { font-family: var(--font-mono); font-size: 13px; fill: var(--text-3); opacity: clamp(0, var(--p) * 3, 1); }
 /* The system arrives as the lines reach it, well before the drawing is fully in view. */
