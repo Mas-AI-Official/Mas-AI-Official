@@ -66,9 +66,16 @@ export const viewport: Viewport = {
 // Marks JS as available before first paint so reveal start states exist only when a script can finish them.
 const JS_FLAG = "document.documentElement.classList.add('js')"
 
+// data-scroll-behavior: Next 16 turns off the smooth html scroll (globals.css) for route transitions only when this
+// attribute is set. Without it, the Fragment scroll on navigation animates and lands on the second section.
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${jetbrains.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${archivo.variable} ${jetbrains.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: JS_FLAG }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ld(siteGraph()) }} />
