@@ -197,3 +197,10 @@
 .wk-toc li > .t-mono { padding-top: 0.25rem; }
 .wk-toc p + p { margin-top: var(--space-1); }
 @media (min-width: 768px) { .wk-doc { padding: var(--space-7); } }
+
+/* ---------- /growth/ ---------- */
+.gr-terms { margin-top: var(--space-7); align-items: start; }
+.gr-hst { margin-top: var(--space-3); max-width: 38ch; color: var(--text-2); }
+.gr-sub { margin-top: var(--space-9); }
+.gr-sub-intro { margin-top: var(--space-3); max-width: var(--measure); color: var(--text-2); }
+@media (min-width: 900px) { .gr-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
