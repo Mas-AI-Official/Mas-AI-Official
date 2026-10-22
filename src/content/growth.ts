@@ -3,7 +3,7 @@
  *
  * Source of every term below: D:/Ideas/creative/campaigns/masai-launch-2026-10/growth/2026-10-21/dr004/
  * DR-004-APPENDIX.md AP5 (Leak Audit scope, direct pilot) and AP6 (Lead Response terms), PLAN-GATED.md S03 and S13.
- * Amounts are before HST. MAS-AI's HST status is an open owner decision (Y15), so the page says "if it applies".
+ * Prices are shown as plain CAD amounts with no tax line, by owner decision 2026-10-21. No tax claim is made on this page.
  * No client result, no customer quote and no deadline appears here on purpose. Banned claim words (tenant.json)
  * stay out of this file: no guarantee, certified, compliant, best, testimonial, uptime, engineer, case study.
  *
@@ -19,7 +19,7 @@ export const GROWTH = {
   meta: {
     title: 'MAS-AI Growth',
     description:
-      'Two fixed-price offers for owner-run trades and local service businesses in Ontario: a CAD 800 Leak Audit and a CAD 1,500 Lead Response pilot. Amounts are before HST.',
+      'Two fixed-price offers for owner-run trades and local service businesses in Ontario: a CAD 800 Leak Audit and a CAD 1,500 Lead Response pilot.',
   },
   lead: 'Fixed-price help for owner-run trades and local service businesses in Ontario. Find where calls and quotes go quiet, then decide whether to fix it yourself, hire us, or leave it alone.',
 
@@ -36,7 +36,6 @@ export const GROWTH = {
     name: 'Leak Audit',
     for: 'For when you are not sure where jobs leak.',
     price: 'CAD 800',
-    hst: 'plus HST if it applies. At Ontario’s 13 percent rate, CAD 800 becomes CAD 904.00.',
     terms: [
       {
         k: 'Time',
@@ -74,7 +73,6 @@ export const GROWTH = {
     name: 'Lead Response pilot',
     for: 'For when you already know calls go unanswered and want it handled.',
     price: 'CAD 1,500',
-    hst: 'plus HST if it applies, one price for a one-month pilot. At Ontario’s 13 percent rate, CAD 1,500 becomes CAD 1,695.00.',
     terms: [
       {
         k: 'What it does',

@@ -22,7 +22,6 @@ function OfferTerms({ offer }: { offer: Offer }) {
         <p className="wk-price">
           {offer.price}
         </p>
-        <p className="t-small gr-hst">{offer.hst}</p>
       </div>
       <dl className="wk-terms__list" data-reveal style={{ ['--i' as string]: 1 }}>
         {offer.terms.map((t) => (
