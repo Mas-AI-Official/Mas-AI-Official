@@ -118,8 +118,6 @@ export const START = {
   prompt: 'What are you trying to improve?',
   options: [
     { id: 'response', label: 'Response time to customers' },
-    { id: 'growth-audit', label: 'Find where our leads leak' },
-    { id: 'growth-content', label: 'Short videos for my business, approved by me' },
     { id: 'manual', label: 'A slow manual process' },
     { id: 'website', label: 'A website that does more' },
     { id: 'software', label: 'Software we cannot buy' },
