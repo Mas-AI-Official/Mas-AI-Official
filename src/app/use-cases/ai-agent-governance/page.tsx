@@ -9,7 +9,7 @@ import { DAENA } from '@/content/facts'
 const path = '/use-cases/ai-agent-governance/'
 const title = 'How to govern AI agents in production'
 const description =
-  'Govern AI agents by checking every action against policy before it runs, sending high-risk actions to a person and keeping a record. How Daena does it with a ten-stage pipeline.'
+  'Govern AI agents by checking every action against policy before it runs, sending high-risk actions to a person and keeping a record. How Daena does it.'
 const h1 = 'How do you enforce governance on AI agents in production?'
 const tldr =
   'Check every action against policy before it runs, send the risky ones to a person, and write down what happened. Daena does this with a ten-stage request pipeline, risk classification, an approval queue and an audit record.'

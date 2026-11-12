@@ -17,8 +17,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const item = CASE_STUDIES.find((w) => w.slug === slug)
   if (!item) return {}
   return pageMetadata({
-    title: `${item.name}: case study`,
-    description: item.line,
+    title: `${item.name} case study: ${item.label}`,
+    // A line under about 110 characters reads thin as a search snippet, so it gets the page's own name in front.
+    description: item.line.length < 110 ? `${item.name}, a MAS-AI case study. ${item.line}` : item.line,
     path: `/work/${item.slug}/`,
   })
 }

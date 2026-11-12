@@ -9,7 +9,7 @@ import { DAENA } from '@/content/facts'
 const path = '/compare/daena-vs-autogen/'
 const title = 'Daena vs AutoGen: control plane or framework'
 const description =
-  'AutoGen is a Microsoft framework for multi-agent applications, now in maintenance mode. Daena is a governed platform for running agents. A factual comparison with sources.'
+  'AutoGen is a Microsoft framework for multi-agent apps, now in maintenance mode. Daena is a governed platform for running agents. A comparison with sources.'
 const h1 = 'How is Daena different from AutoGen?'
 const tldr =
   'AutoGen is a Microsoft open-source framework for building multi-agent applications. Its repository now says it is in maintenance mode and points new users to Microsoft Agent Framework. Daena is a governed platform for running agents, with approval, memory and audit built into the request path.'

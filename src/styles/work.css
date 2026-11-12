@@ -197,3 +197,73 @@
 .wk-toc li > .t-mono { padding-top: 0.25rem; }
 .wk-toc p + p { margin-top: var(--space-1); }
 @media (min-width: 768px) { .wk-doc { padding: var(--space-7); } }
+
+/* ---------- /growth/ ---------- */
+.gr-terms { margin-top: var(--space-7); align-items: start; }
+.gr-sub { margin-top: var(--space-9); }
+.gr-sub-intro { margin-top: var(--space-3); max-width: var(--measure); color: var(--text-2); }
+@media (min-width: 900px) { .gr-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* No price is printed (rule Y1): the big word is the pricing model, the line under it is the promise. */
+.gr-price { display: grid; gap: var(--space-4); align-content: start; }
+.gr-price .wk-price { font-size: clamp(2.5rem, 1.6rem + 4vw, 4.5rem); }
+.gr-price .t-body { max-width: 34ch; color: var(--text-2); }
+/* The weekly loop. Colour is state: gold marks the one step that is the client's gate, the rest stay neutral. */
+.gr-loop { margin-top: 0; row-gap: var(--space-8); }
+.gr-loop .wk-steps__dot { background: var(--line-ui); }
+.gr-loop li[data-gate] .wk-steps__dot { background: var(--gold); }
+.gr-loop li[data-gate] h3 { color: var(--gold); }
+.gr-loop li > .t-mono { color: var(--text-3); }
+@media (min-width: 900px) {
+  /* Two identical rails of three: the connector stays inside its column and the last step keeps its line. */
+  .gr-loop li:nth-child(3n)::before { right: 0; }
+  .gr-loop li:last-child::before { display: block; }
+  /* The pricing word follows the reader down the long terms list instead of leaving an empty column. */
+  .gr-price { position: sticky; top: 6.5rem; }
+}
+/* Part status. Filled green square = runs on our own site today; outlined grey = built to a written scope. */
+.gr-tag { display: inline-flex; align-items: center; gap: var(--space-2); margin-top: var(--space-2); }
+.gr-tag::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 2px; border: 1.5px solid currentColor; }
+.svp-grid > li > .gr-tag { color: var(--text-3); }
+.svp-grid > li > .gr-tag[data-state='live'] { color: var(--ok); }
+.gr-tag[data-state='live']::before { background: currentColor; }
+
+/* Name lockup: the MAS-AI mark, the parent name, the service name in gold after a hairline. */
+.gr-lockup { display: grid; gap: var(--space-3); margin: 0; }
+.gr-lockup__row { display: inline-flex; align-items: center; gap: 0.75rem; }
+.gr-lockup__row img { width: 44px; height: 44px; flex: none; }
+.gr-lockup__name { display: inline-flex; align-items: center; gap: 0.7rem; font-size: 1.5rem; font-weight: 700; font-variation-settings: 'wdth' var(--wdth-tight); letter-spacing: 0.02em; line-height: 1; color: var(--text); white-space: nowrap; }
+.gr-lockup__sub { padding: 0.15em 0 0.15em 0.7rem; border-left: 1px solid var(--line-ui); font-weight: 500; letter-spacing: 0.01em; color: var(--gold); }
+.gr-lockup__line { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); }
+
+/* Page-head illustration: one week's approval list. Gold marks the item waiting for the owner, green the approved one. */
+.gr-board { display: grid; gap: var(--space-4); margin: 0; padding: var(--space-5); background: var(--raised); border-radius: var(--r-surface); outline: 1px solid var(--line); outline-offset: -1px; }
+.gr-board__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-3); }
+.gr-board__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.gr-board__item { display: grid; gap: var(--space-3); padding: var(--space-4); background: var(--panel); border: 1px solid var(--line-2); border-radius: var(--r-control); }
+.gr-board__item[data-state='wait'] { border-color: var(--gold); background: linear-gradient(var(--gold-wash), var(--gold-wash)), var(--panel); }
+.gr-board__kind { display: flex; align-items: center; gap: var(--space-2); }
+.gr-board__kind svg { width: 16px; height: 16px; flex: none; color: var(--text-2); }
+.gr-board__kind .t-mono { color: var(--text-2); }
+.gr-board__kind .gr-board__meta { margin-left: auto; color: var(--text-3); }
+.gr-board__title { font-size: var(--step-1); font-weight: 600; line-height: 1.25; color: var(--text); }
+.gr-board__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.gr-board__state { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-2); }
+.gr-board__state::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 2px; border: 1.5px solid currentColor; }
+.gr-board__item[data-state='wait'] .gr-board__state { color: var(--gold); }
+.gr-board__item[data-state='ok'] .gr-board__state { color: var(--ok); }
+.gr-board__item[data-state='ok'] .gr-board__state::before { background: currentColor; }
+.gr-board__acts { display: inline-flex; gap: var(--space-2); }
+.gr-board__act { padding: 0.45rem 0.8rem; border: 1px solid var(--line-ui); border-radius: var(--r-control); font-size: 0.8125rem; font-weight: 600; line-height: 1; color: var(--text); }
+.gr-board__act[data-primary] { background: var(--gold); border-color: var(--gold); color: var(--gold-ink); }
+.gr-board__cap { display: grid; gap: var(--space-2); padding-top: var(--space-4); border-top: 1px solid var(--line); }
+.gr-board__cap .t-small { color: var(--text); }
+
+/* Sample pieces at one height, so a 9:16 video and two 4:5 pieces line up. The row scrolls sideways when it
+   does not fit (phones), and bleeds to the screen edge so the next piece shows. */
+.gr-samples { overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scrollbar-width: thin; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); padding-bottom: var(--space-3); }
+.gr-samples ul { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--space-5); width: max-content; }
+.gr-samples li { scroll-snap-align: center; }
+.gr-samples figure { display: grid; gap: var(--space-3); margin: 0; }
+.gr-samples img, .gr-samples video { display: block; height: 28rem; width: auto; max-width: none; border-radius: var(--r-surface); outline: 1px solid var(--line-2); outline-offset: -1px; }
+.gr-samples video { aspect-ratio: 9 / 16; }
+@media (min-width: 900px) { .gr-samples img, .gr-samples video { height: 34rem; } }

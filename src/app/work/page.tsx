@@ -6,9 +6,9 @@ import { workByTier } from '@/content/work'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
-  title: 'Work',
+  title: 'Work: systems, open-source tools and research',
   description:
-    'The systems MAS-AI builds, runs and releases itself: a governed multi-agent platform, a retrieval engine, open-source tools and research, each with its current state.',
+    'The systems MAS-AI builds, runs and releases itself: a governed multi-agent platform, a retrieval engine, open-source tools and research.',
   path: '/work/',
 })
 
@@ -27,8 +27,9 @@ export default function WorkIndexPage() {
             About client work
           </h2>
           <p className="t-body">
-            Clients are named and linked only with their written permission, so client websites appear here without
-            names. Everything else is a system we build, run or release ourselves.
+            Clients are named only with their permission, and the three client entries below have it. A client site
+            still in preview is described here but not linked. Everything else is a system we build, run or release
+            ourselves.
           </p>
         </div>
       </section>

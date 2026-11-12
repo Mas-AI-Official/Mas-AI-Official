@@ -8,7 +8,7 @@ import { DAENA } from '@/content/facts'
 
 const path = '/multi-agent-ai-company-os/'
 const title = 'Multi-agent AI company OS'
-const description = `A multi-agent AI company OS organizes agents by department, capability, memory and approval level. Daena has ${DAENA.agents.display}, three reasoning modes and ${DAENA.memoryTiers.display}.`
+const description = `A multi-agent AI company OS organizes agents by department, memory and approval level. Daena has ${DAENA.agents.display}, and ${DAENA.memoryTiers.display}.`
 const h1 = 'What is a multi-agent AI company OS?'
 const tldr = `A multi-agent AI company OS organizes AI agents the way a company organizes departments. Daena has ${DAENA.agents.display}, three reasoning modes and ${DAENA.memoryTiers.display}, all behind one governed request pipeline.`
 

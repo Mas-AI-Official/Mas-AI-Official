@@ -48,6 +48,16 @@ export const TIMELINE_OPTIONS: Option[] = [
   { id: '1-month', label: 'Within a month' },
 ]
 
+/** Optional and never preselected. A spoken or typed address carries no utm labels, so this is the only source signal then. */
+export const HEARD_OPTIONS: Option[] = [
+  { id: 'youtube', label: 'YouTube' },
+  { id: 'linkedin', label: 'LinkedIn' },
+  { id: 'search', label: 'A search engine' },
+  { id: 'assistant', label: 'An AI assistant' },
+  { id: 'referral', label: 'Someone told me' },
+  { id: 'other', label: 'Somewhere else' },
+]
+
 export type Inquiry = {
   /** Id of the chosen "what are you trying to improve" chip. */
   needId: string
@@ -65,6 +75,8 @@ export type Inquiry = {
   name: string
   email: string
   phone: string
+  /** Optional: id of the chosen "where did you hear about us" chip, or ''. */
+  heardId: string
   /** utm_* labels of the link that brought the visitor (lib/attribution), or ''. */
   campaign: string
 }
@@ -83,6 +95,7 @@ export const EMPTY_INQUIRY: Inquiry = {
   name: '',
   email: '',
   phone: '',
+  heardId: '',
   campaign: '',
 }
 
@@ -148,6 +161,7 @@ export function summaryRows(d: Inquiry): [string, string][] {
     ['Timeline', labelFor(TIMELINE_OPTIONS, d.timelineId) || NOT_GIVEN],
     ['Company', d.company.trim() || NOT_GIVEN],
     ['Company size', d.size.trim() || NOT_GIVEN],
+    ['How they heard about us', labelFor(HEARD_OPTIONS, d.heardId) || NOT_GIVEN],
     ...(d.campaign ? ([['Campaign', d.campaign]] as [string, string][]) : []),
   ]
 }

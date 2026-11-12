@@ -168,15 +168,56 @@ export const WORK: WorkItem[] = [
   },
 
   /* ---------- Tier B: built by MAS-AI, index ---------- */
-  // Client names, links and screenshots appear only with the client's written permission. Facts verified
-  // 2026-10-01: the clinic site answers 200 on the clinic's own domain; the other two are preview and provisional.
+  // Client names and links appear only with the client's permission. All three agreed to be named, as stated by
+  // the owner on 2026-11-12 (owner ledger, item dec-client-naming-consent). No screenshots: image rights on the
+  // previews are unresolved. Links only to sites live in production. Checked 2026-11-12: coremetabolichealth.ca
+  // answers 200; the MenCore site and Katie's site are previews.
   {
-    slug: 'client-websites',
-    name: 'Client websites',
+    slug: 'core-metabolic-health',
+    name: 'Core Metabolic Health Centre',
     label: 'Client website',
     tier: 'B',
-    line: 'Three sites designed and built for clients: a medical clinic\'s website, live on the clinic\'s own domain and hosting; a private design preview for a health company; and a site in progress for a wellness practice.',
+    line: 'The website of an internal medicine and metabolic care clinic in Richmond Hill, Ontario: static pages with no patient forms and no tracking, live on the clinic\'s own domain and hosting.',
     proves: ['websites'],
+    links: [{ label: 'coremetabolichealth.ca', href: 'https://coremetabolichealth.ca' }],
+  },
+  {
+    slug: 'mencore',
+    name: 'MenCore Health',
+    label: 'Client website',
+    tier: 'B',
+    line: 'A scroll-driven launch website for a men\'s health company, kept as a private preview until the client approves it for launch.',
+    proves: ['websites'],
+  },
+  {
+    slug: 'booking-platform',
+    name: 'Katie: booking and scheduling platform',
+    label: 'Client website',
+    tier: 'B',
+    line: 'A website and booking platform for Katie, a yoga, somatic movement and meditation teacher, that suggests session times by how well they fit her day and how far she would drive.',
+    proves: ['websites', 'software'],
+    caseStudy: {
+      problem:
+        'Katie teaches classes and private sessions, online and in clients\' homes across the Toronto area. A private session only works if it fits around the classes she already teaches and the drive between them.',
+      insight:
+        'Rank the times instead of listing them: a time that fits comes first, then the one with the least driving, then the one that leaves spare time, so a slot next to a session she already teaches nearby wins.',
+      built: [
+        'A website with a class schedule, bookings and private session requests, and a private studio area where Katie sets her service area, prices and wording herself.',
+        'Suggested times for flexible requests, ranked by fit and driving, each offered with one button; the client confirms by link.',
+        'A reminder email the day before a session, and an alert to Katie if her calendar connection drops.',
+      ],
+      connected: [
+        'Google Calendar, so bookings and her own calendar stay in step: built and tested, waiting for the account to be connected.',
+        'Driving times from Google Routes once its key is set; until then the site shows estimates and labels them as estimates.',
+        'Payments through Stripe Checkout and email through Resend: built, and switched off until the accounts exist.',
+      ],
+      engineering: [
+        'Astro on Cloudflare Workers with a D1 (SQLite) database: static pages first, server code only where booking needs it.',
+        'No animation JavaScript: motion is native CSS with fallbacks, and accessibility is checked by automated tests.',
+      ],
+      state:
+        'In preview with Katie: draft words, a sample schedule and a provisional brand. It takes no real bookings or payments yet, and the scheduling features are in review before they reach her preview. The scheduling engine is designed to serve other independent practitioners as well; Katie is the first.',
+    },
   },
   {
     slug: 'ai-company-os',
