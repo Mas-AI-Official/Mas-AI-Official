@@ -3,6 +3,8 @@
  * One label per intent across the whole site (taste 4.5): contact intent = CTA.label.
  */
 
+import { GROWTH } from './growth'
+
 export const CTA = {
   label: 'Bring us a bottleneck',
   href: '/start/',
@@ -37,6 +39,16 @@ export const FAMILIES: ServiceLink[] = [
     href: '/websites/',
     name: 'Build websites',
     line: 'Websites that book, qualify, answer and connect to the rest of your business.',
+  },
+]
+
+/** What we run after the build. One managed service today; name, path and line come from content/growth.ts. */
+export const RUN: ServiceLink[] = [
+  {
+    slug: 'growth',
+    href: GROWTH.path,
+    name: GROWTH.name,
+    line: `${GROWTH.line}.`,
   },
 ]
 
@@ -82,7 +94,7 @@ export const NAV = [
 export const FOOTER = [
   {
     title: 'Services',
-    links: [...FAMILIES, ...PRACTICES, ...DEPTH].map((s) => ({ label: s.name, href: s.href })),
+    links: [...FAMILIES, ...RUN, ...PRACTICES, ...DEPTH].map((s) => ({ label: s.name, href: s.href })),
   },
   {
     title: 'Work',

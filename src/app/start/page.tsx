@@ -7,7 +7,7 @@ import { START } from '@/content/home'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
-  title: 'Start a conversation',
+  title: 'Start a conversation: bring us a bottleneck',
   description:
     'Tell us what you are trying to improve and what happens today. Four short steps, and we reply by email. Or book a 30-minute fit call.',
   path: '/start/',

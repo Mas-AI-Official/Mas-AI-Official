@@ -10,7 +10,7 @@ import { DAENA, PATENTS } from '@/content/facts'
 
 const path = '/what-is-daena/'
 const title = 'What is Daena? A governed AI control plane'
-const description = `Daena is a governed multi-agent platform from MAS-AI: AI departments that plan and act inside approval gates and an audit trail, with routing across ${DAENA.providers.display}.`
+const description = `Daena is a governed multi-agent platform from MAS-AI: AI departments that plan and act inside approval gates and an audit trail, across ${DAENA.providers.display}.`
 const h1 = 'What is Daena by MAS-AI?'
 const tldr = `Daena is a governed multi-agent platform from MAS-AI Technologies. It gives a company AI departments that plan and act inside approval gates and an audit trail, and it routes work across ${DAENA.providers.display}.`
 

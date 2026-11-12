@@ -3,6 +3,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import {
   EMPTY_INQUIRY,
+  HEARD_OPTIONS,
   INQUIRY_ENDPOINT,
   buildMailto,
   buildPayload,
@@ -165,6 +166,19 @@ test('the optional systems and hardware answers travel with the inquiry', () => 
   assert.equal(p['Hardware'], 'We may need new hardware')
   assert.equal(p['Where data may run'], 'Help me decide')
   assert.deepEqual(validateStep(2, { ...EMPTY_INQUIRY, hardwareId: 'unsure' }), {})
+})
+
+test('the optional "where did you hear about us" answer travels with the inquiry and is never preselected', () => {
+  assert.equal(EMPTY_INQUIRY.heardId, '')
+  assert.equal(buildPayload(FILLED)['How they heard about us'], 'Not given')
+  assert.ok(HEARD_OPTIONS.length >= 2)
+  for (const o of HEARD_OPTIONS) {
+    assert.equal(buildPayload({ ...FILLED, heardId: o.id })['How they heard about us'], o.label)
+  }
+  assert.equal(buildPayload({ ...FILLED, heardId: 'not-an-option' })['How they heard about us'], 'Not given')
+  assert.match(summaryText({ ...FILLED, heardId: 'assistant' }), /How they heard about us: An AI assistant/)
+  assert.deepEqual(validateStep(3, { ...FILLED, heardId: '' }), {})
+  assert.deepEqual(validateAll({ ...FILLED, heardId: '' }), { errors: {}, firstStep: -1 })
 })
 
 test('campaign labels from an ad link travel with the inquiry, and only when present', async () => {

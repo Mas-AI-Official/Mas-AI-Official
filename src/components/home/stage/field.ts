@@ -498,13 +498,32 @@ export function glyph(ctx: CanvasRenderingContext2D, pal: Palette, kind: Kind, p
 
 /** A station: fixed-size label in screen space so it stays legible at every zoom. */
 /** A station's box in canvas px: the world size at scale s, never smaller than its label needs. */
+/**
+ * Label widths, measured once per font and text. Every station asked for its size on every frame, and each ask set
+ * ctx.font and measured the text again: the largest self time on the page in the 2026-11-12 profile (4x slowed CPU),
+ * enough to block a slow phone while the diagram is on screen. Cleared when web fonts finish loading, because a width
+ * measured against the fallback font is wrong afterwards.
+ */
+const labelWidths = new Map<string, number>()
+if (typeof document !== 'undefined' && document.fonts) {
+  const clear = () => labelWidths.clear()
+  void document.fonts.ready.then(clear)
+  document.fonts.addEventListener('loadingdone', clear)
+}
+
 export function stationSize(ctx: CanvasRenderingContext2D, pal: Palette, label: string, s: number, phone: boolean) {
   const px = phone ? 11 : 12.5
-  ctx.save()
-  ctx.font = `600 ${px}px ${pal.sans}`
-  const w = Math.max(BOX.w * s, ctx.measureText(label).width + 18)
-  ctx.restore()
-  return { w, h: Math.max(BOX.h * s, px + 12), px }
+  const font = `600 ${px}px ${pal.sans}`
+  const key = `${font}\n${label}`
+  let tw = labelWidths.get(key)
+  if (tw === undefined) {
+    ctx.save()
+    ctx.font = font
+    tw = ctx.measureText(label).width
+    ctx.restore()
+    labelWidths.set(key, tw)
+  }
+  return { w: Math.max(BOX.w * s, tw + 18), h: Math.max(BOX.h * s, px + 12), px }
 }
 
 export function station(ctx: CanvasRenderingContext2D, pal: Palette, label: string, p: Vec, s: number, phone: boolean, opts: { alpha?: number; status?: number; stroke?: string } = {}) {

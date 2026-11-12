@@ -8,7 +8,7 @@ import { DAENA } from '@/content/facts'
 
 const path = '/use-cases/multi-llm-routing/'
 const title = 'Multi-LLM routing without vendor lock-in'
-const description = `Route AI workloads across ${DAENA.providers.display}, cloud and local, while every request still passes the governance check. How Daena separates model choice from policy.`
+const description = `Route AI workloads across ${DAENA.providers.display}, cloud and local, while every request still passes the governance check. Daena separates model choice from policy.`
 const h1 = 'How do you route AI workloads across multiple LLMs without vendor lock-in?'
 const tldr = `Keep model choice out of your agents and in one routing layer. Daena routes across ${DAENA.providers.display}, and its routing stage comes after the governance check, so changing the model does not skip the check.`
 

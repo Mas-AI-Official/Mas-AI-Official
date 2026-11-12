@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next'
 import { canonical } from '@/lib/seo'
 import { CASE_STUDIES } from '@/content/work'
 import { DATE_MODIFIED } from '@/lib/answer-seo'
+import { GROWTH, GROWTH_INDEXABLE } from '@/content/growth'
 
 export const dynamic = 'force-static'
 
@@ -39,7 +40,9 @@ const ANSWERS = [
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const work = CASE_STUDIES.map((w) => `/work/${w.slug}/`)
-  return [...CORE, ...work, ...ANSWERS].map((path) => ({
+  // The Growth page lists itself here the moment its one search switch is turned on (content/growth.ts).
+  const growth = GROWTH_INDEXABLE ? [GROWTH.path] : []
+  return [...CORE, ...growth, ...work, ...ANSWERS].map((path) => ({
     url: canonical(path),
     lastModified: DATE_MODIFIED,
   }))

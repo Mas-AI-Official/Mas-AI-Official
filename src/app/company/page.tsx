@@ -8,7 +8,7 @@ import { COMPANY_SECTION } from '@/content/home'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
-  title: 'Company',
+  title: `Company: founder-led, in the ${COMPANY.area}`,
   description: `MAS-AI Technologies Inc. is a founder-led company in the ${COMPANY.area}, ${COMPANY.countryName}. How we work, how we build, and where to find us.`,
   path: '/company/',
 })

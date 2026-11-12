@@ -17,6 +17,8 @@ export const STAGE_ONE = {
     gapWord: 'gap',
     sub: 'We work inside your business, find where the work stalls, then build what should exist next.',
     proof: 'AI built around your business. Deployed on your terms.',
+    /** The run layer, one line under the proof line; the linked service comes from RUN in content/site.ts. */
+    run: 'Then we run it.',
     alt: 'Illustration of an example operation: work moves between five tools, one hand-off is done by hand, and a queue builds up there until it is marked as the gap.',
   },
   gap: {
@@ -118,6 +120,8 @@ export const START = {
   prompt: 'What are you trying to improve?',
   options: [
     { id: 'response', label: 'Response time to customers' },
+    { id: 'growth-audit', label: 'Find where our leads leak' },
+    { id: 'growth-content', label: 'Short videos for my business, approved by me' },
     { id: 'manual', label: 'A slow manual process' },
     { id: 'website', label: 'A website that does more' },
     { id: 'software', label: 'Software we cannot buy' },

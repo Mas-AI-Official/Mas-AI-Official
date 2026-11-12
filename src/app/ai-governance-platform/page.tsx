@@ -8,7 +8,7 @@ import { DAENA } from '@/content/facts'
 
 const path = '/ai-governance-platform/'
 const title = 'AI governance platform for multi-agent systems'
-const description = `Daena is a governed AI control plane: in governed mode every agent request passes a ten-stage pipeline with risk classification, an approval queue for high-risk actions and an audit trail, across ${DAENA.providers.display}.`
+const description = 'Daena is a governed AI control plane. In governed mode every agent request passes a ten-stage pipeline: risk classification, approval queue and audit trail.'
 const h1 = 'What is an AI governance platform for multi-agent systems?'
 const tldr =
   'An AI governance platform decides what AI agents may do before they act, and keeps a record of what they did. Daena does this inside the request path: a ten-stage pipeline, risk classification, an approval queue for high-risk actions and an audit trail.'

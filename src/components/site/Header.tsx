@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useId, useRef, useState } from 'react'
 import { HomeLink } from './HomeLink'
-import { CTA, DEPTH, FAMILIES, NAV, PRACTICES } from '@/content/site'
+import { CTA, DEPTH, FAMILIES, NAV, PRACTICES, RUN } from '@/content/site'
 
 /**
  * Header: one line at desktop, 64 px. Services is a disclosure menu (not a mega-menu).
@@ -111,7 +111,7 @@ export function Header() {
                       className="site-nav__link site-nav__menu-btn"
                       aria-expanded={servicesOpen}
                       aria-controls={menuId}
-                      data-active={isActive(item.href) || FAMILIES.concat(PRACTICES, DEPTH).some((s) => isActive(s.href))}
+                      data-active={isActive(item.href) || FAMILIES.concat(RUN, PRACTICES, DEPTH).some((s) => isActive(s.href))}
                       onClick={() => setServicesOpen((v) => !v)}
                     >
                       {item.label}
@@ -167,6 +167,17 @@ export function Header() {
                   </li>
                 ))}
               </ul>
+              <p className="t-label">What we run</p>
+              <ul>
+                {RUN.map((s) => (
+                  <li key={s.href}>
+                    <Link href={s.href} className="services-menu__item">
+                      <span className="services-menu__name">{s.name}</span>
+                      <span className="services-menu__line">{s.line}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
             <div>
               <p className="t-label">How we build</p>
@@ -194,6 +205,12 @@ export function Header() {
           <p className="t-label">What we build</p>
           <ul>
             {FAMILIES.map((s) => (
+              <li key={s.href}><Link href={s.href} onClick={closeSheet}>{s.name}</Link></li>
+            ))}
+          </ul>
+          <p className="t-label">What we run</p>
+          <ul>
+            {RUN.map((s) => (
               <li key={s.href}><Link href={s.href} onClick={closeSheet}>{s.name}</Link></li>
             ))}
           </ul>

@@ -152,6 +152,7 @@ html:not(.js) .site-nav__menu-btn { display: none; }
 }
 .services-menu__grid { display: grid; gap: var(--space-7); grid-template-columns: 1.2fr 1fr; }
 .services-menu ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: var(--space-2); }
+.services-menu ul + .t-label { margin-top: var(--space-6); }
 .services-menu__item {
   display: grid;
   gap: 0.2rem;

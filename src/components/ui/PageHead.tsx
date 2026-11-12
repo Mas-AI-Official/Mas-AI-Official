@@ -10,12 +10,15 @@ export function PageHead({
   crumbs,
   children,
   visual,
+  eyebrow,
   id = 'page-head',
 }: {
   title: string
   lead?: string
   crumbs: Crumb[]
   children?: React.ReactNode
+  /** Optional block between the breadcrumb and the H1 (the growth page: its name lockup). */
+  eyebrow?: React.ReactNode
   /** Decorative visual beside the heading on wide screens (service pages: the living system). */
   visual?: React.ReactNode
   id?: string
@@ -34,6 +37,7 @@ export function PageHead({
             ))}
           </ol>
         </nav>
+        {eyebrow}
         <h1 id={`${id}-title`} className="t-display page-head__title">
           {title}
         </h1>

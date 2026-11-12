@@ -3,12 +3,12 @@ import { COMPANY } from '@/content/facts'
 import { pageMetadata } from '@/lib/seo'
 
 export const metadata = pageMetadata({
-  title: 'Privacy notice',
-  description: 'What the mas-ai.co inquiry form collects, who delivers it, and how to ask us to delete it.',
+  title: 'Privacy notice for the mas-ai.co inquiry form',
+  description: 'What the inquiry form on mas-ai.co collects, who delivers the message to us, and how to ask MAS-AI Technologies Inc. to delete what you sent.',
   path: '/privacy/',
 })
 
-const LAST_UPDATED = '2026-09-30'
+const LAST_UPDATED = '2026-11-11'
 
 export default function PrivacyPage() {
   return (
@@ -41,7 +41,8 @@ export default function PrivacyPage() {
                 your timeline, if you choose to answer;
               </li>
               <li>your company name and size, if you choose to give them;</li>
-              <li>your name and email address, and a phone number if you choose to give one.</li>
+              <li>your name and email address, and a phone number if you choose to give one;</li>
+              <li>where you heard about us, if you choose to say.</li>
             </ul>
             <p>
               If you reached the site through a link from one of our posts or ads, the link carries campaign labels such as

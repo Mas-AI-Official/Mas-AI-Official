@@ -9,6 +9,7 @@ import { recalledCampaign, rememberCampaign, tabStore } from '@/lib/attribution'
 import {
   DATA_OPTIONS,
   HARDWARE_OPTIONS,
+  HEARD_OPTIONS,
   EMPTY_INQUIRY,
   STEP_COUNT,
   TIMELINE_OPTIONS,
@@ -476,6 +477,23 @@ export function InquiryFlow() {
               />
               <p className="hint">Only if you would rather we call.</p>
             </div>
+            <fieldset className="field inq-fieldset">
+              <legend>Where did you hear about us? Optional.</legend>
+              <div className="inq-chips">
+                {HEARD_OPTIONS.map((o) => (
+                  <label key={o.id} className="inq-chip inq-chip--radio">
+                    <input
+                      type="radio"
+                      name="heard"
+                      value={o.id}
+                      checked={data.heardId === o.id}
+                      onChange={() => patch({ heardId: o.id })}
+                    />
+                    <span>{o.label}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
           </>
         )}
 

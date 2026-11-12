@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { STAGE_ONE, STAGE_TWO, type DeployMode } from '@/content/home'
-import { CTA, WORK_CTA } from '@/content/site'
+import { CTA, RUN, WORK_CTA } from '@/content/site'
 import { DAENA } from '@/content/facts'
 import {
   BUILT_AT,
@@ -578,6 +578,13 @@ function Acts() {
               </Link>
             </div>
             <p className="stage__note">{hero.proof}</p>
+            <p className="stage__note stage__note--wide">
+              {hero.run}{' '}
+              <Link href={RUN[0].href} className="link">
+                {RUN[0].name}
+              </Link>
+              : {RUN[0].line}
+            </p>
             <p className="visually-hidden">{hero.alt}</p>
           </div>
           <Still i={0} />

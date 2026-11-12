@@ -9,7 +9,7 @@ import { DAENA } from '@/content/facts'
 const path = '/ai-control-plane-for-business/'
 const title = 'AI control plane for business'
 const description =
-  'An AI control plane centralizes model routing, governance, memory and audit across a business’s AI agents. Daena is one, so a company can deploy agents without losing oversight.'
+  'An AI control plane centralizes model routing, governance, memory and audit across a business’s AI agents. Daena is one: deploy agents without losing oversight.'
 const h1 = 'What is an AI control plane for business?'
 const tldr =
   'An AI control plane is the one layer that decides which model runs a task, whether an action is allowed, what the agent remembers and how it is logged. Daena is a control plane for AI agents, so a company can deploy them across teams and still see what they did.'

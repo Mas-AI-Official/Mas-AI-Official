@@ -79,7 +79,7 @@ const automation: ServiceContent = {
   meta: {
     title: 'AI automation services for business operations',
     description:
-      'Workflow automation, AI agents with approval steps, multi-agent systems, knowledge assistants and MCP connectors. Built by a founder-led studio in Ontario and shipped to production.',
+      'Workflow automation, AI agents with approval steps, multi-agent systems, knowledge assistants and MCP connectors, built by a founder-led studio in Ontario.',
   },
   serviceType: 'AI automation',
   h1: 'AI automation that ships to production',
@@ -262,7 +262,7 @@ const software: ServiceContent = {
   meta: {
     title: 'Custom software development for business',
     description:
-      'Custom web applications, internal tools, SaaS and product engineering, Python and FastAPI APIs, and AI inside existing software. Built around how you work, connected to what you run.',
+      'Custom web applications, internal tools, SaaS and product engineering, Python and FastAPI APIs, and AI inside existing software, built around how you work.',
   },
   serviceType: 'Custom software development',
   h1: 'Custom software, built around how you work',
@@ -429,7 +429,7 @@ const websites: ServiceContent = {
   meta: {
     title: 'Website development that books, qualifies and answers',
     description:
-      'Websites connected to your calendar, CRM and inbox: booking, lead systems, client portals and an AI concierge. Fast, accessible and findable, built and deployed by a founder-led studio.',
+      'Websites connected to your calendar, CRM and inbox: booking, lead systems, client portals and an AI concierge. Fast, accessible and findable.',
   },
   serviceType: 'Website development',
   h1: 'Websites that do work, not just explain it',
@@ -605,7 +605,7 @@ const privateAi: ServiceContent = {
   meta: {
     title: 'Private, local and cloud AI deployment',
     description:
-      'On-device, on-premises, private cloud, hybrid and cloud AI deployment. Open-weight models sized to your hardware, with production hardening, monitoring and evaluation.',
+      'On-device, on-premises, private cloud, hybrid and cloud AI deployment. Open-weight models sized to your hardware, with hardening, monitoring and evaluation.',
   },
   serviceType: 'Private and local AI deployment',
   h1: 'Private, local and cloud AI deployment',
@@ -800,7 +800,7 @@ const security: ServiceContent = {
   meta: {
     title: 'Security, evaluation and governance for AI systems',
     description:
-      'Security reviews of applications and AI features, evaluation against real examples, audit trails, human approval, least privilege and secrets handling. Controls that keep a person in charge.',
+      'Security reviews of applications and AI features, evaluation against real examples, audit trails, human approval, least privilege and secrets handling.',
   },
   serviceType: 'AI security and governance',
   h1: 'Security, evaluation and governance for AI systems',
@@ -975,7 +975,7 @@ const rag: ServiceContent = {
   meta: {
     title: 'RAG and knowledge systems for company documents',
     description:
-      'Answers from your own documents with citations, and a refusal when the source is missing. Retrieval-augmented generation with evaluation and a private deployment option.',
+      'Answers from your own documents with citations, and a refusal when the source is missing. RAG with evaluation and a private deployment option.',
   },
   serviceType: 'Retrieval-augmented generation development',
   h1: 'RAG and knowledge systems for your own documents',
@@ -1146,7 +1146,7 @@ const aiAct: ServiceContent = {
   meta: {
     title: 'EU AI Act readiness for AI systems',
     description:
-      'Risk classification, technical documentation, logging and traceability, human oversight and transparency for AI systems that reach the EU. Engineering work, alongside your counsel.',
+      'Risk classification, technical documentation, logging, human oversight and transparency for AI systems that reach the EU. Engineering, alongside your counsel.',
   },
   serviceType: 'EU AI Act readiness',
   h1: 'EU AI Act readiness for AI systems',
@@ -1319,7 +1319,7 @@ export const HUB = {
   meta: {
     title: 'Services: AI automation, custom software and websites',
     description:
-      'Three kinds of work: automate operations, build software, build websites. Two practices run through all of them: private, local and cloud AI, and security, evaluation and governance.',
+      'Automate operations, build software, build websites. Two practices run through all three: private, local and cloud AI, and security, evaluation and governance.',
   },
   h1: 'What we build, and how we build it.',
   lead: 'Three kinds of work, two practices that run through all of them, and two depth areas for specific questions.',
